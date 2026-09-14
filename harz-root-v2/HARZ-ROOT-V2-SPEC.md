@@ -14,13 +14,16 @@ HARZ is NOT another DNS. HARZ = a sovereign naming, identity, trust, state, rout
 and application-continuity layer that can use the public Internet when available
 but does not fundamentally depend on it.
 
-## Frozen Principle (owner amendment, Sep 14)
-HARZ is SOFTWARE-DEFINED INFRASTRUCTURE. Physical hardware is an external SUBSTRATE,
-not a HARZ architectural dependency. A node is software, not a box. Nodes run on
-cloud, VPS, PC, phone, browser, or edge runtime, and can migrate between substrates
-while retaining the same HARZ identity and canonical state.
-(Consistent with proven work: capsule v14 survived death and ran byte-identical
-across Cloudflare, Deno, and the phone — portable runtime, no owned hardware.)
+## Frozen Principle (owner amendments 1+2, Sep 14)
+1. HARZ is SOFTWARE-DEFINED INFRASTRUCTURE. Physical hardware is an external
+   SUBSTRATE, not a HARZ architectural dependency. A node is software, not a box.
+2. HARDWARE IS OPTIONAL; ORDINARY USER DEVICES ARE VALID HARZ NODES. No specialized
+   HARZ hardware is required. The owner's Infinix is already a live node (Node C,
+   harz-survivor, Sep 14) and takes the Node 1 seed role — same phone, two roles.
+3. PORTABILITY RULE: nothing may be built that only works because Node 1 is one
+   particular phone. The proof of HARZ is: move the runtime to another substrate
+   and the identity + canonical state SURVIVE. (Already proven once: capsule v14
+   ran byte-identical across Cloudflare, Deno, and the phone.)
 
 Owner refinement (Sep 14, 23:35 WAT): hardware is OPTIONAL infrastructure and
 ORDINARY USER DEVICES ARE VALID HARZ NODES — no specialized HARZ hardware is
@@ -82,7 +85,8 @@ zone at boot only — Root v2 needs a gossip->resolver hot-reload hook.
 3. Resolver unification — one engine, four projections (pure software)
 4. Gateway fabric — software proof (DoH endpoint + deterministic pay.harz ↔ pay.harz.ng mapping when/if the domain exists)
 5. Killer test, SOFTWARE MODE (no hardware gate)
-6. Physical substrate (Node 1 / Pi / extra phones) = OPTIONAL later deployment, not a prerequisite
+6. Physical substrate = OPTIONAL deployment, not a prerequisite; the owner's phone
+   already serves as Node 1 seed + Node C — no additional device needed for v1
 ICANN round 3 = reach expansion only, never a dependency.
 harz.ng purchase = optional accelerator (public doorway + stable tunnels), not a dependency.
 
