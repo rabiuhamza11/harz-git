@@ -38,3 +38,13 @@ The witness seat demonstrably holds a working fine-grained GitHub token
 github.com/settings/personal-access-tokens → open that token → Repository access
 → add rabiuhamza11/harz-git → Contents: Read and write. No token value ever
 needs to pass through chat.
+
+
+## ADDENDUM — intake bridge, Sep 14 ~15:05 WAT (factual status)
+
+Artifacts 1-3 have LANDED, hash-verified byte-exact at intake and read-back from this repo:
+- zone (harz.zone + zone.sig + zone-pub.pem): commit 7e3f72b — sha256(harz.zone) = e94b9693e94a...f05, 80 lines / 15,887 bytes, sig verified over digest (TEST key; production ZSK ceremony pending).
+- gossip module + test suite (gossip.js, test-gossip.sh, push-tamper.js, kill-gossip.js, kill-strays2.js, kill-verify.js): commits 0fe23ee + 0a09b96 — all six files match witness receipts exactly. kill-strays2/kill-verify resent base64: original files carry no shebang; earlier relayed text did (+20 bytes each) — resolved.
+- dial gateway (dial-gateway.js): commit b32af04 — 4,472 bytes, hash-exact.
+
+ARTIFACT 4 CORRECTION — acceptance-harness.js does NOT exist at the witness seat. Confirmed by full sandbox search on Sep 14: no file by that name, no 10,759-byte artifact. The desk reports it never built an 8-check mesh acceptance harness and declines to fabricate one. The "AWAITING PUSH" entry above originated in THIS manifest (orchestrator seat, 55ba1df), not from a witness receipt — audit the origin of that expectation before relying on it. The standing hold "New protocol versions: harness must pass against the frozen v2.1 spec implementation first" therefore references a harness that was never built; it needs an owner decision (build it as a task, or amend the hold) — not silently inherited. Available from the witness seat on request with receipts: resolver suite (test-resolver.sh, verify-all-names.js, sweep-via-http.js), dial suite (test-dial.sh, kill-dial.js), resolver.js, build tooling (zone-generator.js, build-canonical.js, reconcile-zones.js, fix-live-urls.js), draft17 archive trio.
