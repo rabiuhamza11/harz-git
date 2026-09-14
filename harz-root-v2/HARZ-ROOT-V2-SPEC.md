@@ -1,16 +1,24 @@
-# HARZ Root v2 — Strategic Architecture (DRAFT v0.9, awaiting owner freeze)
+# HARZ Root v2 — Strategic Architecture (DRAFT v0.9.1, awaiting owner freeze)
 
-Status: DRAFT — proposed by owner (Rabiu) Sep 14, 2026, reviewed by witness seat (Magani).
-Freeze happens on the owner's explicit word. No live system changes until frozen.
+Status: DRAFT v0.9.1 — owner amendment applied Sep 14, 2026: hardware is NOT an
+architectural prerequisite. Freeze happens on the owner's explicit word.
 
 ## The Definition
 HARZ is NOT another DNS. HARZ = a sovereign naming, identity, trust, state, routing,
 and application-continuity layer that can use the public Internet when available
 but does not fundamentally depend on it.
 
-## The Central Invariant (frozen candidate)
+## Frozen Principle (owner amendment, Sep 14)
+HARZ is SOFTWARE-DEFINED INFRASTRUCTURE. Physical hardware is an external SUBSTRATE,
+not a HARZ architectural dependency. A node is software, not a box. Nodes run on
+cloud, VPS, PC, phone, browser, or edge runtime, and can migrate between substrates
+while retaining the same HARZ identity and canonical state.
+(Consistent with proven work: capsule v14 survived death and ran byte-identical
+across Cloudflare, Deno, and the phone — portable runtime, no owned hardware.)
+
+## The Central Invariant
 ONE HARZ NAME → ONE CANONICAL IDENTITY → ONE CANONICAL STATE →
-MANY RESOLUTION METHODS → MANY TRANSPORTS → MANY PHYSICAL NODES.
+MANY RESOLUTION METHODS → MANY TRANSPORTS → MANY SOFTWARE NODES.
 
 ## The Three Roots
 1. Naming Root — "What is pay.harz?" (canonical zone → service identity)
@@ -19,42 +27,44 @@ MANY RESOLUTION METHODS → MANY TRANSPORTS → MANY PHYSICAL NODES.
 
 ## Five Components
 A. harz-root — canonical namespace + signed zone (LIVE: worker v2.1.1, zone e94b9693, production ZSK 86a507a42df64df2)
-B. harz-resolver — ONE resolution engine with multiple projections: DNS / DoH / browser bridge / native runtime / mesh (partially exists: /resolve API, extension resolver, dial resolver — unification is the work)
-C. harz-gateway — public Internet ↔ HARZ translation (NEW surface; harz.ng is the doorway INTO .harz, never its replacement; deterministic mapping pay.harz ↔ pay.harz.ng; canonical identity remains pay.harz)
-D. harz-state — canonical state, signatures, gossip, convergence, reconciliation (exists: capsule book v14 49b7cf42, gossip adoption proven, byte-identical across CF/Deno/Termux)
-E. harz-transport — Internet + WiFi + BLE + Dial (SMS/USSD) + DTN store-carry-forward (+ LoRa as a SLOT ONLY — unproven, zero hardware owned; must never appear in claims as if real)
+B. harz-resolver — ONE resolution engine, multiple projections: DNS / DoH / browser bridge / native runtime / mesh
+C. harz-gateway — public Internet ↔ HARZ translation; PROVABLE ENTIRELY IN SOFTWARE (DoH endpoint can ride any substrate); harz.ng is an optional accelerator/doorway, never an architectural dependency
+D. harz-state — canonical state, signatures, gossip, convergence, reconciliation (exists: capsule v14 49b7cf42)
+E. harz-transport — Internet + mesh + Dial (SMS/USSD) + DTN store-carry-forward + local/offline (+ LoRa = slot only, unproven, zero hardware owned)
 
-## Service Registry (record schema v2 — the real new engineering)
-77 names are not merely DNS records — they are the HARZ Service Registry.
-Target record shape per name:
-  identity (Ed25519 public key) / service type / state (current signed state ref)
-  endpoints (https, harz-native, mesh, dial, local) / routing (reachable nodes) / policy
-Today's zone carries URL targets only. Schema v2 migration is the core engineering task.
-One book, many projections: DNS projection, DoH projection, native root projection —
-all render from the SAME canonical book (matches the canonical-book discipline already proven).
+## Service Registry (record schema v2 — the core new engineering)
+Per name: identity (Ed25519 public key) / service type / state ref / endpoints
+(https, harz-native, mesh, dial, local) / routing (reachable nodes) / policy.
+One book, many projections (DNS, DoH, native root) — all render from the SAME canonical book.
 
-## The Killer Test (acceptance gate for HARZ Root v2 — falsifiable, staged)
-1. Create service test.harz
-2. Resolve it through: DNS, DoH, HARZ-native resolver, mesh
-3. Kill Node A → 4. Node B continues serving
-5. Disconnect Internet → 6. Mesh resolves it
-7. Modify state on Node B → 8. Reconnect Node A → 9. Gossip converges
-10. Verify: same identity, same canonical state, same proof, same service
-Then: kill the gateway → HARZ-native network must still work.
-STAGING: software-mode run first (sandbox, honestly labeled, per standing orders);
-physical run gated on Node 1 hardware + mesh APK + second device.
+## The Killer Test (v2 wording, per owner amendment)
+"Can a HARZ service survive the DEATH, MIGRATION, DISCONNECTION, and REPLACEMENT of
+its software node while preserving one identity and one canonical state across
+different software substrates and transports?"
+Full sequence: create test.harz → resolve via DNS/DoH/native/mesh → kill Node A →
+Node B serves → disconnect (simulated partition) → mesh/offline resolves →
+modify state on B → reconnect → gossip reconciles → same identity, same state, same
+proof, same service → kill the gateway → HARZ-native network still works.
+EXECUTION MODE: SOFTWARE MODE FIRST — independent software nodes, simulated network
+partitions, real death/restart of processes. This proves the architecture without
+pretending we own physical infrastructure we don't own. Physical hardware later
+becomes ONE deployment substrate, not a requirement.
 
-## Sequencing (witness-seat proposal)
+## Sequencing (revised — hardware gates removed)
 1. Owner freezes this spec (word: "freeze")
-2. Record schema v2 design (pure software, sandbox)
-3. Resolver unification — one engine, four projections
-4. Gateway fabric — requires harz.ng purchase (the ONE purchase; also unblocks Node 1 tunnels)
-5. Killer test, software mode → then physical
-ICANN round 3 = reach expansion ONLY, never a dependency. Same network, same namespace,
-same canonical book — the bridge (harz.ng) simply gets removed if delegation ever happens.
+2. Record schema v2 (pure software)
+3. Resolver unification — one engine, four projections (pure software)
+4. Gateway fabric — software proof (DoH endpoint + deterministic pay.harz ↔ pay.harz.ng mapping when/if the domain exists)
+5. Killer test, SOFTWARE MODE (no hardware gate)
+6. Physical substrate (Node 1 / Pi / extra phones) = OPTIONAL later deployment, not a prerequisite
+ICANN round 3 = reach expansion only, never a dependency.
+harz.ng purchase = optional accelerator (public doorway + stable tunnels), not a dependency.
 
-## Honest Boundaries (standing)
+## Honest Boundaries (standing, unchanged in spirit)
 - LoRa: unproven, no hardware — slot only, never claimed
-- Software-mode results are workbench evidence, never sovereignty claims
-- Physical sovereignty claims only from HARZ-owned hardware (Node 1 / Pi)
+- Software-mode results prove the ARCHITECTURE; they are honestly labeled as
+  software-mode evidence — they are not claims of physical infrastructure ownership
+- Sep 9 ruling preserved in claims discipline: no sovereignty-over-rented-compute
+  claims from sandbox evidence alone; the architecture claim and the ownership
+  claim stay separate
 - No architecture change to LIVE systems without owner agreement (Yakubu's rule)
