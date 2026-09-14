@@ -22,6 +22,17 @@ while retaining the same HARZ identity and canonical state.
 (Consistent with proven work: capsule v14 survived death and ran byte-identical
 across Cloudflare, Deno, and the phone — portable runtime, no owned hardware.)
 
+Owner refinement (Sep 14, 23:35 WAT): hardware is OPTIONAL infrastructure and
+ORDINARY USER DEVICES ARE VALID HARZ NODES — no specialized HARZ hardware is
+required. A normal phone is a node: Node 1 = the owner's phone as primary
+sovereign/seed node; Node C = another network position (recovery/edge role),
+possibly the SAME physical phone at a different role/stage. What matters is the
+NODE IDENTITY and the CANONICAL STATE, not the physical device. LAW: nothing may
+be built that only works because Node 1 is any particular phone. The portability
+proof: move the runtime to another substrate and the identity/state must survive
+— proven by sovereignty-test v1.1 checks 13-16 (production book migrated across
+substrates, replacement nodes carry the same identity/state/proof).
+
 ## The Central Invariant
 ONE HARZ NAME → ONE CANONICAL IDENTITY → ONE CANONICAL STATE →
 MANY RESOLUTION METHODS → MANY TRANSPORTS → MANY SOFTWARE NODES.
