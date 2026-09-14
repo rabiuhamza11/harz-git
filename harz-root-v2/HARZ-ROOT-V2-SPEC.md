@@ -1,7 +1,13 @@
-# HARZ Root v2 — Strategic Architecture (DRAFT v0.9.1, awaiting owner freeze)
+# HARZ Root v2 — Strategic Architecture (FROZEN v1.0)
 
-Status: DRAFT v0.9.1 — owner amendment applied Sep 14, 2026: hardware is NOT an
-architectural prerequisite. Freeze happens on the owner's explicit word.
+Status: FROZEN v1.0 — Sep 14, 2026, 23:27 WAT. Owner amendment applied and freeze
+called final: "HARZ is software-defined infrastructure. Physical hardware is an
+external substrate, not a HARZ architectural dependency." Hardware gates REMOVED
+from the plan before freeze, per explicit owner order: (x) "Gateway fabric needs
+Node 1 hardware" — FALSE, gateway fabric is provable entirely in software;
+(x) "Physical run waits for HARZ-owned hardware" — FALSE, offline/partition runs on
+simulated partitions + independent software nodes; physical hardware is later ONE
+deployment substrate, never a requirement.
 
 ## The Definition
 HARZ is NOT another DNS. HARZ = a sovereign naming, identity, trust, state, routing,
@@ -26,9 +32,9 @@ MANY RESOLUTION METHODS → MANY TRANSPORTS → MANY SOFTWARE NODES.
 3. State Root — "What is the latest legitimate state of pay.harz?" (canonical state → height → signed records → reconciliation)
 
 ## Five Components
-A. harz-root — canonical namespace + signed zone (LIVE: worker v2.1.1, zone e94b9693, production ZSK 86a507a42df64df2)
+A. harz-root — canonical namespace + signed zone (LIVE: worker v2.3, zone e94b9693, production ZSK 86a507a42df64df2; /zone /pub /zone.sig byte-exact vs git)
 B. harz-resolver — ONE resolution engine, multiple projections: DNS / DoH / browser bridge / native runtime / mesh
-C. harz-gateway — public Internet ↔ HARZ translation; PROVABLE ENTIRELY IN SOFTWARE (DoH endpoint can ride any substrate); harz.ng is an optional accelerator/doorway, never an architectural dependency
+C. harz-gateway — public Internet ↔ HARZ translation; PROVEN ENTIRELY IN SOFTWARE: live DoH endpoint /dns-query (RFC 8484) on the production root since Sep 14 (commit 0bf2029); harz.ng is an optional accelerator/doorway, never an architectural dependency
 D. harz-state — canonical state, signatures, gossip, convergence, reconciliation (exists: capsule v14 49b7cf42)
 E. harz-transport — Internet + mesh + Dial (SMS/USSD) + DTN store-carry-forward + local/offline (+ LoRa = slot only, unproven, zero hardware owned)
 
@@ -49,6 +55,15 @@ EXECUTION MODE: SOFTWARE MODE FIRST — independent software nodes, simulated ne
 partitions, real death/restart of processes. This proves the architecture without
 pretending we own physical infrastructure we don't own. Physical hardware later
 becomes ONE deployment substrate, not a requirement.
+PROVEN: sovereignty-test.js v1.1 — 16/16 GO, 3 consecutive clean runs (Sep 14).
+Extends v1.0's death/offline/recovery 12 checks with the migration/replacement
+elements of the amended killer test: (13-15) the PRODUCTION canonical book migrated
+live from the Cloudflare Workers substrate to a local Node.js runtime — zone+sig+pub
+fetched from the live routes, production signature verified on arrival (fingerprint
+86a507a42df64df2), and gov.harz served byte-identically on the new substrate;
+(16) a fresh replacement node built from canonical state serves the same
+identity/state/proof as the network. Known gap on record: resolver.v1.1 loads the
+zone at boot only — Root v2 needs a gossip->resolver hot-reload hook.
 
 ## Sequencing (revised — hardware gates removed)
 1. Owner freezes this spec (word: "freeze")

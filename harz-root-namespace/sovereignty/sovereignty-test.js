@@ -26,6 +26,10 @@ function check(n, cond, detail) {
   if (!cond) fails++;
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+function reap() { for (const p of killed) { try { process.kill(p, 'SIGKILL'); } catch (e) {} } }
+process.on('exit', reap);
+process.on('SIGINT', () => { reap(); process.exit(130); });
+process.on('uncaughtException', e => { console.error('TEST CRASH:', e.message); reap(); process.exit(1); });
 
 /* ---- test zone builder + signer ---- */
 let testPriv, testPubPem;
@@ -89,10 +93,10 @@ function httpJson(port, method, urlPath, body) {
     req.end();
   });
 }
-async function waitReady(kind, port) {
+async function waitReady(kind, port, name = 'test.harz') {
   for (let i = 0; i < 40; i++) {
     try {
-      if (kind === 'dns') { const r = await dnsQuery(port, 'test.harz', 800); if (r.ok) return true; }
+      if (kind === 'dns') { const r = await dnsQuery(port, name, 800); if (r.ok) return true; }
       else { const r = await httpJson(port, 'GET', '/p2p/info'); if (r.json && r.json.height !== undefined) return true; }
     } catch (e) { /* not yet */ }
     await sleep(250);
@@ -132,6 +136,7 @@ function stopNode(n) {
   if (!(await waitReady('dns', 5301)) || !(await waitReady('dns', 5302))) {
     console.log('NODE START FAILURE:\n' + nodeA.log + '\n---\n' + nodeB.log); process.exit(1);
   }
+  await waitReady('http', 8091); await waitReady('http', 8092);
   const ia = await httpJson(8091, 'GET', '/p2p/info');
   const ib = await httpJson(8092, 'GET', '/p2p/info');
   check('2a RESOLVE via DNS wire on Node A', (await dnsQuery(5301, 'test.harz')).ok === true);
@@ -154,7 +159,7 @@ function stopNode(n) {
 
   console.log('--- INTERNET DISCONNECTED (no non-localhost traffic from here on) ---');
   const meshAnswer = await dnsQuery(5302, 'test.harz');
-  check('5+6  Offline: mesh node resolves from pinned signed zone', meshAnswer.ok === true && meshAnswer.txt.includes('state v1'));
+  check('5+6  Offline: mesh node resolves from pinned signed zone', meshAnswer.ok === true && meshAnswer.txt.includes('state v1'), JSON.stringify(meshAnswer).slice(0,200));
 
   console.log('--- MODIFY STATE ON NODE B: height 2, re-signed ---');
   const zone2 = buildZone(2, 'state v2');
@@ -199,7 +204,42 @@ function stopNode(n) {
   const final = await dnsQuery(5301, 'test.harz');
   check('12 Gateway-independent: sovereign nodes resolve alone', final.ok === true && final.txt.includes('state v2'));
 
+  console.log('--- SUBSTRATE MIGRATION: production book Cloudflare Workers -> local Node runtime ---');
+  const CLOUD = path.join(DIR, 'nodeCloud'); // substrate 2: local Node runtime, migrated from the live worker
+  const zRes = await fetch('https://harz-root.harz.workers.dev/zone');
+  const sigRes = await fetch('https://harz-root.harz.workers.dev/zone.sig');
+  const pubRes = await fetch('https://harz-root.harz.workers.dev/pub');
+  const zoneProd = await zRes.text();
+  const sigProd = (await sigRes.text()).trim();
+  const pubProd = await pubRes.text();
+  const prodHash = crypto.createHash('sha256').update(zoneProd).digest('hex');
+  check('13  Production book fetched from live substrate (digest e94b9693...)', prodHash === 'e94b9693e94a229065f79c14577a3db767063744df4f7aefc7dfe9a2fd227f05');
+  const pubKey = crypto.createPublicKey(pubProd);
+  const der = pubKey.export({ type: 'spki', format: 'der' });
+  const fp = crypto.createHash('sha256').update(der).digest('hex').slice(0, 16);
+  const sigOkLive = crypto.verify(null, Buffer.from(prodHash, 'hex'), pubProd, Buffer.from(sigProd, 'base64'));
+  check('14  Identity carried: production ZSK fingerprint + sig verify on arrival', fp === '86a507a42df64df2' && sigOkLive === true, 'fp ' + fp);
+  deployZone(CLOUD, zoneProd, { sig: sigProd, hash: prodHash });
+  fs.writeFileSync(path.join(CLOUD, 'keys', 'zsk-ed25519.pub.pem'), pubProd);
+  const nodeCloud = startNode(CLOUD, 5303, 8093, 'NodeCloud-migrated');
+  if (!(await waitReady('dns', 5303, 'gov.harz'))) { console.log('migration node failed:\n' + nodeCloud.log); process.exit(1); }
+  const localAnswer = await dnsQuery(5303, 'gov.harz');
+  const cloudJson = await (await fetch('https://harz-root.harz.workers.dev/resolve?name=gov.harz')).json();
+  check('15  Migrated node serves identical state on a different substrate', localAnswer.ok === true && localAnswer.txt === cloudJson.records[0].value, 'TXT byte-identical across substrates');
+
+  console.log('--- NODE REPLACEMENT: fresh substrate from B\u2019s canonical state ---');
+  const CREP = path.join(DIR, 'nodeCrep');
+  fs.mkdirSync(CREP, { recursive: true });
+  for (const f of ['harz.zone', 'zone.sig', 'zone.hash']) fs.copyFileSync(path.join(B, f), path.join(CREP, f));
+  fs.mkdirSync(path.join(CREP, 'keys'), { recursive: true });
+  fs.copyFileSync(path.join(B, 'keys', 'zsk-ed25519.pub.pem'), path.join(CREP, 'keys', 'zsk-ed25519.pub.pem'));
+  const nodeC = startNode(CREP, 5304, 8094, 'NodeC-replacement');
+  if (!(await waitReady('dns', 5304)) || !(await waitReady('http', 8094))) { console.log('replacement node failed'); process.exit(1); }
+  const cAnswer = await dnsQuery(5304, 'test.harz');
+  const ic = await httpJson(8094, 'GET', '/p2p/info');
+  check('16  Replacement node: same identity/state/proof as the network', cAnswer.ok && cAnswer.txt === bAfter.txt && ic.json.hash === signed2.hash && ic.json.height === 2);
+
   for (const p of killed) { try { process.kill(p, 'SIGKILL'); } catch (e) {} }
-  console.log(fails === 0 ? '=== SOVEREIGNTY: GO (12/12) ===' : '=== SOVEREIGNTY: NO-GO (' + fails + ' failed) ===');
+  console.log(fails === 0 ? '=== SOVEREIGNTY: GO (16/16) ===' : '=== SOVEREIGNTY: NO-GO (' + fails + ' failed) ===');
   process.exit(fails === 0 ? 0 : 1);
-})().catch(e => { console.error('TEST CRASH:', e.message); for (const p of killed) { try { process.kill(p, 'SIGKILL'); } catch (x) {} } process.exit(1); });
+})().catch(e => { console.error('TEST CRASH:', e.message); process.exit(1); });
