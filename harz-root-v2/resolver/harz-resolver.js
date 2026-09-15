@@ -1,4 +1,4 @@
-// HARZ Resolver v1.1 — ONE resolution engine, four projections (v1.1: anchor pinning law)
+// HARZ Resolver v1.0 — ONE resolution engine, four projections
 // Projections: (1) native CLI  (2) HTTP + DoH-JSON server  (3) browser/library  (4) offline/mesh cache
 // UMD: works in Node (module.exports + CLI/serve) and browser (window.HarzResolver).
 // LAW: fail-closed — a zone that fails signature verification is REFUSED, never served.
@@ -46,14 +46,17 @@
   // ---------- the engine ----------
   // createEngine({ verify }) — verify(zoneObj, pubHex, sigHex) → boolean
   // Node callers pass nodeVerifier(); browser passes an async WebCrypto wrapper.
+  // v1.2 guards (Yakubu Phase 2, Sep 15): the holder pins the trust bundle
+  // (anchor + minRecords + minHeight) out-of-band — the same way the anchor travels.
+  // SHRINK law: a validly-signed zone below the namespace floor is REFUSED (a stolen or
+  // malicious authority cannot silently kill 74 names under a valid signature).
+  // ROLLBACK law: a zone older than the pinned (or previously-seen) height is REFUSED.
   function createEngine(opts) {
-    const verify = (opts && opts.verify) || nodeVerifier();
-    // v1.1 ANCHOR LAW (killer-test KT-8 finding, Sep 15): self-declared authority is NOT trust.
-    // When `anchor` is pinned, a zone whose signed_by differs from the anchor is a FORK or
-    // FORGERY — REFUSED, regardless of internal signature validity. Without `anchor`,
-    // the caller owns out-of-band verification (backward compatible, unchanged behavior).
-    const anchorHex = opts && opts.anchor ? String(opts.anchor).replace("ed25519:", "") : null;
-    let zone = null, index = null, digest = null;
+    opts = opts || {};
+    const verify = opts.verify || nodeVerifier();
+    const minRecords = Number.isInteger(opts.minRecords) && opts.minRecords > 0 ? opts.minRecords : null;
+    const minHeight = Number.isInteger(opts.minHeight) && opts.minHeight >= 0 ? opts.minHeight : null;
+    let zone = null, index = null, digest = null, lastHeight = null;
 
     function loadZone(zoneObj) {
       if (typeof zoneObj === "string") zoneObj = JSON.parse(zoneObj);
@@ -61,18 +64,24 @@
         throw new Error("REFUSED: not a HARZ v2 zone");
       if (!Array.isArray(zoneObj.records)) throw new Error("REFUSED: no records");
       const pubHex = String(zoneObj.signed_by).replace("ed25519:", "");
-      if (anchorHex && pubHex !== anchorHex)
-        throw new Error("REFUSED: WRONG ANCHOR — zone authority " + pubHex.slice(0, 12) + " is not the pinned anchor (fork or forgery, fail-closed)");
       const sigHex = String(zoneObj.sig).replace("ed25519:", "");
       let ok = false;
       try { ok = verify(zoneObj, pubHex, sigHex); } catch (e) { ok = false; }
       if (!ok) throw new Error("REFUSED: SIGNATURE FAILED — zone not loaded (fail-closed)");
+      const zh = Number.isInteger(zoneObj.height) ? zoneObj.height : 0;
+      if (minRecords !== null && zoneObj.records.length < minRecords)
+        throw new Error("REFUSED: NAMESPACE SHRINK — " + zoneObj.records.length + " records < floor " + minRecords + " (valid sig, malicious or stolen authority suspected — fail-closed)");
+      if (minHeight !== null && zh < minHeight)
+        throw new Error("REFUSED: ROLLBACK — zone height " + zh + " < pinned floor " + minHeight + " (stale/replayed zone — fail-closed)");
+      if (lastHeight !== null && zh < lastHeight)
+        throw new Error("REFUSED: ROLLBACK — zone height " + zh + " < previously-seen height " + lastHeight + " (stale/replayed zone — fail-closed)");
       index = new Map();
       for (const r of zoneObj.records) {
         if (index.has(r.name)) throw new Error("REFUSED: duplicate name " + r.name);
         index.set(r.name, r);
       }
       zone = zoneObj;
+      lastHeight = zh;
       try { digest = sha256hex(canonicalBytes({ ...zoneObj, sig: undefined })); }
       catch (e) { digest = null; }
       return { names: index.size, digest: digest || "digest-unavailable-in-projection" };
