@@ -184,9 +184,7 @@
         "height": 0,
         "digest": ""
       },
-      "endpoints": {
-        "https": "https://reserved"
-      },
+      "endpoints": {},
       "routing": {
         "nodes": []
       },
@@ -260,9 +258,7 @@
         "height": 0,
         "digest": ""
       },
-      "endpoints": {
-        "https": "https://reserved"
-      },
+      "endpoints": {},
       "routing": {
         "nodes": []
       },
@@ -1468,7 +1464,7 @@
       }
     }
   ],
-  "signed_at": "2026-09-15T11:00:00Z",
-  "signed_by": "ed25519:ced8e3cb76be3be2d63de6da4b754d33f015fdfeff3587e5ba764296cd64b164",
-  "sig": "ed25519:6e3e5e637a2ec64653604295c1de60cb765ec4e4b7e6746e76cc94c5b4820dd22510cf7b05f7b5c0b386c240ed0cfcd45e5603e3f2358acc2bc33afda6c1a804"
+  "signed_at": "2026-09-15T10:40:00Z",
+  "signed_by": "ed25519:bcd63332e16e939f5b4d6cd1487571e2e67b3d5659d976a00daf604bb76ece02",
+  "sig": "ed25519:c53b3ebe0169e8775c1558d80dea5f93c2a9b7c86c9a5501bcecf17fe995a20d2e7436053375661dac97b82a10b0f97ac735bbcca8d3f8aeb1be3fa105d6a604"
 }
