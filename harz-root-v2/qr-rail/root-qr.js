@@ -30,7 +30,11 @@
 
   // ---------- decode: collected QR payloads (any order, dupes OK) → zone ----------
   // verifyFn(zoneObj, pubHex, sigHex) → bool — the ANCHOR check at the door.
-  function decodeChunks(payloads, anchorPubHex, verifyFn) {
+  // v1.1 opts (Yakubu Phase 2): { expectedHeight, minRecords } — the trust bundle
+  // travels out-of-band WITH the anchor. Replayed old zones and signed shrink zones
+  // are REFUSED here, not just at the resolver.
+  function decodeChunks(payloads, anchorPubHex, verifyFn, opts) {
+    opts = opts || {};
     const seen = new Map();
     for (const p of payloads) {
       let obj;
@@ -62,6 +66,11 @@
     let ok = false;
     try { ok = verifyFn(zoneObj, pubHex, sigHex); } catch (e) { ok = false; }
     if (!ok) return { error: "REFUSED", reason: "SIGNATURE FAILED — tampered or forged zone" };
+    if (opts.minRecords && zoneObj.records.length < opts.minRecords)
+      return { error: "REFUSED", reason: "NAMESPACE SHRINK — " + zoneObj.records.length + " < floor " + opts.minRecords + " (signed but malicious)" };
+    const zh = Number.isInteger(zoneObj.height) ? zoneObj.height : 0;
+    if (opts.expectedHeight && zh < opts.expectedHeight)
+      return { error: "REFUSED", reason: "ROLLBACK — zone height " + zh + " < expected " + opts.expectedHeight + " (replayed old zone)" };
     return { zone: zoneObj, chunks: firstT };
   }
 
