@@ -1,4 +1,4 @@
-// HARZ Resolver v1.0 — ONE resolution engine, four projections
+// HARZ Resolver v1.1 — ONE resolution engine, four projections (v1.1: anchor pinning law)
 // Projections: (1) native CLI  (2) HTTP + DoH-JSON server  (3) browser/library  (4) offline/mesh cache
 // UMD: works in Node (module.exports + CLI/serve) and browser (window.HarzResolver).
 // LAW: fail-closed — a zone that fails signature verification is REFUSED, never served.
@@ -48,6 +48,11 @@
   // Node callers pass nodeVerifier(); browser passes an async WebCrypto wrapper.
   function createEngine(opts) {
     const verify = (opts && opts.verify) || nodeVerifier();
+    // v1.1 ANCHOR LAW (killer-test KT-8 finding, Sep 15): self-declared authority is NOT trust.
+    // When `anchor` is pinned, a zone whose signed_by differs from the anchor is a FORK or
+    // FORGERY — REFUSED, regardless of internal signature validity. Without `anchor`,
+    // the caller owns out-of-band verification (backward compatible, unchanged behavior).
+    const anchorHex = opts && opts.anchor ? String(opts.anchor).replace("ed25519:", "") : null;
     let zone = null, index = null, digest = null;
 
     function loadZone(zoneObj) {
@@ -56,6 +61,8 @@
         throw new Error("REFUSED: not a HARZ v2 zone");
       if (!Array.isArray(zoneObj.records)) throw new Error("REFUSED: no records");
       const pubHex = String(zoneObj.signed_by).replace("ed25519:", "");
+      if (anchorHex && pubHex !== anchorHex)
+        throw new Error("REFUSED: WRONG ANCHOR — zone authority " + pubHex.slice(0, 12) + " is not the pinned anchor (fork or forgery, fail-closed)");
       const sigHex = String(zoneObj.sig).replace("ed25519:", "");
       let ok = false;
       try { ok = verify(zoneObj, pubHex, sigHex); } catch (e) { ok = false; }
