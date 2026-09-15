@@ -1,4 +1,4 @@
-// HARZ SUCCESSION CEREMONY KIT v1.0 — the operator tool for the REAL key ceremony.
+// HARZ SUCCESSION CEREMONY KIT v1.1 (Yakubu-hardened: --split 2-of-3 papers, combine, custody discipline) — the operator tool for the REAL key ceremony.
 // Runs on the operator's device (Node 1 / Termux). The production ZSK PRIVATE key NEVER
 // enters this kit — the kit builds canonical payloads, the owner signs with the ZSK where
 // the ZSK lives (Node 1), and the kit verifies whatever signature is handed back.
@@ -46,6 +46,37 @@ function qrChunks(str) {
 // Private key as raw 64-hex (pkcs8 der hex is the honest full export)
 function privHex(pk) { return pk.export({ format: "der", type: "pkcs8" }).toString("hex"); }
 
+// ---- 2-of-3 PAPER SPLIT (Yakubu attack fix, Sep 15): one photographed paper = NOTHING ----
+// Law: key = x1 ^ x2 ^ x3. Paper A holds (x1,x2), B holds (x1,x3), C holds (x2,x3).
+// Any two papers reconstruct the key exactly; any single paper gives ZERO information about it.
+function splitHex(keyHex) {
+  const k = Buffer.from(keyHex, "hex");
+  const x1 = crypto.randomBytes(k.length), x2 = crypto.randomBytes(k.length);
+  const x3 = Buffer.alloc(k.length);
+  for (let i = 0; i < k.length; i++) x3[i] = k[i] ^ x1[i] ^ x2[i];
+  const h = b => b.toString("hex");
+  return [
+    { paper: "A", shares: [h(x1), h(x2)] },
+    { paper: "B", shares: [h(x1), h(x3)] },
+    { paper: "C", shares: [h(x2), h(x3)] },
+  ];
+}
+function combineShares(sharePairs) {
+  if (sharePairs.length !== 2) return { error: "NEED EXACTLY 2 PAPERS (2-of-3 split)" };
+  const xs = new Set();
+  for (const p of sharePairs) for (const s of p) xs.add(s);
+  // two papers must expose exactly 3 distinct shares
+  if (xs.size !== 3) return { error: "INVALID PAIR — expected 3 distinct shares across 2 papers" };
+  const arr = [...xs];
+  // recover: try all pairings — the key is xA^xB^xC for the 3 distinct shares
+  const key = Buffer.alloc(arr[0].length / 2);
+  for (const h of arr) {
+    const b = Buffer.from(h, "hex");
+    for (let i = 0; i < key.length; i++) key[i] ^= b[i];
+  }
+  return { keyHex: key.toString("hex") };
+}
+
 function die(msg, code = 1) { console.error(msg); process.exit(code); }
 
 if (cmd === "plan") {
@@ -57,15 +88,21 @@ BEFORE THE CEREMONY (owner rulings — D6-D8):
   D7  Quorum: 2-of-3 (recommended) or 3-of-3
   D8  Freeze timing: protocol freezes BEFORE the true-mode killer test (recommended)
 
-CEREMONY DAY (owner + this kit, on the operator device):
-  1. gen-key --role successor      -> print pub (git record), priv QR chunks -> PAPER, safe place
-  2. gen-key --role witness --seat W1 / W2 / W3  -> pub goes to git manifest; priv QR -> each
-     seat's activation card (they hold it, never learn the other seats' keys)
+CEREMONY DAY (owner + this kit, on the operator device — HARDENED ORDER, Yakubu Y1/Y2/Y3 fixes):
+  1. gen-key --role successor --split  -> THREE papers (2-of-3: one photo = nothing),
+     printed and STORED IN TWO+ SEPARATE PLACES, then VERIFIED:
+     combine --papers <A>,<B> -> reconstructed key works -> papers are real. DO THIS FIRST —
+     the successor must exist on paper BEFORE the king names it (Y2: no unfinishable window).
+  2. gen-key --role witness --seat W1 / W2 / W3 --split -> each seat's papers go to
+     INDEPENDENT CUSTODY. QUORUM THEATER WARNING (Y3): if one hand generates, prints, and
+     stores all three seats, 2-of-3 is theater. Each seat-holder takes their papers in person
+     (or generates their own key on their own device and hands back only the PUB).
   3. manifest ... -> canonical manifest bytes -> OWNER SIGNS WITH ZSK ON NODE 1
      (ZSK private key never enters this kit; paste the sig back with --sig to verify)
   4. manifest record enters the next signed zone (height N)
   5. LATER — rotation day: act-planned -> successor signs the new zone; witnesses stand by
   6. OR death event: act-death + compromise height -> 2-of-3 witness sigs -> successor enthroned
+     (successor key recovered via combine --papers, any 2 of 3)
 
 LAWS (rehearsed 10/10, SR battery): witnesses COMPLETE, never APPOINT;
 zombie keys refused; theft race closes at declared height; manifest tamper fails the sig.`);
@@ -84,9 +121,21 @@ PRIVATE KEY — PAPER ONLY WARNING:
   This is the ${role} private key. Print the QR chunks below on PAPER and store them in the
   designated safe place. NEVER save to a file, NEVER paste into chat, NEVER photograph on a
   networked device. The paper is the keystore. Lose the paper = the seat dies.`);
-  const chunks = qrChunks(privHex(k.privateKey));
-  console.log(`PRIV-QR-CHUNKS (${chunks.length}):`);
-  chunks.forEach(c => console.log("  " + c));
+  if (has("--split")) {
+    // YAKUBU FIX: one photographed paper is worthless. 2-of-3 papers reconstruct.
+    const papers = splitHex(privHex(k.privateKey));
+    console.log(`PRIV SPLIT 2-of-3 — three papers, SEPARATE safe places. Any ONE paper alone = NOTHING.`);
+    for (const p of papers) {
+      const pc = qrChunks(p.shares[0] + "|" + p.shares[1]);
+      console.log(`PAPER ${p.paper} QR-CHUNKS (${pc.length}):`);
+      pc.forEach(c => console.log("  " + c));
+    }
+    console.log(`RECOVER LATER: node ceremony-kit.js combine --papers <paperA-file>,<paperB-file>`);
+  } else {
+    const chunks = qrChunks(privHex(k.privateKey));
+    console.log(`PRIV-QR-CHUNKS (${chunks.length}) — WARNING: plaintext key, ONE photo of this paper compromises the seat. Prefer --split.`);
+    chunks.forEach(c => console.log("  " + c));
+  }
 }
 
 else if (cmd === "manifest") {
@@ -141,5 +190,35 @@ else if (cmd === "verify-chain") {
   process.exit(allOk ? 0 : 3);
 }
 
-else if (!cmd) die("usage: ceremony-kit.js plan|gen-key|manifest|act-planned|act-death|verify-chain ...");
+else if (cmd === "combine") {
+  const files = (opt("--papers") || die("--papers <pA.txt>,<pB.txt> required (any 2 of 3)")).split(",");
+  if (files.length !== 2) die("NEED EXACTLY 2 PAPERS (2-of-3 split)");
+  const sharePairs = files.map(f => {
+    const txt = fs.readFileSync(f.trim(), "utf8");
+    const out = [];
+    for (const line of txt.split("\n")) {
+      const m = line.trim().match(/^\{.*\}$/);
+      if (m) {
+        try {
+          const o = JSON.parse(m[0]);
+          if (o.b === "harz-ceremony-key") {
+            const b64 = o.d.replace(/-/g, "+").replace(/_/g, "/");
+            out.push(Buffer.from(b64, "base64").toString("utf8"));
+          }
+        } catch (e) {}
+      }
+    }
+    // each paper file decodes to ONE payload: share|share
+    const joined = out.join("");
+    return joined.split("|").filter(Boolean);
+  });
+  const r = combineShares(sharePairs);
+  if (r.error) die("COMBINE REFUSED: " + r.error, 3);
+  console.log("KEY RECONSTRUCTED (2-of-3). QR chunks for the recovery session:");
+  const chunks = qrChunks(r.keyHex);
+  chunks.forEach(c => console.log("  " + c));
+  console.log("\nRECOVERY WARNING: this session holds the live private key. Print/transfer, then close. Never save.");
+}
+
+else if (!cmd) die("usage: ceremony-kit.js plan|gen-key|manifest|act-planned|act-death|combine|verify-chain ...");
 else die("unknown command: " + cmd);
