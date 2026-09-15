@@ -107,6 +107,41 @@ const T = (id, name, ok) => { results.push(`${id} ${ok ? "PASS" : "FAIL"} — ${
     T("RU-R10", "cross-check vs live (network): " + e.message, false);
   }
 
+  // ---- v1.2 GUARD TESTS (Yakubu Phase 2: shrink + rollback laws) ----
+  {
+    const crypto = require("crypto");
+    const canon = (o) => {
+      if (o === null || typeof o !== "object") return JSON.stringify(o);
+      if (Array.isArray(o)) return "[" + o.map(canon).join(",") + "]";
+      return "{" + Object.keys(o).sort().map(k => JSON.stringify(k) + ":" + canon(o[k])).join(",") + "}";
+    };
+    const { privateKey, publicKey } = crypto.generateKeyPairSync("ed25519");
+    const pubHex = publicKey.export({ format: "der", type: "spki" }).slice(-32).toString("hex");
+    const sign = (z) => { const c = JSON.parse(JSON.stringify(z)); delete c.sig; return crypto.sign(null, Buffer.from(canon(c)), privateKey).toString("hex"); };
+    const full = [];
+    for (let i = 1; i <= 77; i++) full.push({ name: "g" + i + ".harz", service: "s" + i, identity: "PENDING", state: { height: 1 }, endpoints: { https: "https://g" + i + ".example" } });
+    const mk = (h, recs, prev) => { const z = { v: 2, zone: "harz", height: h, prev, records: recs, signed_by: pubHex }; z.sig = sign(z); return z; };
+    let refused = false;
+    try { api.createEngine({ verify: api.nodeVerifier(), minRecords: 75 }).loadZone(mk(11, full.slice(0, 3), "h10")); } catch (e) { refused = /SHRINK/.test(e.message); }
+    T("RU-G1", "v1.2 shrink: validly-signed 3-record zone REFUSED below floor 75", refused);
+    refused = false;
+    try { api.createEngine({ verify: api.nodeVerifier(), minHeight: 10 }).loadZone(mk(1, full.slice(0, 5), null)); } catch (e) { refused = /ROLLBACK/.test(e.message); }
+    T("RU-G2", "v1.2 rollback: height-1 replay REFUSED below pinned height 10", refused);
+    refused = false;
+    try {
+      const e = api.createEngine({ verify: api.nodeVerifier() });
+      e.loadZone(mk(10, full, "h9"));
+      e.loadZone(mk(1, full.slice(0, 5), null));
+    } catch (e) { refused = /ROLLBACK/.test(e.message); }
+    T("RU-G3", "v1.2 stateful rollback: engine that saw h10 refuses h1 on next load", refused);
+    let ok4 = false;
+    try { const r = api.createEngine({ verify: api.nodeVerifier(), minRecords: 75, minHeight: 10 }).loadZone(mk(12, full, "h11")); ok4 = r.names === 77; } catch (e) {}
+    T("RU-G4", "v1.2 growth: newer honest 77-name zone ACCEPTED with floors set", ok4);
+    let ok5 = false;
+    try { const r = api.createEngine({ verify: api.nodeVerifier() }).loadZone(mk(1, full.slice(0, 5), null)); ok5 = r.names === 5; } catch (e) {}
+    T("RU-G5", "v1.2 backward compat: without floors, older behavior unchanged (holder's choice)", ok5);
+  }
+
   console.log(results.join("\n"));
   const pass = results.filter(r => r.includes("PASS")).length;
   console.log(`\nBATTERY: ${pass}/${results.length} PASS`);
