@@ -102,7 +102,12 @@ function buildRecordsFromV1(v1text, extraMap = {}) {
     let target = null;
     try {
       const val = JSON.parse(m[2].replace(/\\"/g, '"').replace(/\\\\/g, "\\"));
-      target = val.url || (val.service_id ? "https://" + val.service_id : null);
+      // HONEST RESERVED RULE: url null or service_id "reserved" = no endpoint, ever.
+      if (val.url === null || val.url === undefined || val.service_id === "reserved" || val.record_type === "RESERVED") {
+        target = "RESERVED";
+      } else {
+        target = val.url || (val.service_id ? "https://" + val.service_id : null);
+      }
     } catch (e) { target = m[2]; } // plain TXT value fallback
     map.set(m[1], target || "RESERVED");
   }
