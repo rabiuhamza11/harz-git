@@ -16,3 +16,12 @@ row 5, CHECK sha8 in corners, labeled W1-A/B/C). Private key on paper only — n
 CUSTODY: PENDING independent hand (candidate, not yet a seat). Cards written per owner's word.
 
 NEXT: W2, W3 generation — same loop. Then the manifest (ZSK signs on Node 1, never in chat).
+
+## WITNESS W2 — CANDIDATE (Sep 16, 12:01 WAT)
+
+PUB (ed25519, for git/manifest): 54697e7fb8504d7166067584c9831bf85c7cad267615490ec26b76aabecff748
+PUB-SHORT: 54697e7fb850
+
+FLOW: gen-key --role witness --seat W2 --split-hex on Node 1, kit v1.2.1 no-typing ceremony.
+3 plain-hex cards (ink protocol, CHECK values in corners, labeled W2-A/B/C). Private key on
+paper only. CUSTODY: PENDING independent hand — candidate, not yet a seat (Y3).
