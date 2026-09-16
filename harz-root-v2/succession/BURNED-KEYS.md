@@ -21,3 +21,27 @@ REFUSE it. Void forever. No exceptions, no recovery.
 
 Owner hygiene performed: WhatsApp message deleted for everyone, Termux scrollback
 cleared, paper cards marked VOID and destroyed, fresh key regenerated afterward.
+
+## BURNED SUCCESSOR KEY #2 — Sep 16, 2026 (ceremony Session 1, exposure #2)
+
+PUB: NOT YET RECORDED — owner has not sent the PUB line as text. If it is later supplied,
+append it here explicitly. Until then, treat ANY successor PUB generated in this second
+attempt window as suspect and unusable — do not name it in a manifest.
+
+REASON: All three PAPER QR-CHUNKS (A, B, C) were visible in a screenshot sent into the
+WhatsApp chat during ceremony Session 1. Same law as burn #1: paper is the only valid
+keystore; any digital appearance of the share lines (paste OR screenshot) burns the key
+on sight, regardless of whether the key was ever combined, verified, or named.
+
+DISTINCT FROM BURN #1: this exposure came via a full-screen terminal screenshot, not a
+copy-paste. Confirms the ceremony needs a stronger rule than "don't paste" — it is
+"don't screenshot or photograph the terminal at all" while PRIV/PAPER material is on
+screen. Rule added to the runbook going forward.
+
+CONTAINMENT: the owner's combine attempt used literal placeholder text ("CARD A LINE")
+instead of real card content, so this key was never reconstructed, never verified, and
+never entered any manifest. No zone references it. Live root (v1, e94b9693) untouched.
+
+Owner hygiene requested: delete the WhatsApp photo (delete for everyone), delete the
+screenshot from phone gallery, clear Termux scrollback (`reset`), destroy any cards
+written for this key, mark VOID.
