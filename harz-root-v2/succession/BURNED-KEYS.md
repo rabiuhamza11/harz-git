@@ -1,0 +1,23 @@
+# BURNED KEYS — refused forever (append-only record)
+
+## BURNED SUCCESSOR KEY #1 — Sep 16, 2026 (ceremony Session 1)
+
+PUB (ed25519): 23305bf5e14170a4edf7ed214316a0ec40a7cc8ef0f81ae44e15a7c5f9070a8b
+
+REASON: All three 2-of-3 paper share lines (PAPER A, B, C) were pasted into a networked
+chat channel (WhatsApp → Base44 transcript) during ceremony Session 1, before any
+manifest was signed. Ceremony law: the paper is the keystore — the private key must
+exist ONLY on paper. Once the share lines exist digitally anywhere, the key is
+compromised and must be treated as stolen. It is BURNED.
+
+CONTAINMENT (why this was cheap, not fatal): the Y2 ceremony order — successor papers
+verified and stored BEFORE the king names the successor — meant nothing had been named
+yet. No manifest carries this key. No zone references it. The live root (v1, e94b9693)
+was never touched. Cost of the burn: three cards of ink.
+
+LAW: any tool, verifier, ceremony, or future session that encounters this PUB as a
+successor, witness, or authority candidate in ANY manifest, zone, or ceremony must
+REFUSE it. Void forever. No exceptions, no recovery.
+
+Owner hygiene performed: WhatsApp message deleted for everyone, Termux scrollback
+cleared, paper cards marked VOID and destroyed, fresh key regenerated afterward.
