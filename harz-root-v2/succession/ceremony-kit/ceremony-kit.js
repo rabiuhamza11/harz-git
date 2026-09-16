@@ -77,6 +77,34 @@ function combineShares(sharePairs) {
   return { keyHex: key.toString("hex") };
 }
 
+
+// v1.2: sha8 checksum for hand-copied cards (safe to publish: fingerprint of a 384-bit random)
+function sha8(s) { return crypto.createHash("sha256").update(s, "utf8").digest("hex").slice(0, 8); }
+// v1.2: parse a paper card FILE: new plain-hex format "x1hex/x2hex" OR legacy JSON chunks
+function parsePaperFile(txt) {
+  if (txt.includes("{")) {
+    const out = [];
+    for (const line of txt.split("\n")) {
+      const m = line.trim().match(/^\{.*\}$/);
+      if (m) {
+        try {
+          const o = JSON.parse(m[0]);
+          if (o.b === "harz-ceremony-key") {
+            const b64 = o.d.replace(/-/g, "+").replace(/_/g, "/");
+            out.push(Buffer.from(b64, "base64").toString("utf8"));
+          }
+        } catch (e) {}
+      }
+    }
+    return out.join("").split("|").filter(Boolean);
+  }
+  const raw = txt.replace(/\s+/g, "").toLowerCase();
+  if (!/^[0-9a-f]+\/[0-9a-f]+$/.test(raw) || !raw.includes("/")) return { error: "BAD_CARD" };
+  const parts = raw.split("/");
+  if (parts[0].length !== parts[1].length || parts[0].length % 2 !== 0) return { error: "BAD_CARD" };
+  return parts;
+}
+
 function die(msg, code = 1) { console.error(msg); process.exit(code); }
 
 if (cmd === "plan") {
@@ -89,7 +117,7 @@ BEFORE THE CEREMONY (owner rulings — D6-D8):
   D8  Freeze timing: protocol freezes BEFORE the true-mode killer test (recommended)
 
 CEREMONY DAY (owner + this kit, on the operator device — HARDENED ORDER, Yakubu Y1/Y2/Y3 fixes):
-  1. gen-key --role successor --split  -> THREE papers (2-of-3: one photo = nothing),
+  1. gen-key --role successor --split-hex -> THREE hand-copy cards (plain hex + CHECK sums; verify locally with check-card.js). Legacy --split = QR-JSON papers (2-of-3: one photo = nothing),
      printed and STORED IN TWO+ SEPARATE PLACES, then VERIFIED:
      combine --papers <A>,<B> -> reconstructed key works -> papers are real. DO THIS FIRST —
      the successor must exist on paper BEFORE the king names it (Y2: no unfinishable window).
@@ -121,7 +149,26 @@ PRIVATE KEY — PAPER ONLY WARNING:
   This is the ${role} private key. Print the QR chunks below on PAPER and store them in the
   designated safe place. NEVER save to a file, NEVER paste into chat, NEVER photograph on a
   networked device. The paper is the keystore. Lose the paper = the seat dies.`);
-  if (has("--split")) {
+  if (has("--split-hex")) {
+    // v1.2 HAND-COPY MODE (Sep 16, burn #3 fix): plain hex cards, no quotes/braces/JSON.
+    // 193 chars per card. CHECK = sha8 fingerprint, safe to write on the card itself.
+    // Typos are caught LOCALLY by check-card.js — card content never needs to go anywhere.
+    const papers = splitHex(privHex(k.privateKey));
+    console.log(`PRIV SPLIT 2-of-3 — HAND-COPY MODE. Three cards, SEPARATE safe places.`);
+    console.log(`Write each card as ONE line of plain lowercase hex/letters, the CHECK in the corner.`);
+    console.log(`COPY THE PUB LINE NOW (it is public — safe on paper, safe in chat).`);
+    for (const p of papers) {
+      const line = p.shares[0] + "/" + p.shares[1];
+      console.log(`\nCARD ${p.paper} (${line.length} characters):\n${line}`);
+      console.log(`CHECK ${p.paper}: ${sha8(line)}`);
+    }
+    console.log(`\nVERIFY EACH CARD (local, from paper only):
+  cat > p${"A"}.txt   (type card A's line, press Enter, then Ctrl-D = Volume-Down + D)
+  node check-card.js pA.txt <CHECK-A-value>
+Repeat for B and C. MATCH = the card is byte-exact. Then rm pA.txt pB.txt pC.txt && reset.`);
+    process.exit(0);
+  }
+  else if (has("--split")) {
     // YAKUBU FIX: one photographed paper is worthless. 2-of-3 papers reconstruct.
     const papers = splitHex(privHex(k.privateKey));
     console.log(`PRIV SPLIT 2-of-3 — three papers, SEPARATE safe places. Any ONE paper alone = NOTHING.`);
@@ -194,23 +241,9 @@ else if (cmd === "combine") {
   const files = (opt("--papers") || die("--papers <pA.txt>,<pB.txt> required (any 2 of 3)")).split(",");
   if (files.length !== 2) die("NEED EXACTLY 2 PAPERS (2-of-3 split)");
   const sharePairs = files.map(f => {
-    const txt = fs.readFileSync(f.trim(), "utf8");
-    const out = [];
-    for (const line of txt.split("\n")) {
-      const m = line.trim().match(/^\{.*\}$/);
-      if (m) {
-        try {
-          const o = JSON.parse(m[0]);
-          if (o.b === "harz-ceremony-key") {
-            const b64 = o.d.replace(/-/g, "+").replace(/_/g, "/");
-            out.push(Buffer.from(b64, "base64").toString("utf8"));
-          }
-        } catch (e) {}
-      }
-    }
-    // each paper file decodes to ONE payload: share|share
-    const joined = out.join("");
-    return joined.split("|").filter(Boolean);
+    const r = parsePaperFile(fs.readFileSync(f.trim(), "utf8"));
+    if (r && r.error === "BAD_CARD") die("COMBINE REFUSED: file " + f + " is not a valid card (hex format: 96hex/96hex, or JSON chunk lines). Check for typos — run check-card.js", 3);
+    return r;
   });
   const r = combineShares(sharePairs);
   if (r.error) die("COMBINE REFUSED: " + r.error, 3);
@@ -220,5 +253,5 @@ else if (cmd === "combine") {
   console.log("\nRECOVERY WARNING: this session holds the live private key. Print/transfer, then close. Never save.");
 }
 
-else if (!cmd) die("usage: ceremony-kit.js plan|gen-key|manifest|act-planned|act-death|combine|verify-chain ...");
+else if (!cmd) die("usage: ceremony-kit.js plan|gen-key [--split-hex (hand-copy)]|manifest|act-planned|act-death|combine|verify-chain ...");
 else die("unknown command: " + cmd);
