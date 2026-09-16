@@ -162,10 +162,18 @@ PRIVATE KEY — PAPER ONLY WARNING:
       console.log(`\nCARD ${p.paper} (${line.length} characters):\n${line}`);
       console.log(`CHECK ${p.paper}: ${sha8(line)}`);
     }
-    console.log(`\nVERIFY EACH CARD (local, from paper only):
-  cat > p${"A"}.txt   (type card A's line, press Enter, then Ctrl-D = Volume-Down + D)
-  node check-card.js pA.txt <CHECK-A-value>
-Repeat for B and C. MATCH = the card is byte-exact. Then rm pA.txt pB.txt pC.txt && reset.`);
+    console.log(`\nINK PROTOCOL — write it right the first time (no typing ever):
+  Write each card in ROWS of 24 characters: 8 rows + 1 final character (row 9).
+  The SLASH is the FIRST character of ROW 5. If row 5 does not start with / — that card has a drop, re-copy it.
+  After writing, hold the card beside the screen line: compare row 1, row 5, and row 8. Then write the CHECK in the corner.
+
+VERIFY THE KIT ON THIS PHONE (copy/paste, never typing):
+  Long-press the CARD A line on screen, drag the handles to select ONLY the 193 characters, tap COPY.
+  cat > pA.txt    then long-press, PASTE, press Enter, then Ctrl-D ONCE (Volume-Down + D).
+  node check-card.js pA.txt <CHECK-A-value>    must say MATCH.
+  Repeat for B and C. Then: rm pA.txt pB.txt pC.txt && reset
+  (This proves the kit's cards + checks on this device. The INK proof is the row protocol + the recovery checksum.)
+  A single bad card is survivable — any 2 of 3 rebuild the key. The CHECK catches errors at recovery.`);
     process.exit(0);
   }
   else if (has("--split")) {
