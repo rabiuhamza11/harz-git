@@ -1,63 +1,69 @@
-// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN (runs ON NODE 1 only)
-// Signs the SUCCESSION MANIFEST with the production ZSK at ~/.harz-owner-key.
-// The seed NEVER leaves this phone. This script prints ONLY public material (pub + sig).
-// Fail-closed: if this phone's key is not the declared king, it REFUSES to sign.
+// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN v2 (runs ON NODE 1 only)
+// Signs the SUCCESSION MANIFEST with the production ZSK (zsk-ed25519.pem, pkcs8 PEM,
+// born offline Sep 14 via zone-generator.js --init, fingerprint 86a507a42df64df2).
+// The private key NEVER leaves this phone. This script prints ONLY public material
+// (pub + sig). Fail-closed: if the found key is not the declared king, it REFUSES.
 //
-// The ceremony values below are ALL PUBLIC (king pub from the live root v2.1, successor
-// key #4, witnesses W1/W2/W3, D7 policy 2-of-3, declared at live zone height 1).
-// Defaults = the Sep 16 ceremony. Flags exist for future ceremonies.
+// v2 fix (Sep 16): the first version looked at ~/.harz-owner-key — WRONG KEY (that is
+// the P13 book key, pub e884828a...). The real king key is keys/zsk-ed25519.pem from
+// the zone-generator ceremony. v2 FINDS the key wherever it is on this phone.
 const crypto = require("crypto");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
+const { execSync } = require("child_process");
 const law = require(path.join(__dirname, "succession-law.js"));
 
-const DEFAULTS = {
-  current: "c56e08bfbe74b1d431f05cf75b932773ed99e8b13dd4a4af7fe9f26cb9923f09", // production ZSK (live root v2.1, fingerprint 86a507a42df64df2)
-  successor: "7f970c910c75783d4b763028303bfc5eba9b8ca462fec92e3f357d7e57f5af0d", // successor key #4, Sep 16 ceremony Session 1
-  witnesses: [
-    "c2c6d6b9844e852fe14982c648ce14f5734079b47c0d6218e743eeb4a71c133d", // W1
-    "54697e7fb8504d7166067584c9831bf85c7cad267615490ec26b76aabecff748", // W2
-    "a1348ed909e774562054b69c0ffd63bb42d323077db2c550d09b3bad8a2669c3", // W3
-  ],
-  policy: 2,   // D7 ruling: 2-of-3 quorum
-  height: 1,   // live zone height at signing
-};
+const KING_PUB = "c56e08bfbe74b1d431f05cf75b932773ed99e8b13dd4a4af7fe9f26cb9923f09";
 
-const args = process.argv.slice(2);
-const opt = (n) => { const i = args.indexOf(n); return i >= 0 && i + 1 < args.length ? args[i + 1] : null; };
-const current = (opt("--current") || DEFAULTS.current).toLowerCase();
-const successor = (opt("--successor") || DEFAULTS.successor).toLowerCase();
-const witnesses = (opt("--witnesses") || DEFAULTS.witnesses.join(",")).split(",").map(s => s.trim().toLowerCase());
-const policy = parseInt(opt("--policy") || String(DEFAULTS.policy), 10);
-const height = parseInt(opt("--height") || String(DEFAULTS.height), 10);
-if (isNaN(policy) || isNaN(height) || !/^[0-9a-f]{64}$/.test(current) || !/^[0-9a-f]{64}$/.test(successor) || witnesses.length !== 3 || witnesses.some(w => !/^[0-9a-f]{64}$/.test(w))) {
-  console.error("BAD ARGUMENTS — refusing. Expected 64-hex pubs, 3 witnesses, numeric policy/height.");
-  process.exit(1);
+// ---- find the ZSK pem anywhere under home (no typing, no paths to remember) ----
+let zskPath = null;
+const CANDIDATES = [
+  path.join(os.homedir(), "ceremony", "keys", "zsk-ed25519.pem"),
+  path.join(os.homedir(), "ceremony", "zsk-ed25519.pem"),
+];
+for (const c of CANDIDATES) if (fs.existsSync(c)) { zskPath = c; break; }
+if (!zskPath) {
+  try {
+    const out = execSync('find ~ -name "zsk-ed25519.pem" -not -path "*/proc/*" 2>/dev/null | head -1', { timeout: 30000 }).toString().trim();
+    if (out) zskPath = out.split("\n")[0].trim();
+  } catch (e) { /* find failed or timed out — fall through */ }
 }
-
-const keyPath = path.join(os.homedir(), ".harz-owner-key");
-if (!fs.existsSync(keyPath)) {
-  console.error("NO ZSK at " + keyPath + " — the king's key is not on this phone. REFUSING.");
+if (!zskPath) {
+  console.error("ZSK NOT FOUND — zsk-ed25519.pem is not on this phone (searched home).");
+  console.error("Nothing signed. Tell Magani in words.");
   process.exit(3);
 }
-const seedHex = fs.readFileSync(keyPath, "utf8").trim();
-if (!/^[0-9a-f]{64}$/.test(seedHex)) {
-  console.error("ZSK FILE MALFORMED (expected 64-hex seed). REFUSING — do not proceed, tell Magani in words.");
+console.log("ZSK FOUND AT: " + zskPath);
+
+let priv;
+try {
+  const pem = fs.readFileSync(zskPath, "utf8");
+  priv = crypto.createPrivateKey({ key: pem, format: "pem" });
+} catch (e) {
+  console.error("ZSK FILE UNREADABLE (not a valid PEM) — refusing. Tell Magani in words.");
   process.exit(3);
 }
-const pkcs8 = Buffer.concat([Buffer.from("302e020100300506032b657004220420", "hex"), Buffer.from(seedHex, "hex")]);
-const priv = crypto.createPrivateKey({ key: pkcs8, format: "der", type: "pkcs8" });
 const pubHex = crypto.createPublicKey(priv).export({ type: "spki", format: "der" }).slice(-32).toString("hex");
-
 console.log("LOCAL ZSK PUB: " + pubHex);
-if (pubHex !== current) {
-  console.error("REFUSED — this phone's key is NOT the declared king (expected " + current + ").");
+if (pubHex !== KING_PUB) {
+  console.error("REFUSED — this key is NOT the declared king (expected " + KING_PUB + ").");
   console.error("Nothing was signed. Tell Magani in words.");
   process.exit(3);
 }
 
-const m = law.buildManifest(current, successor, witnesses, policy, height);
+// ---- the Sep 16 ceremony (all public values, frozen in HarzGit) ----
+const m = law.buildManifest(
+  KING_PUB, // current authority (living king)
+  "7f970c910c75783d4b763028303bfc5eba9b8ca462fec92e3f357d7e57f5af0d", // successor key #4
+  [ // witnesses W1/W2/W3
+    "c2c6d6b9844e852fe14982c648ce14f5734079b47c0d6218e743eeb4a71c133d",
+    "54697e7fb8504d7166067584c9831bf85c7cad267615490ec26b76aabecff748",
+    "a1348ed909e774562054b69c0ffd63bb42d323077db2c550d09b3bad8a2669c3",
+  ],
+  2,  // D7 policy: 2-of-3 quorum
+  1   // declared at live zone height 1
+);
 console.log("");
 console.log("SUCCESSION MANIFEST (canonical):");
 console.log(JSON.stringify(m));
