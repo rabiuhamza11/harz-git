@@ -24,7 +24,7 @@ class IdentityManager {
     } catch (e: Exception) { false }
 
     fun createIdentity(): Boolean = try {
-        val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_ED25519, "AndroidKeyStore")
+        val kpg = KeyPairGenerator.getInstance("Ed25519", "AndroidKeyStore")
         kpg.initialize(
             KeyGenParameterSpec.Builder(KS_ALIAS, KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY)
                 .build()
@@ -33,20 +33,24 @@ class IdentityManager {
         true
     } catch (e: Exception) { false }
 
-    fun publicKeyHex(): String? = try {
-        val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
-        val cert = ks.getCertificate(KS_ALIAS) ?: return null
-        cert.publicKey.encoded.joinToString("") { "%02x".format(it) }
-    } catch (e: Exception) { null }
+    fun publicKeyHex(): String? {
+        return try {
+            val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            val cert = ks.getCertificate(KS_ALIAS) ?: return null
+            cert.publicKey.encoded.joinToString("") { "%02x".format(it) }
+        } catch (e: Exception) { null }
+    }
 
     /** Sign a frame hash. Returns 64-byte Ed25519 signature or null. */
-    fun sign(data: ByteArray): ByteArray? = try {
-        val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
-        val entry = ks.getEntry(KS_ALIAS, null) as? KeyStore.PrivateKeyEntry ?: return null
-        Signature.getInstance("Ed25519").run {
-            initSign(entry.privateKey)
-            update(data)
-            sign()
-        }
-    } catch (e: Exception) { null }
+    fun sign(data: ByteArray): ByteArray? {
+        return try {
+            val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            val entry = ks.getEntry(KS_ALIAS, null) as? KeyStore.PrivateKeyEntry ?: return null
+            Signature.getInstance("Ed25519").run {
+                initSign(entry.privateKey)
+                update(data)
+                sign()
+            }
+        } catch (e: Exception) { null }
+    }
 }
