@@ -24,3 +24,19 @@ NEXT CEREMONY STEPS: witness seats W1/W2/W3 (gen-key --role witness --seat W1/W2
 hand — Bauchi office / trusted person / Jalingo safe-or-desk, two buildings two hands
 minimum; papers held by one hand = quorum theater) -> manifest (ZSK never enters chat;
 Rabiu signs on Node 1) -> freeze -> true-mode killer test -> live migration to v2.
+
+## UPDATE — SESSION 1 CLOSED (Sep 16, 11:32 WAT)
+
+Owner confirmed by word: all 3 cards written per the ink protocol (rows of 24, slash at
+row 5, CHECK values in corners). The successor private key now exists ONLY as ink.
+Terminal side closed (reset). PUB 7f970c91... recorded above and in git.
+
+STORAGE LAW (owner's D6 structure): the 3 cards go to 2+ SEPARATE places — Bauchi office,
+trusted person, Jalingo safe-or-desk. Storage is a hands-act: as soon as travel allows.
+
+NEXT CEREMONY SESSION: witness seats W1/W2/W3 (gen-key --role witness --split-hex x3,
+cards to INDEPENDENT hands — Y3: one hand holding all seats = quorum theater), then the
+manifest signed on Node 1, then freeze, then true-mode killer test, then live migration.
+
+OPEN HYGIENE (from burns #1-#3): delete the 4 detected secrets from Base44 Security
+settings ($HARZ_CEREMONY_KEY x4), delete the old WhatsApp messages, destroy VOIDed cards.
