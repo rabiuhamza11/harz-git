@@ -8,8 +8,9 @@
 // Cross-check law: deriving from (A,B), (A,C) and (B,C) MUST print the identical PUB.
 // If any pair differs → a card has a typo → do not proceed, re-copy that card.
 //
-// Built Sep 16, 2026 after ceremony Session 1 exposure #2 (sequencing fix: PUB lost
-// to `reset` before capture). Test keys only in build; no real key material here.
+// v1.2 Sep 16: accepts plain-hex cards (96hex/96hex) from gen-key --split-hex. Built
+// after ceremony Session 1 burns #1-#3: pastes/screenshots exposed share lines. Hex
+// cards + local check-card.js = card content never needs to leave the phone. Test keys only.
 
 const crypto = require("crypto");
 const fs = require("fs");
@@ -21,20 +22,31 @@ if (files.length !== 2) {
 }
 
 const sharePairs = files.map(f => {
-  const out = [];
-  for (const line of fs.readFileSync(f, "utf8").split("\n")) {
-    const m = line.trim().match(/^\{.*\}$/);
-    if (m) {
-      try {
-        const o = JSON.parse(m[0]);
-        if (o.b === "harz-ceremony-key") {
-          const b64 = o.d.replace(/-/g, "+").replace(/_/g, "/");
-          out.push(Buffer.from(b64, "base64").toString("utf8"));
-        }
-      } catch (e) {}
+  const txt = fs.readFileSync(f, "utf8");
+  if (txt.includes("{")) {
+    // legacy JSON-chunk card format
+    const out = [];
+    for (const line of txt.split("\n")) {
+      const m = line.trim().match(/^\{.*\}$/);
+      if (m) {
+        try {
+          const o = JSON.parse(m[0]);
+          if (o.b === "harz-ceremony-key") {
+            const b64 = o.d.replace(/-/g, "+").replace(/_/g, "/");
+            out.push(Buffer.from(b64, "base64").toString("utf8"));
+          }
+        } catch (e) {}
+      }
     }
+    return out.join("").split("|").filter(Boolean);
   }
-  return out.join("").split("|").filter(Boolean);
+  // v1.2 plain-hex card format: x1hex/x2hex (whitespace ignored, case-insensitive)
+  const raw = txt.replace(/\s+/g, "").toLowerCase();
+  if (!/^[0-9a-f]+\/[0-9a-f]+$/.test(raw) || raw.split("/")[0].length !== raw.split("/")[1].length) {
+    console.error("INVALID CARD in " + f + " — expected 96hex/96hex or JSON chunk lines. Check for typos (run check-card.js).");
+    process.exit(3);
+  }
+  return raw.split("/");
 });
 
 const xs = new Set();
