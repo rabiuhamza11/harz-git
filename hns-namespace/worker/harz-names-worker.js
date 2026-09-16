@@ -1,4 +1,6 @@
-// UNMUTANT — HARZ Name Service (HNS) v1.2.0 — .harz names for people, not just services
+// UNMUTANT — HARZ Name Service (HNS) v1.4.0 — .harz names for people, not just services
+// v1.4 (pay.harz law, both attack rounds converged): RELEASE QUARANTINE — a released name is locked
+// 30 days before re-registration, so stale invoices/QRs cannot fund a stranger.
 // LAW: light #f0f2f5, honest pilot disclosure, fails closed on the chain gate.
 // v1.2 (attack-hardened): SIGN-TO-REGISTER — EIP-191 personal_sign signature proves
 // wallet ownership (impersonation closed). Name RELEASE endpoint with signature.
@@ -119,7 +121,7 @@ const IP_LIMIT_24H = 10; // CGNAT-safe: NAT can put many real users on one IP; I
 
 const RESERVED = new Set(["ai","arch","baraka","bridge","broadcast","buildbot","catalog","chain","cloud","content","contracts","crm","daily","dial","dialweb","dna","dua","edge","edgenet","estate","eternity","evolve","exchange","faucet","film","forge","forms","gateway","gdeg","genesis","gov","guard","harz","health","hospital","images","kasuwa","lend","link","maganu","manager","markets","mesh","mindcare","miner","mining","music","net","neural","nexus","nlcl","omega","oracle","orbital","pay","poi","pricing","prism","root","rpc","scan","skyeye","sms","smsmkt","spell","store","super","swap","symphony","telecom","trade","verify","wa","wallet","watch","wholesale","yelwa","www","admin","api","dns","mail","test","null","localhost","ns1","ns2","me","my","id","whois","hns"]);
 
-const DISCLOSURE = "HNS v1.2 is a signature-gated, D1-anchored pilot: only the wallet owner can register or release a name (EIP-191 signature proof), registration is additionally gated by live on-chain balance, and records are revocable by the chain admin. On-chain promotion is planned at v2.";
+const DISCLOSURE = "HNS v1.2 is a signature-gated, D1-anchored pilot: only the wallet owner can register or release a name (EIP-191 signature proof), registration is additionally gated by live on-chain balance, and records are revocable by the chain admin, and released names are quarantined 30 days (payer protection). On-chain promotion is planned at v2.";
 
 const CORS = {
   "content-type": "application/json",
@@ -162,6 +164,8 @@ async function handleRegister(request, env, ip) {
   const taken = await env.DB.prepare("SELECT name, wallet, created_date FROM hns_names WHERE name=?1").bind(name).first();
   if (taken) return json({ ok: false, error: "taken: " + name + ".harz is already registered", registered_date: taken.created_date }, 409);
 
+  const quar = await env.DB.prepare("SELECT released_at, datetime(released_at, '+30 days') AS until, (datetime(released_at, '+30 days') > datetime('now')) AS active FROM hns_released WHERE name=?1").bind(name).first();
+  if (quar && Number(quar.active) === 1) return json({ ok: false, error: "quarantine: " + name + ".harz was released " + quar.released_at + " UTC and cannot be re-registered until " + quar.until + " UTC (payer protection — stale invoices must not fund a stranger)" }, 403);
   const owned = await env.DB.prepare("SELECT name FROM hns_names WHERE wallet=?1").bind(wallet.toLowerCase()).first();
   if (owned) return json({ ok: false, error: "wallet already holds " + owned.name + ".harz (one name per wallet)" }, 409);
 
@@ -190,6 +194,7 @@ async function handleRelease(request, env, ip) {
   if (!rec) return json({ ok: false, error: "NXDOMAIN: " + name + ".harz is not registered" }, 404);
   if (String(rec.wallet).toLowerCase() !== wallet.toLowerCase()) return json({ ok: false, error: "wallet does not hold " + name + ".harz" }, 403);
   await env.DB.prepare("DELETE FROM hns_names WHERE name=?1 AND wallet=?2").bind(name, wallet.toLowerCase()).run();
+  await env.DB.prepare("INSERT OR REPLACE INTO hns_released (name, wallet, released_at) VALUES (?1,?2,datetime('now'))").bind(name, wallet.toLowerCase()).run();
   const sz = await reSignSubzone(env).catch(() => null);
   return json({ ok: true, released: name + ".harz", freed_by: wallet.toLowerCase(), subzone_height: sz ? sz.zone.height : null, disclosure: DISCLOSURE });
 }
@@ -198,7 +203,11 @@ async function handleLookup(url, env) {
   const name = String(url.searchParams.get("name") || "").toLowerCase().trim();
   if (!validName(name)) return json({ ok: false, error: "invalid name format" }, 400);
   const rec = await env.DB.prepare("SELECT name, wallet, bio, created_date FROM hns_names WHERE name=?1").bind(name).first();
-  if (!rec) return json({ ok: false, error: "NXDOMAIN: " + name + ".harz is not registered" }, 404);
+  if (!rec) {
+    const quar = await env.DB.prepare("SELECT datetime(released_at, '+30 days') AS until, (datetime(released_at, '+30 days') > datetime('now')) AS active FROM hns_released WHERE name=?1").bind(name).first();
+    if (quar && Number(quar.active) === 1) return json({ ok: false, error: "NXDOMAIN: " + name + ".harz is not registered", quarantined_until: quar.until, note: "recently released — payer protection window" }, 404);
+    return json({ ok: false, error: "NXDOMAIN: " + name + ".harz is not registered" }, 404);
+  }
   return json({ ok: true, name: rec.name + ".harz", wallet: rec.wallet, bio: rec.bio || "", registered: rec.created_date, disclosure: DISCLOSURE });
 }
 
@@ -489,7 +498,7 @@ export default {
     if (url.pathname === "/pub" && request.method === "GET") return handlePub(env);
     if (url.pathname === "/api/health") {
       const fp = await env.DB.prepare("SELECT value FROM hns_kv WHERE key='subzone_fp'").first().catch(() => null);
-      return json({ status: "ok", service: "UNMUTANT (HARZ Name Service)", version: "1.3.1", signature_gated: true, theme: "light (#f0f2f5)", gate: GATE_HARZ + " HARZ", subzone: SUBZONE_KIND, hns_zsk_fp: fp ? fp.value : null, disclosure: DISCLOSURE });
+      return json({ status: "ok", service: "UNMUTANT (HARZ Name Service)", version: "1.4.0", signature_gated: true, theme: "light (#f0f2f5)", gate: GATE_HARZ + " HARZ", subzone: SUBZONE_KIND, hns_zsk_fp: fp ? fp.value : null, disclosure: DISCLOSURE });
     }
     if (url.pathname === "/manifest.json") return new Response(MANIFEST, { headers: { "content-type": "application/json", "cache-control": "no-store" } });
     if (url.pathname === "/sw.js") return new Response(SW, { headers: { "content-type": "application/javascript", "cache-control": "no-store" } });
