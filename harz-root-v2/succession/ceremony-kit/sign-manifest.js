@@ -1,4 +1,4 @@
-// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN v2 (runs ON NODE 1 only)
+// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN v3 (runs ON NODE 1 only) — symlink-blindspot fix: find -L follows ~/storage
 // Signs the SUCCESSION MANIFEST with the production ZSK (zsk-ed25519.pem, pkcs8 PEM,
 // born offline Sep 14 via zone-generator.js --init, fingerprint 86a507a42df64df2).
 // The private key NEVER leaves this phone. This script prints ONLY public material
@@ -25,12 +25,15 @@ const CANDIDATES = [
 for (const c of CANDIDATES) if (fs.existsSync(c)) { zskPath = c; break; }
 if (!zskPath) {
   try {
-    const out = execSync('find ~ -name "zsk-ed25519.pem" -not -path "*/proc/*" 2>/dev/null | head -1', { timeout: 30000 }).toString().trim();
+    const out = execSync('find -L ~ -name "zsk-ed25519.pem" -not -path "*/proc/*" 2>/dev/null | head -1', { timeout: 60000 }).toString().trim();
     if (out) zskPath = out.split("\n")[0].trim();
   } catch (e) { /* find failed or timed out — fall through */ }
 }
 if (!zskPath) {
-  console.error("ZSK NOT FOUND — zsk-ed25519.pem is not on this phone (searched home).");
+  console.error("ZSK NOT FOUND — zsk-ed25519.pem is not on this phone (searched home + storage).");
+  let gens = "";
+  try { gens = execSync('find -L ~ -name "zone-generator.js" 2>/dev/null | head -5', { timeout: 60000 }).toString().trim(); } catch (e) {}
+  console.error(gens ? "CEREMONY FOLDER (key missing inside): " + gens.replace(/\n/g, " | ") : "NO zone-generator.js folder anywhere either.");
   console.error("Nothing signed. Tell Magani in words.");
   process.exit(3);
 }
