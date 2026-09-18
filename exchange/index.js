@@ -278,7 +278,7 @@ async function loadMarkets() {
 
 function renderMarkets() {
   const el = document.getElementById('markets-list');
-  el.innerHTML = COINS.map(function(c) {
+  el.innerHTML = COINS.filter(function(c) { const p = prices[c.id]; return p && p.usd > 0; }).map(function(c) {
     const p = prices[c.id];
     if (!p) return '';
     const usd = p.usd || 0;
@@ -315,7 +315,7 @@ function updateL1Note() {
   if (panel) panel.style.display = (v === 'harz' || v === 'gdeg' || v === 'nrl') ? 'block' : 'none';
 }
 function populateSelectors() {
-  const opts = COINS.map(function(c) {
+  const opts = COINS.filter(function(c) { const p = prices[c.id]; return p && p.usd > 0; }).map(function(c) {
     const p = prices[c.id];
     const price = p ? '$' + (p.usd >= 1 ? p.usd.toLocaleString(undefined,{maximumFractionDigits:2}) : p.usd.toFixed(6)) : '';
     return '<option value="' + c.id + '">' + c.sym + ' ' + price + '</option>';
@@ -561,7 +561,7 @@ var harz_exchange_v5_secured_default = {
     if (path === "/manifest.json") return new Response(MANIFEST, { headers: { "Content-Type": "application/manifest+json", ...cors } });
     if (path === "/sw.js") return new Response(SW_CODE, { headers: { "Content-Type": "application/javascript", ...cors } });
     if (path === "/api/health") {
-      return Response.json({ service: "HARZ Exchange", version: "6.0.0", status: "live", coins: COIN_LIST.length, model: "OTC buy/sell desk (orders settled by our team)", onchain_dex: "https://harz-swap.harz.workers.dev", features: ["otc_buy_sell_desk", "tradingview_charts", "harzswap_oracle_prices", "harzswap_l1_onchain_route", "metamask_read_only_balances", "ngn_otc", "portfolio", "api_key_auth"] }, { headers: cors });
+      return Response.json({ service: "HARZ Exchange", version: "6.0.1", status: "live", coins: COIN_LIST.length, model: "OTC buy/sell desk (orders settled by our team)", onchain_dex: "https://harz-swap.harz.workers.dev", features: ["otc_buy_sell_desk", "tradingview_charts", "harzswap_oracle_prices", "harzswap_l1_onchain_route", "metamask_read_only_balances", "ngn_otc", "portfolio", "api_key_auth"] }, { headers: cors });
     }
     if (path === "/api/ngn") {
       const ngn = await getNGN(env);
