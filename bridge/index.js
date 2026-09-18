@@ -176,8 +176,8 @@ async function am_seed_status(env,relayer){
   const poolAddr=BigInt(poolHex)!==0n?"0x"+String(poolHex).slice(-40):null;
   let ratio=null;
   if(poolAddr){try{const s0=await am_rpc("eth_call",[{to:poolAddr,data:"0x3850c7bd"},"latest"]);const sq=BigInt("0x"+String(s0).slice(2,66));if(sq>0n)ratio=Number(sq*sq*10n**18n/(2n**192n))/1e18}catch(a){}}
-  const usable=Math.min(wpolAmt,Math.max(0,Number(BigInt(polHex))/1e18-0.3)+Number(wpolBal)/1e18);
-  return{config:{wpol:wpolAmt,price:priceStr},seed_enabled:seedOn,relayer_pol:Number(BigInt(polHex))/1e18,relayer_wpol:Number(wpolBal)/1e18,relayer_harz:Number(harzBal)/1e18,pool:poolAddr,market_ratio_harz_per_wpol:ratio,plan:ratio?{usable_wpol:+usable.toFixed(4),harz_needed_total:+(usable*ratio).toFixed(2),harz_missing:+Math.max(0,usable*ratio-Number(harzBal)/1e18).toFixed(2),ready:(usable>=0.5&&Number(harzBal)/1e18+1e-9>=usable*ratio)}:null}
+  const usable=Math.min(wpolAmt,Math.max(0,Number(BigInt(polHex))/1e18-0.3)+Number(wpolBal)/1e18,Number(harzBal)/1e18/(ratio||1));
+  return{config:{wpol:wpolAmt,price:priceStr},seed_enabled:seedOn,relayer_pol:Number(BigInt(polHex))/1e18,relayer_wpol:Number(wpolBal)/1e18,relayer_harz:Number(harzBal)/1e18,pool:poolAddr,market_ratio_harz_per_wpol:ratio,plan:ratio?{usable_wpol:+usable.toFixed(4),harz_paired:+(usable*ratio).toFixed(2),ready:(usable>=0.01)}:null}
 }
 async function am_seed_run(env){
   const relayer=ETHLIB.Address.fromPrivateKey(env.RELAYER_PRIVATE_KEY.replace(/^0x/,""))+"";
@@ -195,10 +195,12 @@ async function am_seed_run(env){
   // price both sides at the LIVE pool ratio (slot0). No fixed seed_price when pool exists.
   let ratioWei=null;
   if(st.pool){try{const s0=await am_rpc("eth_call",[{to:st.pool,data:"0x3850c7bd"},"latest"]);const sq=BigInt("0x"+String(s0).slice(2,66));if(sq>0n)ratioWei=sq*sq*10n**18n/(2n**192n)}catch(a){}}
-  const wpolWei=BigInt(Math.floor(Math.min(cfgWpol,Math.max(0,st.relayer_pol-0.3)+st.relayer_wpol)*1e6))*10n**12n;
-  if(wpolWei<5n*10n**17n)return{state:"awaiting_funds",note:"v2: relayer holds under 0.5 WPOL-equivalent after gas reserve",need:{pol:0.8},have:{pol:st.relayer_pol,wpol:st.relayer_wpol,harz:st.relayer_harz}};
+  const ratioNum=ratioWei!==null?(Number(ratioWei)/1e18):(Number(num)/Number(den));
+  const usable=Math.min(cfgWpol,Math.max(0,st.relayer_pol-0.3)+st.relayer_wpol,st.relayer_harz/ratioNum);
+  const wpolWei=BigInt(Math.floor(usable*1e6))*10n**12n;
   const harzWei=ratioWei!==null?(wpolWei*ratioWei/(10n**18n)):(wpolWei*num/den);
   const npmBalR=BigInt(await am_rpc("eth_call",[{to:SEED_NPM,data:"0x70a08231"+am_padAddr(relayer)},"latest"]));
+  if(wpolWei<10n**16n&&npmBalR===0n)return{state:"awaiting_funds",note:"v2: nothing seedable after gas reserve (both sides sized together)",need:{pol:0.8},have:{pol:st.relayer_pol,wpol:st.relayer_wpol,harz:st.relayer_harz}};
   if(npmBalR>0n){
     const idxHex=await am_rpc("eth_call",[{to:SEED_NPM,data:"0x2f745c59"+am_padAddr(relayer)+am_padUint(npmBalR-1n)},"latest"]);
     const tokenId=BigInt(idxHex);
@@ -208,9 +210,9 @@ async function am_seed_run(env){
     return{state:r.ok===true?"complete":(r.ok===null?"pending":"failed"),did:"lp_handover",hash:r.hash,token_id:tokenId.toString()};
   }
   const wpolBalWei=BigInt(Math.floor(st.relayer_wpol*1e6))*10n**12n;
-  if(st.relayer_pol<0.5&&wpolBalWei>=10n**18n){
-    const r=await am_sendTx(env,relayer,SEED_WPOL,"0x2e1a7d4d"+am_padUint(10n**18n),0n,100000n);
-    await am_log(env,"seed_step","gas self-refill: unwrapped 1 WPOL -> POL tx "+r.hash+" ok="+r.ok,null,null);
+  if(st.relayer_pol<2.5&&wpolBalWei>=2n*10n**18n){
+    const r=await am_sendTx(env,relayer,SEED_WPOL,"0x2e1a7d4d"+am_padUint(2n*10n**18n),0n,100000n);
+    await am_log(env,"seed_step","gas self-refill: unwrapped 2 WPOL -> POL tx "+r.hash+" ok="+r.ok,null,null);
     return{state:r.ok===true?"stepped":(r.ok===null?"pending":"failed"),did:"gas_refill",hash:r.hash};
   }
   if(wpolBalWei<wpolWei){
@@ -237,7 +239,7 @@ async function am_seed_run(env){
   if(npmBalR===0n){
     const dl=BigInt(Math.floor(Date.now()/1000)+1800);
     const mintData="0x88316456"+am_padAddr(SEED_WPOL)+am_padAddr(AM_CONTRACT)+am_padUint(10000n)+am_padTick(-887200)+am_padTick(887200)+am_padUint(wpolWei)+am_padUint(harzWei)+am_padUint(wpolWei*95n/100n)+am_padUint(harzWei*95n/100n)+am_padAddr(relayer)+am_padUint(dl);
-    const r=await am_sendTx(env,relayer,SEED_NPM,mintData,0n,4500000n);
+    const r=await am_sendTx(env,relayer,SEED_NPM,mintData,0n,2500000n);
     await am_log(env,"seed_step","mint full-range LP tx "+r.hash+" ok="+r.ok,null,null);
     return{state:r.ok===true?"stepped":(r.ok===null?"pending":"failed"),did:"mint_lp",hash:r.hash};
   }
