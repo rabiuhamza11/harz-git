@@ -5,7 +5,7 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 // worker.js
 var y = "HARZ Chain";
 var k = "HARZ";
-var S = "8.2.6";
+var S = "8.2.9";
 var R = "Proof-of-Edge";
 var O = "harz-evm-1.1.1";
 async function N(a) {
@@ -62,7 +62,7 @@ var K = { async fetch(a, s, _) {
   const __orig = async () => {
   const n = new URL(a.url), i = n.pathname, u = a.method;
   if (u === "OPTIONS") return new Response(null, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type" } });
-  if (i === "/health" || i === "/api/health") return new Response(JSON.stringify({ status: "healthy", service: "HARZ Chain", version: "8.2.6", consensus: "Proof-of-Edge", theme: "light (#f0f2f5)", pwa: true }), { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } });
+  if (i === "/health" || i === "/api/health") return new Response(JSON.stringify({ status: "healthy", service: "HARZ Chain", version: "8.2.8", consensus: "Proof-of-Edge", theme: "light (#f0f2f5)", pwa: true }), { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } });
   const r = s.HARZ_DB, l = !!r;
   if (i === "/manifest.json") return o({ name: "HARZ Chain Explorer", short_name: "HARZChain", description: "HARZ Chain \u2014 EVM-Compatible Proof-of-Edge Blockchain Explorer", start_url: "/", display: "standalone", background_color: "#f0f2f5", theme_color: "#f0f2f5", orientation: "portrait-primary", icons: [{ src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230a3d2e'/%3E%3Ctext x='96' y='120' font-size='80' text-anchor='middle' fill='white'%3E%E2%9B%93%EF%B8%8F%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" }], categories: ["finance", "blockchain"] });
   if (i === "/sw.js") return new Response('const CACHE="harz-chain-v8.7";self.addEventListener("install",e=>{self.skipWaiting()});self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});self.addEventListener("fetch",e=>{if(e.request.url.includes("/api/")||e.request.url.includes("/rpc"))return;e.respondWith(caches.open(CACHE).then(c=>c.match(e.request).then(r=>r||fetch(e.request).then(f=>{if(f.ok&&e.request.method==="GET")c.put(e.request,f.clone());return f}).catch(()=>c.match(e.request)))))});', { headers: { "Content-Type": "application/javascript", "Cache-Control": "no-cache" } });
@@ -171,6 +171,76 @@ if (!M) { try { M = (await r.prepare("SELECT COUNT(*) as c FROM chain_blocks").a
         done.push({ contract: c.contract, wallet: c.wallet, amount: c.amount, tx: txr });
       }
       return o({ success: true, op: "amm_repair_race_credits", repaired: done, note: "One-time credit restoring token balances lost to concurrent read-then-write races in withdraw/swap handlers (fixed in v8.2.6 with atomic SQL)." });
+    }
+    if (t.op === "amm_repair_conservation") {
+      const OWNER = t.wallet || "08028687857";
+      const nAddr = "0x" + (await sha256hex("HARZCHAIN:NRL:v1:" + NP)).slice(0, 40);
+      const SUPPLY = { GDEG: 10000000, NRL: 5000000 };
+      const bal = async (contract, wallet) => {
+        const row = (await r.prepare("SELECT value FROM chain_contract_storage WHERE contract_address = ? AND key = ?").bind(contract, "balance:" + wallet).all()).results[0];
+        return row ? (parseFloat(row.value) || 0) : 0;
+      };
+      const poolOf = async (pid) => (await r.prepare("SELECT * FROM chain_amm_pools WHERE pool_id = ?").bind(pid).all()).results[0];
+      const done = [];
+      {
+        const pool = await poolOf("GDEG/HARZ");
+        if (!pool) return o({ error: "GDEG/HARZ pool not found" }, 500);
+        const w = await bal(gAddr, OWNER);
+        const poolRes = parseFloat(pool.token_reserve) || 0;
+        const total = w + poolRes;
+        const missing = SUPPLY.GDEG - total;
+        if (missing > 0.000001) {
+          const k = "balance:" + OWNER;
+          await r.prepare("INSERT OR IGNORE INTO chain_contract_storage (contract_address, key, value) VALUES (?,?,?)").bind(gAddr, k, "0").run();
+          await r.prepare("UPDATE chain_contract_storage SET value = CAST(CAST(value AS REAL) + ? AS TEXT) WHERE contract_address = ? AND key = ?").bind(missing, gAddr, k).run();
+          const txr = "tx_" + crypto.randomUUID().slice(0, 10), blkr = await g(r);
+          await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(txr, "repair:conservation-gdeg-credit", OWNER, missing, 0, blkr, "confirmed", Date.now() / 1e3).run();
+          done.push({ token: "GDEG", action: "credit_wallet", wallet: OWNER, amount: missing, tx: txr });
+        } else {
+          done.push({ token: "GDEG", action: "none", note: "conservation already exact", wallet_balance: w, pool_reserve: poolRes, total });
+        }
+      }
+      {
+        const pool = await poolOf("NRL/HARZ");
+        if (!pool) return o({ error: "NRL/HARZ pool not found" }, 500);
+        const w = await bal(nAddr, OWNER);
+        const poolRes = parseFloat(pool.token_reserve) || 0;
+        const total = w + poolRes;
+        const phantom = total - SUPPLY.NRL;
+        if (phantom > 0.000001) {
+          await r.prepare("UPDATE chain_amm_pools SET token_reserve = CAST(CAST(token_reserve AS REAL) - ? AS TEXT), updated_at = ? WHERE pool_id = ?").bind(phantom, Date.now(), "NRL/HARZ").run();
+          const txr = "tx_" + crypto.randomUUID().slice(0, 10), blkr = await g(r);
+          await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(txr, "NRL/HARZ", "burn:conservation-nrl-phantom", phantom, 0, blkr, "confirmed", Date.now() / 1e3).run();
+          done.push({ token: "NRL", action: "burn_pool_phantom", pool: "NRL/HARZ", amount: phantom, tx: txr });
+        } else {
+          done.push({ token: "NRL", action: "none", note: "conservation already exact", wallet_balance: w, pool_reserve: poolRes, total });
+        }
+      }
+      return o({ success: true, op: "amm_repair_conservation", repaired: done, law: "conservation: wallet + pool = fixed supply, exact (owner law: repair Sep 18, 2026)", asOf: new Date().toISOString() });
+    }
+    if (t.op === "amm_repair_negbalance") {
+      const nAddr2 = "0x" + (await sha256hex("HARZCHAIN:NRL:v1:" + NP)).slice(0, 40);
+      const targets = [{ token: "GDEG", contract: gAddr, pool_id: "GDEG/HARZ" }, { token: "NRL", contract: nAddr2, pool_id: "NRL/HARZ" }];
+      const fixed = [];
+      for (const tg of targets) {
+        const negs = (await r.prepare("SELECT key, value FROM chain_contract_storage WHERE contract_address = ? AND key LIKE 'balance:%' AND CAST(value AS REAL) < 0").bind(tg.contract).all()).results || [];
+        if (!negs.length) { fixed.push({ token: tg.token, action: "none", note: "no negative balances" }); continue; }
+        let total = 0; const who = [];
+        for (const row of negs) {
+          const w = row.key.slice("balance:".length); const amt = -parseFloat(row.value);
+          await r.prepare("UPDATE chain_contract_storage SET value = CAST(CAST(value AS REAL) + ? AS TEXT) WHERE contract_address = ? AND key = ?").bind(amt, tg.contract, row.key).run();
+          const txr = "tx_" + crypto.randomUUID().slice(0, 10), blkr = await g(r);
+          await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(txr, "repair:negbalance-zero:" + tg.token, w, amt, 0, blkr, "confirmed", Date.now() / 1e3).run();
+          total += amt; who.push({ wallet: w, credited: amt, tx: txr });
+        }
+        const pool = (await r.prepare("SELECT * FROM chain_amm_pools WHERE pool_id = ?").bind(tg.pool_id).all()).results[0];
+        if (!pool || (parseFloat(pool.token_reserve) || 0) < total - 0.000001) return o({ error: "pool reserve smaller than phantom total; aborting before any pool write", token: tg.token, total, pool_reserve: pool ? pool.token_reserve : null }, 409);
+        await r.prepare("UPDATE chain_amm_pools SET token_reserve = CAST(CAST(token_reserve AS REAL) - ? AS TEXT), updated_at = ? WHERE pool_id = ?").bind(total, Date.now(), tg.pool_id).run();
+        const txr = "tx_" + crypto.randomUUID().slice(0, 10), blkr = await g(r);
+        await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(txr, tg.pool_id, "burn:negbalance-phantom", total, 0, blkr, "confirmed", Date.now() / 1e3).run();
+        fixed.push({ token: tg.token, action: "zeroed_negative_balances", wallets: who, pool_burned: total, tx: txr });
+      }
+      return o({ success: true, op: "amm_repair_negbalance", repaired: fixed, law: "no wallet may hold a negative balance; phantom pool reserve burns to match (conservation preserved)", asOf: new Date().toISOString() });
     }
     if (t.op === "amm_canonicalize")if (t.op === "amm_canonicalize") {
       const canon = { GDEG: gAddr, NRL: nAddr };
