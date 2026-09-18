@@ -498,7 +498,7 @@ async function walletAction() {
     const d = await r.json();
     if (d.success) {
       if (d.checkout_url) { showResult(el, 'ok', 'Taking you to secure Paystack checkout...'); setTimeout(function(){ location.href = d.checkout_url; }, 900); return; }
-      showResult(el, 'ok', 'Withdrawal of \u20A6' + amount.toLocaleString() + ' requested. You\'ll receive it within 30 minutes to your bank account.');
+      showResult(el, 'ok', 'Withdrawal of \u20A6' + amount.toLocaleString() + ' requested. You\\'ll receive it within 30 minutes to your bank account.');
     } else { showResult(el, 'err', d.error || 'Failed'); }
   } catch(e) { showResult(el, 'err', 'Network error'); }
 }
@@ -534,7 +534,7 @@ async function loadP2P() {
     const r = await fetch('/api/p2p/offers'); const d = await r.json();
     if (!d.offers || !d.offers.length) { el.innerHTML = '<div style="color:#64748b;font-size:.8rem">No active offers yet. Post the first one below.</div>'; return; }
     el.innerHTML = d.offers.map(function(o) {
-      return '<div class="coin-row" style="padding:10px 0;border-bottom:1px solid #e2e8f0"><div><div class="sym">' + o.symbol + '</div><div style="font-size:.7rem;color:#64748b">' + o.amount + ' ' + o.symbol + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' each</div></div><div style="text-align:right"><button class="btn btn-buy" style="padding:6px 12px;font-size:.75rem" onclick="p2pTrade(\'' + o.id + '\')">Buy</button></div></div>';
+      return '<div class="coin-row" style="padding:10px 0;border-bottom:1px solid #e2e8f0"><div><div class="sym">' + o.symbol + '</div><div style="font-size:.7rem;color:#64748b">' + o.amount + ' ' + o.symbol + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' each</div></div><div style="text-align:right"><button class="btn btn-buy" style="padding:6px 12px;font-size:.75rem" onclick="p2pTrade(\\'' + o.id + '\\')">Buy</button></div></div>';
     }).join('');
   } catch(e) { el.innerHTML = '<div style="color:#ef4444;font-size:.8rem">Failed to load offers</div>'; }
 }
@@ -572,7 +572,7 @@ async function loadMyOffers() {
   try {
     const r = await fetch('/api/p2p/my?phone=' + encodeURIComponent(phone)); const d = await r.json();
     let html = '';
-    (d.offers||[]).forEach(function(o){ html += '<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:.78rem"><b>' + o.symbol + '</b> \u2014 ' + o.amount + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' \u2014 ' + o.status + (o.status==='active'?' <button style="padding:2px 8px;font-size:.68rem;border:1px solid #16a34a;border-radius:6px;background:#f0fdf4;color:#16a34a" onclick="p2pRelease(\''+o.id+'\',\''+phone+'\')">Mark released/sold</button>':'') + '</div>'; });
+    (d.offers||[]).forEach(function(o){ html += '<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:.78rem"><b>' + o.symbol + '</b> \u2014 ' + o.amount + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' \u2014 ' + o.status + (o.status==='active'?' <button style="padding:2px 8px;font-size:.68rem;border:1px solid #16a34a;border-radius:6px;background:#f0fdf4;color:#16a34a" onclick="p2pRelease(\\''+o.id+'\\',\\''+phone+'\\')">Mark released/sold</button>':'') + '</div>'; });
     (d.orders||[]).forEach(function(o){ html += '<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:.78rem">' + o.symbol + ' \u2014 \u20A6' + o.ngn_amount.toLocaleString() + ' \u2014 ' + o.status + '</div>'; });
     el.innerHTML = html || '<div style="color:#64748b;font-size:.8rem">No offers or orders yet.</div>';
   } catch(e) { el.innerHTML = '<div style="color:#ef4444;font-size:.8rem">Failed to load</div>'; }
