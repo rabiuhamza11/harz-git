@@ -5,7 +5,7 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 // worker.js
 var y = "HARZ Chain";
 var k = "HARZ";
-var S = "8.2.9";
+var S = "8.3.0";
 var R = "Proof-of-Edge";
 var O = "harz-evm-1.1.1";
 async function N(a) {
@@ -459,6 +459,64 @@ if (i === "/api/amm/swap" && u === "POST") try {
     return o({ success: true, tx_id: tx, block: blk, wallet: b.wallet, pool_id: b.pool_id, direction: b.direction, amount_in: amt, amount_out: out, token_symbol: pool.token_symbol, executed_price_harz_per_token: out > 0 ? amt / out : 0, admin: auth.admin });
   }
   return o({ error: "direction must be harz_to_token or token_to_harz" }, 400);
+} catch (t) { return o({ error: t.message }, 500); }
+if (i === "/api/token/create" && u === "POST") try {
+  if (!l) return o({ error: "DB required" }, 500);
+  const b = await a.json();
+  if (!b.wallet || !b.symbol || !b.supply) return o({ error: "wallet, symbol, supply required" }, 400);
+  const sym = String(b.symbol).toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const name = String(b.name || sym).slice(0, 32);
+  const supply = parseFloat(b.supply), dec = parseInt(b.decimals === undefined ? 18 : b.decimals);
+  if (sym.length < 2 || sym.length > 8) return o({ error: "symbol must be 2-8 letters/digits" }, 400);
+  if (name.length < 2) return o({ error: "name must be at least 2 characters" }, 400);
+  if (!(supply > 0) || supply > 1e12) return o({ error: "supply must be > 0 and <= 1 trillion" }, 400);
+  if (!(dec >= 0 && dec <= 18)) return o({ error: "decimals must be 0-18" }, 400);
+  const auth = await ammAuth({ wallet: b.wallet, sig: b.sig, nonce: b.nonce, pool_id: "", direction: "token_create", amount: supply });
+  if (!auth.authed) return o({ error: "Unauthorized: valid signature required" }, 403);
+  const wRow = (await r.prepare("SELECT balance FROM chain_wallets WHERE address = ?").bind(b.wallet).all()).results[0];
+  if (!wRow || parseFloat(wRow.balance) < 1) return o({ error: "Insufficient HARZ: token creation burns a 1 HARZ anti-spam fee" }, 400);
+  const addr = "0x" + (await (async function() { const bb = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("HARZCHAIN:HRC20:" + sym + ":" + b.wallet + ":" + b.nonce)); return Array.from(new Uint8Array(bb)).map(function(x) { return x.toString(16).padStart(2, "0"); }).join(""); })()).slice(0, 40);
+  const dupe = (await r.prepare("SELECT address FROM chain_contracts WHERE address = ?").bind(addr).all()).results[0];
+  if (dupe) return o({ error: "Address collision — retry" }, 409);
+  const blk = await g(r);
+  const abi = JSON.stringify([{ canonical: true, engine: "HRC-20 on HARZ Chain", mint: "disabled — fixed supply at creation", creator: b.wallet }]);
+  await r.prepare("INSERT INTO chain_contracts (address, owner, name, symbol, total_supply, decimals, code_type, abi, created_block) VALUES (?,?,?,?,?,?,?,?,?)").bind(addr, b.wallet, name + " (HARZ Chain)", sym, supply, dec, "hrc20", abi, blk).run();
+  const k = "balance:" + b.wallet;
+  await r.prepare("INSERT OR IGNORE INTO chain_contract_storage (contract_address, key, value) VALUES (?,?,?)").bind(addr, k, "0").run();
+  await r.prepare("UPDATE chain_contract_storage SET value = ? WHERE contract_address = ? AND key = ?").bind(String(supply), addr, k).run();
+  await r.prepare("UPDATE chain_wallets SET balance = balance - 1 WHERE address = ?").bind(b.wallet).run();
+  const tx = "tx_" + crypto.randomUUID().slice(0, 10);
+  await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(tx, b.wallet, addr, supply, 1, blk, "confirmed", Date.now() / 1e3).run();
+  return o({ success: true, tx_id: tx, block: blk, token: { address: addr, name: name, symbol: sym, total_supply: supply, decimals: dec, creator: b.wallet, standard: "HRC-20" }, note: "1 HARZ anti-spam fee burned" });
+} catch (t) { return o({ error: t.message }, 500); }
+if (i === "/api/amm/create_pool" && u === "POST") try {
+  if (!l) return o({ error: "DB required" }, 500);
+  const b = await a.json();
+  if (!b.wallet || !b.token_contract || !b.harz_amount || !b.token_amount) return o({ error: "wallet, token_contract, harz_amount, token_amount required" }, 400);
+  const hAmt = parseFloat(b.harz_amount), tAmt = parseFloat(b.token_amount);
+  if (!(hAmt > 0) || !(tAmt > 0)) return o({ error: "amounts must be > 0" }, 400);
+  const auth = await ammAuth({ wallet: b.wallet, sig: b.sig, nonce: b.nonce, pool_id: "", direction: "create_pool", amount: hAmt });
+  if (!auth.authed) return o({ error: "Unauthorized: valid signature required" }, 403);
+  const tk = (await r.prepare("SELECT * FROM chain_contracts WHERE address = ? AND code_type = 'hrc20'").bind(b.token_contract).all()).results[0];
+  if (!tk) return o({ error: "Token contract not found on HARZ Chain" }, 404);
+  const pid = tk.symbol + "/HARZ";
+  const existing = await ammGetPool(pid);
+  if (existing) return o({ error: "Pool " + pid + " already exists — use Add Liquidity instead" }, 409);
+  const wRow = (await r.prepare("SELECT balance FROM chain_wallets WHERE address = ?").bind(b.wallet).all()).results[0];
+  if (!wRow || parseFloat(wRow.balance) < hAmt) return o({ error: "Insufficient HARZ balance" }, 400);
+  const tKey = "balance:" + b.wallet;
+  const tBal = parseFloat((((await r.prepare("SELECT value FROM chain_contract_storage WHERE contract_address = ? AND key = ?").bind(tk.address, tKey).all()).results[0] || {}).value) || "0");
+  if (tBal < tAmt) return o({ error: "Insufficient " + tk.symbol + " balance" }, 400);
+  const mint = Math.sqrt(hAmt * tAmt);
+  const now = Date.now(), blk = await g(r);
+  await r.prepare("UPDATE chain_wallets SET balance = balance - ? WHERE address = ?").bind(hAmt, b.wallet).run();
+  await r.prepare("INSERT OR IGNORE INTO chain_contract_storage (contract_address, key, value) VALUES (?,?,?)").bind(tk.address, tKey, "0").run();
+  await r.prepare("UPDATE chain_contract_storage SET value = CAST(CAST(value AS REAL) - ? AS TEXT) WHERE contract_address = ? AND key = ?").bind(tAmt, tk.address, tKey).run();
+  await r.prepare("INSERT INTO chain_amm_pools (pool_id, token_symbol, token_contract, harz_reserve, token_reserve, lp_supply, fee_bps, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)").bind(pid, tk.symbol, tk.address, hAmt, tAmt, mint, 30, now, now).run();
+  await r.prepare("INSERT INTO chain_amm_positions (pool_id, wallet, lp_tokens, created_at) VALUES (?,?,?,?)").bind(pid, b.wallet, mint, now).run();
+  const tx = "tx_" + crypto.randomUUID().slice(0, 10);
+  await r.prepare("INSERT INTO chain_transactions (id, from_addr, to_addr, amount, fee, block_index, status, timestamp) VALUES (?,?,?,?,?,?,?,?)").bind(tx, b.wallet, "amm_lp:" + pid, mint, 0, blk, "confirmed", Date.now() / 1e3).run();
+  return o({ success: true, tx_id: tx, block: blk, pool: { pool_id: pid, token_symbol: tk.symbol, token_contract: tk.address, harz_reserve: hAmt, token_reserve: tAmt, lp_supply: mint, fee_bps: 30, creator: b.wallet } });
 } catch (t) { return o({ error: t.message }, 500); }
 if (i === "/api/amm/liquidity" && u === "POST") try {
   if (!l) return o({ error: "DB required" }, 500);
