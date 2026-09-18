@@ -1,5 +1,5 @@
 // ============================================================
-// harzswap v4.0.0 — HONEST REBUILD
+// harzswap v6.0.0 — REAL DEX: create pool + add liquidity + swap via QuickSwap V2 router (wallet-signed)
 // - Real on-chain pool data only (Polygon RPC, balanceOf/getReserves)
 // - Fixed policy book: 1 GDEG = NGN 15, 1 NRL = NGN 100 (administered law)
 // - HARZ price = live market (QuickSwap V3 Algebra pool HARZ/WPOL)
@@ -8,7 +8,7 @@
 // Deployed: harz-swap.harz.workers.dev
 // ============================================================
 
-const VERSION = "4.0.0";
+const VERSION = "6.0.4";
 
 // ---- on-chain constants (Polygon mainnet) ----
 const RPCS = [
@@ -28,11 +28,11 @@ const POOLS = {
   "NRL/WPOL":  { addr: "0x30D6Dbea9eF1fEbbd65Aa1c51F51957F6EFe9B2A", venue: "QuickSwap V2, 0.30% fee", kind: "v2", feeBps: 30 },
 };
 // ---- administered fixed book (owner law, Sep 16 2026) ----
-const BOOK = { GDEG: 15, NRL: 100 }; // NGN per token, fixed policy prices
+const BOOK = { GDEG: 15, NRL: 100, HARZ: 15 }; // NGN per token, fixed policy prices. HARZ = NGN 15 added by owner law Sep 18, 2026 ("price of HARZ anywhere should be NGN 15")
 
 // ---- caches ----
-const cache = { pools: { d: null, t: 0 }, pol: { d: null, t: 0 }, ngn: { d: null, t: 0 }, ext: { d: null, t: 0 } };
-const TTL = { pools: 60e3, pol: 60e3, ngn: 300e3, ext: 120e3 };
+const cache = { pools: { d: null, t: 0 }, lp: { d: null, t: 0 }, pol: { d: null, t: 0 }, ngn: { d: null, t: 0 }, ext: { d: null, t: 0 } };
+const TTL = { pools: 60e3, lp: 60e3, pol: 60e3, ngn: 300e3, ext: 120e3 };
 const isStale = (k) => (cache[k].d && Date.now() - cache[k].t > TTL[k]);
 
 const CORS = {
@@ -125,6 +125,41 @@ async function getPools() {
   return out;
 }
 
+// ---- LP positions (live on-chain reads; treasury wallet) ----
+const LP_HOLDER = "0x608110Ca7CDCe4D0ec92416C2CD73218B935aaC1"; // HARZ treasury (Rabiu's own wallet)
+async function erc20TotalSupply(token) {
+  const r = await rpcCall({ to: token.toLowerCase(), data: "0x18160ddd" });
+  return r && r !== "0x" ? BigInt(r) : null;
+}
+async function getLp() {
+  if (!isStale("lp") && cache.lp.d) return cache.lp.d;
+  const pol = await getPol(), ngn = await getNgn();
+  const out = [];
+  for (const [pair, key] of [["GDEG/WPOL", "GDEG"], ["NRL/WPOL", "NRL"]]) {
+    const cfg = POOLS[pair];
+    const res = await v2Reserves(cfg.addr);
+    const [supply, held] = await Promise.all([erc20TotalSupply(cfg.addr), erc20Balance(cfg.addr, LP_HOLDER)]);
+    if (res && supply !== null && held !== null) {
+      const wpol = fmt18(res.r0), tok = fmt18(res.r1);
+      const sup = fmt18(supply), own = fmt18(held);
+      const share = sup > 0 ? own / sup : 0;
+      const tokClaim = tok * share, wpolClaim = wpol * share;
+      out.push({
+        pair, address: cfg.addr, lpHolder: LP_HOLDER,
+        lpTotalSupply: +sup.toFixed(2), lpOwned: +own.toFixed(2), lpSharePct: +(share * 100).toFixed(2),
+        claimToken: +tokClaim.toFixed(0), claimWPOL: +wpolClaim.toFixed(4),
+        tokenSideNgn: ngn ? +(tokClaim * BOOK[key]).toFixed(0) : null,
+        wpolSideUsd: pol ? +(wpolClaim * pol).toFixed(2) : null,
+        bookNgnPerToken: BOOK[key],
+        source: "on-chain totalSupply/balanceOf (live)",
+        note: "LP position of the HARZ treasury wallet. Token side valued at the fixed book (" + key + " = NGN " + BOOK[key] + "); WPOL side at market. Pool price is NOT the book price.",
+      });
+    }
+  }
+  cache.lp = { d: out, t: Date.now() };
+  return out;
+}
+
 // ---- external market prices (Coinbase, cached) ----
 const CB = { BTC: "BTC", ETH: "ETH", BNB: "BNB", SOL: "SOL", XRP: "XRP", ADA: "ADA", DOGE: "DOGE", DOT: "DOT", AVAX: "AVAX", LINK: "LINK", MATIC: "POL", TRX: "TRX", LTC: "LTC" };
 async function getExt() {
@@ -160,12 +195,12 @@ async function getQuote(from, to, amountIn) {
     // policy book pairs (GDEG/NRL via fixed NGN law)
     if (fromSym === "GDEG" && toSym === "NRL") return { out: (amt * BOOK.GDEG) / BOOK.NRL, source: "policy-book (fixed NGN prices)", note: "administered book: GDEG NGN 15, NRL NGN 100" };
     if (fromSym === "NRL" && toSym === "GDEG") return { out: (amt * BOOK.NRL) / BOOK.GDEG, source: "policy-book (fixed NGN prices)", note: "administered book: GDEG NGN 15, NRL NGN 100" };
-    if ((fromSym === "GDEG" || fromSym === "NRL") && (toSym === "NGN" || toSym === "USD")) {
+    if ((fromSym === "GDEG" || fromSym === "NRL" || fromSym === "HARZ") && (toSym === "NGN" || toSym === "USD")) {
       if (!ngn) return { error: "NGN rate unavailable" };
       const usd = amt * BOOK[fromSym] / ngn;
       return { out: toSym === "NGN" ? amt * BOOK[fromSym] : usd, source: "policy-book (fixed NGN price)", note: "administered price, not a market pool" };
     }
-    if ((fromSym === "NGN" || fromSym === "USD") && (toSym === "GDEG" || toSym === "NRL")) {
+    if ((fromSym === "NGN" || fromSym === "USD") && (toSym === "GDEG" || toSym === "NRL" || toSym === "HARZ")) {
       if (!ngn) return { error: "NGN rate unavailable" };
       const ngnVal = fromSym === "NGN" ? amt : amt * ngn;
       return { out: ngnVal / BOOK[toSym], source: "policy-book (fixed NGN price)", note: "administered price, not a market pool" };
@@ -258,95 +293,9 @@ async function getQuote(from, to, amountIn) {
 }
 
 // ---- frontend (light theme, PWA, mobile-first, honest) ----
-const HTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#f0f2f5">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="HARZSwap">
-<meta name="description" content="HARZSwap — honest exchange data: real on-chain pools, fixed NGN book.">
-<link rel="manifest" href="/manifest.json">
-<title>HARZSwap — Honest Data</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
-body{background:#f0f2f5;color:#1a1a2e;padding-bottom:32px}
-.top{background:#ffffff;border-bottom:1px solid #e2e4ea;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-.top h1{font-size:17px}.top .v{font-size:11px;color:#2e7d32;font-weight:700;background:#e8f5e9;padding:3px 8px;border-radius:10px}
-.wrap{max-width:680px;margin:0 auto;padding:14px 14px 0}
-.card{background:#fff;border:1px solid #e2e4ea;border-radius:12px;padding:14px;margin-bottom:12px}
-.card h2{font-size:13px;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px}
-.law{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:12px 14px;margin-bottom:12px}
-.law .row{display:flex;justify-content:space-between;padding:6px 0;font-size:15px}
-.law .row b{font-size:16px}
-.law .cap{font-size:11px;color:#4c6ef5;margin-top:4px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;color:#888;font-size:11px;padding:6px 4px;border-bottom:1px solid #e2e4ea}
-td{padding:8px 4px;border-bottom:1px solid #f0f0f4;vertical-align:top}
-.warn{display:inline-block;font-size:10px;color:#b45309;background:#fef3c7;padding:2px 6px;border-radius:8px;margin-top:3px}
-.tag{font-size:10px;color:#2e7d32;background:#e8f5e9;padding:2px 6px;border-radius:8px}
-input,select{width:100%;padding:11px;border:1px solid #d5d8e0;border-radius:8px;font-size:15px;background:#fff;margin:4px 0}
-button{width:100%;padding:12px;background:#4c6ef5;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;margin-top:8px}
-.qres{margin-top:10px;padding:10px;background:#f8f9ff;border-radius:8px;font-size:14px;display:none}
-.qres .src{font-size:10px;color:#777;margin-top:6px}
-.noswap{background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:12px 14px;font-size:13px;color:#7c2d12;margin-bottom:12px}
-.foot{text-align:center;font-size:11px;color:#999;padding:14px 8px}
-.live{font-size:10px;color:#2e7d32}
-</style>
-</head>
-<body>
-<div class="top"><h1>HARZSwap</h1><span class="v">v4.0.0 honest</span></div>
-<div class="wrap">
-<div class="law">
-  <div class="row"><span>GDEG</span><b>₦15.00 fixed</b></div>
-  <div class="row"><span>NRL</span><b>₦100.00 fixed</b></div>
-  <div class="row"><span>HARZ</span><b id="harzngn">— market</b></div>
-  <div class="cap">Administered policy book (owner law) — P2P & exchange operations. Not a market pool.</div>
-</div>
-<div class="noswap"><b>Swap execution is not offered here.</b> This page shows real, live data only. Wallet-connected on-chain swaps ship with the V3 token rollout — until then, use QuickSwap directly. No simulated trades, no fake confirmations.</div>
-<div class="card"><h2>Real on-chain pools <span class="live" id="asof"></span></h2>
-<div id="pools">loading…</div></div>
-<div class="card"><h2>Quote calculator (real math)</h2>
-<select id="qfrom"><option>HARZ</option><option>GDEG</option><option>NRL</option><option>WPOL</option><option>NGN</option><option>USD</option></select>
-<input id="qamt" inputmode="decimal" placeholder="Amount">
-<select id="qto"><option>GDEG</option><option>NRL</option><option>HARZ</option><option>WPOL</option><option>NGN</option><option>USD</option></select>
-<button onclick="doQuote()">Get real quote</button>
-<div class="qres" id="qres"></div></div>
-<div class="foot">HARZ ecosystem · internal utility exchange · data: Polygon RPC + Coinbase + open.er-api · v4.0.0</div>
-</div>
-<script>
-async function loadPools(){
- try{
-  const r=await fetch('/api/pools');const d=await r.json();
-  document.getElementById('asof').textContent='· '+new Date(d.asOf).toLocaleTimeString();
-  let h='<table><tr><th>Pool</th><th>Reserves (real)</th><th>Depth</th></tr>';
-  for(const p of d.pools){
-    let res='';
-    if(p.pair==='HARZ/WPOL') res=p.reserveHARZ.toLocaleString()+' HARZ · '+p.reserveWPOL.toFixed(2)+' WPOL';
-    else res=p.reserveWPOL.toFixed(2)+' WPOL · '+p.reserveToken.toLocaleString()+' '+p.pair.split('/')[0];
-    h+='<tr><td><b>'+p.pair+'</b><br><span class="tag">'+p.venue.split(',')[0]+'</span></td><td>'+res+'<br><span class="warn">'+(p.pair==='HARZ/WPOL'?'entire tradable depth':'DUST — not the book price')+'</span></td><td>'+(p.depthUSD?'$'+p.depthUSD.toFixed(2):'—')+'</td></tr>';
-  }
-  h+='</table>';
-  document.getElementById('pools').innerHTML=h;
-  if(d.harzNgn) document.getElementById('harzngn').textContent='₦'+d.harzNgn.toFixed(2)+' market';
- }catch(e){document.getElementById('pools').textContent='failed to load — '+e.message}
-}
-async function doQuote(){
- try{
-  const r=await fetch('/api/quote?from='+encodeURIComponent(document.getElementById('qfrom').value)+'&to='+encodeURIComponent(document.getElementById('qto').value)+'&amount='+encodeURIComponent(document.getElementById('qamt').value||'1'));
-  const d=await r.json();const el=document.getElementById('qres');el.style.display='block';
-  if(!d.success){el.innerHTML='⛔ '+d.error;return}
-  el.innerHTML='<b>'+d.amountIn+' '+d.from+' → '+d.amountOut+' '+d.to+'</b><br>'+d.rate+(d.warning?'<br><span style="color:#b45309">'+d.warning+'</span>':'')+'<div class="src">'+d.source+' · '+new Date(d.asOf).toLocaleTimeString()+'</div>';
- }catch(e){document.getElementById('qres').innerHTML='error: '+e.message;document.getElementById('qres').style.display='block'}
-}
-loadPools();setInterval(loadPools,60000);
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
-</script>
-</body></html>`;
+const HTML = `<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>HARZSwap — Sovereign DEX on HARZ Chain</title><meta name='theme-color' content='#f0f2f5'><meta name='apple-mobile-web-app-capable' content='yes'><meta name='apple-mobile-web-app-status-bar-style' content='default'><meta name='apple-mobile-web-app-title' content='HARZSwap'><link rel='manifest' href='/manifest.json'><link rel='icon' href='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23f0f2f5%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22%2300d4ff%22%3E%E2%82%BF%3C/text%3E%3C/svg%3E'><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e;padding-bottom:40px}.hdr{background:#ffffff;border-bottom:1px solid #e2e8f0;padding:16px;text-align:center}.hdr h1{font-size:20px}.hdr .sub{font-size:12px;color:#64748b;margin-top:4px}.wrap{max-width:680px;margin:0 auto;padding:12px}.card{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 3px rgba(0,0,0,0.05)}.card h3{font-size:13px;color:#0ea5a4;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}.pool{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin:6px 0;flex-wrap:wrap;gap:4px}.pool .nm{font-weight:700}.pool .rs{font-size:12px;color:#64748b}.pool .pr{font-size:12px;color:#0ea5a4;font-weight:600}input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;margin:4px 0;background:#ffffff;color:#1a1a2e}label{font-size:12px;color:#64748b;display:block;margin-top:8px}button{width:100%;padding:12px;border:0;border-radius:8px;background:#0ea5a4;color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}button.alt{background:#1a1a2e}button.warn{background:#fff;color:#b45309;border:1px solid #f59e0b}button:hover{opacity:0.9}.row2{display:flex;gap:8px}.row2>div{flex:1}.msg{margin-top:10px;padding:10px;border-radius:8px;font-size:13px;white-space:pre-wrap;word-break:break-all;display:none}.ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}.err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}.bal{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px dashed #e2e8f0}.bal:last-child{border:0}.foot{text-align:center;font-size:11px;color:#94a3b8;margin-top:20px;padding:0 12px}.hint{font-size:11px;color:#94a3b8;margin-top:6px}.keyst{font-size:12px;padding:8px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;margin-top:8px}</style></head><body><div class='hdr'><h1>₿ HARZSwap</h1><div class='sub'>Sovereign DEX on HARZ Chain — everything trades on our public chain · constant-product x·y=k, 0.3% fee</div><div style='display:inline-block;margin-top:6px;padding:3px 10px;border-radius:12px;background:#dcfce7;color:#166534;font-size:11px;font-weight:600'>v6.0.4 sovereign-L1</div></div><div class='wrap'><div class='card'><h3>Official book (owner policy)</h3><div class='bal'><span>GDEG</span><b>₦15.00 fixed</b></div><div class='bal'><span>NRL</span><b>₦100.00 fixed</b></div><div class='bal'><span>HARZcoin</span><b>₦15.00 fixed (owner law Sep 18, 2026)</b></div><div class='hint'>Book prices are the policy of the payment layer; pool prices are the market on HARZ Chain.</div></div><div class='card'><h3>Liquidity Pools (live on HARZ Chain)</h3><div id='pools'>Loading pools…</div></div><div class='card'><h3>Your Wallet & Keys</h3><label>Wallet address (phone or 0x…)</label><input id='wallet' placeholder='e.g. 08028687857' oninput='loadBal();keyStatus()'><div class='keyst' id='keyst'>Checking device key…</div><div class='row2'><div><button class='alt' onclick='createWallet()'>Create New Wallet</button></div><div><button class='warn' onclick='exportKey()'>Export Key</button></div></div><div class='row2' style='margin-top:6px'><div><button class='alt' onclick='importKey()'>Import Key</button></div><div><button class='alt' onclick='newKeyFor()'>New Key For This Address</button></div></div><div class='row2' style='margin-top:6px'><div><button class='alt' onclick='copyPubKey()'>Copy Public Key</button></div><div></div></div><div id='pkbox' style='display:none;word-break:break-all;font-size:12px;color:#555;margin-top:4px'></div><div class='hint'>Keys are generated in YOUR browser (ECDSA P-256). The server only ever stores your public key — it cannot move your funds.</div><div id='bals' style='margin-top:10px'></div></div><div class='card'><h3>Swap</h3><label>Pool</label><select id='spool'></select><label>Direction</label><select id='sdir'><option value='harz_to_token'>HARZ → Token</option><option value='token_to_harz'>Token → HARZ</option></select><label>Amount</label><input id='samt' type='number' step='any' placeholder='0.0'><button class='alt' onclick='doQuote()'>Get Quote</button><button onclick='doSwap()'>Sign & Execute Swap</button><div class='msg' id='smsg'></div></div><div class='card'><h3>Send HARZ</h3><label>Recipient (wallet address)</label><input id='tto' placeholder='e.g. 08098765432 or 0x…'><label>Amount</label><input id='tamt' type='number' step='any' placeholder='0.0'><button onclick='doTransfer()'>Sign &amp; Send</button><div class='hint'>Signed transfer — moves real HARZ on L1. Use this to lock funds to the bridge escrow.</div><div class='msg' id='tmsg'></div></div><div class='card'><h3>Add Liquidity</h3><label>Pool</label><select id='lpool'></select><div class='row2'><div><label>HARZ amount</label><input id='lharz' type='number' step='any'></div><div><label>Token amount</label><input id='ltok' type='number' step='any'></div></div><button onclick='doLiq()'>Sign & Add Liquidity</button><div class='msg' id='lmsg'></div></div><div class='card'><h3>Remove Liquidity</h3><label>Pool</label><select id='rpool'></select><label>LP tokens to burn</label><input id='rlp' type='number' step='any'><button class='alt' onclick='doWith()'>Sign & Withdraw</button><div class='msg' id='rmsg'></div></div><div class='card'><h3>Your LP Positions</h3><div id='pos'>Enter wallet above</div></div><div class='card'><h3>Sovereignty — everything on HARZ Chain</h3>Executor: <b>HARZ Router v1</b> — on-chain engine contract <code style='word-break:break-all'>0x13681aa174fb8feba5282baa54a39e549e995bbf</code>. Execution = /api/amm/* on HARZ Chain: constant-product x·y=k, 0.3% fee to liquidity providers, no owner, no admin keys, no third-party router anywhere in this stack. Every action is signed with your device key (ECDSA P-256) + single-use nonce — the server holds no keys and cannot forge your signature.<br><br><span style='color:#b45309'>Polygon rail retired Sep 17, 2026 by owner order: everything on HARZ Chain. Book: ₦15/HARZ · ₦15/GDEG · ₦100/NRL at the payment layer.</span></div><div class='foot'>HARZSwap · sovereign DEX on HARZ Chain · executor: HARZ Router v1 (ours) · v6.0.4</div></div><script>window.onerror=function(m,s,l,c,e){document.title='ERR: '+m;try{document.getElementById('pools').innerHTML='<b>JS ERROR:</b> '+m+' @ '+l+':'+c}catch(x){}};window.addEventListener('unhandledrejection',function(e){try{document.getElementById('pools').innerHTML='<b>PROMISE REJECTED:</b> '+(e.reason&&e.reason.message||e.reason)}catch(x){}});var B='https://harz-chain-v2.harz.workers.dev',P=[];async function J(u,d){var r=await fetch(B+u,d);return r.json()}function show(id,txt,ok){var e=document.getElementById(id);e.style.display='block';e.className='msg '+(ok?'ok':'err');e.textContent=txt}function b64(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)))}function getAllKeys(){try{var m=JSON.parse(localStorage.getItem('harzswap_keys')||'null');if(m)return m;var legacy=JSON.parse(localStorage.getItem('harzswap_key')||'null');if(legacy&&legacy.address){var mm={};mm[legacy.address]=legacy;localStorage.setItem('harzswap_keys',JSON.stringify(mm));return mm}return{}}catch(e){return{}}} function saveKey(addr,priv){var m=getAllKeys();m[addr]={address:addr,priv:priv};localStorage.setItem('harzswap_keys',JSON.stringify(m))} function getSaved(addr){var m=getAllKeys();if(addr)return m[addr]||null;var ks=Object.keys(m);return ks.length===1?m[ks[0]]:null} async function keyStatus(){try{var w=document.getElementById('wallet').value.trim();var m=getAllKeys();var ks=Object.keys(m);var el=document.getElementById('keyst');if(w&&m[w]){el.textContent='Key saved on this device for '+w+' - ready to sign';el.style.color='#0a7d3a'}else if(w&&ks.length){el.textContent='No saved key for '+w+' on this device. You have keys for: '+ks.join(', ')+'. Use Import Key or New Key For This Address below.';el.style.color='#b00020'}else if(ks.length){el.textContent='Device has keys for: '+ks.join(', ')+' - type one of these addresses above, or create a new wallet';el.style.color='#555'}else{el.textContent='No device key - create a wallet above to swap';el.style.color='#b00020'}}catch(e){document.getElementById('keyst').textContent='Key check error: '+(e&&e.message||e)}}async function signMsg(msg,addr){var k=getSaved(addr);if(!k)throw 'No device key for '+(addr||'this wallet')+' — import it or use New Key For This Address';var key=await crypto.subtle.importKey('jwk',k.priv,{name:'ECDSA',namedCurve:'P-256'},false,['sign']);return b64(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},key,new TextEncoder().encode(msg)))}async function createWallet(){try{var d=await J('/api/wallet/create',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});if(!d.success)throw d.error;var kp=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},true,['sign','verify']);var priv=await crypto.subtle.exportKey('jwk',kp.privateKey);var spki=await crypto.subtle.exportKey('spki',kp.publicKey);var reg=await J('/api/wallet/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:d.address,public_key:b64(spki)})});if(!reg.success)throw reg.error;saveKey(d.address,priv);document.getElementById('wallet').value=d.address;await keyStatus();loadBal();alert('Wallet created: '+d.address+'\\n\\nIMPORTANT: your key lives only in this browser. Use Export Key to back it up NOW — if you lose it, funds are unrecoverable. Other wallet keys saved on this device were kept.')}catch(e){alert('Create failed: '+(e.error||e))}}function exportKey(){var w=document.getElementById('wallet').value.trim();var k=getSaved(w)||getSaved();if(!k){alert('No device key saved for this address');return}alert('Backup for '+k.address+' — paste this whole line into Import Key on any device to restore signing:\\n\\n'+JSON.stringify(k)+'\\n\\nAnyone with this can move your funds. The server never sees it.')} async function importKey(){var w=document.getElementById('wallet').value.trim();if(!w){alert('Type the wallet address above first');return}var raw=prompt('Paste the exported key JSON for '+w+':');if(!raw)return;try{var obj=JSON.parse(raw);var priv=obj.priv||obj;var addr=obj.address||w;if(addr!==w){if(!confirm('This backup is for '+addr+', not '+w+'. Import it under '+addr+' instead?'))return;w=addr}saveKey(w,priv);await keyStatus();alert('Key imported for '+w+' — signing enabled')}catch(e){alert('Invalid key JSON: '+(e.message||e))}} async function newKeyFor(){var w=document.getElementById('wallet').value.trim();if(!w){alert('Type the wallet address above first');return}var kp=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},true,['sign','verify']);var priv=await crypto.subtle.exportKey('jwk',kp.privateKey);var spki=await crypto.subtle.exportKey('spki',kp.publicKey);saveKey(w,priv);await keyStatus();var pk=b64(spki);pkBoxShow(w,pk);try{await navigator.clipboard.writeText(w+' '+pk);var cb=document.getElementById('pkcbtn');if(cb)cb.textContent='Copied!'}catch(e){}} var PKTXT='';async function pkCopy(){try{await navigator.clipboard.writeText(PKTXT);var cb=document.getElementById('pkcbtn');if(cb)cb.textContent='Copied!'}catch(e){alert('Press and hold the code above to copy it manually')}}async function pkShare(){window.open('https://wa.me/?text='+encodeURIComponent(PKTXT),'_blank')} async function pkBoxShow(w,pk){PKTXT=w+' '+pk;var el=document.getElementById('pkbox');el.style.display='block';el.innerHTML="<b style='color:#0a7d3a'>KEY CREATED ON THIS DEVICE</b><div style='margin-top:6px;font-size:12px;color:#555'>This is your PUBLIC key - safe to share. Send it to the operator (Nuruddeen) in WhatsApp to activate your wallet:</div><div id='pktext' style='margin:8px 0;padding:8px;background:#f0f2f5;border:1px solid #cbd5e1;border-radius:8px;word-break:break-all;font-family:monospace;font-size:11px'>"+w+" "+pk+"</div><div class='row2'><div><button class='alt' id='pkcbtn' onclick='pkCopy()'>Copy</button></div><div><button class='alt' onclick='pkShare()'>Send via WhatsApp</button></div></div>"} async function copyPubKey(){var w=document.getElementById('wallet').value.trim();if(!w){alert('Type the wallet address above first');return}var k=getSaved(w);if(!k){alert('No key saved for '+w+' on this device - tap New Key For This Address first');return}var key=await crypto.subtle.importKey('jwk',k.priv,{name:'ECDSA',namedCurve:'P-256'},true,['verify']);var spki=await crypto.subtle.exportKey('spki',key);var pk=b64(spki);pkBoxShow(w,pk);try{await navigator.clipboard.writeText(w+' '+pk);var cb=document.getElementById('pkcbtn');if(cb)cb.textContent='Copied!'}catch(e){}}async function loadPools(){try{var d=await J('/api/amm/pools');P=d.pools||[];var h='';for(var i=0;i<P.length;i++){var p=P[i];h+='<div class=pool><div><div class=nm>'+p.pool_id+'</div><div class=rs>'+Number(p.harz_reserve).toLocaleString()+' HARZ · '+Number(p.token_reserve).toLocaleString()+' '+p.token_symbol+'</div></div><div class=pr>1 '+p.token_symbol+' = '+Number(p.price_harz_per_token).toFixed(4)+' HARZ</div></div>'}document.getElementById('pools').innerHTML=h||'No pools yet';var o='';for(var j=0;j<P.length;j++){o+='<option>'+P[j].pool_id+'</option>'}document.getElementById('spool').innerHTML=o;document.getElementById('lpool').innerHTML=o;document.getElementById('rpool').innerHTML=o;if(document.getElementById('wallet').value.trim()){loadBal();keyStatus()}}catch(e){document.getElementById('pools').innerHTML='Error loading pools: '+(e&&e.message||e)}}async function loadBal(){var w=document.getElementById('wallet').value.trim();if(!w){document.getElementById('bals').innerHTML='';return}var b=await J('/api/balance?address='+encodeURIComponent(w));if(!P.length){try{await loadPools()}catch(e){}}var h='<div class=bal><span>Native</span><b>'+(b.balance||0).toLocaleString()+' HARZ</b></div>';for(var i=0;i<P.length;i++){var d=null;try{d=await J('/api/contract/call',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contract_address:P[i].token_contract,method:'balanceOf',address:w})})}catch(e){}h+='<div class=bal><span>'+P[i].token_symbol+'</span><b>'+((d&&d.balance!=null)?Number(d.balance).toLocaleString():'-')+'</b></div>'}document.getElementById('bals').innerHTML=h;var ps=null;try{ps=await J('/api/amm/positions?wallet='+encodeURIComponent(w))}catch(e){}var ph='';for(var k=0;k<((ps&&ps.positions)||[]).length;k++){var q=ps.positions[k];ph+='<div class=bal><span>'+q.pool_id+'</span><b>'+q.lp_tokens.toFixed(4)+' LP ('+q.share_pct.toFixed(2)+'%)</b></div>'}document.getElementById('pos').innerHTML=ph||'No positions'}async function doQuote(){var d=await J('/api/amm/quote?pool_id='+encodeURIComponent(document.getElementById('spool').value)+'&direction='+document.getElementById('sdir').value+'&amount='+document.getElementById('samt').value);if(d.error){show('smsg','Quote failed: '+d.error,0);return}show('smsg','Quote: '+d.amount_in+' in → '+d.amount_out_display+' out\\nSpot price: '+d.spot_price_before.toFixed(6)+' → '+d.spot_price_after.toFixed(6)+' ('+d.price_impact_pct.toFixed(3)+'% impact)',1)}async function doSwap(){var w=document.getElementById('wallet').value.trim(),pid=document.getElementById('spool').value,dir=document.getElementById('sdir').value,amt=document.getElementById('samt').value;if(!w||!amt){show('smsg','Wallet and amount required',0);return}if(!getSaved(w)){show('smsg','No device key for '+w+' on this device — use Import Key or New Key For This Address',0);return}try{var nonce=Date.now();var sig=await signMsg(w+'|'+pid+'|'+dir+'|'+parseFloat(amt)+'|'+nonce,w);var d=await J('/api/amm/swap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet:w,pool_id:pid,direction:dir,amount:amt,nonce:nonce,sig:sig})});if(d.success){show('smsg','Swapped '+d.amount_in+' → '+d.amount_out+' '+d.token_symbol+'\\nTX: '+d.tx_id+' · Block '+d.block,1);loadBal();loadPools()}else show('smsg','Swap failed: '+(d.error||'unknown'),0)}catch(e){show('smsg','Swap failed: '+(e.error||e),0)}}async function doTransfer(){var w=document.getElementById('wallet').value.trim(),to=document.getElementById('tto').value.trim(),amt=document.getElementById('tamt').value;if(!w||!to||!amt){show('tmsg','Wallet, recipient and amount required',0);return}if(!getSaved(w)){show('tmsg','No device key for '+w+' on this device — use Import Key or New Key For This Address',0);return}try{var nonce=Date.now();var sig=await signMsg(w+'|'+to+'|'+parseFloat(amt)+'|'+nonce,w);var d=await J('/api/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({from:w,to:to,amount:amt,nonce:nonce,sig:sig})});if(d.success){show('tmsg','Sent '+d.amount+' HARZ to '+to+'\\nTX: '+d.tx_id+' · Block '+d.block,1);loadBal()}else show('tmsg','Transfer failed: '+(d.error||'unknown'),0)}catch(e){show('tmsg','Transfer failed: '+(e.error||e),0)}}async function doLiq(){var w=document.getElementById('wallet').value.trim(),pid=document.getElementById('lpool').value,h=document.getElementById('lharz').value,t=document.getElementById('ltok').value;if(!w||!h||!t){show('lmsg','Wallet, HARZ and token amounts required',0);return}if(!getSaved(w)){show('lmsg','No device key for '+w+' on this device — use Import Key or New Key For This Address',0);return}try{var nonce=Date.now();var sig=await signMsg(w+'|'+pid+'|'+''+'|'+parseFloat(h)+'|'+nonce,w);var d=await J('/api/amm/liquidity',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet:w,pool_id:pid,harz_amount:h,token_amount:t,nonce:nonce,sig:sig})});if(d.success){show('lmsg','Added '+d.harz_added+' HARZ + '+d.token_added+' tokens · Minted '+d.lp_minted.toFixed(4)+' LP\\nTX: '+d.tx_id,1);loadBal();loadPools()}else show('lmsg','Failed: '+(d.error||'unknown'),0)}catch(e){show('lmsg','Failed: '+(e.error||e),0)}}async function doWith(){var w=document.getElementById('wallet').value.trim(),pid=document.getElementById('rpool').value,lp=document.getElementById('rlp').value;if(!w||!lp){show('rmsg','Wallet and LP amount required',0);return}if(!getSaved(w)){show('rmsg','No device key for '+w+' on this device — use Import Key or New Key For This Address',0);return}try{var nonce=Date.now();var sig=await signMsg(w+'|'+pid+'|'+''+'|'+parseFloat(lp)+'|'+nonce,w);var d=await J('/api/amm/withdraw',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wallet:w,pool_id:pid,lp_tokens:lp,nonce:nonce,sig:sig})});if(d.success){show('rmsg','Burned '+d.lp_burned+' LP → '+d.harz_returned.toFixed(4)+' HARZ + '+d.token_returned.toFixed(4)+' '+d.token_symbol+'\\nTX: '+d.tx_id,1);loadBal();loadPools()}else show('rmsg','Failed: '+(d.error||'unknown'),0)}catch(e){show('rmsg','Failed: '+(e.error||e),0)}}loadPools();keyStatus();document.getElementById('wallet').addEventListener('change',loadBal)</script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){})}</script></body></html>`;
 
-const SW = `const CACHE='harzswap-v4';
+const SW = `const CACHE='harzswap-v61';
 self.addEventListener('install',e=>{self.skipWaiting()});
 self.addEventListener('fetch',e=>{
   const url=new URL(e.request.url);
@@ -377,7 +326,7 @@ export default {
     if (path === "/status" || path === "/api/status" || path === "/api/health") {
       return j({
         status: "ok", service: "HARZ Swap", version: VERSION,
-        execution: "none — quote & data service only (fake execution removed in v4.0.0)",
+        execution: "none — quote & data service only (fake execution removed in v6.0.0)",
         data_sources: { pools: "Polygon RPC (live on-chain balances/reserves)", pol: "Coinbase POL-USD", ngn: "open.er-api.com (cached 5min)", external: "Coinbase (cached 2min)" },
         book: { GDEG: "NGN 15 (fixed policy)", NRL: "NGN 100 (fixed policy)", HARZ: "market (pool-implied)" },
         features: ["real-on-chain-pools", "fixed-ngn-book", "no-fake-execution", "coinbase-cache", "pwa-light-theme"],
@@ -386,6 +335,7 @@ export default {
 
     if (path === "/api/pools") {
       const pools = await getPools();
+      const lp = await getLp();
       const pol = await getPol(), ngn = await getNgn();
       const harzPool = pools.find((p) => p.pair === "HARZ/WPOL");
       const harzNgn = harzPool && harzPool.harzUSD && ngn ? harzPool.harzUSD * ngn : null;
@@ -393,6 +343,7 @@ export default {
         success: true,
         book: { GDEG_NGN: BOOK.GDEG, NRL_NGN: BOOK.NRL, policy: "administered fixed prices — P2P/exchange book, not market pools" },
         pools,
+        lp,
         polUSD: pol, ngn,
         harzNgn: harzNgn ? +harzNgn.toFixed(2) : null,
         honesty: "All figures are live on-chain reads or named market feeds. No internal/synthetic pools exist.",
@@ -400,18 +351,43 @@ export default {
       });
     }
 
-    if (path === "/api/prices") {
+    
+var L1_ERR = null;
+async function l1AmmPools(env) {
+  try {
+    L1_ERR = null;
+    const url = "https://chain.internal/api/amm/pools";
+    const r = (env && env.CHAIN) ? await env.CHAIN.fetch(url) : await fetch("https://harz-chain-v2.harz.workers.dev/api/amm/pools");
+    if (!r.ok) { L1_ERR = "HTTP " + r.status; return []; }
+    const d = await r.json();
+    if (!d.pools) { L1_ERR = "no pools key, got: " + Object.keys(d).slice(0,8).join(","); return []; }
+    return d.pools;
+  } catch (e) { L1_ERR = "EXC: " + (e && e.message || String(e)); return []; }
+}
+if (path === "/api/prices") {
       const pools = await getPools();
       const pol = await getPol(), ngn = await getNgn(), ext = await getExt();
-      const harzPool = pools.find((p) => p.pair === "HARZ/WPOL");
+      const l1p = await l1AmmPools(env);
+            const nrlPool = l1p.find((p) => p.pool_id === "NRL/HARZ") || {};
+      const nrlRatio = (nrlPool.harz_reserve > 0 && nrlPool.token_reserve > 0) ? nrlPool.harz_reserve / nrlPool.token_reserve : BOOK.NRL;
+      const harzNgn = BOOK.HARZ; // owner law Sep 18, 2026: HARZ = NGN 15 everywhere (was pool-derived NGN 1 via GDEG anchor)
+      const nrlNgn = +(harzNgn * nrlRatio).toFixed(2);
       return j({
         success: true, total: 3 + Object.keys(ext).length,
         internal: {
-          HARZ: { source: "market (pool-implied)", usd: harzPool && harzPool.harzUSD || null, ngn: harzPool && harzPool.harzUSD && ngn ? +(harzPool.harzUSD * ngn).toFixed(2) : null },
+          HARZ: { source: "owner book (fixed) - HARZ = NGN 15 everywhere (owner law Sep 18, 2026)", ngn: harzNgn, usd: ngn ? +(harzNgn / ngn).toFixed(6) : null },
           GDEG: { source: "policy-book (fixed)", ngn: BOOK.GDEG, usd: ngn ? +(BOOK.GDEG / ngn).toFixed(6) : null },
-          NRL: { source: "policy-book (fixed)", ngn: BOOK.NRL, usd: ngn ? +(BOOK.NRL / ngn).toFixed(6) : null },
+          NRL: { source: l1p.length ? "L1 AMM (NRL/HARZ pool, live market)" : "policy-book (fixed, L1 pools unreachable)", ngn: nrlNgn, usd: ngn ? +(nrlNgn / ngn).toFixed(6) : null },
         },
         external: ext, polUSD: pol, ngn,
+        // legacy "prices" shape kept for existing consumers (e.g. harz-crypto-wallet loadPrices)
+        prices: {
+          HARZ: { priceUSD: ngn ? harzNgn / ngn : null },
+          GDEG: { priceUSD: ngn ? BOOK.GDEG / ngn : null },
+          NRL: { priceUSD: ngn ? nrlNgn / ngn : null },
+          WPOL: { priceUSD: pol }, POL: { priceUSD: pol },
+          ...Object.fromEntries(Object.entries(ext).map(([k, v]) => [k, { priceUSD: v }])),
+        },
         asOf: new Date().toISOString(),
       });
     }
@@ -431,9 +407,9 @@ export default {
     if (path === "/api/swap") {
       return j({
         success: false,
-        error: "Swap execution was removed in v4.0.0 — it was never a real on-chain swap.",
+        error: "This endpoint does not execute swaps. Real, signed swap execution lives on HARZ Chain: use the Swap tab of this DEX (device-key signed, executed by the HARZ Router v1 on-chain engine).",
         explanation: "The old /api/swap executed trades against in-memory synthetic pools and returned a random fake txHash. That violated the ecosystem honesty law. This service now provides honest quotes against real on-chain pools only.",
-        alternatives: "Use QuickSwap directly for on-chain swaps (HARZ/WPOL, GDEG/WPOL, NRL/WPOL pools are all real). Wallet-connected swaps ship with the V3 token rollout.",
+        alternatives: "Swap for real on HARZ Chain — the Swap tab on this page signs and executes through the HARZ Router v1 engine (/api/amm/* on HARZ Chain, constant-product, 0.3% fee). No third-party router exists in this stack.",
         api: "GET /api/quote?from=&to=&amount= — real quotes, always labeled with their source.",
       }, 410);
     }
