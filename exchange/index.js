@@ -2,7 +2,6 @@ var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value: value, configurable: true });
 
 // harz-exchange-v5-secured.js
-var PAYMENT = { bank: "UBA", account: "2034326424", name: "Rabiu Hamza Mohammed", code: "033" };
 var SW_CODE = "const C='harz-ex-v5';self.addEventListener('install',e=>{self.skipWaiting()});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(c=>c!==C).map(c=>caches.delete(c)))))});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(c=>{const f=fetch(e.request).then(r=>{if(r&&r.status===200){caches.open(C).then(c=>c.put(e.request,r.clone()))}return r}).catch(()=>c);return c||f}))})";
 var MANIFEST = JSON.stringify({
   name: "HARZ Exchange",
@@ -140,6 +139,7 @@ body{background:#f0f2f5;color:#1e293b;min-height:100vh;padding-bottom:60px}
 <div class="tab" data-tab="trade" onclick="showTab('trade')">Trade</div>
 <div class="tab" data-tab="wallet" onclick="showTab('wallet')">Wallet</div>
 <div class="tab" data-tab="portfolio" onclick="showTab('portfolio')">Portfolio</div>
+<div class="tab" data-tab="p2p" onclick="showTab('p2p')">P2P</div>
 </div>
 
 <div id="tab-markets">
@@ -160,12 +160,13 @@ body{background:#f0f2f5;color:#1e293b;min-height:100vh;padding-bottom:60px}
 
 <div id="tab-trade" style="display:none">
 <div class="section">
-<h2>Buy Crypto with NGN \u2014 OTC Desk</h2><p style="font-size:.72rem;color:#64748b;margin-bottom:12px">Desk-settled order: after ordering you receive bank payment instructions; coins are sent once payment confirms.</p>
+<h2>Buy Crypto with NGN</h2><p style="font-size:.72rem;color:#64748b;margin-bottom:12px">Secure checkout by Paystack \u2014 card, bank, or USSD. Coins credit automatically when payment confirms. No API key needed.</p>
 <div class="form-group"><label>Select Coin</label><select id="buy-coin" onchange="updateL1Note()"></select></div>
 <div class="form-group"><label>Amount (NGN)</label><input type="number" id="buy-ngn" placeholder="5000" inputmode="decimal" oninput="calcBuy()"></div>
 <div class="form-group"><label>You Receive</label><input type="text" id="buy-recv" readonly style="color:#0ea5e9;font-weight:600"></div>
 <div class="form-group"><label>Phone Number</label><input type="tel" id="buy-phone" placeholder="0802..." inputmode="tel"></div>
-<div class="form-group"><label>API Key (required for trading)</label><input type="password" id="harz-key" placeholder="Enter your HARZ API key" oninput="localStorage.setItem('harz_api_key',this.value)"></div><button class="btn btn-buy" onclick="placeBuy()">Buy Now</button>
+<div class="form-group"><label>Email (optional, for your receipt)</label><input type="email" id="buy-email" placeholder="you@email.com"></div>
+<button class="btn btn-buy" onclick="placeBuy()">Buy Now</button>
 <div class="result" id="buy-result"></div><div id="l1-route" style="display:none;margin-top:10px;padding:10px;border:1px solid #bae6fd;background:#f0f9ff;border-radius:10px;font-size:.74rem;color:#0369a1"><b>On-chain alternative:</b> HARZ, GDEG and NRL trade 24/7 peer-to-pool on <b>HARZSwap</b> \u2014 our own DEX on HARZ Chain. Instant signed swaps against live pool liquidity, no bank steps.<br><a href="https://harz-swap.harz.workers.dev/" style="color:#0369a1;font-weight:600">Open HARZSwap \u2192</a></div>
 </div>
 <div class="section">
@@ -199,11 +200,33 @@ body{background:#f0f2f5;color:#1e293b;min-height:100vh;padding-bottom:60px}
 <h2>Deposit / Withdraw</h2>
 <div class="form-group"><label>Phone (Account ID)</label><input type="tel" id="w-phone" placeholder="0802..." inputmode="tel"></div>
 <div class="form-group"><label>Action</label>
-<select id="w-action"><option value="deposit">Deposit NGN (Bank Transfer)</option><option value="withdraw">Withdraw NGN</option></select>
+<select id="w-action"><option value="deposit">Deposit NGN (Paystack)</option><option value="withdraw">Withdraw NGN</option></select>
 </div>
 <div class="form-group"><label>Amount (NGN)</label><input type="number" id="w-amount" placeholder="5000" inputmode="decimal"></div>
 <button class="btn btn-primary" onclick="walletAction()">Submit</button>
 <div class="result" id="w-result"></div>
+</div>
+</div>
+
+<div id="tab-p2p" style="display:none">
+<div class="section">
+<h2>P2P Market</h2><p style="font-size:.72rem;color:#64748b;margin-bottom:12px">Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded.</p>
+<div id="p2p-board" style="max-height:340px;overflow-y:auto"></div>
+</div>
+<div class="section">
+<h2>Post a Sell Offer</h2>
+<div class="form-group"><label>Coin</label><select id="po-coin"></select></div>
+<div class="form-group"><label>Amount to Sell</label><input type="number" id="po-amount" placeholder="0.01" step="0.00000001" inputmode="decimal"></div>
+<div class="form-group"><label>Price per coin (NGN)</label><input type="number" id="po-rate" placeholder="Set your price" inputmode="decimal"></div>
+<div class="form-group"><label>Your Phone (buyers contact you)</label><input type="tel" id="po-phone" placeholder="0802..." inputmode="tel"></div>
+<button class="btn btn-buy" onclick="postOffer()">Post Offer</button>
+<div class="result" id="po-result"></div>
+</div>
+<div class="section">
+<h2>My Offers \u0026 Orders</h2>
+<div class="form-group"><label>Phone</label><input type="tel" id="my-phone" placeholder="0802..." inputmode="tel"></div>
+<button class="btn btn-buy" onclick="loadMyOffers()">Load My Offers</button>
+<div id="my-offers" style="margin-top:10px"></div>
 </div>
 </div>
 
@@ -217,7 +240,7 @@ body{background:#f0f2f5;color:#1e293b;min-height:100vh;padding-bottom:60px}
 </div>
 
 <div class="footer">
-HARZ Exchange v6.0 | OTC Desk + Live HARZSwap oracle | NGN rate: \u20A6${ngnRate.toLocaleString()}<br>
+HARZ Exchange v6.1 | OTC Desk + Paystack checkout + P2P market | NGN rate: \u20A6${ngnRate.toLocaleString()}<br>
 WhatsApp: 08028687857 | CAC RC: 321424
 </div>
 </div>
@@ -404,10 +427,10 @@ async function placeBuy() {
   if (!phone || phone.length < 10) { showResult(el, 'err', 'Enter a valid phone number'); return; }
   showResult(el, 'loading', 'Processing order...');
   try {
-    const r = await fetch('/api/buy', {method:'POST',headers:{'Content-Type':'application/json','X-API-Key':localStorage.getItem('harz_api_key')||''},body:JSON.stringify({coin:coinId,symbol:coin.sym,ngn_amount:ngn,phone:phone,price:p.usd})});
+    const r = await fetch('/api/buy', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coin:coinId,symbol:coin.sym,ngn_amount:ngn,phone:phone,email:document.getElementById('buy-email').value.trim(),price:p.usd})});
     const d = await r.json();
     if (d.success) {
-      showResult(el, 'ok', 'Order ' + d.order_id + ' created!<br>Pay \u20A6' + d.ngn_amount.toLocaleString() + ' to ' + d.payment.bank + ' ' + d.payment.account + '<br>Receive: ' + d.crypto_amount + ' ' + coin.sym + '<br>Send payment proof to 08028687857');
+      showResult(el, 'ok', 'Order ' + d.order_id + ' created! Taking you to secure Paystack checkout...'); setTimeout(function(){ location.href = d.checkout_url; }, 900);
     } else { showResult(el, 'err', d.error || 'Order failed'); }
   } catch(e) { showResult(el, 'err', 'Network error. Try again.'); }
 }
@@ -424,7 +447,7 @@ async function placeSell() {
   if (!phone || phone.length < 10) { showResult(el, 'err', 'Enter a valid phone number'); return; }
   showResult(el, 'loading', 'Processing sell order...');
   try {
-    const r = await fetch('/api/sell', {method:'POST',headers:{'Content-Type':'application/json','X-API-Key':localStorage.getItem('harz_api_key')||''},body:JSON.stringify({coin:coinId,symbol:coin.sym,amount:amt,phone:phone,price:p.usd})});
+    const r = await fetch('/api/sell', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coin:coinId,symbol:coin.sym,amount:amt,phone:phone,price:p.usd})});
     const d = await r.json();
     if (d.success) {
       showResult(el, 'ok', 'Sell order ' + d.order_id + ' created!<br>Send ' + d.crypto_amount + ' ' + coin.sym + ' to our wallet<br>Receive: \u20A6' + d.ngn_payout.toLocaleString() + '<br>We\\'ll credit your account within 10 minutes');
@@ -471,10 +494,11 @@ async function walletAction() {
   if (!amount || amount < 100) { showResult(el, 'err', 'Min \u20A6100'); return; }
   showResult(el, 'loading', 'Processing...');
   try {
-    const r = await fetch('/api/wallet', {method:'POST',headers:{'Content-Type':'application/json','X-API-Key':localStorage.getItem('harz_api_key')||''},body:JSON.stringify({phone,action,amount})});
+    const r = await fetch('/api/wallet', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,action,amount})});
     const d = await r.json();
     if (d.success) {
-      showResult(el, 'ok', d.action === 'deposit' ? 'Deposit request created. Transfer \u20A6' + amount.toLocaleString() + ' to UBA 2034326424. Your exchange balance will be credited within 10 minutes.' : 'Withdrawal of \u20A6' + amount.toLocaleString() + ' requested. You\\'ll receive it within 30 minutes to your bank account.');
+      if (d.checkout_url) { showResult(el, 'ok', 'Taking you to secure Paystack checkout...'); setTimeout(function(){ location.href = d.checkout_url; }, 900); return; }
+      showResult(el, 'ok', 'Withdrawal of \u20A6' + amount.toLocaleString() + ' requested. You\'ll receive it within 30 minutes to your bank account.');
     } else { showResult(el, 'err', d.error || 'Failed'); }
   } catch(e) { showResult(el, 'err', 'Network error'); }
 }
@@ -502,6 +526,64 @@ async function loadPortfolio() {
   } catch(e) { el.innerHTML = '<div class="error-msg">Failed to load portfolio</div>'; }
 }
 
+// ============ P2P ============
+async function loadP2P() {
+  const el = document.getElementById('p2p-board');
+  if (!el) return;
+  try {
+    const r = await fetch('/api/p2p/offers'); const d = await r.json();
+    if (!d.offers || !d.offers.length) { el.innerHTML = '<div style="color:#64748b;font-size:.8rem">No active offers yet. Post the first one below.</div>'; return; }
+    el.innerHTML = d.offers.map(function(o) {
+      return '<div class="coin-row" style="padding:10px 0;border-bottom:1px solid #e2e8f0"><div><div class="sym">' + o.symbol + '</div><div style="font-size:.7rem;color:#64748b">' + o.amount + ' ' + o.symbol + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' each</div></div><div style="text-align:right"><button class="btn btn-buy" style="padding:6px 12px;font-size:.75rem" onclick="p2pTrade(\'' + o.id + '\')">Buy</button></div></div>';
+    }).join('');
+  } catch(e) { el.innerHTML = '<div style="color:#ef4444;font-size:.8rem">Failed to load offers</div>'; }
+}
+async function p2pTrade(offerId) {
+  const ngn = prompt('Amount in NGN to pay (min \u20A6100):');
+  if (!ngn || parseFloat(ngn) < 100) { alert('Minimum is \u20A6100'); return; }
+  const phone = prompt('Your phone number (seller contacts you here):');
+  if (!phone || phone.length < 10) { alert('Enter a valid phone number'); return; }
+  try {
+    const r = await fetch('/api/p2p/trade', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({offer_id:offerId,phone:phone,ngn_amount:parseFloat(ngn)})});
+    const d = await r.json();
+    if (d.success && d.checkout_url) { alert('Taking you to secure Paystack checkout...'); location.href = d.checkout_url; }
+    else alert(d.error || 'Trade failed');
+  } catch(e) { alert('Network error. Try again.'); }
+}
+async function postOffer() {
+  const coinVal = document.getElementById('po-coin').value;
+  const parts = coinVal.split('|');
+  const amount = parseFloat(document.getElementById('po-amount').value);
+  const rate = parseFloat(document.getElementById('po-rate').value);
+  const phone = document.getElementById('po-phone').value.trim();
+  const el = document.getElementById('po-result');
+  if (!amount || amount <= 0 || !rate || rate <= 0) { showResult(el, 'err', 'Enter amount and price'); return; }
+  if (!phone || phone.length < 10) { showResult(el, 'err', 'Enter phone number'); return; }
+  try {
+    const r = await fetch('/api/p2p/offer', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({coin:parts[0],symbol:parts[1],amount:amount,rate_ngn:rate,phone:phone})});
+    const d = await r.json();
+    if (d.success) { showResult(el, 'ok', 'Offer posted! ID ' + d.offer_id + '. It is live on the P2P board.'); loadP2P(); }
+    else showResult(el, 'err', d.error || 'Failed');
+  } catch(e) { showResult(el, 'err', 'Network error'); }
+}
+async function loadMyOffers() {
+  const phone = document.getElementById('my-phone').value.trim(); const el = document.getElementById('my-offers');
+  if (!phone || phone.length < 10) { el.innerHTML = '<div style="color:#64748b;font-size:.8rem">Enter your phone to view offers and orders.</div>'; return; }
+  try {
+    const r = await fetch('/api/p2p/my?phone=' + encodeURIComponent(phone)); const d = await r.json();
+    let html = '';
+    (d.offers||[]).forEach(function(o){ html += '<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:.78rem"><b>' + o.symbol + '</b> \u2014 ' + o.amount + ' @ \u20A6' + o.rate_ngn.toLocaleString() + ' \u2014 ' + o.status + (o.status==='active'?' <button style="padding:2px 8px;font-size:.68rem;border:1px solid #16a34a;border-radius:6px;background:#f0fdf4;color:#16a34a" onclick="p2pRelease(\''+o.id+'\',\''+phone+'\')">Mark released/sold</button>':'') + '</div>'; });
+    (d.orders||[]).forEach(function(o){ html += '<div style="padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:.78rem">' + o.symbol + ' \u2014 \u20A6' + o.ngn_amount.toLocaleString() + ' \u2014 ' + o.status + '</div>'; });
+    el.innerHTML = html || '<div style="color:#64748b;font-size:.8rem">No offers or orders yet.</div>';
+  } catch(e) { el.innerHTML = '<div style="color:#ef4444;font-size:.8rem">Failed to load</div>'; }
+}
+async function p2pRelease(offerId, phone) {
+  try {
+    const r = await fetch('/api/p2p/release', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({offer_id:offerId,seller_phone:phone})});
+    const d = await r.json(); alert(d.success ? 'Offer marked completed.' : (d.error||'Failed')); loadMyOffers(); loadP2P();
+  } catch(e) { alert('Network error'); }
+}
+
 // ============ HELPERS ============
 function showResult(el, type, msg) {
   el.className = 'result ' + type;
@@ -513,7 +595,7 @@ function showTab(name) {
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   const tab = document.querySelector('[data-tab="' + name + '"]');
   if (tab) tab.classList.add('active');
-  ['markets','chart','trade','wallet','portfolio'].forEach(function(t) {
+  ['markets','chart','trade','wallet','portfolio','p2p'].forEach(function(t) {
     const el = document.getElementById('tab-' + t);
     if (el) el.style.display = t === name ? 'block' : 'none';
   });
@@ -523,8 +605,8 @@ function showTab(name) {
 // ============ INIT ============
 loadNGN();
 loadMarkets();
-  const savedKey = localStorage.getItem('harz_api_key');
-  if (savedKey) { const k = document.getElementById('harz-key'); if (k) k.value = savedKey; }
+  const poSel = document.getElementById('po-coin');
+  if (poSel) { COINS.forEach(function(c){ poSel.innerHTML += '<option value="' + c.id + '|' + c.sym + '">' + c.name + '</option>'; }); loadP2P(); }
 setInterval(loadMarkets, 60000);
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function(){});
 <\/script>
@@ -561,14 +643,19 @@ var harz_exchange_v5_secured_default = {
     if (path === "/manifest.json") return new Response(MANIFEST, { headers: { "Content-Type": "application/manifest+json", ...cors } });
     if (path === "/sw.js") return new Response(SW_CODE, { headers: { "Content-Type": "application/javascript", ...cors } });
     if (path === "/api/health") {
-      return Response.json({ service: "HARZ Exchange", version: "6.0.1", status: "live", coins: COIN_LIST.length, model: "OTC buy/sell desk (orders settled by our team)", onchain_dex: "https://harz-swap.harz.workers.dev", features: ["otc_buy_sell_desk", "tradingview_charts", "harzswap_oracle_prices", "harzswap_l1_onchain_route", "metamask_read_only_balances", "ngn_otc", "portfolio", "api_key_auth"] }, { headers: cors });
+      return Response.json({ service: "HARZ Exchange", version: "6.1.0", status: "live", coins: COIN_LIST.length, model: "OTC desk with Paystack checkout (buys auto-settle) + P2P market + desk-settled sell payouts", onchain_dex: "https://harz-swap.harz.workers.dev", features: ["otc_buy_sell_desk", "tradingview_charts", "harzswap_oracle_prices", "harzswap_l1_onchain_route", "metamask_read_only_balances", "ngn_otc", "portfolio", "paystack_checkout", "p2p_market", "no_api_key_for_customers"] }, { headers: cors });
     }
     if (path === "/api/ngn") {
       const ngn = await getNGN(env);
       return Response.json({ ngn }, { headers: cors });
     }
+    async function psInit(env2, ngnAmount, ref, metadata, emailHint) {
+      const email = (typeof emailHint === "string" && emailHint.includes("@")) ? emailHint : ((emailHint || "customer") + "@harz.dev");
+      const r = await fetch("https://api.paystack.co/transaction/initialize", { method: "POST", headers: { Authorization: "Bearer " + (env2.PAYSTACK_SK || ""), "Content-Type": "application/json", "User-Agent": "HARZExchange/6.1 (+https://harz-exchange.harz.workers.dev)" }, body: JSON.stringify({ email: email, amount: Math.round(ngnAmount * 100), reference: ref, currency: "NGN", metadata: metadata, callback_url: "https://harz-exchange.harz.workers.dev/?tab=portfolio&paid=" + ref }) });
+      return r.json();
+    }
+    __name(psInit, "psInit");
     if (path === "/api/buy" && request.method === "POST") {
-      if (!checkAuth(request)) return Response.json({ error: "Unauthorized. X-API-Key required." }, { status: 401, headers: cors });
       const body = await request.json();
       const coinId = body.coin;
       const symbol = body.symbol;
@@ -581,24 +668,16 @@ var harz_exchange_v5_secured_default = {
       const ngnRate = await getNGN(env);
       const cryptoAmount = ngnAmount / (price * ngnRate);
       const orderId = genId("BUY");
-      const order = { id: orderId, type: "buy", coin: coinId, symbol, ngn_amount: ngnAmount, crypto_amount: cryptoAmount.toFixed(8), rate: price, ngn_rate: ngnRate, phone, payment: PAYMENT, status: "pending", created_at: (/* @__PURE__ */ new Date()).toISOString() };
+      const order = { id: orderId, type: "buy", coin: coinId, symbol, ngn_amount: ngnAmount, crypto_amount: cryptoAmount.toFixed(8), rate: price, ngn_rate: ngnRate, phone, status: "awaiting_payment", created_at: (new Date()).toISOString() };
       await env.EXCHANGE_KV.put("order:" + orderId, JSON.stringify(order));
       const idx = await env.EXCHANGE_KV.get("orders:" + phone, "json") || [];
-      idx.push({ id: orderId, type: "buy", symbol, ngn_amount: ngnAmount, status: "pending", created_at: order.created_at });
+      idx.push({ id: orderId, type: "buy", symbol, ngn_amount: ngnAmount, status: "awaiting_payment", created_at: order.created_at });
       await env.EXCHANGE_KV.put("orders:" + phone, JSON.stringify(idx));
-      const holdings = await env.EXCHANGE_KV.get("holdings:" + phone, "json") || [];
-      let existing = holdings.find(function(h) {
-        return h.coin === coinId;
-      });
-      if (existing) {
-        existing.amount = (parseFloat(existing.amount) + cryptoAmount).toFixed(8);
-        existing.ngn_value = parseFloat(existing.amount) * price * ngnRate;
-      } else holdings.push({ coin: coinId, symbol, amount: cryptoAmount.toFixed(8), ngn_value: cryptoAmount * price * ngnRate, status: "pending" });
-      await env.EXCHANGE_KV.put("holdings:" + phone, JSON.stringify(holdings));
-      return Response.json({ success: true, order_id: orderId, ngn_amount: ngnAmount, crypto_amount: cryptoAmount.toFixed(8), rate: price, payment: PAYMENT }, { headers: cors });
+      const ps = await psInit(env, ngnAmount, orderId, { type: "otc_buy", phone }, body.email || phone);
+      if (!ps.status || !(ps.data || {}).authorization_url) return Response.json({ error: "Payment gateway unavailable. Please try again in a moment." }, { status: 502, headers: cors });
+      return Response.json({ success: true, order_id: orderId, ngn_amount: ngnAmount, crypto_amount: cryptoAmount.toFixed(8), rate: price, checkout_url: ps.data.authorization_url }, { headers: cors });
     }
     if (path === "/api/sell" && request.method === "POST") {
-      if (!checkAuth(request)) return Response.json({ error: "Unauthorized. X-API-Key required." }, { status: 401, headers: cors });
       const body = await request.json();
       const coinId = body.coin;
       const symbol = body.symbol;
@@ -638,7 +717,6 @@ var harz_exchange_v5_secured_default = {
       return Response.json({ phone, holdings, total_ngn: total }, { headers: cors });
     }
     if (path === "/api/wallet" && request.method === "POST") {
-      if (!checkAuth(request)) return Response.json({ error: "Unauthorized. X-API-Key required." }, { status: 401, headers: cors });
       const body = await request.json();
       const phone = body.phone?.trim();
       const action = body.action;
@@ -648,7 +726,122 @@ var harz_exchange_v5_secured_default = {
       const txId = genId(action.toUpperCase().slice(0, 3));
       const tx = { id: txId, phone, action, amount, status: "pending", created_at: (/* @__PURE__ */ new Date()).toISOString() };
       await env.EXCHANGE_KV.put("wtx:" + txId, JSON.stringify(tx));
+      if (action === "deposit") {
+        const ps = await psInit(env, amount, txId, { type: "deposit", phone }, phone);
+        if (!ps.status || !(ps.data || {}).authorization_url) return Response.json({ error: "Payment gateway unavailable. Please try again in a moment." }, { status: 502, headers: cors });
+        return Response.json({ success: true, action, amount, tx_id: txId, checkout_url: ps.data.authorization_url }, { headers: cors });
+      }
       return Response.json({ success: true, action, amount, tx_id: txId }, { headers: cors });
+    }
+    if (path === "/api/paystack/webhook" && request.method === "POST") {
+      const raw = await request.text();
+      const sig = request.headers.get("x-paystack-signature") || "";
+      const enc = new TextEncoder();
+      const keyRaw = await crypto.subtle.importKey("raw", enc.encode(env.PAYSTACK_SK || ""), { name: "HMAC", hash: "SHA-512" }, false, ["sign"]);
+      const sigBuf = await crypto.subtle.sign("HMAC", keyRaw, enc.encode(raw));
+      const expect = Array.from(new Uint8Array(sigBuf)).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+      if (sig !== expect) return new Response("bad signature", { status: 401 });
+      let ev; try { ev = JSON.parse(raw); } catch (e2) { return new Response("bad json", { status: 400 }); }
+      if (ev.event === "charge.success") {
+        const d = ev.data || {}; const ref = d.reference || ""; const meta = (d && d.metadata) || {};
+        const kind = meta.type || (ref.startsWith("BUY") ? "otc_buy" : ref.startsWith("DEP") ? "deposit" : ref.startsWith("P2P") ? "p2p" : "");
+        if (kind === "otc_buy") {
+          const o = await env.EXCHANGE_KV.get("order:" + ref, "json");
+          if (o && o.status !== "paid") {
+            o.status = "paid"; o.paid_at = (new Date()).toISOString();
+            await env.EXCHANGE_KV.put("order:" + ref, JSON.stringify(o));
+            const price = parseFloat(o.rate) || 0; const nr = parseFloat(o.ngn_rate) || 1; const amt = parseFloat(o.crypto_amount) || 0;
+            const hKey = "holdings:" + o.phone; const hs = await env.EXCHANGE_KV.get(hKey, "json") || [];
+            const ex = hs.find(function(h) { return h.coin === o.coin; });
+            if (ex) { ex.amount = (parseFloat(ex.amount) + amt).toFixed(8); ex.ngn_value = parseFloat(ex.amount) * price * nr; ex.status = "paid"; }
+            else hs.push({ coin: o.coin, symbol: o.symbol, amount: amt.toFixed(8), ngn_value: amt * price * nr, status: "paid" });
+            await env.EXCHANGE_KV.put(hKey, JSON.stringify(hs));
+            const idx = await env.EXCHANGE_KV.get("orders:" + o.phone, "json") || [];
+            const ix = idx.find(function(x) { return x.id === ref; }); if (ix) ix.status = "paid";
+            await env.EXCHANGE_KV.put("orders:" + o.phone, JSON.stringify(idx));
+          }
+        } else if (kind === "deposit") {
+          const t = await env.EXCHANGE_KV.get("wtx:" + ref, "json");
+          if (t && t.status !== "paid") {
+            t.status = "paid";
+            await env.EXCHANGE_KV.put("wtx:" + ref, JSON.stringify(t));
+            const wKey = "wallet:" + t.phone; const w = await env.EXCHANGE_KV.get(wKey, "json") || { ngn: 0 };
+            w.ngn = (parseFloat(w.ngn || 0) + parseFloat(t.amount)).toFixed(2);
+            await env.EXCHANGE_KV.put(wKey, JSON.stringify(w));
+          }
+        } else if (kind === "p2p") {
+          const o = await env.EXCHANGE_KV.get("order:" + ref, "json");
+          if (o && o.status !== "paid") {
+            o.status = "paid";
+            await env.EXCHANGE_KV.put("order:" + ref, JSON.stringify(o));
+            const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+            const of = offers.find(function(x) { return x.id === o.offer_id; });
+            if (of) { of.amount = Math.max(0, (parseFloat(of.amount) || 0) - (parseFloat(o.qty) || 0)); if (of.amount <= 0.00000001) of.status = "sold"; }
+            await env.EXCHANGE_KV.put("p2p:offers", JSON.stringify(offers));
+            const sidx = await env.EXCHANGE_KV.get("orders:" + o.seller_phone, "json") || [];
+            const sx = sidx.find(function(x) { return x.id === ref; }); if (sx) sx.status = "paid";
+            await env.EXCHANGE_KV.put("orders:" + o.seller_phone, JSON.stringify(sidx));
+            const bidx = await env.EXCHANGE_KV.get("orders:" + o.buyer_phone, "json") || [];
+            const bx = bidx.find(function(x) { return x.id === ref; }); if (bx) bx.status = "paid";
+            await env.EXCHANGE_KV.put("orders:" + o.buyer_phone, JSON.stringify(bidx));
+          }
+        }
+      }
+      return new Response("ok");
+    }
+    if (path === "/api/p2p/offers" && request.method === "GET") {
+      const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+      return Response.json({ offers: offers.filter(function(o) { return o.status === "active"; }) }, { headers: cors });
+    }
+    if (path === "/api/p2p/offer" && request.method === "POST") {
+      const body = await request.json();
+      const phone = (body.phone || "").trim();
+      const amount = parseFloat(body.amount); const rate = parseFloat(body.rate_ngn);
+      if (!phone || phone.length < 10) return Response.json({ error: "Valid phone required" }, { headers: cors });
+      if (!amount || amount <= 0 || !rate || rate <= 0) return Response.json({ error: "Amount and price required" }, { headers: cors });
+      const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+      const id = genId("P2P");
+      offers.push({ id: id, symbol: body.symbol || "BTC", coin: body.coin || "bitcoin", amount: amount, rate_ngn: rate, phone: phone, status: "active", created_at: (new Date()).toISOString() });
+      await env.EXCHANGE_KV.put("p2p:offers", JSON.stringify(offers));
+      return Response.json({ success: true, offer_id: id }, { headers: cors });
+    }
+    if (path === "/api/p2p/trade" && request.method === "POST") {
+      const body = await request.json();
+      const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+      const of = offers.find(function(x) { return x.id === body.offer_id; });
+      if (!of || of.status !== "active") return Response.json({ error: "Offer no longer available" }, { headers: cors });
+      const phone = (body.phone || "").trim(); const ngnAmount = parseFloat(body.ngn_amount);
+      if (!phone || phone.length < 10) return Response.json({ error: "Valid phone required" }, { headers: cors });
+      if (!ngnAmount || ngnAmount < 100) return Response.json({ error: "Min \u20A6100" }, { headers: cors });
+      const qty = ngnAmount / of.rate_ngn;
+      if (qty > of.amount) return Response.json({ error: "Amount exceeds offer. Max \u20A6" + Math.floor(of.amount * of.rate_ngn).toLocaleString() }, { headers: cors });
+      const orderId = genId("P2P");
+      const order = { id: orderId, type: "p2p", offer_id: of.id, symbol: of.symbol, coin: of.coin, qty: qty, rate_ngn: of.rate_ngn, ngn_amount: ngnAmount, seller_phone: of.phone, buyer_phone: phone, status: "awaiting_payment", created_at: (new Date()).toISOString() };
+      await env.EXCHANGE_KV.put("order:" + orderId, JSON.stringify(order));
+      const idx = await env.EXCHANGE_KV.get("orders:" + phone, "json") || [];
+      idx.push({ id: orderId, type: "p2p", symbol: of.symbol, ngn_amount: ngnAmount, status: "awaiting_payment", created_at: order.created_at });
+      await env.EXCHANGE_KV.put("orders:" + phone, JSON.stringify(idx));
+      const sidx = await env.EXCHANGE_KV.get("orders:" + of.phone, "json") || [];
+      sidx.push({ id: orderId, type: "p2p", symbol: of.symbol, ngn_amount: ngnAmount, status: "awaiting_payment", created_at: order.created_at });
+      await env.EXCHANGE_KV.put("orders:" + of.phone, JSON.stringify(sidx));
+      const ps = await psInit(env, ngnAmount, orderId, { type: "p2p", offer_id: of.id, phone }, phone);
+      if (!ps.status || !(ps.data || {}).authorization_url) return Response.json({ error: "Payment gateway unavailable. Please try again in a moment." }, { status: 502, headers: cors });
+      return Response.json({ success: true, order_id: orderId, qty: qty, ngn_amount: ngnAmount, checkout_url: ps.data.authorization_url }, { headers: cors });
+    }
+    if (path === "/api/p2p/my" && request.method === "GET") {
+      const phone = url.searchParams.get("phone") || "";
+      const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+      const orders = await env.EXCHANGE_KV.get("orders:" + phone, "json") || [];
+      return Response.json({ offers: offers.filter(function(o) { return o.phone === phone; }), orders: orders.filter(function(o) { return o.type === "p2p"; }) }, { headers: cors });
+    }
+    if (path === "/api/p2p/release" && request.method === "POST") {
+      const body = await request.json();
+      const offers = await env.EXCHANGE_KV.get("p2p:offers", "json") || [];
+      const of = offers.find(function(x) { return x.id === body.offer_id; });
+      if (!of || of.phone !== ((body.seller_phone || "").trim())) return Response.json({ error: "Offer not found for this phone" }, { headers: cors });
+      of.status = "completed";
+      await env.EXCHANGE_KV.put("p2p:offers", JSON.stringify(offers));
+      return Response.json({ success: true, offer_id: of.id, status: "completed" }, { headers: cors });
     }
     if (path === "/" || path === "/app") {
       const ngn = await getNGN(env);
