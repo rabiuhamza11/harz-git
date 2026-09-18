@@ -1,12 +1,11 @@
---6fedd520f4c9f8e17c0e63e07f552f239db41fa7635b4fa11f5107d66479
-Content-Disposition: form-data; name="worker.js"
-
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// worker.js
+// edge-new.js
 var __defProp2 = Object.defineProperty;
 var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
+var __defProp22 = Object.defineProperty;
+var __name22 = /* @__PURE__ */ __name2((target, value) => __defProp22(target, "name", { value, configurable: true }), "__name");
 var REPORT_MD = `
 # HARZ EDGE TELECOM \u2014 SOUND-OVER-MESH VALIDATION REPORT
 Compiled: 6 Sep 2026 (evening) | Location: sandbox (logic layer) | Status: ALL TESTS PASS
@@ -97,7 +96,8 @@ ${body}
 }
 __name(reportPage, "reportPage");
 __name2(reportPage, "reportPage");
-var VERSION = "4.0.2";
+__name22(reportPage, "reportPage");
+var VERSION = "5.2.0";
 var THEME = "#f0f2f5";
 var CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
@@ -193,6 +193,7 @@ function shell(title, body, activeNav) {
 }
 __name(shell, "shell");
 __name2(shell, "shell");
+__name22(shell, "shell");
 function overview() {
   return shell("HARZ Edge Telecom \u2014 Phone Mesh Network", `
 <div class="card">
@@ -233,6 +234,7 @@ function overview() {
 }
 __name(overview, "overview");
 __name2(overview, "overview");
+__name22(overview, "overview");
 function gates() {
   return shell("Validation Gates \u2014 HARZ Edge Telecom", `
 <div class="card">
@@ -271,6 +273,7 @@ function gates() {
 }
 __name(gates, "gates");
 __name2(gates, "gates");
+__name22(gates, "gates");
 function appPage() {
   return shell("The App \u2014 HARZ Edge Telecom", `
 <div class="card">
@@ -301,6 +304,319 @@ function appPage() {
 }
 __name(appPage, "appPage");
 __name2(appPage, "appPage");
+__name22(appPage, "appPage");
+var RADIO_CODEC = `// HARZ RADIO CODEC v1.1 \u2014 FSK over sound (2 tones: 1000 Hz = 0, 1500 Hz = 1; decoder is rate-adaptive)
+// Pure functions, no browser APIs: encode(text) \u2192 Float32Array PCM; decode(pcm, sampleRate) \u2192 text | null
+// Frame: 8-bit alternating preamble + magic "HRZ1" + 16-bit length + UTF-8 payload + CRC16 (CCITT).
+var HRC = (function () {
+  var RATE = 48000, BITMS = 8, BIT = Math.round(RATE * BITMS / 1000); // 384 samples, 125 bits/sec
+  var F0 = 1000, F1 = 1500, RAMP = 38; // ~1ms raised-cosine ramp; exact Goertzel bins at 384-sample windows (k=8, k=12)
+  var PREAMBLE = [1, 0, 1, 0, 1, 0, 1, 0];
+  var MAGIC = [0x48, 0x52, 0x5a, 0x31]; // "HRZ1"
+  var MAXPAY = 90;
+
+  function crc16(bytes) {
+    var c = 0xFFFF;
+    for (var i = 0; i < bytes.length; i++) {
+      c ^= bytes[i] << 8;
+      for (var j = 0; j < 8; j++) c = (c & 0x8000) ? (((c << 1) ^ 0x1021) & 0xFFFF) : ((c << 1) & 0xFFFF);
+    }
+    return c & 0xFFFF;
+  }
+  function bytesToBits(bytes) {
+    var bits = [];
+    for (var i = 0; i < bytes.length; i++) for (var b = 7; b >= 0; b--) bits.push((bytes[i] >> b) & 1);
+    return bits;
+  }
+  function bitsToBytes(bits) {
+    var out = [];
+    for (var i = 0; i + 8 <= bits.length; i += 8) {
+      var v = 0;
+      for (var b = 0; b < 8; b++) v = (v << 1) | bits[i + b];
+      out.push(v);
+    }
+    return out;
+  }
+  // encode text \u2192 {pcm: Float32Array, durationSec, bits}
+  function encode(text) {
+    if (typeof text !== "string") return null;
+    var bytes = [];
+    var u = unescape(encodeURIComponent(text)); // UTF-8 bytes
+    for (var i = 0; i < u.length; i++) bytes.push(u.charCodeAt(i) & 0xFF);
+    if (bytes.length > MAXPAY) return null;
+    var frame = [].concat(MAGIC, [(bytes.length >> 8) & 0xFF, bytes.length & 0xFF], bytes);
+    var crc = crc16(frame);
+    frame.push((crc >> 8) & 0xFF, crc & 0xFF);
+    var bits = PREAMBLE.slice().concat(bytesToBits(frame));
+    var n = bits.length * BIT;
+    var pcm = new Float32Array(n);
+    for (var k = 0; k < bits.length; k++) {
+      var f = bits[k] ? F1 : F0, off = k * BIT;
+      for (var s = 0; s < BIT; s++) {
+        var g = 1;
+        if (s < RAMP) g = 0.5 * (1 - Math.cos(Math.PI * s / RAMP));
+        else if (s >= BIT - RAMP) g = 0.5 * (1 - Math.cos(Math.PI * (BIT - s) / RAMP));
+        pcm[off + s] = g * 0.5 * Math.sin(2 * Math.PI * f * (s / RATE));
+      }
+    }
+    return { pcm: pcm, durationSec: n / RATE, bits: bits.length };
+  }
+  // Goertzel energy at freq over pcm[start, start+len)
+  function goertzel(pcm, start, len, freq, rate) {
+    var k = Math.round(len * freq / rate), w = 2 * Math.PI * k / len;
+    var coeff = 2 * Math.cos(w), s0 = 0, s1 = 0, s2 = 0;
+    for (var i = 0; i < len; i++) {
+      s0 = pcm[start + i] + coeff * s1 - s2; s2 = s1; s1 = s0;
+    }
+    return s1 * s1 + s2 * s2 - coeff * s1 * s2;
+  }
+  function bitAt(pcm, start, rate) {
+    var len = Math.round(rate * BITMS / 1000);
+    if (start + len > pcm.length) return null;
+    var e1 = goertzel(pcm, start, len, F1, rate), e0 = goertzel(pcm, start, len, F0, rate);
+    var tot = e0 + e1;
+    if (tot < 1e-6) return null; // silence
+    return e1 > e0 ? 1 : 0;
+  }
+  // decode pcm \u2192 {text} | null. Sliding search for preamble, then read frame.
+  function decode(pcm, rate) {
+    rate = rate || RATE;
+    var B = Math.round(rate * BITMS / 1000); // bit width at THIS rate (mic may run 44.1k/16k)
+    if (!pcm || pcm.length < B) return null;
+    var step = Math.max(1, Math.round(B / 4));
+    for (var off = 0; off + PREAMBLE.length * B + 56 * B < pcm.length; off += step) {
+      // preamble check with margin dominance
+      var ok = true;
+      for (var p = 0; p < PREAMBLE.length && ok; p++) {
+        var b = bitAt(pcm, off + p * B, rate);
+        if (b === null || b !== PREAMBLE[p]) ok = false;
+      }
+      if (!ok) continue;
+      // read frame bits after preamble
+      var bits = [], pos = off + PREAMBLE.length * B;
+      // read 32 magic + 16 len first (48 bits)
+      for (var i = 0; i < 48; i++) {
+        var b = bitAt(pcm, pos + i * B, rate);
+        if (b === null) { ok = false; break; }
+        bits.push(b);
+      }
+      if (!ok) continue;
+      var head = bitsToBytes(bits);
+      var magicOk = true;
+      for (var m = 0; m < 4; m++) if (head[m] !== MAGIC[m]) magicOk = false;
+      if (!magicOk) { off += PREAMBLE.length * B - step; continue; }
+      var payLen = (head[4] << 8) | head[5];
+      if (payLen > MAXPAY || payLen < 1) continue;
+      var totalBits = 48 + payLen * 8 + 16;
+      if (pos + totalBits * B > pcm.length) {
+        // fractional-rate rounding can overshoot the buffer by a few samples at the frame's last bits \u2014
+        // pad with silence (Goertzel-quiet zeros) instead of dropping a decodable frame
+        var ext = new Float32Array(pos + totalBits * B);
+        ext.set(pcm);
+        pcm = ext;
+      }
+      for (var i = 48; i < totalBits; i++) {
+        var b = bitAt(pcm, pos + i * B, rate);
+        if (b === null) { ok = false; break; }
+        bits.push(b);
+      }
+      if (!ok) continue;
+      var all = bitsToBytes(bits);
+      var frame = all.slice(0, 4 + 2 + payLen);
+      var crc = (all[all.length - 2] << 8) | all[all.length - 1];
+      if (crc16(frame) !== crc) continue;
+      var pay = frame.slice(6);
+      var txt = "";
+      try { txt = decodeURIComponent(escape(pay.map(function (c) { return String.fromCharCode(c); }).join(""))); } catch (e) { continue; }
+      return { text: txt, samplesIn: off, durationSec: (off + totalBits * B) / rate };
+    }
+    return null;
+  }
+  return { encode: encode, decode: decode, RATE: RATE, BIT: BIT, MAXPAY: MAXPAY, crc16: crc16, frameOf: function (text) { return "0800000000000" + text.length; } };
+})();`;
+var RADIO_JS = `
+var log = (t, cls) => { document.getElementById('rlog').innerHTML = '<div class="' + (cls || 'note') + '">' + t + '</div>'; };
+var PH = localStorage.getItem('mesh-phone') || '';
+document.getElementById('rfrom').value = PH;
+var esc = function(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); };
+var mode = 'send';
+function setMode(m) {
+  mode = m;
+  document.getElementById('bsend').style.fontWeight = (m === 'send') ? '900' : '400';
+  document.getElementById('bbcast').style.fontWeight = (m === 'bcast') ? '900' : '400';
+  document.getElementById('rto').style.display = (m === 'send') ? 'block' : 'none';
+  document.getElementById('bcastnote').style.display = (m === 'bcast') ? 'block' : 'none';
+  document.getElementById('txbtn').textContent = (m === 'send') ? 'PLAY THE CHIRP' : 'BROADCAST TO THE ROOM';
+}
+function frame() {
+  var f = document.getElementById('rfrom').value.replace(/[^0-9]/g, '');
+  var body = document.getElementById('rbody').value.trim();
+  if (!f || !body) return null;
+  if (mode === 'bcast') return { f: f, to: null, body: body, text: 'B|' + f + '|' + body };
+  var to = document.getElementById('rto').value.replace(/[^0-9]/g, '');
+  if (!to) return null;
+  return { f: f, to: to, body: body, text: f + '|' + to + '|' + body };
+}
+function selfTest() {
+  var t = 'Self-test: sound round trip at 125bps';
+  var e = HRC.encode(t);
+  var d = HRC.decode(e.pcm, HRC.RATE);
+  document.getElementById('selfres').innerHTML = (d && d.text === t) ? 'PASS \u2014 the message survived speaker math and mic math, bit for bit.' : 'FAIL';
+}
+function transmit() {
+  var fr = frame();
+  if (!fr) { log(mode === 'bcast' ? 'Your phone and the bulletin are required.' : 'From, to and message are required.', 'bad'); return; }
+  var e = HRC.encode(fr.text);
+  if (!e) { log('Too long for the sound rail (max 90 bytes total).', 'bad'); return; }
+  try {
+    var ctx = new AudioContext({ sampleRate: HRC.RATE });
+    var buf = ctx.createBuffer(1, e.pcm.length, HRC.RATE);
+    buf.copyToChannel(e.pcm, 0);
+    var src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
+    src.start();
+    log(mode === 'bcast'
+      ? 'Broadcasting ' + e.durationSec.toFixed(1) + 's of sound. Every listening phone in earshot can catch it. Repeat freely \u2014 fresh broadcasts deliver.'
+      : 'Transmitting ' + e.durationSec.toFixed(1) + 's of sound. Hold the phones close. ' + e.bits + ' bits on air.', 'ok');
+  } catch (err) { log('Audio blocked: ' + err.message, 'bad'); }
+}
+var listening = false, micCtx = null, micStream = null;
+async function listen() {
+  if (listening) { listening = false; document.getElementById('listenbtn').textContent = 'START LISTENING'; if (micStream) micStream.getTracks().forEach(function (t) { t.stop(); }); if (micCtx) micCtx.close(); return; }
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    micCtx = new AudioContext();
+    var rate = micCtx.sampleRate;
+    var proc = micCtx.createScriptProcessor(4096, 1, 1);
+    var rolling = new Float32Array(Math.ceil(rate * 12));
+    var wpos = 0;
+    proc.onaudioprocess = function (ev) {
+      var d = ev.inputBuffer.getChannelData(0);
+      for (var i = 0; i < d.length; i++) { rolling[wpos % rolling.length] = d[i]; wpos++; }
+    };
+    var probe = setInterval(function () {
+      if (!listening) { clearInterval(probe); return; }
+      var flat = new Float32Array(rolling.length);
+      var start = wpos % rolling.length;
+      for (var i = 0; i < rolling.length; i++) flat[i] = rolling[(start + i) % rolling.length];
+      var d = HRC.decode(flat, rate);
+      if (d && d.text) { for (var i = 0; i < rolling.length; i++) rolling[i] = 0; gotMessage(d.text); }
+    }, 700);
+    proc.connect(micCtx.destination);
+    listening = true;
+    document.getElementById('listenbtn').textContent = 'STOP LISTENING';
+    log('Listening through the mic at ' + rate + ' Hz. Waiting for a chirp...', 'ok');
+  } catch (err) { log('Microphone blocked: ' + err.message + ' \u2014 allow mic access to receive.', 'bad'); }
+}
+var lastMsg = null;
+function gotMessage(text) {
+  lastMsg = text;
+  var parts = text.split('|');
+  if (parts[0] === 'B' && parts.length >= 3) {
+    document.getElementById('rinbox').innerHTML = '<div class="msg" style="background:#eef7f0"><div class="m">BROADCAST from ' + esc(parts[1]) + '</div>' + esc(parts.slice(2).join('|')) + '</div><input id="relayto" placeholder="Relay onward \u2014 enter a phone number"><button onclick="relayBulletin()">RELAY INTO THE MESH</button>';
+    log('A broadcast was decoded from sound. Relay it so absent citizens get it through store-and-forward.', 'ok');
+    return;
+  }
+  document.getElementById('rinbox').innerHTML = '<div class="msg"><div class="m">Decoded from ' + esc(parts[0] || 'unknown') + (parts[1] ? ' for ' + esc(parts[1]) : '') + '</div>' + esc(parts.slice(2).join('|')) + '</div><button onclick="sendToMesh()">SEND TO MESH QUEUE</button>';
+  log('Message decoded from sound. Send it to the mesh queue so it rides the network.', 'ok');
+}
+async function sendToMesh() {
+  if (!lastMsg) return;
+  var parts = lastMsg.split('|');
+  var r = await fetch('/api/msg', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ from: parts[0], to: parts[1], text: parts.slice(2).join('|') }) });
+  var d = await r.json();
+  document.getElementById('rinbox').innerHTML = '<div class="msg"><div class="m">Status</div>' + (d.success ? 'Queued on the edge. The recipient pulls it when any phone reaches the network.' : ('Refused: ' + esc(d.error))) + '</div>';
+}
+async function relayBulletin() {
+  if (!lastMsg) return;
+  var parts = lastMsg.split('|');
+  var to = (document.getElementById('relayto').value || '').replace(/[^0-9]/g, '');
+  if (!to) { log('Enter a phone number to relay the broadcast onward.', 'bad'); return; }
+  var r = await fetch('/api/msg', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ from: parts[1], to: to, text: parts.slice(2).join('|') }) });
+  var d = await r.json();
+  document.getElementById('rinbox').innerHTML = '<div class="msg"><div class="m">Relay status</div>' + (d.success ? 'Broadcast relayed into the mesh queue. The recipient pulls it when any phone reaches the network.' : ('Refused: ' + esc(d.error))) + '</div>';
+}
+
+// ---- PUSH-TO-TALK v1 (2026-09-18, approved) ----
+var pttRec = null, pttChunks = [], pttTimer = null, pttBlob = null;
+async function pttStart() {
+  if (pttRec && pttRec.state === 'recording') return;
+  try {
+    var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    pttChunks = [];
+    pttRec = new MediaRecorder(stream);
+    pttRec.ondataavailable = function (e) { if (e.data.size) pttChunks.push(e.data); };
+    pttRec.onstop = function () {
+      stream.getTracks().forEach(function (t) { t.stop(); });
+      pttBlob = new Blob(pttChunks, { type: pttRec.mimeType || 'audio/webm' });
+      document.getElementById('pttstat').innerHTML = 'Recorded ' + (pttBlob.size / 1024).toFixed(1) + 'KB. Playing from this speaker now \\u2014 hold the phones close, or send the clip into the mesh voice queue.';
+      var el = document.getElementById('pttplay');
+      el.src = URL.createObjectURL(pttBlob);
+      el.play().catch(function () {});
+    };
+    pttRec.start();
+    pttTimer = setTimeout(function () { pttStop(); }, 20000); // 20s cap
+    document.getElementById('pttstat').innerHTML = 'Talking... release to transmit.';
+    document.getElementById('pttbtn').textContent = 'RELEASE TO SEND';
+  } catch (err) { document.getElementById('pttstat').innerHTML = 'Mic blocked: ' + err.message; }
+}
+function pttStop() {
+  if (pttRec && pttRec.state === 'recording') { clearTimeout(pttTimer); pttRec.stop(); document.getElementById('pttbtn').textContent = 'HOLD TO TALK'; }
+}
+async function pttSendMesh() {
+  if (!pttBlob) { document.getElementById('pttstat').innerHTML = 'Record a clip first.'; return; }
+  var f = (document.getElementById('rfrom').value || '').replace(/[^0-9]/g, '');
+  var to = (document.getElementById('pttto').value || '').replace(/[^0-9]/g, '');
+  if (!f || to.length < 10) { document.getElementById('pttstat').innerHTML = 'Your phone (top of page) and a full to-phone are required for the voice queue.'; return; }
+  var durl = await new Promise(function (res) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.readAsDataURL(pttBlob); });
+  var r = await fetch('/api/vmsg', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ from: f, to: to, audio: durl, dur: Math.min(20, Math.round(pttBlob.size / 15000)) }) });
+  var d = await r.json();
+  document.getElementById('pttstat').innerHTML = d.success ? 'Voice note queued in the mesh. The recipient pulls it when any phone reaches the network. +5 HARZ relay credit pending.' : ('Refused: ' + esc(d.error));
+}
+// ---- VOICE LISTENER (rolling buffer, last transmission replayable) ----
+var vlRec = null, vlLast = null, vlPrev = null;
+async function vlToggle() {
+  if (vlRec) {
+    try { vlRec.stop(); } catch (e) {}
+    vlRec.stream.getTracks().forEach(function (t) { t.stop(); });
+    vlRec = null;
+    document.getElementById('vlbtn').textContent = 'LISTEN FOR VOICE';
+    document.getElementById('vlstat').innerHTML = 'Stopped. Last transmission is still playable.';
+    return;
+  }
+  try {
+    var stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    vlRec = new MediaRecorder(stream); vlRec.stream = stream;
+    vlRec.ondataavailable = function (e) {
+      if (e.data.size) { vlPrev = vlLast; vlLast = e.data; document.getElementById('vlstat').innerHTML = 'New transmission captured (' + (vlLast.size / 1024).toFixed(1) + 'KB). Press PLAY LAST TRANSMISSION.'; }
+    };
+    vlRec.start(10000); // 10s chunks, newest two kept = 20s rolling
+    document.getElementById('vlbtn').textContent = 'STOP LISTENING';
+    document.getElementById('vlstat').innerHTML = 'Listening for voice \\u2014 the last transmission stays in a 20-second rolling buffer.';
+  } catch (err) { document.getElementById('vlstat').innerHTML = 'Mic blocked: ' + err.message; }
+}
+function vlPlay() {
+  if (!vlLast) { document.getElementById('vlstat').innerHTML = 'Nothing captured yet.'; return; }
+  var el = document.getElementById('vlplay');
+  el.src = URL.createObjectURL(vlLast);
+  el.play().catch(function () {});
+}
+`;
+var RADIO_STYLE = "<style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}body{background:#f0f2f5;color:#333}header{background:#fff;border-bottom:1px solid #e3e6ea;padding:14px 16px}h1{font-size:17px;color:#0a7d3c}.ver{font-size:11px;color:#888}main{max-width:640px;margin:0 auto;padding:14px}.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.05)}.card h2{font-size:13px;color:#0a7d3c;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}input,textarea,button{width:100%;padding:10px;border:1px solid #d7dbe0;border-radius:8px;font-size:13px;margin-top:6px}button{background:#0a7d3c;color:#fff;border:0;font-weight:700;cursor:pointer}.note{font-size:11px;color:#777;margin-top:6px}.msg{background:#f6f8fa;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:13px}.m{font-size:11px;color:#888}.ok{color:#0a7d3c;font-weight:700}.bad{color:#b30000;font-weight:700}</style>";
+var RADIO_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f0f2f5"><meta name="apple-mobile-web-app-capable" content="yes"><title>HARZ Radio \u2014 Sound Rail</title><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon.svg" type="image/svg+xml">@@STYLE@@</head><body><header><h1>HARZ RADIO</h1><div class="ver">The sound rail \u2014 v1.2 \xB7 125 bits/sec text \xB7 send + broadcast + push-to-talk \xB7 closed loop on Harz Mesh</div></header><main>
+<div class="card"><h2>Self-test</h2><button onclick="selfTest()">RUN SOUND ROUND TRIP</button><div id="selfres" class="note">Encodes a message to sound, decodes it back, checks bit for bit.</div></div>
+<div class="card"><h2>Mode</h2><button id="bsend" onclick="setMode('send')" style="font-weight:900">SEND (one phone)</button><button id="bbcast" onclick="setMode('bcast')">BROADCAST (the room)</button><div id="bcastnote" class="note" style="display:none">A broadcast carries no single recipient \u2014 every listening phone in earshot can catch it and relay it onward. Repeats deliver fresh.</div></div>
+<div class="card"><h2>Transmit \u2014 speak in sound</h2><input id="rfrom" placeholder="Your phone (from)"><input id="rto" placeholder="To phone"><textarea id="rbody" placeholder="Message (max 90 bytes on the sound rail)"></textarea><button id="txbtn" onclick="transmit()">PLAY THE CHIRP</button></div>
+<div class="card"><h2>Receive \u2014 listen</h2><button id="listenbtn" onclick="listen()">START LISTENING</button><div id="rlog" class="note">Open this page on a second phone, press Transmit there, hold the phones close.</div></div>
+<div class="card"><h2>Sound inbox</h2><div id="rinbox"><div class="note">Decoded messages and broadcasts land here. One tap sends them into the mesh store-and-forward queue.</div></div></div>
+<div class="card"><h2>Push-to-talk</h2><input id="pttto" placeholder="Mesh voice queue \u2014 to phone (optional)"><button id="pttbtn" onmousedown="pttStart()" onmouseup="pttStop()" ontouchstart="pttStart();event.preventDefault()" ontouchend="pttStop()">HOLD TO TALK</button><audio id="pttplay"></audio><button onclick="pttSendMesh()">SEND CLIP TO MESH VOICE QUEUE</button><div id="pttstat" class="note">Hold, speak, release \u2014 your voice plays from the speaker. The listening phone keeps the last transmission. Half-duplex: one talks, then the other.</div></div>
+<div class="card"><h2>Voice listener</h2><button id="vlbtn" onclick="vlToggle()">LISTEN FOR VOICE</button><button onclick="vlPlay()">PLAY LAST TRANSMISSION</button><audio id="vlplay"></audio><div id="vlstat" class="note">While listening, this phone keeps the last 20 seconds in a rolling buffer and can replay the last transmission.</div></div>
+<div class="card"><h2>What this is</h2><div class="note">A message becomes two tones from the speaker; another phone's mic hears it and turns it back into text. No internet, no carrier, no cost. Text rides the sound rail; voice rides push-to-talk \u2014 a half-duplex walkie-talkie, one talks then the other. Real-phone field testing is mandatory before any announcement.</div></div>
+</main>@@SCRIPT@@<script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw2.js').catch(function(){}); }</script></body></html>`;
+function radioPage() {
+  var html = RADIO_HTML.replace("@@STYLE@@", RADIO_STYLE).replace("@@SCRIPT@@", "<script>" + RADIO_CODEC + RADIO_JS + "<\/script>");
+  return html;
+}
+__name(radioPage, "radioPage");
 var worker_default = {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -335,6 +651,9 @@ var worker_default = {
       if (path === "/mesh") {
         return new Response(meshPage(), { headers: { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-cache" } });
       }
+      if (path === "/radio") {
+        return new Response(radioPage(), { headers: { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-cache" } });
+      }
       if (path === "/health") {
         return new Response(JSON.stringify({
           status: "healthy",
@@ -368,8 +687,8 @@ var worker_default = {
   }
 };
 var MCORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Methods": "GET,POST,OPTIONS" };
-var mjson = /* @__PURE__ */ __name((obj, code = 200) => new Response(JSON.stringify(obj), { status: code, headers: { "Content-Type": "application/json", ...MCORS } }), "mjson");
-var mphone = /* @__PURE__ */ __name((p) => String(p || "").replace(/\D/g, ""), "mphone");
+var mjson = /* @__PURE__ */ __name2((obj, code = 200) => new Response(JSON.stringify(obj), { status: code, headers: { "Content-Type": "application/json", ...MCORS } }), "mjson");
+var mphone = /* @__PURE__ */ __name2((p) => String(p || "").replace(/\D/g, ""), "mphone");
 async function queueMsg(from, to, text, env) {
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   const msg = { id, from, to, text, ts: Date.now(), relay: from, network: "harz-mesh-g3" };
@@ -389,6 +708,7 @@ async function queueMsg(from, to, text, env) {
   return id;
 }
 __name(queueMsg, "queueMsg");
+__name2(queueMsg, "queueMsg");
 async function handleMsg(request, env) {
   let b = {};
   try {
@@ -402,6 +722,7 @@ async function handleMsg(request, env) {
   return mjson({ success: true, queued: true, msg_id: id, relay_earned: 5, note: "Message stored on the edge. Recipient pulls it when any phone reaches the network." });
 }
 __name(handleMsg, "handleMsg");
+__name2(handleMsg, "handleMsg");
 async function queueVoice(from, to, audio, dur, env) {
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   const msg = { id, from, to, voice: audio, dur, ts: Date.now(), relay: from, network: "harz-mesh-g4" };
@@ -421,6 +742,7 @@ async function queueVoice(from, to, audio, dur, env) {
   return id;
 }
 __name(queueVoice, "queueVoice");
+__name2(queueVoice, "queueVoice");
 async function handleVMsg(request, env) {
   let b = {};
   try {
@@ -436,6 +758,7 @@ async function handleVMsg(request, env) {
   return mjson({ success: true, queued: true, msg_id: id, relay_earned: 5, note: "Voice note stored on the edge. Recipient pulls and plays it when any phone reaches the network." });
 }
 __name(handleVMsg, "handleVMsg");
+__name2(handleVMsg, "handleVMsg");
 async function handleInbox(url, env) {
   const phone = mphone(url.searchParams.get("phone"));
   if (phone.length < 10) return mjson({ success: false, error: "Valid phone required" }, 400);
@@ -445,6 +768,7 @@ async function handleInbox(url, env) {
   return mjson({ success: true, phone, count: msgs.length, messages: msgs, note: "Store-and-forward: inbox delivered and cleared." });
 }
 __name(handleInbox, "handleInbox");
+__name2(handleInbox, "handleInbox");
 async function handleStats(url, env) {
   const st = await env.MESH_KV.get("stats:network", "json") || { messages: 0, relays: 0 };
   const p = mphone(url.searchParams.get("phone"));
@@ -452,8 +776,13 @@ async function handleStats(url, env) {
   return mjson({ success: true, network: st, your_relay: relay, note: "Relay rewards: 5 HARZ pending per message carried. On-chain settlement = Phase 2." });
 }
 __name(handleStats, "handleStats");
+__name2(handleStats, "handleStats");
 function meshPage() {
   return shell("G4 \u2014 Harz Mesh: The People's Internet, now with Voice", `
+<div class="card">
+<h2>Harz Radio \u2014 the sound rail</h2>
+<p>Messages can now travel as sound: speaker to mic, no internet, no carrier. <a href="/radio">Open Harz Radio</a>.</p>
+</div>
 <div class="card">
 <h2>The internet that cannot be switched off</h2>
 <p>Every internet in history had a center \u2014 a government can throttle it, a company can shut it, a war can bomb it. Harz Mesh has no center. The network lives inside the phones. When the networks die, the people <b>become</b> the network.</p>
@@ -599,6 +928,7 @@ render(); loadStats();
 `, "/mesh");
 }
 __name(meshPage, "meshPage");
+__name2(meshPage, "meshPage");
 async function claimReward(phone, env) {
   const rl = await env.MESH_KV.get("relay:" + phone, "json") || { relays: 0, harz_pending: 0 };
   if (!rl.harz_pending || rl.harz_pending < 5) return { success: false, error: "Nothing to claim yet \u2014 carry messages to earn HARZ." };
@@ -625,6 +955,7 @@ async function claimReward(phone, env) {
   }
 }
 __name(claimReward, "claimReward");
+__name2(claimReward, "claimReward");
 async function handleClaim(request, env) {
   let b = {};
   try {
@@ -638,6 +969,7 @@ async function handleClaim(request, env) {
   return mjson({ success: true, settled: c.settled, phone, tx: c.tx, settled_total: c.settled_total });
 }
 __name(handleClaim, "handleClaim");
+__name2(handleClaim, "handleClaim");
 async function sendSMS(phone, text, env) {
   const key = env.SENDCHAMP_KEY;
   if (!key) return { success: false, error: "SENDCHAMP_KEY not configured" };
@@ -659,15 +991,52 @@ async function sendSMS(phone, text, env) {
   }
 }
 __name(sendSMS, "sendSMS");
+__name2(sendSMS, "sendSMS");
 async function handleSMSCommand(from, text, env) {
   const t = String(text || "").trim();
   const up = t.toUpperCase();
+  const nm = t.match(/^NET\s+(\S+)\s+(.+)$/i);
+  if (nm) {
+    let addr = nm[1];
+    if (/^\d{10,15}$/.test(addr)) addr = "tel:+" + addr;
+    const nbody = nm[2].trim().slice(0, 300);
+    if (!env.HARZNET) return "HARZNET not enabled on this node yet.";
+    try {
+      const r = await env.HARZNET.fetch("https://harznet.internal/api/send", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ from: "tel:" + from, to: addr, body: nbody, frag_size: 60 }) });
+      const d = await r.json();
+      if (!d.success) return "HARZNET error: " + (d.error || "rejected");
+      return "HARZNET: sent as " + d.fragments + " envelope(s). Hash " + String(d.body_hash).slice(0, 10) + ". Recipient pulls from anywhere on Earth with NETIN.";
+    } catch (e) {
+      return "HARZNET unreachable. Try again.";
+    }
+  }
+  if (up === "NETIN") {
+    if (!env.HARZNET) return "HARZNET not enabled on this node yet.";
+    try {
+      const r = await env.HARZNET.fetch("https://harznet.internal/api/inbox/" + encodeURIComponent("tel:" + from));
+      const d = await r.json();
+      if (!d.delivered) return "HARZNET inbox empty.";
+      return "HARZNET INBOX (" + d.delivered + "): " + d.messages.slice(0, 2).map((x, i2) => i2 + 1 + ". from " + x.from + ": " + String(x.body).slice(0, 90) + " [" + x.integrity + "]").join(" | ");
+    } catch (e) {
+      return "HARZNET unreachable. Try again.";
+    }
+  }
+  if (up === "NODE") {
+    if (!env.HARZNET) return "HARZNET not enabled on this node yet.";
+    try {
+      const r = await env.HARZNET.fetch("https://harznet.internal/api/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ country: "Nigeria", mediums: ["sms", "http"] }) });
+      const d = await r.json();
+      return d.success ? "HARZNET relay registered: " + String(d.node_id).slice(0, 18) + "... Your phone is now a node on the People's Internet." : "HARZNET register failed.";
+    } catch (e) {
+      return "HARZNET unreachable. Try again.";
+    }
+  }
   const m = t.match(/^SEND\s+(\d{10,15})\s+(.+)$/i);
   if (up === "JOIN" || up === "START" || up === "HELP") {
     const reg = await env.MESH_KV.get("smsuser:" + from, "json") || { joined: Date.now() };
     if (!reg.joined) reg.joined = Date.now();
     await env.MESH_KV.put("smsuser:" + from, JSON.stringify(reg));
-    return "HARZ MESH \u2014 The People's Internet. Commands: SEND <phone> <message> | INBOX | BAL | CLAIM | HELP. Every message you relay earns 5 HARZ.";
+    return "HARZ MESH \u2014 The People's Internet. Commands: SEND <phone> <message> | INBOX | BAL | CLAIM | NET <address> <message> | NETIN | NODE | HELP. Relays earn 5 HARZ. HarzNet reaches any address on Earth.";
   }
   if (m) {
     const to = m[1].replace(/\D/g, "");
@@ -696,6 +1065,7 @@ async function handleSMSCommand(from, text, env) {
   return "Unknown command. Reply HELP for the menu.";
 }
 __name(handleSMSCommand, "handleSMSCommand");
+__name2(handleSMSCommand, "handleSMSCommand");
 async function handleSMSInbound(url, request, env) {
   if (!env.SMS_WEBHOOK_KEY || url.searchParams.get("key") !== env.SMS_WEBHOOK_KEY) return mjson({ success: false, error: "Unauthorized" }, 401);
   let b = {};
@@ -718,39 +1088,39 @@ async function handleSMSInbound(url, request, env) {
   return mjson({ success: true, from, command: text.slice(0, 40), reply, sent, sendInfo });
 }
 __name(handleSMSInbound, "handleSMSInbound");
+__name2(handleSMSInbound, "handleSMSInbound");
 async function handleSMSTest(url, env) {
   if (!env.SMS_WEBHOOK_KEY || url.searchParams.get("key") !== env.SMS_WEBHOOK_KEY) return mjson({ success: false, error: "Unauthorized" }, 401);
   const r = await sendSMS("08028687857", "HARZ MESH: SMS gateway is live. Reply HELP to try the mesh by SMS.", env);
   return mjson(r, r.success ? 200 : 502);
 }
 __name(handleSMSTest, "handleSMSTest");
-
-// ===== HARZ Gateway funding: /pay checkout (Paystack, fail-closed, D1-credited) =====
+__name2(handleSMSTest, "handleSMSTest");
 var __payStyle = "<style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}body{background:#f0f2f5;color:#333;padding:16px;max-width:600px;margin:0 auto}.card{background:#fff;border-radius:12px;padding:20px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}.hd{font-size:20px;font-weight:800;color:#0a7d3c;margin-bottom:4px}.sub{font-size:12px;color:#666;margin-bottom:14px}.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;font-size:13px}.row:last-child{border:0}.lbl{color:#666}.val{font-weight:700}.btn{width:100%;background:#0a7d3c;color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px}.err{background:#ffebee;border:1px solid #8b0000;color:#8b0000;padding:10px;border-radius:8px;font-size:12px;margin-top:10px;display:none}.ok{background:#e8f5e9;border:1px solid #0a7d3c;color:#0a7d3c;padding:10px;border-radius:8px;font-size:12px;margin-top:10px;display:none}.foot{text-align:center;font-size:11px;color:#888;padding:16px}</style>";
-var payHead = (title) => "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><meta name=\"theme-color\" content=\"#f0f2f5\"><meta name=\"apple-mobile-web-app-capable\" content=\"yes\"><meta name=\"apple-mobile-web-app-title\" content=\"HARZ Pay\"><link rel=\"manifest\" href=\"/manifest.json\"><title>" + title + "</title>" + __payStyle + "</head><body>";
-var payFoot = "<div class=\"foot\">HARZ Gateway Funding · Verified by Paystack · Fail-closed: credit only after provider confirmation</div></body></html>";
-
+var payHead = /* @__PURE__ */ __name((title) => '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f0f2f5"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="HARZ Pay"><link rel="manifest" href="/manifest.json"><title>' + title + "</title>" + __payStyle + "</head><body>", "payHead");
+var payFoot = '<div class="foot">HARZ Gateway Funding \xB7 Verified by Paystack \xB7 Fail-closed: credit only after provider confirmation</div></body></html>';
 function handlePayPage(url, env) {
   const amount = parseInt(url.searchParams.get("amount") || "0", 10);
   const apiKey = url.searchParams.get("api_key") || "";
   const h = { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-store" };
   return (async () => {
     if (!apiKey || !amount || amount < 100) {
-      return new Response(payHead("Fund HARZ Account") + "<div class=\"card\"><div class=\"hd\">Fund HARZ Gateway Account</div><div class=\"sub\">Checkout</div><div class=\"err\" style=\"display:block\">Enter a valid amount (minimum \u20A6100) and API key. Return to the HARZ Gateway and use the Fund Balance tab.</div></div>" + payFoot, { headers: h });
+      return new Response(payHead("Fund HARZ Account") + '<div class="card"><div class="hd">Fund HARZ Gateway Account</div><div class="sub">Checkout</div><div class="err" style="display:block">Enter a valid amount (minimum \u20A6100) and API key. Return to the HARZ Gateway and use the Fund Balance tab.</div></div>' + payFoot, { headers: h });
     }
     const acc = await env.HARZ_DB.prepare("SELECT business_name, balance FROM gateway_accounts WHERE api_key = ?").bind(apiKey).first();
     if (!acc) {
-      return new Response(payHead("Fund HARZ Account") + "<div class=\"card\"><div class=\"hd\">Fund HARZ Gateway Account</div><div class=\"sub\">Checkout</div><div class=\"err\" style=\"display:block\">Unknown gateway account \u2014 check your API key on the HARZ Gateway Account tab.</div></div>" + payFoot, { headers: h });
+      return new Response(payHead("Fund HARZ Account") + '<div class="card"><div class="hd">Fund HARZ Gateway Account</div><div class="sub">Checkout</div><div class="err" style="display:block">Unknown gateway account \u2014 check your API key on the HARZ Gateway Account tab.</div></div>' + payFoot, { headers: h });
     }
-    return new Response(payHead("Fund HARZ Account") + "<div class=\"card\"><div class=\"hd\">Fund HARZ Gateway Account</div><div class=\"sub\">Business: " + (acc.business_name || "Gateway customer") + " \u00b7 Account: " + apiKey.slice(0, 8) + "\u2026</div><div class=\"row\"><span class=\"lbl\">Amount</span><span class=\"val\">\u20A6" + amount.toLocaleString() + "</span></div><div class=\"row\"><span class=\"lbl\">Current balance</span><span class=\"val\">\u20A6" + (Number(acc.balance) / 100).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "</span></div><div class=\"row\"><span class=\"lbl\">You will receive</span><span class=\"val\">\u20A6" + amount.toLocaleString() + " credit</span></div><button class=\"btn\" id=\"payBtn\" onclick=\"startPay()\">Pay \u20A6" + amount.toLocaleString() + " via Paystack</button><div class=\"err\" id=\"errBox\"></div></div><script>var AMT=" + amount + ",KEY=" + JSON.stringify(apiKey) + ";async function startPay(){const b=document.getElementById('payBtn');b.disabled=true;b.textContent='Connecting to Paystack\u2026';try{const r=await fetch('/pay/init',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:AMT,api_key:KEY})});const d=await r.json();if(d.success&&d.authorization_url){window.location.href=d.authorization_url;}else{document.getElementById('errBox').style.display='block';document.getElementById('errBox').textContent=d.error||'Payment could not start. No charge made.';b.disabled=false;b.textContent='Pay \u20A6'+AMT.toLocaleString()+' via Paystack';}}catch(e){document.getElementById('errBox').style.display='block';document.getElementById('errBox').textContent='Network error: '+e.message+'. No charge made.';b.disabled=false;b.textContent='Pay \u20A6'+AMT.toLocaleString()+' via Paystack';}}</script>" + payFoot, { headers: h });
+    return new Response(payHead("Fund HARZ Account") + '<div class="card"><div class="hd">Fund HARZ Gateway Account</div><div class="sub">Business: ' + (acc.business_name || "Gateway customer") + " \xB7 Account: " + apiKey.slice(0, 8) + '\u2026</div><div class="row"><span class="lbl">Amount</span><span class="val">\u20A6' + amount.toLocaleString() + '</span></div><div class="row"><span class="lbl">Current balance</span><span class="val">\u20A6' + (Number(acc.balance) / 100).toLocaleString(void 0, { minimumFractionDigits: 2 }) + '</span></div><div class="row"><span class="lbl">You will receive</span><span class="val">\u20A6' + amount.toLocaleString() + ' credit</span></div><button class="btn" id="payBtn" onclick="startPay()">Pay \u20A6' + amount.toLocaleString() + ' via Paystack</button><div class="err" id="errBox"></div></div><script>var AMT=' + amount + ",KEY=" + JSON.stringify(apiKey) + ";async function startPay(){const b=document.getElementById('payBtn');b.disabled=true;b.textContent='Connecting to Paystack\u2026';try{const r=await fetch('/pay/init',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:AMT,api_key:KEY})});const d=await r.json();if(d.success&&d.authorization_url){window.location.href=d.authorization_url;}else{document.getElementById('errBox').style.display='block';document.getElementById('errBox').textContent=d.error||'Payment could not start. No charge made.';b.disabled=false;b.textContent='Pay \u20A6'+AMT.toLocaleString()+' via Paystack';}}catch(e){document.getElementById('errBox').style.display='block';document.getElementById('errBox').textContent='Network error: '+e.message+'. No charge made.';b.disabled=false;b.textContent='Pay \u20A6'+AMT.toLocaleString()+' via Paystack';}}<\/script>" + payFoot, { headers: h });
   })();
 }
+__name(handlePayPage, "handlePayPage");
 async function handlePayInit(request, env) {
   try {
     const body = await request.json();
     const amount = parseInt(body.amount, 10);
     const apiKey = body.api_key || "";
-    if (!amount || amount < 100 || amount > 500000) return mjson({ success: false, error: "Amount must be between \u20A6100 and \u20A6500,000." }, 400);
+    if (!amount || amount < 100 || amount > 5e5) return mjson({ success: false, error: "Amount must be between \u20A6100 and \u20A6500,000." }, 400);
     if (!apiKey) return mjson({ success: false, error: "api_key required" }, 401);
     const acc = await env.HARZ_DB.prepare("SELECT id, business_name FROM gateway_accounts WHERE api_key = ?").bind(apiKey).first();
     if (!acc) return mjson({ success: false, error: "Unknown gateway account" }, 401);
@@ -763,22 +1133,23 @@ async function handlePayInit(request, env) {
       return mjson({ success: false, error: "Paystack rejected the payment start (" + (initData.message || "HTTP " + initRes.status) + "). No charge made, no credit given.", provider_status: initRes.status }, 502);
     }
     await env.HARZ_DB.prepare("CREATE TABLE IF NOT EXISTS gateway_funds (reference TEXT PRIMARY KEY, api_key TEXT, amount_kobo INTEGER, status TEXT, raw TEXT, created_date TEXT)").run();
-    await env.HARZ_DB.prepare("INSERT OR IGNORE INTO gateway_funds (reference, api_key, amount_kobo, status, raw, created_date) VALUES (?,?,?,?,?,?)").bind(reference, apiKey, amount * 100, "pending", null, new Date().toISOString()).run();
+    await env.HARZ_DB.prepare("INSERT OR IGNORE INTO gateway_funds (reference, api_key, amount_kobo, status, raw, created_date) VALUES (?,?,?,?,?,?)").bind(reference, apiKey, amount * 100, "pending", null, (/* @__PURE__ */ new Date()).toISOString()).run();
     return mjson({ success: true, authorization_url: initData.data.authorization_url, reference });
   } catch (e) {
     return mjson({ success: false, error: "Init failed: " + e.message + ". No charge made, no credit given." }, 500);
   }
 }
+__name(handlePayInit, "handlePayInit");
 async function handlePayDone(url, env) {
   const reference = url.searchParams.get("reference") || url.searchParams.get("trxref") || "";
   const h = { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-store" };
-  const failPage = (msg) => new Response(payHead("Payment Result") + "<div class=\"card\"><div class=\"hd\">Payment</div><div class=\"sub\">Result</div><div class=\"err\" style=\"display:block\">" + msg + "</div><a class=\"btn\" style=\"display:block;text-align:center;text-decoration:none;margin-top:14px\" href=\"https://harz-gateway.harz.workers.dev/\">Return to HARZ Gateway</a></div>" + payFoot, { headers: h });
-  const okPage = (msg, extra) => new Response(payHead("Payment Result") + "<div class=\"card\"><div class=\"hd\">\u2705 Payment credited</div><div class=\"sub\">HARZ Gateway funding</div><div class=\"ok\" style=\"display:block\">" + msg + "</div>" + (extra || "") + "<a class=\"btn\" style=\"display:block;text-align:center;text-decoration:none;margin-top:14px\" href=\"https://harz-gateway.harz.workers.dev/\">Return to HARZ Gateway</a></div>" + payFoot, { headers: h });
+  const failPage = /* @__PURE__ */ __name((msg) => new Response(payHead("Payment Result") + '<div class="card"><div class="hd">Payment</div><div class="sub">Result</div><div class="err" style="display:block">' + msg + '</div><a class="btn" style="display:block;text-align:center;text-decoration:none;margin-top:14px" href="https://harz-gateway.harz.workers.dev/">Return to HARZ Gateway</a></div>' + payFoot, { headers: h }), "failPage");
+  const okPage = /* @__PURE__ */ __name((msg, extra) => new Response(payHead("Payment Result") + '<div class="card"><div class="hd">\u2705 Payment credited</div><div class="sub">HARZ Gateway funding</div><div class="ok" style="display:block">' + msg + "</div>" + (extra || "") + '<a class="btn" style="display:block;text-align:center;text-decoration:none;margin-top:14px" href="https://harz-gateway.harz.workers.dev/">Return to HARZ Gateway</a></div>' + payFoot, { headers: h }), "okPage");
   try {
     if (!reference) return failPage("No payment reference found in the return link.");
     await env.HARZ_DB.prepare("CREATE TABLE IF NOT EXISTS gateway_funds (reference TEXT PRIMARY KEY, api_key TEXT, amount_kobo INTEGER, status TEXT, raw TEXT, created_date TEXT)").run();
     const existing = await env.HARZ_DB.prepare("SELECT * FROM gateway_funds WHERE reference = ?").bind(reference).first();
-    if (existing && existing.status === "credited") return okPage("This payment was already credited. No double credit.", "<div class=\"row\"><span class=\"lbl\">Reference</span><span class=\"val\" style=\"font-size:11px;word-break:break-all\">" + reference + "</span></div>");
+    if (existing && existing.status === "credited") return okPage("This payment was already credited. No double credit.", '<div class="row"><span class="lbl">Reference</span><span class="val" style="font-size:11px;word-break:break-all">' + reference + "</span></div>");
     const key = env.PAYSTACK_SECRET_KEY;
     if (!key) return failPage("Payment provider not configured (fail-closed). If you were charged, contact support with reference " + reference + ".");
     const vRes = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), { headers: { "Authorization": "Bearer " + key } });
@@ -786,24 +1157,21 @@ async function handlePayDone(url, env) {
     if (!vData.status || !vData.data) return failPage("Could not verify this payment (provider response: " + (vData.message || "HTTP " + vRes.status) + "). No credit given. If you were charged, contact support with reference " + reference + ".");
     const t = vData.data;
     if (t.status !== "success") return failPage("Payment not completed (provider status: " + t.status + "). No credit given.");
-    const apiKey = (t.metadata && t.metadata.gateway_api_key) || (existing && existing.api_key) || "";
+    const apiKey = t.metadata && t.metadata.gateway_api_key || existing && existing.api_key || "";
     if (!apiKey) return failPage("Payment verified but the target gateway account could not be identified. Contact support with reference " + reference + ". No automatic credit.");
     const acc = await env.HARZ_DB.prepare("SELECT id FROM gateway_accounts WHERE api_key = ?").bind(apiKey).first();
     if (!acc) return failPage("Payment verified but the gateway account is unknown. Contact support with reference " + reference + ". No automatic credit.");
-    const claim = await env.HARZ_DB.prepare("UPDATE gateway_funds SET status = 'credited', raw = ?, created_date = ? WHERE reference = ? AND status = 'pending'").bind(JSON.stringify({ channel: t.channel, paid_at: t.paid_at, last4: t.authorization ? t.authorization.last4 : null }), new Date().toISOString(), reference).run();
+    const claim = await env.HARZ_DB.prepare("UPDATE gateway_funds SET status = 'credited', raw = ?, created_date = ? WHERE reference = ? AND status = 'pending'").bind(JSON.stringify({ channel: t.channel, paid_at: t.paid_at, last4: t.authorization ? t.authorization.last4 : null }), (/* @__PURE__ */ new Date()).toISOString(), reference).run();
     if (claim.meta.changes === 0) return failPage("This payment could not be claimed (already processed or unknown state). Reference " + reference + ". No double credit.");
     await env.HARZ_DB.prepare("UPDATE gateway_accounts SET balance = balance + ? WHERE api_key = ?").bind(t.amount, apiKey).run();
     const nacc = await env.HARZ_DB.prepare("SELECT balance FROM gateway_accounts WHERE api_key = ?").bind(apiKey).first();
-    return okPage("\u20A6" + (t.amount / 100).toLocaleString() + " credited to your HARZ Gateway account.", "<div class=\"row\"><span class=\"lbl\">New balance</span><span class=\"val\">\u20A6" + (Number(nacc.balance) / 100).toLocaleString(undefined, { minimumFractionDigits: 2 }) + "</span></div><div class=\"row\"><span class=\"lbl\">Reference</span><span class=\"val\" style=\"font-size:11px;word-break:break-all\">" + reference + "</span></div>");
+    return okPage("\u20A6" + (t.amount / 100).toLocaleString() + " credited to your HARZ Gateway account.", '<div class="row"><span class="lbl">New balance</span><span class="val">\u20A6' + (Number(nacc.balance) / 100).toLocaleString(void 0, { minimumFractionDigits: 2 }) + '</span></div><div class="row"><span class="lbl">Reference</span><span class="val" style="font-size:11px;word-break:break-all">' + reference + "</span></div>");
   } catch (e) {
     return failPage("Verification error: " + e.message + ". No credit given. If you were charged, contact support with reference " + reference + ".");
   }
 }
-
+__name(handlePayDone, "handlePayDone");
 export {
   worker_default as default
 };
-//# sourceMappingURL=worker.js.map
-
-
---6fedd520f4c9f8e17c0e63e07f552f239db41fa7635b4fa11f5107d66479--
+//# sourceMappingURL=edge-new.js.map
