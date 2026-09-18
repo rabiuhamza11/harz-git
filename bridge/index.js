@@ -176,7 +176,7 @@ async function am_seed_status(env,relayer){
   const poolAddr=BigInt(poolHex)!==0n?"0x"+String(poolHex).slice(-40):null;
   let ratio=null;
   if(poolAddr){try{const s0=await am_rpc("eth_call",[{to:poolAddr,data:"0x3850c7bd"},"latest"]);const sq=BigInt("0x"+String(s0).slice(2,66));if(sq>0n)ratio=Number(sq*sq*10n**18n/(2n**192n))/1e18}catch(a){}}
-  const usable=Math.min(wpolAmt,Math.max(0,Number(BigInt(polHex))/1e18-0.3)+Number(wpolBal)/1e18,Number(harzBal)/1e18/(ratio||1));
+  const usable=Math.min(wpolAmt,Math.max(0,Number(BigInt(polHex))/1e18-1.2)+Number(wpolBal)/1e18,Number(harzBal)/1e18/(ratio||1));
   return{config:{wpol:wpolAmt,price:priceStr},seed_enabled:seedOn,relayer_pol:Number(BigInt(polHex))/1e18,relayer_wpol:Number(wpolBal)/1e18,relayer_harz:Number(harzBal)/1e18,pool:poolAddr,market_ratio_harz_per_wpol:ratio,plan:ratio?{usable_wpol:+usable.toFixed(4),harz_paired:+(usable*ratio).toFixed(2),ready:(usable>=0.01)}:null}
 }
 async function am_seed_run(env){
@@ -196,7 +196,7 @@ async function am_seed_run(env){
   let ratioWei=null;
   if(st.pool){try{const s0=await am_rpc("eth_call",[{to:st.pool,data:"0x3850c7bd"},"latest"]);const sq=BigInt("0x"+String(s0).slice(2,66));if(sq>0n)ratioWei=sq*sq*10n**18n/(2n**192n)}catch(a){}}
   const ratioNum=ratioWei!==null?(Number(ratioWei)/1e18):(Number(num)/Number(den));
-  const usable=Math.min(cfgWpol,Math.max(0,st.relayer_pol-0.3)+st.relayer_wpol,st.relayer_harz/ratioNum);
+  const usable=Math.min(cfgWpol,Math.max(0,st.relayer_pol-1.2)+st.relayer_wpol,st.relayer_harz/ratioNum);
   const wpolWei=BigInt(Math.floor(usable*1e6))*10n**12n;
   const harzWei=ratioWei!==null?(wpolWei*ratioWei/(10n**18n)):(wpolWei*num/den);
   const npmBalR=BigInt(await am_rpc("eth_call",[{to:SEED_NPM,data:"0x70a08231"+am_padAddr(relayer)},"latest"]));
@@ -210,14 +210,14 @@ async function am_seed_run(env){
     return{state:r.ok===true?"complete":(r.ok===null?"pending":"failed"),did:"lp_handover",hash:r.hash,token_id:tokenId.toString()};
   }
   const wpolBalWei=BigInt(Math.floor(st.relayer_wpol*1e6))*10n**12n;
-  if(st.relayer_pol<2.5&&wpolBalWei>=2n*10n**18n){
+  if(st.relayer_pol<1.0&&wpolBalWei>=2n*10n**18n){
     const r=await am_sendTx(env,relayer,SEED_WPOL,"0x2e1a7d4d"+am_padUint(2n*10n**18n),0n,100000n);
     await am_log(env,"seed_step","gas self-refill: unwrapped 2 WPOL -> POL tx "+r.hash+" ok="+r.ok,null,null);
     return{state:r.ok===true?"stepped":(r.ok===null?"pending":"failed"),did:"gas_refill",hash:r.hash};
   }
   if(wpolBalWei<wpolWei){
     const wrapAmt=wpolWei-wpolBalWei;
-    if(st.relayer_pol<Number(wrapAmt)/1e18+0.3)return{state:"awaiting_funds",need:{pol:+(Number(wrapAmt)/1e18+0.3).toFixed(3)},have:{pol:st.relayer_pol,wpol:st.relayer_wpol,harz:st.relayer_harz}};
+    if(st.relayer_pol<Number(wrapAmt)/1e18+1.15)return{state:"awaiting_funds",need:{pol:+(Number(wrapAmt)/1e18+1.2).toFixed(3)},have:{pol:st.relayer_pol,wpol:st.relayer_wpol,harz:st.relayer_harz}};
     const r=await am_sendTx(env,relayer,SEED_WPOL,"0xd0e30db0",wrapAmt,500000n);
     await am_log(env,"seed_step","wrap POL->WPOL tx "+r.hash+" ok="+r.ok,null,null);
     return{state:r.ok===true?"stepped":(r.ok===null?"pending":"failed"),did:"wrap",hash:r.hash};
@@ -504,7 +504,16 @@ if(i.pathname==="/api/seed/force"&&e.method==="POST"){let bk;try{bk=await e.json
     const signed=tx.sign(t.RELAYER_PRIVATE_KEY.replace(/^0x/,""));
     await am_rpc("eth_sendRawTransaction",[signed.hex]);
     out.push({action:"gas_drip",to:SEED_OWNER,value_pol:0.06,hash:signed.hash,ok:true})
-  }else if(bk.action==="cancel"){const nonces=String(bk.nonces||"").split(",").map(function(x){return parseInt(x,10)}).filter(function(x){return x>=0});for(const n of nonces){try{const tx=new ETHLIB.Transaction({to:relayer,value:0n,nonce:BigInt(n),chainId:137,gasLimit:21000n,maxFeePerGas:mfee,maxPriorityFeePerGas:prio,data:"0x"});const signed=tx.sign(t.RELAYER_PRIVATE_KEY.replace(/^0x/,""));await am_rpc("eth_sendRawTransaction",[signed.hex]);out.push({nonce:n,hash:signed.hash,ok:true})}catch(a){out.push({nonce:n,error:String((a&&a.message)||a).slice(0,150)})}}}return new Response(JSON.stringify({forced:out}),{headers:{"Content-Type":"application/json"}})}
+  }else if(bk.action==="harz_return"){
+    const bal=BigInt(await am_rpc("eth_call",[{to:AM_CONTRACT,data:"0x70a08231"+am_padAddr(relayer)},"latest"]));
+    if(bal<=0n){out.push({action:"harz_return",note:"no HARZ at relayer"})}else{
+      const nonce=BigInt(await am_rpc("eth_getTransactionCount",[relayer,"pending"]));
+      const data="0xa9059cbb"+am_padAddr(SEED_OWNER)+am_padUint(bal);
+      const tx=new ETHLIB.Transaction({to:AM_CONTRACT,value:0n,nonce:nonce,chainId:137,gasLimit:100000n,maxFeePerGas:mfee,maxPriorityFeePerGas:prio,data:data});
+      const signed=tx.sign(t.RELAYER_PRIVATE_KEY.replace(/^0x/,""));
+      await am_rpc("eth_sendRawTransaction",[signed.hex]);
+      out.push({action:"harz_return",to:SEED_OWNER,harz:Number(bal)/1e18,hash:signed.hash,ok:true})}}
+else if(bk.action==="cancel"){const nonces=String(bk.nonces||"").split(",").map(function(x){return parseInt(x,10)}).filter(function(x){return x>=0});for(const n of nonces){try{const tx=new ETHLIB.Transaction({to:relayer,value:0n,nonce:BigInt(n),chainId:137,gasLimit:21000n,maxFeePerGas:mfee,maxPriorityFeePerGas:prio,data:"0x"});const signed=tx.sign(t.RELAYER_PRIVATE_KEY.replace(/^0x/,""));await am_rpc("eth_sendRawTransaction",[signed.hex]);out.push({nonce:n,hash:signed.hash,ok:true})}catch(a){out.push({nonce:n,error:String((a&&a.message)||a).slice(0,150)})}}}return new Response(JSON.stringify({forced:out}),{headers:{"Content-Type":"application/json"}})}
 if(i.pathname==="/api/seed/status"){const relayer=ETHLIB.Address.fromPrivateKey(t.RELAYER_PRIVATE_KEY.replace(/^0x/,""))+"";const st=await am_seed_status(t,relayer);return new Response(JSON.stringify({relayer:relayer,...st}),{headers:{"Content-Type":"application/json","Access-Control-Allow-Origin":"*"}})}
 if(i.pathname==="/api/seed/add"&&e.method==="POST"){let bk2;try{bk2=await e.json()}catch{bk2={}}const r2=p(t);if(r2&&bk2.api_key!==r2&&e.headers.get("X-API-Key")!==r2)return new Response(JSON.stringify({error:"Unauthorized: API key required"}),{status:401,headers:{"Content-Type":"application/json"}});let res2;try{res2=await am_seed_add(t)}catch(se2){res2={error:String((se2&&se2.message)||se2),stack:String((se2&&se2.stack)||"").slice(0,300)}}res2.seed_build="seedv343";return new Response(JSON.stringify(res2),{headers:{"Content-Type":"application/json"}})}
 if(i.pathname==="/api/seed/run"&&e.method==="POST"){let bk;try{bk=await e.json()}catch{bk={}}const r=p(t);if(r&&bk.api_key!==r&&e.headers.get("X-API-Key")!==r)return new Response(JSON.stringify({error:"Unauthorized: API key required"}),{status:401,headers:{"Content-Type":"application/json"}});let res;try{res=await am_seed_run(t)}catch(se){res={error:String((se&&se.message)||se),stack:String((se&&se.stack)||"").slice(0,300)}}res.seed_build="seedv342";return new Response(JSON.stringify(res),{headers:{"Content-Type":"application/json"}})}
