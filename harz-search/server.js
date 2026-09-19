@@ -5,11 +5,34 @@
 var http = require("http");
 var fs = require("fs");
 var E = require("./engine.js");
+var C = require("./search-core.js");
 
 var INDEX_PATH = process.argv[2] || "corpus/index-export.json";
 var payload = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8"));
 var res = E.importIndex(payload); // rebuilds index from documents — determinism proof at boot
 var INDEX = res.index, DOCS = res.docs, META = res.meta;
+
+// v0.1.1 frozen contract view: shared search-core over the imported index
+var BYID = Object.create(null);
+for (var i = 0; i < DOCS.length; i++) BYID[DOCS[i].id] = DOCS[i];
+var view = {
+  N: INDEX.N,
+  avgdl: INDEX.avgdl,
+  getTerm: function (term) {
+    var e = INDEX.terms[term];
+    if (!e) return null;
+    var ps = e.postings.slice().sort(function (a, b) { return a[0] - b[0]; })
+      .map(function (p) { return [p[0], p[1], INDEX.docLens[p[0]] || INDEX.avgdl]; });
+    return { df: e.df, postings: ps };
+  }
+};
+var getTitle = function (id) { return BYID[id] ? BYID[id].title : null; };
+var getMeta = function (id) {
+  var d = BYID[id];
+  if (!d) return null;
+  return { title: d.title, text2000: d.text.slice(0, 2000), url: d.url,
+           domain: d.domain, source: d.source, language: d.language || "" };
+};
 
 var PAGE = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +60,7 @@ footer{font-size:10px;color:#8a94a6;padding:14px 0;text-align:center}
 <form action="/" method="get"><input type="search" name="q" placeholder="Search the HARZ index…" autofocus><button type="submit">SEARCH</button></form>
 <div class="meta" id="stats">loading…</div>
 <div id="out"></div>
-<footer>HARZ Search v0.1 · BM25 · one index, many nodes</footer>
+<footer>HARZ Search v0.1.1 · frozen contract · one engine, many nodes</footer>
 </main>
 <script>
 fetch('/stats').then(r=>r.json()).then(s=>{document.getElementById('stats').textContent=s.documents+' documents · '+s.domains+' domains · '+s.unique_terms+' terms · digest '+String(s.index_digest).slice(0,16)+'…'});
@@ -75,15 +98,19 @@ var server = http.createServer(function (req, res) {
   if (p === "/search") {
     var q = u.searchParams.get("q") || "";
     var t0 = Date.now();
-    var r = E.search(INDEX, DOCS, q, 12);
-    return send(200, JSON.stringify({ query: q, results: r.results, total: r.total, took_ms: Date.now() - t0 }));
+    var rk = C.rankDocs(view, getTitle, q); // FROZEN CONTRACT v0.1.1 phase 1
+    var results = C.buildResults(getMeta, rk.ranked, rk.qtoks, 12); // phase 2
+    return send(200, JSON.stringify({ query: q, results: results, total: rk.total, took_ms: Date.now() - t0 }));
   }
   var dm = p.match(/^\/document\/(\d+)$/);
   if (dm) {
     var id = Number(dm[1]);
-    var doc = DOCS.find(function (d) { return d.id === id; });
+    var doc = BYID[id];
     if (!doc) return send(404, JSON.stringify({ error: "not found" }));
-    return send(200, JSON.stringify(doc));
+    return send(200, JSON.stringify({ id: doc.id, title: doc.title, url: doc.url,
+      domain: doc.domain, source: doc.source, language: doc.language || "",
+      fetched_at: doc.fetched_at, content_hash: doc.content_hash,
+      redirect_chain: doc.redirect_chain || [], text: doc.text.slice(0, 2000) }));
   }
   if (p === "/" || p === "/index.html") return send(200, PAGE, "text/html; charset=utf-8");
   if (p === "/manifest.json") return send(200, MANIFEST, "application/json");
