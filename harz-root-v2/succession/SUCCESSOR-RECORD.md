@@ -93,3 +93,19 @@ Hygiene requested: delete the WhatsApp message (delete for everyone).
 New user rule recorded: never paste anything containing long hex into chat — describe
 errors in words. Card content never goes on a command line; it goes inside the file
 (cat > pA.txt, press Enter FIRST, then paste, Enter, Ctrl-D once).
+
+## OWNER RULING — Sep 20, ~19:40 WAT: NO-CHAT WINDOW RULE REPEALED
+
+By owner order ("remove this law now"), the no-chat window rule enacted after burn #4
+is REPEALED. The owner may communicate with the agent at any point during the
+ceremony, including inside the key window (gen-key -> paper -> verify -> sign -> wipe).
+
+STANDING UNCHANGED (owner kept these by choice):
+1. The burn law — full key material reaching any chat burns the key on sight
+   (burns #1-4 stand; single-card exposure ruled an incident; key #6's margin is
+   the two unexposed cards; any further card exposure = burn on sight).
+2. Agents never receive, hold, combine, or verify card share material (0xCA28 law).
+
+Note for the record, honestly: the open chat carries exposure risk; the owner accepts
+it as ruling authority. The agent's duty is to judge what reaches the chat, not to
+gag the owner.
