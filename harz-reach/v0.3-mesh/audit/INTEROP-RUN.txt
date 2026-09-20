@@ -1,0 +1,12 @@
+GATE 3 INTEROP PROOF — Sep 20, 2026 (~23:5x WAT)
+Claim: the JS mesh-frame twin (mesh-frame.js) speaks the EXACT frozen Kotlin G1/G2 v2.1 wire format.
+Method: InteropDriver.java compiled against the frozen Kotlin core classes (commit 12b5991, unchanged) + kotlin-stdlib 1.9.23; random 300-byte payload.
+
+DIRECTION 1 (Kotlin encodes → JS decodes → JS re-encodes):
+KOTLIN_ENCODED 329 bytes (DATA src=AAAA dst=CCCC seq=42 ttl=8 hops=0 route=[])
+JS decoded Kotlin frame: type=3 src=AAAA dst=CCCC seq=42 ttl=8 hops=0 route=[] payLen=300
+JS re-encode BYTE-IDENTICAL to Kotlin: true
+
+DIRECTION 2 (JS encodes routed frame [AAAA,BBBB] hops=1 → frozen Kotlin MeshFrame.decode):
+KOTLIN_DECODE_OK type=3 seq=42 ttl=8 hops=1 route=[EdgeId(value=AAAA), EdgeId(value=BBBB)] payLen=300
+PAYLOAD BYTE-IDENTICAL through both cores (cmp exit 0)
