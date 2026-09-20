@@ -33,3 +33,8 @@ Single bad card survivable: any 2-of-3 rebuild.
   candidate for future succession use. The fresh king 90062faa supersedes it as living king.
 - Next steps per frozen sequence: zone v2 rebuild signed by the new king, re-pin doors,
   killer test, owner migration decision.
+
+## Owner Confirmation (Sep 20, 20:47 WAT)
+Owner confirmed by word: the fresh king's cards ARE written on paper (ink protocol).
+Terminal reset (step 8) ordered. The ink stands alone as the only keystore. Founding act
+COMPLETE.
