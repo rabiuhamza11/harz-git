@@ -56,6 +56,11 @@
     const verify = opts.verify || nodeVerifier();
     const minRecords = Number.isInteger(opts.minRecords) && opts.minRecords > 0 ? opts.minRecords : null;
     const minHeight = Number.isInteger(opts.minHeight) && opts.minHeight >= 0 ? opts.minHeight : null;
+    // v1.3 (Sep 20, door-bundle battery finding): the pinned ANCHOR is now ENFORCED at
+    // load — a zone signed by any other key (even a perfectly self-consistent one) is
+    // REFUSED. Before v1.3 the engine verified a zone against its OWN signed_by, so the
+    // pin was commentary, not law. Floors were real; the anchor was not. Now it is.
+    const anchor = typeof opts.anchor === "string" && opts.anchor ? opts.anchor : null;
     let zone = null, index = null, digest = null, lastHeight = null;
 
     function loadZone(zoneObj) {
@@ -63,6 +68,8 @@
       if (!zoneObj || zoneObj.v !== 2 || zoneObj.zone !== "harz")
         throw new Error("REFUSED: not a HARZ v2 zone");
       if (!Array.isArray(zoneObj.records)) throw new Error("REFUSED: no records");
+      if (anchor !== null && String(zoneObj.signed_by) !== anchor)
+        throw new Error("REFUSED: WRONG ANCHOR — zone signer " + String(zoneObj.signed_by).slice(0, 16) + " is not the pinned trust anchor (out-of-band pin — fail-closed)");
       const pubHex = String(zoneObj.signed_by).replace("ed25519:", "");
       const sigHex = String(zoneObj.sig).replace("ed25519:", "");
       let ok = false;
@@ -82,7 +89,7 @@
       }
       zone = zoneObj;
       lastHeight = zh;
-      try { digest = sha256hex(canonicalBytes({ ...zoneObj, sig: undefined })); }
+      try { const _dz = { ...zoneObj }; delete _dz.sig; digest = sha256hex(canonicalBytes(_dz)); }
       catch (e) { digest = null; }
       return { names: index.size, digest: digest || "digest-unavailable-in-projection" };
     }
