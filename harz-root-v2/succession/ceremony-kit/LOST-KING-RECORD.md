@@ -78,3 +78,27 @@ backdated authority questions.
 The founding ceremony (fresh chain v2, successor 7f970c91) PAUSES: nothing was
 ever signed on v2; there is nothing to unwind. The ink cards remain valid paper
 backups regardless of which path the owner chooses next.
+
+## CORRECTION — Sep 20, 2026, ~18:15 WAT: THE "RESURFACING" WAS SCROLLBACK, NOT A LIVE FOLDER
+
+Owner ran on Node 1 (Termux): find ~ (zsk-ed25519* | zone.sig) -> EMPTY. cd to the
+namespace build path -> No such file or directory. The pub PEM shown earlier in
+session was OLD TERMINAL SCROLLBACK from the Sep 14 era (when the build folder was
+alive) — not a live folder. Consequence: the line above saying "the Sep 16 search
+was wrong" is ITSELF wrong and is retracted — the Sep 16 exhaustive search was
+CORRECT: no zsk private exists on Node 1 then or now.
+
+STATE: the old king's private half remains UNFOUND. The owner's cancellation of
+the resurrection law STANDS as law (owner word, unchanged) — but there is presently
+no key to resurrect. If the old build folder (harz-root-namespace/build, held
+zsk-ed25519.pub.pem + zone.sig) still exists on ANY other device, backup, or copy,
+the private half may yet be recovered into owner custody. That hunt is OPEN.
+
+TWO LIVE PATHS TO A WORKING KING:
+1. OLD KING: locate the build folder elsewhere (desk machine, backup, other phone).
+2. FRESH KING: the 11:32 successor ink cards (pub 7f970c91) — the first pile written
+   Sep 16 morning. If those cards are unfound, the lawful re-forge (fresh successor
+   generated on Node 1, fresh ink cards, founding act signed locally) is ready —
+   same road as burns #1-3, proven survivable.
+
+Law unchanged throughout: private key material never enters chat. Ink is the keystore.
