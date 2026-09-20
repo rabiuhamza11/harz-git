@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f0f2f5">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#f0f2f5;color:#1a1a2e;width:280px;padding:12px}
+h1{font-size:14px;color:#0b5fff;font-weight:800;margin-bottom:8px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:10px;margin-bottom:8px;font-size:12px}
+.row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f0f0f0}
+.row:last-child{border-bottom:none}
+.ok{color:#0a7d33;font-weight:700}.err{color:#b3261e;font-weight:700}
+.code{font-family:monospace;font-size:10px;word-break:break-all}
+.btn{display:block;width:100%;background:#0b5fff;color:#fff;border:none;border-radius:8px;padding:8px;font-size:12px;font-weight:700;margin-top:6px}
+a.btn{text-align:center;text-decoration:none}
+.small{font-size:10px;color:#666}
+</style>
+</head>
+<body>
+<h1>HARZ Reach v0.1</h1>
+<div class="card" id="status">checking the signed book…</div>
+<button class="btn" id="refresh">Refresh zone now</button>
+<a class="btn" href="receipts.html">Receipts</a>
+<div class="small" style="margin-top:8px">king 90062faa · floors 77/1 · fail-closed</div>
+<script type="module" src="popup.js"></script>
+</body>
+</html>
