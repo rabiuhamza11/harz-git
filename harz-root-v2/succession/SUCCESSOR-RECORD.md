@@ -129,3 +129,36 @@ the last gate. NOTHING WAS SIGNED. Fail-closed held exactly as designed.
 Cleanup ordered: rm pA.txt pB.txt pC.txt king-pub.txt; VOID and destroy the #5
 paper cards. NEXT: a REAL fresh generation (gen-key), then paper, PUB, verify,
 finisher — the owner has now practiced every step.
+
+## FOUNDING SIGNED — Sep 20, ~20:42 WAT: KING 90062faa4947 CROWNED ON HARZ-ROOT-V2, HEIGHT 1
+
+The fresh-chain founding is COMPLETE. Chain harz-root-v2, height 1, FOUNDING_ACT.
+
+KING PUB: 90062faa4947be141d5e18987aea5d14dd1c570329b57b0c50a3f6cddfc54c0f
+SIG (ed25519 over canonical manifest): 87c054528bbfb062a695f70c52f4803ebb9da2614516d50b4611b6e9e4b1772
+183d3b210b050c44d87cab895189a0d66c8a71459f4847273ab92b4f94fcb8605
+Predecessor: c56e08bf (declared-lost, resurrection law cancelled, private unfound).
+Witnesses: 54697e7f, a1348ed9, c2c6d6b9. Policy 2-of-3.
+
+INDEPENDENT VERIFICATION (Nuruddeen, sandbox): canonical form re-derived and confirmed;
+ed25519 signature VERIFIED against the king pub with the kit's own SPKI reconstruction.
+Manifest and sig are public data by design; no key material passed through any chat.
+
+CORRECTION OF THE 20:30 CORRECTION (honesty to the record): the earlier diagnosis that
+"the owner's screen all evening was burn #4's key" was WRONG. The cards were a FRESH
+key's all along (generated ~19:25 after burn #4); the 19:31 ENOENT incident line WAS
+this fresh key's card — the original incident ruling (commit b354ad98a654) was correct.
+The ONLY wrong piece tonight was king-pub.txt holding an old pub (21a268f4); the v3
+REFUSE list caught it, and a diagnosis run with a placeholder pub revealed the real
+king before crowning. Fail-closed held twice.
+
+Note on the signed king_note text ("one no-chat session"): the no-chat rule was in
+fact repealed by owner ruling at ~19:40 (commit 1c008d628c9d) and the ceremony
+proceeded with chat open. The note text is a minor historical inaccuracy baked into
+the signed manifest; it does not affect validity. Recorded here so the books stay true.
+
+PENDING (the one thing that matters now): paper. Card files self-deleted (4 files);
+the gen-key screen scrollback is the last digital copy. The fresh king's cards MUST be
+hand-copied to paper (ink protocol: rows of 24, slash opens row 5, CHECK corners,
+cards to separate places) and confirmed BEFORE any terminal reset. The ink is the
+keystore.
