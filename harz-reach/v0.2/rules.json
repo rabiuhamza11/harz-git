@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "redirect": { "regexSubstitution": "reach.html#u=\\1" } },
+    "condition": {
+      "regexFilter": "^(https?://[a-z0-9][a-z0-9.-]*\\.harz(?::\\d+)?(?:[/?#].*)?)$",
+      "resourceTypes": ["main_frame"],
+      "isUrlFilterCaseSensitive": false
+    }
+  }
+]
