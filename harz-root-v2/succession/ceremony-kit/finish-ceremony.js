@@ -16,17 +16,18 @@
 const crypto = require("crypto");
 const fs = require("fs");
 
-const KING_PUB = "7f970c910c75783d4b763028303bfc5eba9b8ca462fec92e3f357d7e57f5af0d"; // ink key #4 — FOUNDING KING
-const OLD_KING = "c56e08bfbe74b1d431f05cf75b932773ed99e8b13dd4a4af7fe9f26cb9923f09";   // declared lost Sep 16
+const KING_PUB = "21a268f4ca06f936147a2060a6a0bff04fbd8bd8c244ea5152185864604eb035"; // ink key #5 — FOUNDING KING (re-forged Sep 20, owner order)
+const OLD_KING = "c56e08bfbe74b1d431f05cf75b932773ed99e8b13dd4a4af7fe9f26cb9923f09";   // Sep 14 king: resurrection law CANCELLED Sep 20 (ab560506); private still unfound
 const WITNESSES = [
   "c2c6d6b9844e852fe14982c648ce14f5734079b47c0d6218e743eeb4a71c133d",
   "54697e7fb8504d7166067584c9831bf85c7cad267615490ec26b76aabecff748",
   "a1348ed909e774562054b69c0ffd63bb42d323077db2c550d09b3bad8a2669c3",
 ];
-const DECLARED_AT = "2026-09-16";
+const DECLARED_AT = "2026-09-20"; // founding act signed Sep 20 with re-forged key #5
 
 const KNOWN = {
-  [KING_PUB]: "FOUNDING KING — ink key #4 (successor)",
+  [KING_PUB]: "FOUNDING KING — ink key #5 (re-forged Sep 20)",
+  "7f970c910c75783d4b763028303bfc5eba9b8ca462fec92e3f357d7e57f5af0d": "retired candidate #4 (cards unfound — NEVER name it in a manifest)",
   "c2c6d6b9844e852fe14982c648ce14f5734079b47c0d6218e743eeb4a71c133d": "witness W1 cards",
   "54697e7fb8504d7166067584c9831bf85c7cad267615490ec26b76aabecff748": "witness W2 cards",
   "a1348ed909e774562054b69c0ffd63bb42d323077db2c550d09b3bad8a2669c3": "witness W3 cards",
@@ -102,9 +103,10 @@ for (let i = 0; i < FILES.length && !signed; i++) {
       witnesses: WITNESSES.slice().sort(),
       predecessor: {
         king_pub: OLD_KING,
-        status: "declared-lost-by-owner",
+        status: "declared-lost Sep 16; resurrection law cancelled by owner Sep 20; private still unfound",
         live_root_v1: "frozen-serving",
       },
+      king_note: "founding key re-forged Sep 20 — candidate #4 (7f970c91) cards unfound, retired by owner order",
     };
     function canon(o) {
       if (Array.isArray(o)) return "[" + o.map(canon).join(",") + "]";
