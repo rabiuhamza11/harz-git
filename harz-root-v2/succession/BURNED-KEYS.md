@@ -70,3 +70,39 @@ chars, 0-9 a-f and one slash, no punctuation), a CHECK sha8 fingerprint per card
 checksum, card content never needs to leave the phone in any form. Battery: cards
 3/3 MATCH, typo MISMATCH caught, messy typing tolerated, combine hex + legacy both
 RECONSTRUCTED, derive-pub A+B and B+C identical to kit PUB, deterministic x2.
+
+## BURNED SUCCESSOR KEY #4 — Sep 20, 2026, ~19:15 WAT (re-forge session, exposure #4)
+
+PUB (ed25519): 21a268f4ca06f936147a2060a6a0bff04fbd8bd8c244ea5152185864604eb035
+(the re-forged founding king candidate, ink key #5 in the ceremony numbering)
+
+REASON: All three card share lines (the 2-of-3 split of the private key, in the
+A/B + A/C + B/C pairing layout printed by gen-key --split-hex) were pasted into
+the WhatsApp chat by the owner during the ceremony session. The paste contains
+complete key-recoverable material. Same law as burns #1-#3: paper is the only
+valid keystore; any digital appearance of the share lines burns the key on
+sight, regardless of intent, naming, or use. The agent refused to receive,
+combine, or verify the material and recorded the burn instead (standing law:
+agents never hold private keys).
+
+CONTAINMENT: the key never signed anything — no founding act, no manifest, no
+zone reference. Nothing was named. Live root v1 (e94b9693) untouched. Cost: the
+re-forge restart (fresh key #6 required) + any ink cards written for this key.
+
+OWNER HYGIENE REQUESTED (same protocol as burns #1-3):
+1. WhatsApp: delete the message for everyone.
+2. Paper: mark any cards written for this key VOID and destroy them.
+3. Termux: rm pA.txt pB.txt pC.txt (if present) then reset (clears gen-key output
+   from screen and scrollback).
+4. Base44 Security settings: review auto-saved "detected secrets" from this paste
+   and delete them (burn #3 precedent: platform-mediated storage counts).
+
+LAW (repeat, unchanged): any tool, verifier, ceremony, or future session that
+encounters this PUB as a successor, witness, or authority candidate in ANY
+manifest, zone, or ceremony must REFUSE it. Void forever. No exceptions, no
+recovery.
+
+PROCESS FIX (permanent, from the record): the key window (gen-key -> paper ->
+verify -> sign -> wipe) is a NO-CHAT window. Only the PUB line may leave the
+phone before the founding is signed. The agent can never receive, hold, combine,
+or verify card share material.
