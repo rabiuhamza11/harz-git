@@ -19,9 +19,10 @@ DOOR SOFTWARE STATE (all in this folder + ../resolver, ../gateway, ../qr-rail):
 - QR rail: qr-payloads-zone-v2.json — 46 chunks of the REAL signed zone, tamper/missing refused.
 - Receiver (harz-root-receive): trust bundle enters via its UI inputs — nothing baked, no redeploy.
 
-STATUS: ARMED, NOT SERVING. Live root v1 (digest e94b9693, ZSK 86a507a4, old king c56e08bf)
-remains frozen-serving. Migration = the owner's word only; at that word the doors flip their
-serving zone + anchor to this bundle. Until then nothing deployed changes.
+STATUS: SERVING (migrated Sep 20, ~23:00 WAT on the owner's word). harz-root.harz.workers.dev
+is v3.0 serving THIS bundle: zone v2, anchor 90062faa, floors 77/1, boot-verified, 77/77 live
+sweep byte-true, browser-tested. v1 book frozen at /zone-v1 (digest e94b9693, history only).
+See ../migration/MIGRATION-RECORD.md. Rollback = one redeploy of the pinned v2.1 script.
 
 MIGRATION FLIP LIST (at the word "migrate"): DoH doorway worker -> serve zone v2 under anchor
 90062faa; live root v1 -> freeze read-only (or redirect /zone pointer); receiver + QR paper ->
