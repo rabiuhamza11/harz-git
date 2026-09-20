@@ -109,3 +109,23 @@ STANDING UNCHANGED (owner kept these by choice):
 Note for the record, honestly: the open chat carries exposure risk; the owner accepts
 it as ruling authority. The agent's duty is to judge what reaches the chat, not to
 gag the owner.
+
+## CORRECTION — Sep 20, ~20:30 WAT: THE REFUSAL THAT SAVED THE CEREMONY
+
+The owner ran the v3 finisher; it printed: REFUSED: BURNED key #4. This proves
+king-pub.txt contained 21a268f4 — the BURNED king's pub. The gen-key screen the
+owner copied from all evening was the OLD output from ~18:50 (burn #4's key). No
+fresh key was ever generated after burn #4.
+
+What this corrects: the earlier incident entry framed the ENOENT card line as
+"fresh key #6's card" — it was actually the burned king #5's card. Nothing changes
+about the burns: key #5 (21a268f4) was already burned at 19:20 when all three card
+lines reached the chat.
+
+What happened at 20:27: the owner's card files pA/pB/pC (all CHECK-MATCHed) and
+king-pub.txt reconstructed the BURNED king. The finisher's REFUSE list caught it at
+the last gate. NOTHING WAS SIGNED. Fail-closed held exactly as designed.
+
+Cleanup ordered: rm pA.txt pB.txt pC.txt king-pub.txt; VOID and destroy the #5
+paper cards. NEXT: a REAL fresh generation (gen-key), then paper, PUB, verify,
+finisher — the owner has now practiced every step.
