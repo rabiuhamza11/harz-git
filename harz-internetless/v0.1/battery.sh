@@ -3,6 +3,9 @@
 # Simulates 3 nodes A/B/C on localhost, all 5 operations, death+restart persistence, tamper + wrong-key + replay refusals.
 cd "$(dirname "$0")"
 N=$(pwd)/internetless-node.js
+start_node() { # dir, port — starts serve with exec so $! is the real node PID; pid file inside the node dir
+  ( cd "$1" && exec nohup node $N serve --port "$2" > serve.log 2>&1 ) & echo $! > "$1/pid"
+}
 PASS=0; FAIL=0
 t() { if [ "$1" = "0" ]; then echo "PASS $2"; PASS=$((PASS+1)); else echo "FAIL $2"; FAIL=$((FAIL+1)); fi; }
 
@@ -14,7 +17,7 @@ rm -rf testtmp/nA testtmp/nB testtmp/nC; mkdir -p testtmp/nA testtmp/nB testtmp/
 test -f testtmp/nA/identity.json && test -f testtmp/nB/identity.json && test -f testtmp/nC/identity.json
 t $? "T1 identity: 3 nodes each generated a local ed25519 identity"
 
-(cd testtmp/nB && nohup node $N serve --port 8991 >serve.log 2>&1 & echo $! > pid)
+start_node testtmp/nB 8991
 sleep 1
 WHO=$(curl -s http://127.0.0.1:8991/whoami)
 echo "$WHO" | grep -q '"ok":true' && echo "$WHO" | grep -q 'NODE_B'
@@ -24,15 +27,19 @@ t $? "T2 discovery: A discovers B's identity over local transport (no server)"
 grep -q "offline packet delivered" testtmp/nA/send.log
 t $? "T3+T4 message+verify: B verified A's ed25519 signature locally and stored it"
 
-(cd testtmp/nC && nohup node $N serve --port 8992 >serve.log 2>&1 & echo $! > pid)
+start_node testtmp/nC 8992
 sleep 1
 (cd testtmp/nB && node $N forward --to 127.0.0.1:8992) >testtmp/nB/fwd.log 2>&1
 grep -q "FORWARDED 1 verified" testtmp/nB/fwd.log
 t $? "T5 store-and-forward: B relayed A's stored message to C, C verified A's original sig"
 
-# T6 death + restart
-BPID=$(cat testtmp/nB/pid); kill $BPID 2>/dev/null; sleep 1
-(cd testtmp/nB && nohup node $N serve --port 8991 >serve2.log 2>&1 & echo $! > pid)
+# T6 death + restart — the kill must be REAL and proven
+BPID=$(cat testtmp/nB/pid)
+kill $BPID 2>/dev/null; sleep 1
+if kill -0 $BPID 2>/dev/null; then t 1 "T6a death: old B process really terminated"; else t 0 "T6a death: old B process really terminated"; fi
+start_node testtmp/nB 8991
+NEWBPID=$(cat testtmp/nB/pid)
+[ "$BPID" != "$NEWBPID" ]; t $? "T6b restart: new B process is a genuinely new PID"
 sleep 1
 IB=$(curl -s http://127.0.0.1:8991/inbox)
 echo "$IB" | grep -q '"count":1' && echo "$IB" | grep -q '"verified":true' && echo "$IB" | grep -q 'offline packet'
