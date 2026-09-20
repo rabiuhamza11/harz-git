@@ -1,4 +1,4 @@
-// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN v3 (runs ON NODE 1 only) — symlink-blindspot fix: find -L follows ~/storage
+// HARZ CEREMONY v1.2 — sign-manifest.js — THE KING'S PEN v4 (runs ON NODE 1 only) — symlink-blindspot fix: find -L follows ~/storage
 // Signs the SUCCESSION MANIFEST with the production ZSK (zsk-ed25519.pem, pkcs8 PEM,
 // born offline Sep 14 via zone-generator.js --init, fingerprint 86a507a42df64df2).
 // The private key NEVER leaves this phone. This script prints ONLY public material
@@ -16,24 +16,45 @@ const law = require(path.join(__dirname, "succession-law.js"));
 
 const KING_PUB = "c56e08bfbe74b1d431f05cf75b932773ed99e8b13dd4a4af7fe9f26cb9923f09";
 
-// ---- find the ZSK pem anywhere under home (no typing, no paths to remember) ----
-let zskPath = null;
-const CANDIDATES = [
+// ---- v4 finder: the Sep 16 run said NOT FOUND, but Sep 20 the owner's terminal
+// shows a LIVE harz-root-namespace/build folder with the king's pub.pem in it.
+// Two possible causes: folder appeared late, OR v3's find -L timed out at 60s and
+// silently fell through (big home + storage symlinks on a slow phone). v4: fast
+// no-storage pass first, then slow storage pass with a long timeout, then the
+// namespace-glob pass; collect ALL candidates and validate each against the king
+// pub (a wrong key is reported honestly, not silently skipped).
+const foundPaths = [];
+function tryFind(cmd, timeoutMs) {
+  try { return execSync(cmd, { timeout: timeoutMs }).toString().trim().split("\n").filter(Boolean); }
+  catch (e) { return []; }
+}
+// pass 1: known spots (instant)
+for (const p of [
   path.join(os.homedir(), "ceremony", "keys", "zsk-ed25519.pem"),
   path.join(os.homedir(), "ceremony", "zsk-ed25519.pem"),
-];
-for (const c of CANDIDATES) if (fs.existsSync(c)) { zskPath = c; break; }
-if (!zskPath) {
-  try {
-    const out = execSync('find -L ~ -name "zsk-ed25519.pem" -not -path "*/proc/*" 2>/dev/null | head -1', { timeout: 60000 }).toString().trim();
-    if (out) zskPath = out.split("\n")[0].trim();
-  } catch (e) { /* find failed or timed out — fall through */ }
+]) if (fs.existsSync(p)) foundPaths.push(p);
+// pass 2: fast home search, skipping storage symlinks (usually < 30s)
+foundPaths.push(...tryFind('find ~ -name "zsk-ed25519.pem" -not -path "*/storage/*" 2>/dev/null | head -20', 180000));
+// pass 3: the rediscovered namespace folder, by name pattern
+foundPaths.push(...tryFind('find ~ -path "*harz-root-namespace*" -name "zsk-ed25519.pem" 2>/dev/null | head -20', 180000));
+// pass 4: slow symlink pass through shared storage (long timeout, never silent)
+foundPaths.push(...tryFind('find -L ~/storage -name "zsk-ed25519.pem" 2>/dev/null | head -20', 300000));
+const unique = [...new Set(foundPaths)];
+let zskPath = null;
+for (const p of unique) {
+  let priv2;
+  try { priv2 = crypto.createPrivateKey({ key: fs.readFileSync(p, "utf8"), format: "pem" }); }
+  catch (e) { console.error("CANDIDATE " + p + " unreadable as PEM — skipping."); continue; }
+  const p2 = crypto.createPublicKey(priv2).export({ type: "spki", format: "der" }).slice(-32).toString("hex");
+  if (p2 === KING_PUB) { zskPath = p; break; }
+  console.error("CANDIDATE " + p + " is a valid key but NOT the king (pub " + p2 + ") — public-safe, tell Magani.");
 }
 if (!zskPath) {
-  console.error("ZSK NOT FOUND — zsk-ed25519.pem is not on this phone (searched home + storage).");
-  let gens = "";
-  try { gens = execSync('find -L ~ -name "zone-generator.js" 2>/dev/null | head -5', { timeout: 60000 }).toString().trim(); } catch (e) {}
-  console.error(gens ? "CEREMONY FOLDER (key missing inside): " + gens.replace(/\n/g, " | ") : "NO zone-generator.js folder anywhere either.");
+  if (unique.length === 0) {
+    console.error("ZSK NOT FOUND — zsk-ed25519.pem is not in home (fast pass), the harz-root-namespace folder, or shared storage (slow pass, 300s).");
+    const pubs = tryFind('find ~ -name "zsk-ed25519.pub.pem" 2>/dev/null | head -5', 60000);
+    if (pubs.length) console.error("NOTE: the king PUBLIC pem lives at: " + pubs.join(" | ") + " — the folder is real, the private pen was not next to it.");
+  }
   console.error("Nothing signed. Tell Magani in words.");
   process.exit(3);
 }
