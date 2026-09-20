@@ -72,3 +72,24 @@ founding can complete. Candidate #4 (7f970c91) remains retired. The finisher
 currently crowns the burned #5 — it MUST be re-pointed to the new key before any
 use. New permanent rule recorded in BURNED-KEYS.md: the key window is a no-chat
 window; only the PUB line leaves the phone before signing.
+
+## INCIDENT (NOT A BURN) — Sep 20, ~19:33 WAT: KEY #6, ONE CARD LINE REACHED CHAT
+
+During the no-chat ceremony session for fresh key #6 (pub not yet shared by owner), the
+owner pasted a card's content as a check-card.js COMMAND ARGUMENT instead of into the
+pA.txt file; the resulting ENOENT error — whose path IS the card line — was then pasted
+into WhatsApp as a bug report.
+
+EXPOSURE: exactly ONE card (two 96-hex shares of the 3-way split).
+VERDICT: NOT A BURN. One card cannot reconstruct the key — the split requires any TWO
+of three cards (kit design law: "one photo = nothing"; burns #1-#4 were all full
+exposures). Key #6 remains cryptographically sound and the founding may proceed.
+
+MARGIN REDUCED: the two remaining cards now carry the entire secrecy margin.
+LAW: any further exposure of EITHER remaining card = BURN ON SIGHT.
+The exposed card remains usable for 2-of-3 recovery but is public knowledge.
+
+Hygiene requested: delete the WhatsApp message (delete for everyone).
+New user rule recorded: never paste anything containing long hex into chat — describe
+errors in words. Card content never goes on a command line; it goes inside the file
+(cat > pA.txt, press Enter FIRST, then paste, Enter, Ctrl-D once).
