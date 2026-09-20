@@ -46,3 +46,35 @@ The ink ceremony of Sep 16 (kit v1.2.1, successor #4 + W1-3) was designed to
 survive exactly this outcome: "TODAY'S INK KEYS SURVIVE BOTH PATHS." The
 successor bench means a lost king costs nothing but the recovery search itself.
 The fresh anchor is not a compromise — it is the system working.
+
+## UPDATE — OWNER RULING, Sep 20, 2026, ~17:57 WAT: THE RESURRECTION LAW IS CANCELLED
+
+Owner word (Rabiu Hamza Mohammed), spoken in ceremony session, Sep 20 ~17:57 WAT:
+"the law written about the key is cancelled."
+
+EFFECT: the permanent ban above ("if the private key ever resurfaces it does NOT
+resurrect") is CANCELLED by the owner, the same authority that wrote it. From this
+ruling forward, signatures by KING PUB c56e08bf...9923f09 carry authority in the
+HARZ namespace again.
+
+WHY THE PREMISE DISSOLVED: the ban was written on the belief the key was lost,
+possibly to unknown hands. On Sep 20 the king resurfaced in the owner's own
+harz-root-namespace build folder (keys/zsk-ed25519.pub.pem shown in session,
+byte-confirmed = c56e08bf...; Sep 16 search had reported no zsk anywhere — that
+search result was wrong). Rediscovery in the owner's own custody dissolves the
+lost-key premise. No leak evidence ever existed (phone forensics: inconclusive,
+not convicting).
+
+NOT CANCELLED (explicit): burns #1, #2, #3 in BURNED-KEYS.md — those keys entered
+a networked chat channel; they stay refused forever. Only the lost-king
+resurrection ban is lifted.
+
+PENDING VERIFICATION: presence of the private half (zsk private PEM) in the
+namespace build folder — to be confirmed on Node 1 (filenames only, per law).
+INTERIM WINDOW (Sep 16 - Sep 20): no signatures were made by this key in that
+window (root v1 frozen-serving throughout), so the cancellation creates no
+backdated authority questions.
+
+The founding ceremony (fresh chain v2, successor 7f970c91) PAUSES: nothing was
+ever signed on v2; there is nothing to unwind. The ink cards remain valid paper
+backups regardless of which path the owner chooses next.
