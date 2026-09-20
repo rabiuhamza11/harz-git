@@ -106,3 +106,9 @@ PROCESS FIX (permanent, from the record): the key window (gen-key -> paper ->
 verify -> sign -> wipe) is a NO-CHAT window. Only the PUB line may leave the
 phone before the founding is signed. The agent can never receive, hold, combine,
 or verify card share material.
+
+## ADDENDUM — Sep 20, ~19:40 WAT
+
+The PROCESS FIX recorded in burn #4 above (no-chat window) was REPEALED by owner
+ruling the same evening — see SUCCESSOR-RECORD. The burn law and the
+agent-never-holds-keys law remain in force.
