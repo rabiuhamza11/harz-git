@@ -61,3 +61,14 @@ Ceremony path: ink protocol (rows of 24, slash opens row 5, CHECK corners) ->
 kit verify via copy/paste (never typing) -> founding signed from byte-perfect
 copies -> digital wiped (rm + reset). Ink becomes the only keystore.
 Witness bench W1-W3 unchanged. Burns #1-3 law unchanged.
+
+## CORRECTION — Sep 20, ~19:20 WAT: INK #5 BURNED BEFORE SIGNING
+
+The founding king recorded above (PUB 21a268f4...) was burned before the founding
+act was signed: all three card share lines were pasted into the WhatsApp chat
+(exposure #4 — see BURNED-KEYS.md #4). It never signed anything and must never be
+named in a manifest. A fresh key (#6) must be generated on Node 1 before the
+founding can complete. Candidate #4 (7f970c91) remains retired. The finisher
+currently crowns the burned #5 — it MUST be re-pointed to the new key before any
+use. New permanent rule recorded in BURNED-KEYS.md: the key window is a no-chat
+window; only the PUB line leaves the phone before signing.
