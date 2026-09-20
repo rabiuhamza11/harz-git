@@ -164,7 +164,8 @@ if (require.main === module) {
       for (const f of FILES) { try { fs.unlinkSync(f); cleaned++; } catch (e) {} }
       fs.writeFileSync("SIGNED-ZONE-V2.json", JSON.stringify(zone, null, 1));
 
-      const digest = crypto.createHash("sha256").update(canonicalBytes({ ...zone, sig: undefined })).digest("hex");
+      const unsignedZ = { ...zone }; delete unsignedZ.sig;
+      const digest = crypto.createHash("sha256").update(canonicalBytes(unsignedZ)).digest("hex");
       console.log("");
       console.log(">>> ZONE v2 SIGNED — the founding king names the first zone of harz-root-v2.");
       console.log("(signed with pair " + FILES[i] + " + " + FILES[j] + ")");
