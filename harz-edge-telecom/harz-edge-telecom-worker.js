@@ -97,7 +97,7 @@ ${body}
 __name(reportPage, "reportPage");
 __name2(reportPage, "reportPage");
 __name22(reportPage, "reportPage");
-var VERSION = "5.2.0";
+var VERSION = "5.3.0";
 var THEME = "#f0f2f5";
 var CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
@@ -309,8 +309,8 @@ var RADIO_CODEC = `// HARZ RADIO CODEC v1.1 \u2014 FSK over sound (2 tones: 1000
 // Pure functions, no browser APIs: encode(text) \u2192 Float32Array PCM; decode(pcm, sampleRate) \u2192 text | null
 // Frame: 8-bit alternating preamble + magic "HRZ1" + 16-bit length + UTF-8 payload + CRC16 (CCITT).
 var HRC = (function () {
-  var RATE = 48000, BITMS = 8, BIT = Math.round(RATE * BITMS / 1000); // 384 samples, 125 bits/sec
-  var F0 = 1000, F1 = 1500, RAMP = 38; // ~1ms raised-cosine ramp; exact Goertzel bins at 384-sample windows (k=8, k=12)
+  var RATE = 48000, BITMS = 16, BIT = Math.round(RATE * BITMS / 1000); // 768 samples, 62.5 bits/sec
+  var F0 = 1000, F1 = 1500, RAMP = 38; // ~1ms raised-cosine ramp; exact Goertzel bins at 768-sample windows (k=16, k=24)
   var PREAMBLE = [1, 0, 1, 0, 1, 0, 1, 0];
   var MAGIC = [0x48, 0x52, 0x5a, 0x31]; // "HRZ1"
   var MAXPAY = 90;
@@ -356,7 +356,7 @@ var HRC = (function () {
         var g = 1;
         if (s < RAMP) g = 0.5 * (1 - Math.cos(Math.PI * s / RAMP));
         else if (s >= BIT - RAMP) g = 0.5 * (1 - Math.cos(Math.PI * (BIT - s) / RAMP));
-        pcm[off + s] = g * 0.5 * Math.sin(2 * Math.PI * f * (s / RATE));
+        pcm[off + s] = g * 0.9 * Math.sin(2 * Math.PI * f * (s / RATE));
       }
     }
     return { pcm: pcm, durationSec: n / RATE, bits: bits.length };
@@ -438,6 +438,7 @@ var RADIO_JS = `
 var log = (t, cls) => { document.getElementById('rlog').innerHTML = '<div class="' + (cls || 'note') + '">' + t + '</div>'; };
 var PH = localStorage.getItem('mesh-phone') || '';
 document.getElementById('rfrom').value = PH;
+var vp = document.getElementById('vinph'); if (vp && PH) vp.value = PH;
 var esc = function(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); };
 var mode = 'send';
 function setMode(m) {
@@ -458,7 +459,7 @@ function frame() {
   return { f: f, to: to, body: body, text: f + '|' + to + '|' + body };
 }
 function selfTest() {
-  var t = 'Self-test: sound round trip at 125bps';
+  var t = 'Self-test: sound round trip at 62.5bps';
   var e = HRC.encode(t);
   var d = HRC.decode(e.pcm, HRC.RATE);
   document.getElementById('selfres').innerHTML = (d && d.text === t) ? 'PASS \u2014 the message survived speaker math and mic math, bit for bit.' : 'FAIL';
@@ -470,24 +471,27 @@ function transmit() {
   if (!e) { log('Too long for the sound rail (max 90 bytes total).', 'bad'); return; }
   try {
     var ctx = new AudioContext({ sampleRate: HRC.RATE });
-    var buf = ctx.createBuffer(1, e.pcm.length, HRC.RATE);
-    buf.copyToChannel(e.pcm, 0);
+    var gap = Math.round(HRC.RATE * 0.15);
+    var rep = new Float32Array((e.pcm.length + gap) * 3 - gap);
+    for (var rr = 0; rr < 3; rr++) rep.set(e.pcm, rr * (e.pcm.length + gap));
+    var buf = ctx.createBuffer(1, rep.length, HRC.RATE);
+    buf.copyToChannel(rep, 0);
     var src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
     src.start();
     log(mode === 'bcast'
-      ? 'Broadcasting ' + e.durationSec.toFixed(1) + 's of sound. Every listening phone in earshot can catch it. Repeat freely \u2014 fresh broadcasts deliver.'
-      : 'Transmitting ' + e.durationSec.toFixed(1) + 's of sound. Hold the phones close. ' + e.bits + ' bits on air.', 'ok');
+      ? 'Broadcasting ' + (e.durationSec * 3).toFixed(1) + 's of sound (3 repeats). Every listening phone in earshot can catch it. Repeat freely \u2014 fresh broadcasts deliver.'
+      : 'Transmitting ' + (e.durationSec * 3).toFixed(1) + 's of sound (3 repeats). Hold the phones close. ' + e.bits + ' bits on air.', 'ok');
   } catch (err) { log('Audio blocked: ' + err.message, 'bad'); }
 }
 var listening = false, micCtx = null, micStream = null;
 async function listen() {
-  if (listening) { listening = false; document.getElementById('listenbtn').textContent = 'START LISTENING'; if (micStream) micStream.getTracks().forEach(function (t) { t.stop(); }); if (micCtx) micCtx.close(); return; }
+  if (listening) { listening = false; var mEl0 = document.getElementById('sigmeter'); if (mEl0) mEl0.innerHTML = 'Signal: idle'; document.getElementById('listenbtn').textContent = 'START LISTENING'; if (micStream) micStream.getTracks().forEach(function (t) { t.stop(); }); if (micCtx) micCtx.close(); return; }
   try {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
     micCtx = new AudioContext();
     var rate = micCtx.sampleRate;
     var proc = micCtx.createScriptProcessor(4096, 1, 1);
-    var rolling = new Float32Array(Math.ceil(rate * 12));
+    var rolling = new Float32Array(Math.ceil(rate * 20));
     var wpos = 0;
     proc.onaudioprocess = function (ev) {
       var d = ev.inputBuffer.getChannelData(0);
@@ -498,6 +502,16 @@ async function listen() {
       var flat = new Float32Array(rolling.length);
       var start = wpos % rolling.length;
       for (var i = 0; i < rolling.length; i++) flat[i] = rolling[(start + i) % rolling.length];
+      var win = Math.min(flat.length, Math.round(rate * 0.3));
+      var seg = flat.subarray(flat.length - win);
+      var sumsq = 0; for (var ii = 0; ii < win; ii++) sumsq += seg[ii] * seg[ii];
+      var db = 20 * Math.log10(Math.sqrt(sumsq / win) || 1e-9);
+      var mEl = document.getElementById('sigmeter');
+      if (mEl) {
+        var col = db > -38 ? '#0a7d3c' : (db > -52 ? '#b8860b' : '#a0a0a0');
+        var pct = Math.max(0, Math.min(100, Math.round((db + 70) * 100 / 55)));
+        mEl.innerHTML = 'Signal: ' + db.toFixed(1) + ' dB <span style="display:inline-block;width:' + pct + '%;height:8px;background:' + col + ';border-radius:2px;vertical-align:middle"></span> ' + (db > -38 ? '(strong)' : (db > -52 ? '(weak, move closer or raise volume)' : '(too quiet)'));
+      }
       var d = HRC.decode(flat, rate);
       if (d && d.text) { for (var i = 0; i < rolling.length; i++) rolling[i] = 0; gotMessage(d.text); }
     }, 700);
@@ -600,16 +614,51 @@ function vlPlay() {
   el.src = URL.createObjectURL(vlLast);
   el.play().catch(function () {});
 }
+async function vlPull() {
+  var box = document.getElementById('vinbox');
+  var ph = (document.getElementById('vinph').value || '').replace(/[^0-9]/g, '');
+  if (ph.length < 10) { box.textContent = ''; box.insertAdjacentHTML('beforeend', '<div class="note">Enter your full phone number.</div>'); return; }
+  try { localStorage.setItem('mesh-phone', ph); } catch (e) {}
+  box.textContent = '';
+  box.insertAdjacentHTML('beforeend', '<div class="note">Pulling from the edge…</div>');
+  try {
+    var r = await fetch('/api/inbox?phone=' + encodeURIComponent(ph));
+    var d = await r.json();
+    box.textContent = '';
+    if (!d.success) { var bd = document.createElement('div'); bd.className = 'bad'; bd.textContent = 'Refused: ' + (d.error || 'unknown'); box.appendChild(bd); return; }
+    if (!d.messages || !d.messages.length) { var n0 = document.createElement('div'); n0.className = 'note'; n0.textContent = 'No messages waiting on the edge.'; box.appendChild(n0); return; }
+    d.messages.forEach(function (m) {
+      var div = document.createElement('div'); div.className = 'msg';
+      var lbl = document.createElement('div'); lbl.className = 'm';
+      if (m.voice) {
+        lbl.textContent = 'Voice note from ' + (m.from || 'unknown') + ' (' + (m.dur || 0) + 's)';
+        var au = document.createElement('audio'); au.controls = true; au.preload = 'metadata'; au.style.cssText = 'width:100%;margin-top:6px'; au.src = m.voice;
+        div.appendChild(lbl); div.appendChild(au);
+      } else {
+        lbl.textContent = 'Text from ' + (m.from || 'unknown');
+        var tx = document.createElement('div'); tx.textContent = m.text || '';
+        div.appendChild(lbl); div.appendChild(tx);
+      }
+      box.appendChild(div);
+    });
+    var done = document.createElement('div'); done.className = 'note';
+    done.textContent = d.messages.length + ' message(s) delivered — inbox cleared on the edge.';
+    box.appendChild(done);
+  } catch (err) {
+    box.textContent = '';
+    var bd2 = document.createElement('div'); bd2.className = 'bad'; bd2.textContent = 'Pull failed: ' + err.message; box.appendChild(bd2);
+  }
+}
 `;
 var RADIO_STYLE = "<style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}body{background:#f0f2f5;color:#333}header{background:#fff;border-bottom:1px solid #e3e6ea;padding:14px 16px}h1{font-size:17px;color:#0a7d3c}.ver{font-size:11px;color:#888}main{max-width:640px;margin:0 auto;padding:14px}.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.05)}.card h2{font-size:13px;color:#0a7d3c;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}input,textarea,button{width:100%;padding:10px;border:1px solid #d7dbe0;border-radius:8px;font-size:13px;margin-top:6px}button{background:#0a7d3c;color:#fff;border:0;font-weight:700;cursor:pointer}.note{font-size:11px;color:#777;margin-top:6px}.msg{background:#f6f8fa;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:13px}.m{font-size:11px;color:#888}.ok{color:#0a7d3c;font-weight:700}.bad{color:#b30000;font-weight:700}</style>";
-var RADIO_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f0f2f5"><meta name="apple-mobile-web-app-capable" content="yes"><title>HARZ Radio \u2014 Sound Rail</title><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon.svg" type="image/svg+xml">@@STYLE@@</head><body><header><h1>HARZ RADIO</h1><div class="ver">The sound rail \u2014 v1.2 \xB7 125 bits/sec text \xB7 send + broadcast + push-to-talk \xB7 closed loop on Harz Mesh</div></header><main>
+var RADIO_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f0f2f5"><meta name="apple-mobile-web-app-capable" content="yes"><title>HARZ Radio \u2014 Sound Rail</title><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon.svg" type="image/svg+xml">@@STYLE@@</head><body><header><h1>HARZ RADIO</h1><div class="ver">The sound rail \u2014 v1.4 \xB7 62.5 bits/sec text \xB7 send + broadcast + push-to-talk + voice inbox \xB7 closed loop on Harz Mesh</div></header><main>
 <div class="card"><h2>Self-test</h2><button onclick="selfTest()">RUN SOUND ROUND TRIP</button><div id="selfres" class="note">Encodes a message to sound, decodes it back, checks bit for bit.</div></div>
 <div class="card"><h2>Mode</h2><button id="bsend" onclick="setMode('send')" style="font-weight:900">SEND (one phone)</button><button id="bbcast" onclick="setMode('bcast')">BROADCAST (the room)</button><div id="bcastnote" class="note" style="display:none">A broadcast carries no single recipient \u2014 every listening phone in earshot can catch it and relay it onward. Repeats deliver fresh.</div></div>
 <div class="card"><h2>Transmit \u2014 speak in sound</h2><input id="rfrom" placeholder="Your phone (from)"><input id="rto" placeholder="To phone"><textarea id="rbody" placeholder="Message (max 90 bytes on the sound rail)"></textarea><button id="txbtn" onclick="transmit()">PLAY THE CHIRP</button></div>
-<div class="card"><h2>Receive \u2014 listen</h2><button id="listenbtn" onclick="listen()">START LISTENING</button><div id="rlog" class="note">Open this page on a second phone, press Transmit there, hold the phones close.</div></div>
+<div class="card"><h2>Receive \u2014 listen</h2><button id="listenbtn" onclick="listen()">START LISTENING</button><div id="sigmeter" class="note" style="font-family:monospace">Signal: idle</div><div id="rlog" class="note">Open this page on a second phone, press Transmit there, hold the phones close.</div></div>
 <div class="card"><h2>Sound inbox</h2><div id="rinbox"><div class="note">Decoded messages and broadcasts land here. One tap sends them into the mesh store-and-forward queue.</div></div></div>
 <div class="card"><h2>Push-to-talk</h2><input id="pttto" placeholder="Mesh voice queue \u2014 to phone (optional)"><button id="pttbtn" onmousedown="pttStart()" onmouseup="pttStop()" ontouchstart="pttStart();event.preventDefault()" ontouchend="pttStop()">HOLD TO TALK</button><audio id="pttplay"></audio><button onclick="pttSendMesh()">SEND CLIP TO MESH VOICE QUEUE</button><div id="pttstat" class="note">Hold, speak, release \u2014 your voice plays from the speaker. The listening phone keeps the last transmission. Half-duplex: one talks, then the other.</div></div>
-<div class="card"><h2>Voice listener</h2><button id="vlbtn" onclick="vlToggle()">LISTEN FOR VOICE</button><button onclick="vlPlay()">PLAY LAST TRANSMISSION</button><audio id="vlplay"></audio><div id="vlstat" class="note">While listening, this phone keeps the last 20 seconds in a rolling buffer and can replay the last transmission.</div></div>
+<div class="card"><h2>Voice listener</h2><button id="vlbtn" onclick="vlToggle()">LISTEN FOR VOICE</button><button onclick="vlPlay()">PLAY LAST TRANSMISSION</button><audio id="vlplay"></audio><div id="vlstat" class="note">While listening, this phone keeps the last 20 seconds in a rolling buffer and can replay the last transmission.</div></div><div class="card"><h2>Voice inbox — pull from the mesh</h2><input id="vinph" placeholder="Your phone"><button onclick="vlPull()">PULL MY INBOX</button><div id="vinbox"><div class="note">Voice notes sent to your number through the mesh queue wait on the edge. Pull them here and play.</div></div></div>
 <div class="card"><h2>What this is</h2><div class="note">A message becomes two tones from the speaker; another phone's mic hears it and turns it back into text. No internet, no carrier, no cost. Text rides the sound rail; voice rides push-to-talk \u2014 a half-duplex walkie-talkie, one talks then the other. Real-phone field testing is mandatory before any announcement.</div></div>
 </main>@@SCRIPT@@<script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw2.js').catch(function(){}); }</script></body></html>`;
 function radioPage() {
@@ -662,7 +711,7 @@ var worker_default = {
           focus: "serverless-first phone mesh network",
           architecture: "HARZ-Mesh routing above Wi-Fi Aware / Wi-Fi Direct / BLE transports",
           gates: {
-            G1_radio_reality: "protocol frozen 2026-09-06, awaiting field execution",
+            G1_radio_reality: "v1.3 sound rail (62.5 bps, 0.9 amp, 3x repeats, live signal meter) deployed 2026-09-19, awaiting field retest",
             G2_multi_hop: "protocol frozen 2026-09-06, awaiting field execution",
             G3_mobility: "queued",
             G4_store_and_forward: "queued",
