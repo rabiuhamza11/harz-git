@@ -1,0 +1,20 @@
+; HARZ ROOT ZONE — generated from names registry
+; origin: harz.  height: 0
+$ORIGIN harz.
+chain.harz.          3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-chain\",\"note\":\"chain explorer + API\"}"
+content.harz.        3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"contentpilot-ai-pwa\",\"note\":\"keeper\"}"
+dial.harz.           3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-dial\",\"note\":\"USSD/SMS internetless access — designed, pending build\"}"
+dua.harz.            3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-dua\",\"note\":\"prayer exchange v2.0\"}"
+eternity.harz.       3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-eternity\",\"note\":\"digital inheritance, V2 contracts only\"}"
+faucet.harz.         3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-faucet\",\"note\":\"claim faucet v3.0\"}"
+gdeg.harz.           3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"gdeg-wallet-pwa\",\"note\":\"DRAFT — flagged possible duplicate of wallet.harz in 2026-09-06 audit; owner trims before genesis\"}"
+gov.harz.            3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-governance\",\"note\":\"DAO voting, 150-HARZ gate\"}"
+health.harz.         3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"omega-health-pwa\",\"note\":\"keeper\"}"
+miner.harz.          3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-miner-pwa\",\"note\":\"DRAFT — flagged possible duplicate of Super App mining UI in 2026-09-06 audit; owner trims before genesis\"}"
+net.harz.            3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-net\",\"note\":\"ecosystem portal / search\"}"
+pay.harz.            3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harzpay\",\"note\":\"payment bridge v3.3.0\"}"
+sms.harz.            3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-sms-pwa\",\"note\":\"messaging — Dial foundation\"}"
+super.harz.          3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-super-pwa\",\"note\":\"primary Super App gateway\"}"
+swap.harz.           3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harzswap\",\"note\":\"internal utility exchange\"}"
+wallet.harz.         3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"harz-wallet-pwa\",\"note\":\"ecosystem wallet\"}"
+yelwa.harz.          3600 IN TXT "{\"record_type\":\"SERVICE\",\"service_id\":\"yelwa-cloud\",\"note\":\"marketplace (Base44)\"}"

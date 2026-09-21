@@ -1,0 +1,30 @@
+G3-1 — EXISTING PROTOCOL HARNESS RUN (UNCHANGED) — Sep 20, 2026 ~23:3x WAT
+Command: java -cp core/classes:kotlin-stdlib com.harz.edgetelecom.mesh.SelfTest  (JVM, frozen compiled classes from commit 12b5991 build, zero source changes)
+
+[T1] direct 2-node
+  PASS  hello/handshake  (A sees [EdgeId(value=BBBB)], B sees [EdgeId(value=AAAA)])
+  PASS  100/100 delivered  (delivered=100)
+  PASS  100/100 ACKs at sender  (acks=100)
+[T2] multi-hop A->B->C
+  PASS  all joined  (B peers=[EdgeId(value=AAAA), EdgeId(value=CCCC)])
+  PASS  100/100 at C through relay  (delivered=100)
+  PASS  route=[A,B]  (route=[AAAA, BBBB])
+  PASS  hops=1  (hops=1)
+  PASS  100/100 ACKs back at A  (acks=100)
+[T2b] payload integrity (38,478 B)
+  PASS  43 chunks delivered (43 sent)  (delivered=43/43)
+  PASS  seq order 0..42  (first/last seq offsets: 0..42)
+[T3] TTL attack (G2-C)
+  PASS  TTL 0 not forwarded  (C delivered=0)
+  PASS  TTL 1 stops at relay  (C delivered=0)
+  PASS  relay recorded ttl_stop  (metrics=10 stops)
+  PASS  TTL 2 traverses  (C delivered=5)
+[T4] dedup
+  PASS  same packet 3x -> delivered once  (delivered seq77 = 1)
+[T5] relay outage + store-and-forward
+  PASS  warm 10/10  (delivered=10)
+  PASS  20 frames held during outage  (held=20)
+  PASS  C got nothing while relay dead  (C delivered=10)
+  PASS  flush on return  (C delivered=30 of 30)
+  PASS  A store drained  (held=0)
+RESULT: 20 passed, 0 failed — ALL PASS

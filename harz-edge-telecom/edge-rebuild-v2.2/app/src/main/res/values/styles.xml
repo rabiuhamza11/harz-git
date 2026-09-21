@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- HARZ ecosystem light theme: #f0f2f5 background, no dark mode -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#f0f2f5</item>
+        <item name="android:windowBackground">#f0f2f5</item>
+        <item name="android:colorPrimary">#0066ff</item>
+        <item name="android:colorAccent">#0066ff</item>
+    </style>
+</resources>

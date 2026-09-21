@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "HARZ Reach",
+  "version": "0.1.0",
+  "description": "Resolve .harz names through the signed HARZ root. Zero DNS settings, zero configuration. Local signature verification, honest answers only.",
+  "permissions": ["declarativeNetRequest", "storage", "alarms"],
+  "host_permissions": [
+    "https://harz-root.harz.workers.dev/*",
+    "*://*.harz/*",
+    "http://*.harz/*"
+  ],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "HARZ Reach" }
+}

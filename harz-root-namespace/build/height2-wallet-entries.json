@@ -1,0 +1,47 @@
+[
+  {
+    "name": "rabiu.wallet",
+    "record_type": "WALLET",
+    "record_value": {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "network": "polygon",
+      "note": "owner personal wallet \u2014 Rabiu fills PUBLIC address"
+    }
+  },
+  {
+    "name": "danfodio.wallet",
+    "record_type": "WALLET",
+    "record_value": {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "network": "polygon",
+      "note": "Danfodio Memorial Academy school-fee collection wallet"
+    }
+  },
+  {
+    "name": "farm.wallet",
+    "record_type": "WALLET",
+    "record_value": {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "network": "polygon",
+      "note": "HARZ Farm to Market produce payments"
+    }
+  },
+  {
+    "name": "treasury.wallet",
+    "record_type": "WALLET",
+    "record_value": {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "network": "polygon",
+      "note": "HARZ ecosystem treasury"
+    }
+  },
+  {
+    "name": "kasuwa.wallet",
+    "record_type": "WALLET",
+    "record_value": {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "network": "polygon",
+      "note": "kasuwa marketplace settlement wallet"
+    }
+  }
+]
