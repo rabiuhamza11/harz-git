@@ -1,0 +1,17 @@
+name = "harz-intelligence"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+account_id = "5ab9477c8379d6dcb1a8b5183484aeae"
+preview_urls = false
+
+[[kv_namespaces]]
+binding = "MEMORY"
+id = "ce7ad54be5d84ef8b5919950fc7dbabd"
+
+[[services]]
+binding = "SEARCH_SVC"
+service = "harz-search"
+
+[[services]]
+binding = "CHAIN_SVC"
+service = "harz-chain-v2"
