@@ -36,8 +36,11 @@ export function analyzeQuery(question) {
   const tokens = tokenize(raw);
   // entities: capitalized multi-char words in the original + harz-prefixed tokens
   const capWords = (raw.match(/\b[A-Z][A-Za-z0-9'-]{2,}/g) || []).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')).filter(Boolean);
+  // v0.9: sentence-initial directive verbs are not entities — 'Summarize the HarzPay flow' must
+  // retrieve HarzPay docs, not generic 'Summarizer API' junk that shares the directive verb.
+  const DIRECTIVE_VERBS = new Set(['summarize', 'summarise', 'list', 'name', 'show', 'compare', 'difference', 'different', 'enumerate', 'explain', 'describe', 'outline', 'detail', 'identify', 'calculate', 'compute', 'draft', 'write', 'give', 'tell', 'find', 'count', 'how', 'what', 'which', 'when', 'where', 'why', 'does', 'the', 'and', 'for']);
   const harzWords = tokens.filter(t => t.startsWith('harz') && t.length > 4);
-  const entities = [...new Set([...capWords, ...harzWords])].filter(e => e.length >= 3 && !SW.has(e)).slice(0, 6);
+  const entities = [...new Set([...capWords, ...harzWords])].filter(e => e.length >= 3 && !SW.has(e) && !DIRECTIVE_VERBS.has(e)).slice(0, 6);
   const content = tokens.filter(t => !entities.includes(t) && !SW.has(t)).slice(0, 12);
   const intent = /\b(url|address|link|website|domain|endpoint|where (?:is|can)|go to)\b/i.test(lower)
     ? 'entity_url' : /\b(steps|how (?:do|to|can)|guide|instructions|procedur)/i.test(lower)

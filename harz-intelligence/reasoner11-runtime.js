@@ -98,6 +98,13 @@ export function reasoner11Call({ messages }) {
         const hasValue = useG.some(u => extractSentences(u.text, u.id).some(x2 => /\d/.test(x2.s2)));
         if (!hasValue) { answerable = false; guard = 'value-guard: question asks for a value but no value-bearing evidence sentence exists'; }
       }
+      // v0.9 temporal-guard: questions asking WHEN must find a date-bearing evidence sentence —
+      // quoting a UI dump with no date is not an answer to a when-question (gap scan: temporal).
+      if (answerable && /\bwhen\b|what year|which year|launched|founded|established|started/.test(L_query)) {
+        const useG2 = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const hasDate = useG2.some(u => extractSentences(u.text, u.id).some(x2 => /\b(19|20)\d{2}\b/.test(x2.s2)));
+        if (!hasDate) { answerable = false; guard = 'temporal-guard: question asks when, but no date-bearing evidence sentence exists'; }
+      }
     } else guard = 'below-threshold';
   }
 

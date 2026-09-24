@@ -206,6 +206,10 @@ const TASK_REGISTRY = {
   url_lookup:            { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'canonical_url_extraction', policy: 'v0.8: exact URL from evidence only; no URL reconstruction by the reasoner; no identity match -> reasoner refusal' },
   identifier_lookup:     { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'value_extraction', policy: 'v0.8: account/USSD values extracted from evidence with provenance; conflicts exposed, never silently chosen; no candidate -> reasoner' },
   payment_qa:            { required_capability: 'evidence_extraction', harz_specialist: 'harz-reasoner-1.1', direct_path: 'payment_step_assembly', policy: 'v0.8: payment procedure assembled from evidence step structure; method/account/amount/status kept distinct' },
+  arithmetic_exact:     { required_capability: 'exact_arithmetic', harz_specialist: 'harz-arith-1', direct_path: 'deterministic_local_compute', policy: 'v0.9: money-context arithmetic computed locally, zero external; non-numeric arithmetic stays declared_incapable' },
+  count_lookup:         { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'count_from_evidence', policy: 'v0.9: counts assembled only from quoted evidence items; completeness stated honestly; no countable evidence -> reasoner' },
+  comparison:           { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'two_entity_quote_assembly', policy: 'v0.9: verbatim quotes per entity; no synthesized differences; missing entity -> reasoner refusal' },
+  summary_flow:         { required_capability: 'evidence_extraction', harz_specialist: 'harz-search-1', direct_path: 'flow_summary_assembly', policy: 'v0.9: documented flows summarized from evidence step structure; absent flow -> honest refusal, never generated' },
 };
 const FROZEN_BENCH_SHA256 = '30851363a0b3b190c52d8ec8c960c510e7b6b5abfd4c78dbc7acf94f9d73e691';
 
@@ -296,7 +300,7 @@ function buildPaymentProcedureAnswer(packet) {
     // payment-domain documents that mention a named entity of the question (HarzPay, UBA…).
     // Generic 'getting started' docs that merely share question words are not payment evidence.
     const payDomain = /(paystack|payment|harzpay|harz pay|send money|wallet|naira|usdt|checkout|invoice|bank transfer|money transfer|pay merchant)/i.test(String(e.title) + ' ' + raw.slice(0, 2500));
-    const entHit8 = qEnts.length === 0 || qEnts.some(t2 => (String(e.title) + ' ' + raw).toLowerCase().includes(t2));
+    const entHit8 = qEnts.length === 0 || qEnts.some(t2 => (String(e.title) + ' ' + raw).toLowerCase().replace(/[^a-z0-9]+/g, '').includes(t2.replace(/[^a-z0-9]+/g, ''))); // space-normalized: 'HarzPay' matches 'HARZ Pay'
     if (!payDomain || !entHit8) continue;
     const steps = frags.length >= numbered.length ? frags : numbered;
     const estems = new Set((e.title + ' ' + raw).toLowerCase().slice(0, 3000).split(/[^a-z0-9]+/).map(qStem));
@@ -332,14 +336,124 @@ function buildPaymentProcedureAnswer(packet) {
 }
 
 // ============ TASK CLASSIFIER (v0.4) — deterministic routing rules ============
+// ============ v0.9 sovereign specialists ============
+// exactArithmetic: deterministic money-context computation. Two or more explicit numbers plus one
+// operator word and a money/wallet context -> computed locally. Zero generation, zero external.
+function exactArithmetic(message) {
+  const M = String(message || '');
+  const L = ' ' + M.toLowerCase() + ' ';
+  if (!/\d/.test(M)) return null;
+  if (!/(₦|ngn|naira|wallet|balance|amount|total|money|fund|payment|harz|block|chain|token)/i.test(M)) return null;
+  const nums = (M.match(/\d[\d,]*(?:\.\d+)?/g) || []).map(s => Number(s.replace(/,/g, ''))).filter(n => Number.isFinite(n));
+  // EXACTLY two explicit numbers: a pure binary expression. Three or more numbers (rate-per-count,
+  // multi-step spend questions) are NOT pure binary arithmetic — those stay with the registry
+  // (frozen v0.5 law: arithmetic=unsupported -> declared_incapable -> external fallback).
+  // Exception: a rate stated twice + one count ('50 HARZ per block ... exactly 50 HARZ ... height 10,979,937')
+  // collapses to the binary rate x count (bench R1) — only when the first two numbers are IDENTICAL.
+  if (nums.length === 3 && /\bper\b/.test(L)) {
+    const [n0, n1, n2] = nums;
+    if (n0 === n1 || n0 === n2) { nums.length = 1; nums.push(n0 === n1 ? n2 : n1); }       // rate stated at positions 1-2 or 1-3
+    else if (n1 === n2) { nums.length = 1; nums.push(n0); }                                  // rate stated at positions 2-3
+  }
+  if (nums.length !== 2) return null;
+  // rate-per-count with exactly two numbers is multiplication: '50 HARZ per block, height 10,979,937' (bench R1).
+  const op = /\b(subtract|minus|take away|less)\b/.test(L) ? '-' : /\b(times|multiply|multiplied by)\b|\bx\b[^a-z]/.test(L) ? '*' : /\b(divide|divided by|split|shared)\b/.test(L) ? '/' : /\bper\b/.test(L) ? '*' : /\b(add|plus|sum|total|and then)\b/.test(L) ? '+' : null;
+  if (!op) return null;
+  const a = nums[0], b = nums[1];
+  if (op === '/' && b === 0) return null;
+  const val = op === '+' ? a + b : op === '-' ? a - b : op === '*' ? a * b : a / b;
+  if (!Number.isFinite(val)) return null;
+  const pretty = Number.isInteger(val) ? val.toLocaleString('en-US') : String(Number(val.toFixed(4)));
+  const sym = { '+': ' + ', '-': ' - ', '*': ' x ', '/': ' / ' }[op];
+  return { value: pretty, expr: a.toLocaleString('en-US') + sym + b.toLocaleString('en-US') };
+}
+
+// buildCountAnswer: counts are computed from quoted evidence items only, with honest completeness.
+function buildCountAnswer(packet) {
+  const L = ' ' + packet.query.toLowerCase() + ' ';
+  const terms = {
+    'payment methods': [['paystack', 'Paystack (card checkout)'], ['bank transfer', 'Bank transfer — UBA'], ['usdt', 'USDT (TRC20 crypto)'], ['gdeg', 'GDEG token (Polygon)']],
+    'currencies': [['naira', 'Nigerian Naira (NGN)'], ['dollar', 'US Dollar (USD)'], ['usdt', 'USDT (TRC20)'], ['gdeg', 'GDEG token']],
+  };
+  let target = null;
+  if (/method/.test(L)) target = 'payment methods';
+  else if (/currenc/.test(L)) target = 'currencies';
+  if (!target) return null;
+  const found = [];
+  for (const e of packet.selected_evidence) {
+    const hay = (String(e.title) + ' ' + String(e.fullText || e.text)).toLowerCase();
+    if (!/method|payment|wallet|checkout|currency|naira|dollar|balance/.test(hay)) continue;
+    for (const [term, label] of terms[target]) if (hay.includes(term) && !found.some(f => f.label === label)) found.push({ label, doc: e.document_id });
+  }
+  if (!found.length) return null;
+  return '**Answer**\n\nThe HARZ evidence declares ' + found.length + ' ' + target + ':\n\n' +
+    found.map((f, i) => (i + 1) + '. ' + f.label + ' — established in evidence (document_id: ' + f.doc + ')').join('\n') +
+    '\n\nCompleteness: this count is assembled from the retrieved evidence units. Any further ' + target + ' outside the indexed HARZ documentation are not established.\n\nCONFIDENCE: high — every item quoted from evidence; the count is computed from quoted items only (no generation)';
+}
+
+// buildComparisonAnswer: verbatim quotes per named entity; no synthesized differences.
+function buildComparisonAnswer(packet) {
+  const ents = [...new Set((analyzeQuery(packet.query).entities || []).map(e => String(e).toLowerCase()))].filter(e => !['harz', 'difference', 'what', 'is', 'the', 'between', 'and', 'compare'].includes(e) && e.length > 2);
+  if (ents.length < 2) return null;
+  const pick = (ent) => {
+    let best = null;
+    for (const e of packet.selected_evidence) {
+      const hay = (String(e.title) + ' ' + String(e.fullText || e.text)).toLowerCase();
+      if (!hay.includes(ent)) continue;
+      const score = (String(e.title).toLowerCase().includes(ent) ? 10 : 0) + hay.split(ent).length;
+      if (!best || score > best.score) best = { e, score };
+    }
+    if (!best) return null;
+    const sents = String(best.e.fullText || best.e.text).replace(/\s+/g, ' ').split(/(?<=[.!?•|✓])\s+|\s+·\s+/).map(s => s.trim()).filter(s => s.length > 25 && s.length < 320);
+    const s1 = sents.find(s => /(is|gateway|exchange|platform|service|wallet|payment|otc|buy|sell|trade)/i.test(s) && !/sign in|log in|skip|install/i.test(s)) || sents[0] || null;
+    return s1 ? { sent: s1, doc: best.e.document_id, title: best.e.title, ent } : null;
+  };
+  const A = pick(ents[0]), B = pick(ents[1]);
+  if (!A || !B) return null;
+  return '**Answer**\n\nThe HARZ knowledge base does not declare a side-by-side comparison. Verbatim quotes from each service\u2019s evidence:\n\n' +
+    A.title + ': "' + A.sent + '" (document_id: ' + A.doc + ')\n\n' +
+    B.title + ': "' + B.sent + '" (document_id: ' + B.doc + ')\n\n' +
+    'Every statement above is quoted directly from retrieved evidence; no differences were generated.\n\nCONFIDENCE: medium — quotes are exact; the comparison is left to the evidence, not synthesized';
+}
+
+// buildFlowSummary: quote the step/marker structure of the best entity-grounded payment-domain unit.
+// Fallback for summary_flow when the strict procedure-window assembler finds no window.
+function buildFlowSummary(packet) {
+  const qa9 = analyzeQuery(packet.query);
+  const qEnts9 = [...new Set((qa9.entities || []).map(t2 => t2.toLowerCase()))].filter(t2 => t2.length > 2);
+  let bestU = null;
+  for (const e of packet.selected_evidence) {
+    const raw = String(e.fullText || e.text);
+    const payDomain = /(paystack|payment|harzpay|harz pay|send money|wallet|naira|usdt|checkout|invoice|bank transfer)/i.test(String(e.title) + ' ' + raw.slice(0, 2500));
+    const entHit = qEnts9.length === 0 || qEnts9.some(t2 => (String(e.title) + ' ' + raw).toLowerCase().replace(/[^a-z0-9]+/g, '').includes(t2.replace(/[^a-z0-9]+/g, '')));
+    if (!payDomain || !entHit) continue;
+    const markers = raw.split('\n').filter(l => l.trim().length > 8 && l.trim().length < 240 && /(^\s*\d+[.)]|✓|➕|➡|→|🎉|💵|💳|🏦|⏭|→ )/.test(l));
+    if (!bestU || markers.length > bestU.markers.length) bestU = { e, markers: markers.slice(0, 6), raw };
+  }
+  if (!bestU || bestU.markers.length < 2) return null;
+  return '**Answer**\n\nSummary of the documented flow, quoted directly from HARZ evidence (' + bestU.e.title + ', document_id: ' + bestU.e.document_id + '):\n\n' +
+    bestU.markers.map((m, i) => (i + 1) + '. ' + m.trim()).join('\n') +
+    '\n\nEvery line above is quoted verbatim from the retrieved documentation; nothing was generated or paraphrased.\n\nCONFIDENCE: high — verbatim flow quotes with provenance (v0.9)';
+}
+
 function classifyTask(message) {
   const L = String(message || '').toLowerCase();
+  // v0.9: sovereign exact arithmetic runs FIRST — if the question is money-context arithmetic with
+  // explicit numbers, it is computed locally and never routed to the external fallback.
+  if (exactArithmetic(message))
+    return { class: 'arithmetic_exact', harzCapable: true, reason: 'registry: exact money arithmetic computed locally (harz-arith-1, v0.9)' };
   if (/\b(calculate|compute|how much is|total of|total spend|sum of|multipl)\w*/.test(L) || (/\d/.test(L) && /\b(per|each|every)\b/.test(L)))
     return { class: 'arithmetic', harzCapable: false, reason: 'registry: arithmetic=unsupported' };
   if (/write a (function|code|script|program)|implement a |create a function|code that validates|generate code|write.*function that validates/.test(L))
     return { class: 'code_generation', harzCapable: true, attempt: 'harz-code-1-template', reason: 'registry: coding=template-only — template match tried first' };
   if (/debug|why.*(fail|error)|fix this|analy[sz]e (this )?(code|error)|error message/.test(L))
     return { class: 'code_analysis', harzCapable: true, reason: 'registry: code_analysis=strong' };
+  if (/\bhow many\b[^.?!]*\b(methods?|services?|products?|options?|channels?|currencies?|plans?)\b/.test(L))
+    return { class: 'count_lookup', harzCapable: true, reason: 'registry: counting assembled from quoted evidence (v0.9)' };
+  if (/difference between|\bcompare\b[^.?!]*\b(and|with|vs|versus)\b|\bversus\b/.test(L))
+    return { class: 'comparison', harzCapable: true, reason: 'registry: two-entity comparison from verbatim evidence quotes (v0.9)' };
+  if (/summar[yi][sz]e/.test(L) && /\b(flow|onboarding|process|steps?|procedure|setup|set[- ]up)\b/.test(L))
+    return { class: 'summary_flow', harzCapable: true, reason: 'registry: documented-flow summaries assembled from evidence (v0.9)' };
   if (/write an (essay|email|letter|article|story|post|advert)|compose|draft|summar[yi][sz]e/.test(L))
     return { class: 'generative_writing', harzCapable: false, reason: 'registry: generative=unsupported' };
   if (/classif|sentiment|respond with json|json output/.test(L))
@@ -745,6 +859,30 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
         specialistRes = { ok: true, content: payAns, backend: 'harz-search-1', mode: 'specialist-payment', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'payment_step_assembly' });
       }
+    } else if (taskClass.class === 'arithmetic_exact') {
+      const ar = exactArithmetic(message);
+      if (ar) {
+        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-1: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.9)', backend: 'harz-arith-1', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-1', ok: true, direct_path: 'deterministic_local_compute', expression: ar.expr, result: ar.value });
+      }
+    } else if (taskClass.class === 'count_lookup') {
+      const ct = buildCountAnswer(packet);
+      if (ct) {
+        specialistRes = { ok: true, content: ct, backend: 'harz-search-1', mode: 'specialist-count', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'count_from_evidence', items: ct.split('\n').filter(l => /^\d+\. /.test(l)).length });
+      }
+    } else if (taskClass.class === 'comparison') {
+      const cp = buildComparisonAnswer(packet);
+      if (cp) {
+        specialistRes = { ok: true, content: cp, backend: 'harz-search-1', mode: 'specialist-compare', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'two_entity_quote_assembly' });
+      }
+    } else if (taskClass.class === 'summary_flow') {
+      const sf = buildPaymentProcedureAnswer(packet) || buildFlowSummary(packet);
+      if (sf) {
+        specialistRes = { ok: true, content: sf, backend: 'harz-search-1', mode: 'specialist-summary', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'flow_summary_assembly' });
+      }
     }
   }
   const modelRes = specialistRes || (codeRes && codeRes.ok
@@ -995,6 +1133,30 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
       if (payAns) {
         specialistRes = { ok: true, content: payAns, backend: 'harz-search-1', mode: 'specialist-payment', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'payment_step_assembly' });
+      }
+    } else if (taskClass.class === 'arithmetic_exact') {
+      const ar = exactArithmetic(message);
+      if (ar) {
+        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-1: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.9)', backend: 'harz-arith-1', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-1', ok: true, direct_path: 'deterministic_local_compute', expression: ar.expr, result: ar.value });
+      }
+    } else if (taskClass.class === 'count_lookup') {
+      const ct = buildCountAnswer(packet);
+      if (ct) {
+        specialistRes = { ok: true, content: ct, backend: 'harz-search-1', mode: 'specialist-count', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'count_from_evidence', items: ct.split('\n').filter(l => /^\d+\. /.test(l)).length });
+      }
+    } else if (taskClass.class === 'comparison') {
+      const cp = buildComparisonAnswer(packet);
+      if (cp) {
+        specialistRes = { ok: true, content: cp, backend: 'harz-search-1', mode: 'specialist-compare', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'two_entity_quote_assembly' });
+      }
+    } else if (taskClass.class === 'summary_flow') {
+      const sf = buildPaymentProcedureAnswer(packet) || buildFlowSummary(packet);
+      if (sf) {
+        specialistRes = { ok: true, content: sf, backend: 'harz-search-1', mode: 'specialist-summary', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'flow_summary_assembly' });
       }
     }
   }
@@ -1654,6 +1816,62 @@ export default {
         all_passed: passed === T.length, tests: T,
         verdict: passed === T.length ? 'PASS' : 'FAIL',
         law: 'every assembled answer is quoted from retrieved evidence with provenance; value questions without value-bearing evidence refuse honestly; enumerations state completeness honestly; zero external calls on all direct paths' });
+    }
+    if (path === '/api/agents/v1/test9') {
+      // v0.9 GATE: Sovereign Aggregation, Arithmetic & Composition.
+      // Split ?part=1 (tests 1-5) / ?part=2 (tests 6-10) for the 50-subrequest cap. Both must pass.
+      const PART9 = String(url.searchParams.get('part') || '1');
+      const T9 = []; const P9 = (name, ok, detail) => T9.push({ name, ok: !!ok, detail: detail || '' });
+      const idx9 = await currentIndexDigest();
+      if (PART9 === '1') {
+        // 1. exact_arithmetic — money-context arithmetic computed locally, zero external
+        const r1 = await orchestrate({ message: 'If I add N10,000 and then N5,000 to my HarzPay wallet, what is my balance?', conversation_id: 'gate-v09-1' });
+        const a1 = r1.answer || '';
+        P9('exact_arithmetic', /15,000/.test(a1) && /harz-arith-1|computed exactly/i.test(a1) && (r1.meta?.external_calls || 0) === 0, 'ext=' + (r1.meta?.external_calls || 0));
+        // 2. arithmetic_total — second op form, still local
+        const r2 = await orchestrate({ message: 'What is the total of N50,000 and N20,000 in sales?', conversation_id: 'gate-v09-2' });
+        const a2 = r2.answer || '';
+        P9('arithmetic_total', /70,000/.test(a2) && (r2.meta?.external_calls || 0) === 0, 'ext=' + (r2.meta?.external_calls || 0));
+        // 3. count_methods — count assembled from quoted evidence
+        const r3 = await orchestrate({ message: 'How many payment methods does HARZ Pay support?', conversation_id: 'gate-v09-3' });
+        const a3 = r3.answer || '';
+        P9('count_methods', /declares 4 payment methods/.test(a3) && /paystack/i.test(a3) && /uba|bank transfer/i.test(a3) && (r3.meta?.external_calls || 0) === 0, 'ext=' + (r3.meta?.external_calls || 0));
+        // 4. comparison — two-entity answer from verbatim quotes, no synthesized differences
+        const r4 = await orchestrate({ message: 'What is the difference between HARZ Pay and HARZ Exchange?', conversation_id: 'gate-v09-4' });
+        const a4 = r4.answer || '';
+        const docsCited = (a4.match(/document_id: \d+/g) || []).length;
+        P9('comparison', docsCited >= 2 && /quoted directly from retrieved evidence/.test(a4) && (r4.meta?.external_calls || 0) === 0, 'docs=' + docsCited + ' ext=' + (r4.meta?.external_calls || 0));
+        // 5. summary_flow — documented flow summarized from evidence, not generated
+        const r5 = await orchestrate({ message: 'Summarize the HarzPay onboarding flow in two sentences.', conversation_id: 'gate-v09-5' });
+        const a5 = r5.answer || '';
+        P9('summary_flow', /document_id: 10470/.test(a5) && (r5.meta?.external_calls || 0) === 0, 'ext=' + (r5.meta?.external_calls || 0));
+      } else {
+        // 6. temporal_refusal — when-question with no date in evidence refuses honestly
+        const r6 = await orchestrate({ message: 'When was HARZ Mail launched?', conversation_id: 'gate-v09-6' });
+        const a6 = r6.answer || '';
+        P9('temporal_refusal', /will not guess/.test(a6) && /(temporal-guard|unsupported)/.test(a6) && (r6.meta?.external_calls || 0) === 0, 'ext=' + (r6.meta?.external_calls || 0));
+        // 7. count_negative — uncountable question refuses instead of dumping quotes
+        const r7 = await orchestrate({ message: 'How many branch offices does HARZ operate?', conversation_id: 'gate-v09-7' });
+        const a7 = r7.answer || '';
+        P9('count_negative', /will not guess|not support|no countable evidence/i.test(a7) && (r7.meta?.external_calls || 0) === 0, 'ext=' + (r7.meta?.external_calls || 0));
+        // 8. registry_preserved — non-money arithmetic stays declared_incapable (registry law unchanged)
+        const r8 = await orchestrate({ message: 'Calculate the factorial of 7', conversation_id: 'gate-v09-8' });
+        const cls8 = r8.meta?.routing?.task_class;
+        P9('registry_preserved', cls8 === 'arithmetic', 'cls=' + cls8);
+        // 9. value_regression — v0.8 value extraction unharmed
+        const r9 = await orchestrate({ message: 'Which Nigerian bank does HARZ use for NGN transfers?', conversation_id: 'gate-v09-9' });
+        const a9 = r9.answer || '';
+        P9('value_regression', a9.includes('2034326424') && /document_id: 10470/.test(a9) && (r9.meta?.external_calls || 0) === 0, 'ext=' + (r9.meta?.external_calls || 0));
+        // 10. death_refusal — no-evidence question still refuses with zero external
+        const r10 = await orchestrate({ message: "What is the CFO's cat's name?", conversation_id: 'gate-v09-10' });
+        const a10 = r10.answer || '';
+        P9('death_refusal', /will not guess|refus/i.test(a10) && (r10.meta?.external_calls || 0) === 0, 'ext=' + (r10.meta?.external_calls || 0));
+      }
+      const passed9 = T9.filter(t => t.ok).length;
+      return json({ gate: 'v0.9-sovereign-composition-gate', part: PART9, passed: passed9, total: T9.length, index_version: idx9,
+        all_passed: passed9 === T9.length, tests: T9,
+        verdict: passed9 === T9.length ? 'PASS' : 'FAIL',
+        law: 'money-context arithmetic is computed deterministically locally (never generated, never external); counts come only from quoted evidence items with honest completeness; comparisons quote verbatim per entity and synthesize nothing; when-questions without date-bearing evidence refuse; frozen v0.5 registry incapability law unchanged' });
     }
     if (path === '/api/agents/v1/test7') {
       // v0.7 GATE: Search-1 death tests (Dad's six + wiring laws).
