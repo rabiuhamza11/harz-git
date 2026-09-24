@@ -61,3 +61,25 @@ KNOWN LIMITS (honest):
 - Latency avg shown 14s includes old lightning runs; current nano runs are 1.5-3s.
 - In-ecosystem Super App listing not yet done (core infra system, like NEXUS/DNA — decision with Dad).
 - Model still on borrowed rails (OpenRouter) per sovereignty gap note — self-hosting is v0.3+.
+
+## SOVEREIGN MODEL ARCHITECTURE — DAD'S DIRECTIVE (Sept 24, 2026) — SUPERSEDES PRIOR GATES
+Rule: External models (Nemotron, Grok, OpenAI) are ADAPTERS and temporary dev dependencies.
+HARZ Intelligence must NEVER depend architecturally on any external model provider.
+Never copy proprietary weights, code, or trade secrets. Build only from lawful open-weight
+models, licensed datasets, synthetic data, and HARZ's own data.
+
+REVISED ROADMAP:
+- v0.2 (NOW): HARZ MODEL INTERFACE. Router exposes generate(), reason(), tool_call(),
+  structured_output(), embed(). The orchestrator never knows what model runs underneath.
+  Adapters (Nemotron via OpenRouter first) plug in behind the interface. Multi-agent
+  system built ON the interface, not on any named model.
+- v0.3: HARZ-REASONER-1 — first HARZ-owned model (small, specialized, fine-tuned from
+  lawful open-weight models), benchmarked against external models.
+- v0.4: HARZ MODEL FAMILY — HARZ-Code, HARZ-Research, HARZ-Verify.
+- v0.5: Self-hosted local/regional inference. No OpenRouter in the default path.
+- v1.0: External providers are optional adapters, not dependencies. Sovereign HARZ
+  Intelligence Network: Cloud / Edge / Offline models behind one Router.
+
+SOVEREIGNTY = 8 LAYERS: model, inference, knowledge (HARZ Search), identity (HARZ Root),
+trust (Trust Fabric), execution, network (offline/weak-net), economic (no per-request
+AI payments to another provider).
