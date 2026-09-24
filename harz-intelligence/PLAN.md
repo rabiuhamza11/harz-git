@@ -92,3 +92,14 @@ Raw: A external 11/20 @ 2397ms avg (20 ext calls); B harz-reasoner-1 8/20 @ 482m
 (0 ext calls); offline death test 2/2 with receipts, external provider disconnected.
 Engines live: default external chain (pending Dad's review), ?engine=harz,
 ?engine=offline, /api/bench/v1 harness. Failures published in REASONER1-CARD.md.
+
+## V0.4 GATE — SOVEREIGN MODEL FAMILY (Sept 24, 2026) — PASSED
+Production flipped: HARZ-first via CAPABILITY REGISTRY (router consults per-model
+capabilities; external adapter = explicit recorded fallback, never silent).
+Family: Planner-1, Search-1, Verify-1, Code-1 (template-only, honest), Reasoner-1.1
+(answerability guard: function-word filter + content-term rule + role-question guard;
+weights unchanged from 1.0). Frozen bench rerun (v1.0 suite UNCHANGED):
+A 8/20 @2319ms (20 ext) | B 8/20 @487ms (0 ext) | C 9/20 @424ms (0 ext, H2 fixed,
+no regressions) | F production router 11/20 @1393ms | offline death test 2/2, 0 ext,
+receipts 79931323026a6d / 8077883ed84df4. Every answer records engine + sovereignty
++ task_class + routing + claim check. Cards: REASONER11-CARD.md, FAMILY-REGISTRY.md.
