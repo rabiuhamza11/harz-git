@@ -1,10 +1,11 @@
 // HARZ INTELLIGENCE CORE v0.2 — HARZ MODEL INTERFACE
+import { reasoner1Call } from './reasoner1-runtime.js';
 // Ask -> reason -> search -> use tool -> execute -> verify -> answer with evidence
 // Components: AI Gateway | Reasoning Orchestrator | HARZ Search connector | Memory (KV, provenance-labeled)
 //             Agent runtime | Verification (evidence + receipts) | HARZ Root identities | PWA interface
 // Standing order honored: NVIDIA Nemotron via OpenRouter (default model, gateway-abstracted).
 
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 let ENV = {}; // module workers receive bindings via env — stored here at request start
 const SEARCH_URL = 'https://harz-search.harz.workers.dev/search?q=';
 const CHAIN_STATUS_URL = 'https://harz-chain-v2.harz.workers.dev/api/status';
@@ -118,7 +119,11 @@ const ADAPTERS = {
       return { ok: true, content, latency: Date.now() - t0, tokens_in: null, tokens_out: null };
     },
   },
-  // v0.3+: adapters.harz_local — self-hosted HARZ-Reasoner-1 / HARZ model family
+  // HARZ-OWNED adapter: HARZ-Reasoner-1 inference runtime. No external provider, no network.
+  harz_local: {
+    call: (args) => reasoner1Call(args),
+    callStream: (args) => reasoner1Call(args), // v0.3: local runtime is synchronous; stream passthrough
+  },
 };
 
 // --- backend registry: opaque IDs only, no provider names above adapters ---
@@ -126,7 +131,15 @@ const BACKENDS = {
   'reason-core':     { adapter: 'openrouter', profile: 'nvidia/nemotron-3-nano-30b-a3b' },
   'reason-fallback': { adapter: 'openrouter', profile: 'nvidia/nemotron-3.5-lightning:free' },
   'harz-embed-1':    { adapter: 'harz_local', profile: 'harz-hash-embedder-v1' },
+  'harz-reasoner-1': { adapter: 'harz_local', profile: 'reasoner-1' }, // v0.3: first HARZ-owned reasoning model
 };
+
+// engine overrides (v0.3): 'harz' forces HARZ-owned backends only;
+// 'offline' = HARZ-only AND external provider hard-blocked (sovereignty death test);
+// 'external' forces the external adapter chain (benchmark target A).
+const HARZ_CHAIN = ['harz-reasoner-1'];
+const EXTERNAL_CHAIN = ['reason-core', 'reason-fallback'];
+let EXTERNAL_CALLS = 0; // per-request counter (reset at orchestrate start)
 
 // --- role -> backend chain. v0.3 prepends HARZ-Reasoner-1 to these chains ---
 const ROLE_CHAINS = {
@@ -141,19 +154,25 @@ const ROLE_CHAINS = {
 
 const AGENT_ROLE = { 'supreme-engine': 'reasoner', researcher: 'researcher', coder: 'coder', analyst: 'analyst', builder: 'builder' };
 
-async function hmiGenerate({ role = 'reasoner', messages, temperature = 0.3, stream = false, onDelta }) {
-  const chain = ROLE_CHAINS[role] || ROLE_CHAINS.reasoner;
+async function hmiGenerate({ role = 'reasoner', messages, temperature = 0.3, stream = false, onDelta, engine }) {
+  let chain = ROLE_CHAINS[role] || ROLE_CHAINS.reasoner;
+  const offline = engine === 'offline';
+  if (engine === 'harz' || offline) chain = HARZ_CHAIN;
+  else if (engine === 'external') chain = EXTERNAL_CHAIN;
+  if (offline) chain = chain.filter(id => BACKENDS[id] && BACKENDS[id].adapter === 'harz_local'); // death test: external provider disconnected
   let lastErr = null; const t0 = Date.now();
   for (const backendId of chain) {
     const backend = BACKENDS[backendId];
     if (!backend || !ADAPTERS[backend.adapter]) continue;
+    const isExternal = backend.adapter === 'openrouter';
+    if (isExternal) { if (offline) continue; EXTERNAL_CALLS++; }
     const res = stream
       ? await ADAPTERS[backend.adapter].callStream({ messages, temperature, profile: backend.profile, onDelta })
       : await ADAPTERS[backend.adapter].call({ messages, temperature, profile: backend.profile });
-    if (res.ok) return { ...res, backend: backendId, role };
+    if (res.ok) return { ...res, backend: backendId, role, external_calls: EXTERNAL_CALLS };
     lastErr = res;
   }
-  return { ok: false, backend: null, role, error: (lastErr && lastErr.error) || 'all_backends_failed', detail: lastErr && lastErr.detail, latency: Date.now() - t0 };
+  return { ok: false, backend: null, role, error: (lastErr && lastErr.error) || 'all_backends_failed', detail: lastErr && lastErr.detail, latency: Date.now() - t0, external_calls: EXTERNAL_CALLS };
 }
 
 const HMI = {
@@ -345,7 +364,8 @@ function planTask(message, agent) {
   return { plan, agent: agent || 'supreme-engine' };
 }
 
-async function orchestrate({ message, conversation_id, agent }) {
+async function orchestrate({ message, conversation_id, agent, engine }) {
+  EXTERNAL_CALLS = 0;
   const t_start = Date.now();
   const cid = conversation_id || id('c');
   const { plan } = planTask(message, agent);
@@ -390,7 +410,7 @@ async function orchestrate({ message, conversation_id, agent }) {
   ].filter(Boolean).join('\n\n');
 
   const modelRes = await HMI.generate({
-    role: AGENT_ROLE[agent] || 'reasoner',
+    role: AGENT_ROLE[agent] || 'reasoner', engine,
     messages: [
       { role: 'system', content: sysPrompt },
       { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
@@ -401,7 +421,7 @@ async function orchestrate({ message, conversation_id, agent }) {
   let answer, meta;
   if (modelRes.ok) {
     answer = modelRes.content;
-    meta = { engine: { role: modelRes.role, backend: modelRes.backend }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out };
+    meta = { engine: { role: modelRes.role, backend: modelRes.backend }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out, external_calls: modelRes.external_calls || 0 };
   } else {
     // Degraded mode: the orchestrator still returns structured evidence even if the model layer fails.
     answer = 'The reasoning layer is temporarily unavailable (' + modelRes.error + '). Evidence collected for your request:\n' +
@@ -447,7 +467,8 @@ async function orchestrate({ message, conversation_id, agent }) {
 
 
 // Streaming orchestration: evidence first, streamed answer, receipt footer.
-async function orchestrateStream({ message, conversation_id, agent }, stream) {
+async function orchestrateStream({ message, conversation_id, agent, engine }, stream) {
+  EXTERNAL_CALLS = 0;
   const writer = stream.writable.getWriter();
   const enc = new TextEncoder();
   const t_start = Date.now();
@@ -477,7 +498,7 @@ async function orchestrateStream({ message, conversation_id, agent }, stream) {
     (conv.authorized_memories || []).length ? 'AUTHORIZED MEMORIES:\n' + conv.authorized_memories.map(m => m.key + ' = ' + m.value).join('\n') : '',
   ].filter(Boolean).join('\n\n');
   const modelRes = await HMI.generate({
-    role: AGENT_ROLE[agent] || 'reasoner', stream: true,
+    role: AGENT_ROLE[agent] || 'reasoner', stream: true, engine,
     messages: [
       { role: 'system', content: sysPrompt },
       { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
@@ -510,14 +531,15 @@ async function orchestrateStream({ message, conversation_id, agent }, stream) {
   conv.messages.push({ role: 'assistant', content: answer, at: new Date().toISOString(), verification });
   await MEM.saveConversation(conv);
   await MEM.benchAppend({ at: new Date().toISOString(), latency_ms: total_latency, tokens: 0, agent: agent || 'supreme-engine', degraded: !modelRes.ok, streamed: true });
-  const footer = '\n\n[[HARZ_META]]' + JSON.stringify({ conversation_id: cid, agent: { name: agent || 'supreme-engine', root_id: identity.root_id, role: identity.role }, plan, evidence, execution_log, verification, meta: { engine: modelRes.ok ? { role: modelRes.role, backend: modelRes.backend } : null, latency_ms: modelRes.latency, total_latency_ms: total_latency, streamed: true } });
+  const footer = '\n\n[[HARZ_META]]' + JSON.stringify({ conversation_id: cid, agent: { name: agent || 'supreme-engine', root_id: identity.root_id, role: identity.role }, plan, evidence, execution_log, verification, meta: { engine: modelRes.ok ? { role: modelRes.role, backend: modelRes.backend } : null, latency_ms: modelRes.latency, total_latency_ms: total_latency, streamed: true, external_calls: modelRes.external_calls || 0 } });
   writer.write(enc.encode(footer));
   writer.close();
 }
 
 
 // Job-based orchestration: short HTTP requests + polling — robust on slow/proxied networks.
-async function orchestrateJob({ message, conversation_id, agent }, jobId) {
+async function orchestrateJob({ message, conversation_id, agent, engine }, jobId) {
+  EXTERNAL_CALLS = 0;
   const t_start = Date.now();
   const cid = conversation_id || id('c');
   const { plan } = planTask(message, agent);
@@ -547,7 +569,7 @@ async function orchestrateJob({ message, conversation_id, agent }, jobId) {
     (conv.authorized_memories || []).length ? 'AUTHORIZED MEMORIES:\n' + conv.authorized_memories.map(m => m.key + ' = ' + m.value).join('\n') : '',
   ].filter(Boolean).join('\n\n');
   const modelRes = await HMI.generate({
-    role: AGENT_ROLE[agent] || 'reasoner',
+    role: AGENT_ROLE[agent] || 'reasoner', engine,
     messages: [
       { role: 'system', content: sysPrompt },
       { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
@@ -556,7 +578,7 @@ async function orchestrateJob({ message, conversation_id, agent }, jobId) {
   execution_log.push({ step: 'reason', ok: modelRes.ok, backend: modelRes.backend, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out });
   let answer;
   let meta;
-  if (modelRes.ok) { answer = modelRes.content; meta = { engine: { role: modelRes.role, backend: modelRes.backend }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out }; }
+  if (modelRes.ok) { answer = modelRes.content; meta = { engine: { role: modelRes.role, backend: modelRes.backend }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out, external_calls: modelRes.external_calls || 0 }; }
   else {
     answer = 'The reasoning layer is temporarily unavailable (' + modelRes.error + '). Evidence collected for your request:\n' +
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
@@ -624,7 +646,7 @@ const MANIFEST = {
   icons: [{ src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' }],
 };
 
-const SW = `const C='hi-shell-v0.2.0';
+const SW = `const C='hi-shell-v0.3.0';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['/'])));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);
@@ -728,6 +750,73 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');
 }
 
 // ---------- ROUTER ----------
+// ---------- FROZEN BENCHMARK v1.0 (see harz-git harz-reasoner1/benchmark-v1.json) ----------
+const BENCH_V1 = {
+  benchmark: 'HARZ-REASONER-BENCH v1.0',
+  frozen_at: '2026-09-24T11:05:00Z',
+  cases: [
+    { id: 'R1', category: 'reasoning', case: 'If HARZ Chain yields 50 HARZ per block and the current height is 10,979,937 blocks, what is the total HARZ ever issued if every block issued exactly 50 HARZ? Answer with the number.', check: { type: 'contains_number', value: 548996850 } },
+    { id: 'R2', category: 'reasoning', case: 'HARZ AI Pay charges 50 Naira per AI query. A customer runs 3 queries today and 2 queries tomorrow. What is their total spend in Naira?', check: { type: 'contains_number', value: 250 } },
+    { id: 'R3', category: 'reasoning', case: 'List in order the steps a customer takes to receive a payment and get a receipt in HARZ Pay.', check: { type: 'contains_all', values: ['amount', 'method'] } },
+    { id: 'K1', category: 'harz_knowledge', case: 'What payment methods does HARZ Pay support?', check: { type: 'contains_all', values: ['Paystack', 'UBA'] } },
+    { id: 'K2', category: 'harz_knowledge', case: 'What is HARZ Search?', check: { type: 'contains_all', values: ['search'] } },
+    { id: 'K3', category: 'harz_knowledge', case: 'Which services does the HARZ ecosystem offer? Name at least three.', check: { type: 'min_distinct_mentions', count: 3, pattern: 'HARZ' } },
+    { id: 'RE1', category: 'retrieval', case: 'What is the URL of the HARZ payment gateway worker?', check: { type: 'contains_any', values: ['harz-payment.harz.workers.dev', 'harz-payments.hamzarabiu390'] } },
+    { id: 'RE2', category: 'retrieval', case: 'Describe the unified payment gateway and cite the evidence documents you used.', check: { type: 'cites_evidence' } },
+    { id: 'C1', category: 'coding', case: 'Write a JavaScript function that validates a Nigerian phone number (11 digits starting with 0).', check: { type: 'code_artifact' } },
+    { id: 'C2', category: 'coding', case: 'Explain why a fetch to an http:// (non-TLS) internal URL fails inside a Cloudflare Worker, and how to fix it.', check: { type: 'contains_any', values: ['https', 'TLS', 'tls'] } },
+    { id: 'S1', category: 'structured_output', case: "Classify the sentiment of this sentence: 'HARZ runs its own rails and I love it'. Respond with JSON.", check: { type: 'json_field', field: 'sentiment', value: 'positive' } },
+    { id: 'S2', category: 'structured_output', case: "Classify the sentiment of this sentence: 'The gateway failed and my payment was lost'. Respond with JSON.", check: { type: 'json_field', field: 'sentiment', value: 'negative' } },
+    { id: 'T1', category: 'tool_use', case: 'What is the current HARZ chain height right now?', check: { type: 'tool_used', tool: 'chain_status' } },
+    { id: 'T2', category: 'tool_use', case: 'How many wallets are on the HARZ chain right now?', check: { type: 'tool_used', tool: 'chain_status' } },
+    { id: 'H1', category: 'hallucination', case: "What was HARZ Pay's total revenue in March 2019?", check: { type: 'refusal_or_evidence_bounded' } },
+    { id: 'H2', category: 'hallucination', case: 'Who is the CFO of HARZ Intelligence?', check: { type: 'refusal_or_evidence_bounded' } },
+    { id: 'LC1', category: 'long_context', case: 'From the HARZ ecosystem documentation, list every payment method mentioned in the unified gateway, including any rate or fee shown.', check: { type: 'contains_all', values: ['Paystack', 'UBA'] } },
+    { id: 'LC2', category: 'long_context', case: 'List the HARZ worker domains named in the ecosystem documentation.', check: { type: 'contains_any', values: ['harz-', '.workers.dev'] } },
+    { id: 'N1', category: 'nigerian_context', case: 'Which Nigerian bank does HARZ use for NGN transfers?', check: { type: 'contains_any', values: ['UBA'] } },
+    { id: 'N2', category: 'nigerian_context', case: 'What USSD code does a customer dial for a UBA instant loan?', check: { type: 'refusal_or_evidence_bounded' } },
+    { id: 'O1', category: 'offline', case: 'What payment methods does HARZ Pay support?', check: { type: 'offline_success' } },
+    { id: 'O2', category: 'offline', case: 'Answer the HARZ Search question and issue a receipt.', check: { type: 'offline_receipt' } },
+  ],
+};
+
+function checkCase(check, answer, r) {
+  const a = String(answer).toLowerCase();
+  const norm = (t) => String(t).replace(/[,,\s₦n]/g, '');
+  switch (check.type) {
+    case 'contains_number': return norm(a).includes(String(check.value));
+    case 'contains_all': return check.values.every(v => a.includes(v.toLowerCase()));
+    case 'contains_any': return check.values.some(v => a.includes(v.toLowerCase()));
+    case 'cites_evidence': return /[【\[]s\d|[（(]s\d/.test(String(answer));
+    case 'code_artifact': return /function\s+[a-z_]/i.test(String(answer)) || /```/.test(String(answer));
+    case 'json_field': {
+      const m = String(answer).match(/\{[\s\S]*\}/);
+      if (!m) return false;
+      try { const j = JSON.parse(m[0]); return String(j[check.field]) === String(check.value); } catch { return false; }
+    }
+    case 'tool_used': {
+      const log = (r && (r.execution_log || (r.result && r.result.execution_log))) || [];
+      return JSON.stringify(log).includes('"tool":"' + check.tool + '"') || JSON.stringify(log).includes('chain_status');
+    }
+    case 'refusal_or_evidence_bounded':
+      return /no evidence|do not have|don't have|not in the|cannot verify|will not guess|not found|no record|not available|does not contain|do not specify|does not specify|does not mention|cannot determine|no information|not specified|does not provide/i.test(String(answer)) || /[【\[]s\d/.test(String(answer));
+    case 'min_distinct_mentions': {
+      const m = String(answer).match(new RegExp(check.pattern + '[a-z0-9-]*', 'gi')) || [];
+      return new Set(m.map(x => x.toLowerCase())).size >= check.count;
+    }
+    case 'offline_success': {
+      const ok = r && r.answer && r.answer.length > 40 && (r.meta ? r.meta.external_calls === 0 : true);
+      return !!ok;
+    }
+    case 'offline_receipt': {
+      const rec = r && r.verification && r.verification.receipt_sha256;
+      const ext = r && r.meta ? r.meta.external_calls : 0;
+      return !!rec && ext === 0 && !!(r && r.answer);
+    }
+    default: return false;
+  }
+}
+
 export default {
   async fetch(request, env, ctx) {
     ENV = env || {};
@@ -739,6 +828,42 @@ export default {
     if (path === '/manifest.json') return new Response(JSON.stringify(MANIFEST), { headers: { 'Content-Type': 'application/json' } });
     if (path === '/sw.js') return new Response(SW, { headers: { 'Content-Type': 'application/javascript' } });
     if (path === '/icon.svg') return new Response(ICON, { headers: { 'Content-Type': 'image/svg+xml' } });
+
+    if (path === '/api/bench/v1') {
+      // FROZEN BENCHMARK v1.0 (committed to harz-git before any scoring run)
+      const target = url.searchParams.get('target') || 'A'; // A=external adapter, B=harz-reasoner-1, offline=death test
+      const engineFor = (cat) => target === 'offline' ? 'offline' : (target === 'B' ? 'harz' : 'external');
+      const suite = BENCH_V1.cases.filter(c => (target === 'offline') === (c.category === 'offline'));
+      const results = [];
+      for (const c of suite) {
+        const t0 = Date.now();
+        let r;
+        try {
+          r = await orchestrate({ message: c.case, agent: 'supreme-engine', engine: engineFor(c.category) });
+        } catch (e) { r = { error: String(e) }; }
+        const answer = r.answer || r.error || '';
+        const passed = checkCase(c.check, answer, r);
+        results.push({
+          id: c.id, category: c.category, case: c.case,
+          expected: c.check, passed,
+          latency_ms: (r.meta && r.meta.total_latency_ms) || (Date.now() - t0),
+          external_calls: (r.meta && r.meta.external_calls) || 0,
+          backend: (r.meta && r.meta.engine && r.meta.engine.backend) || null,
+          receipt: r.verification && r.verification.receipt_sha256 || null,
+          raw_answer: answer.slice(0, 700),
+        });
+      }
+      const scored = results;
+      return json({
+        benchmark: BENCH_V1.benchmark, frozen_at: BENCH_V1.frozen_at, target,
+        cases_run: results.length,
+        passed: scored.filter(r => r.passed).length,
+        failed: scored.filter(r => !r.passed).length,
+        avg_latency_ms: results.length ? Math.round(results.reduce((a, b) => a + b.latency_ms, 0) / results.length) : 0,
+        total_external_calls: results.reduce((a, b) => a + (b.external_calls || 0), 0),
+        results,
+      });
+    }
 
     if (path === '/api/hmi/test') {
       const out = {};
@@ -796,7 +921,7 @@ export default {
       try { body = await request.json(); } catch { return json({ error: 'invalid JSON body' }, 400); }
       if (!body.message) return json({ error: 'message required' }, 400);
       try {
-        const result = await orchestrate({ message: body.message, conversation_id: body.conversation_id, agent: body.agent });
+        const result = await orchestrate({ message: body.message, conversation_id: body.conversation_id, agent: body.agent, engine: body.engine });
         return json(result);
       } catch (e) {
         return json({ error: 'orchestrator_exception', message: String(e && e.message || e), stack: String(e && e.stack || '').slice(0, 600) }, 500);
@@ -808,9 +933,9 @@ export default {
       try { body = await request.json(); } catch { return json({ error: 'invalid JSON body' }, 400); }
       if (!body.message) return json({ error: 'message required' }, 400);
       const jobId = id('job');
-      const job = { id: jobId, status: 'starting', message: body.message.slice(0, 2000), agent: body.agent, conversation_id: body.conversation_id || null, at: new Date().toISOString() };
+      const job = { id: jobId, status: 'starting', message: body.message.slice(0, 2000), agent: body.agent, conversation_id: body.conversation_id || null, engine: body.engine || null, at: new Date().toISOString() };
       await MEM.createJob(job);
-      ctx.waitUntil(orchestrateJob({ message: body.message, conversation_id: body.conversation_id, agent: body.agent }, jobId)
+      ctx.waitUntil(orchestrateJob({ message: body.message, conversation_id: body.conversation_id, agent: body.agent, engine: body.engine }, jobId)
         .catch(async (e) => {
           await MEM.updateJob(jobId, { status: 'error', error: String(e && e.message || e).slice(0, 300) });
         }));

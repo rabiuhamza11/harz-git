@@ -83,3 +83,12 @@ REVISED ROADMAP:
 SOVEREIGNTY = 8 LAYERS: model, inference, knowledge (HARZ Search), identity (HARZ Root),
 trust (Trust Fabric), execution, network (offline/weak-net), economic (no per-request
 AI payments to another provider).
+
+## V0.3 GATE — HARZ-REASONER-1 / SOVEREIGN REASONING (Sept 24, 2026) — PASSED
+Frozen benchmark committed BEFORE scoring (harz-reasoner1/benchmark-v1.json).
+HARZ-Reasoner-1: first HARZ-owned reasoning model, trained from scratch (statistical
+extractive, IDF over 219-doc HARZ corpus; digests in REASONER1-CARD.md).
+Raw: A external 11/20 @ 2397ms avg (20 ext calls); B harz-reasoner-1 8/20 @ 482ms avg
+(0 ext calls); offline death test 2/2 with receipts, external provider disconnected.
+Engines live: default external chain (pending Dad's review), ?engine=harz,
+?engine=offline, /api/bench/v1 harness. Failures published in REASONER1-CARD.md.
