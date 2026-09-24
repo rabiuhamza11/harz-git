@@ -173,6 +173,7 @@ const CAPABILITY_REGISTRY = {
   'harz-planner-1':    { task_decomposition: 'strong', reasoning: 'unsupported', evidence_extraction: 'unsupported', refusal: 'unsupported', generative: 'unsupported' },
   'harz-embed-1':      { embedding: 'strong' },
   'harz-reasoner-1.2': { reasoning: 'limited', arithmetic: 'unsupported', coding: 'unsupported', evidence_extraction: 'strong', evidence_extraction_v2: 'sentence-level (learned)', refusal: 'supported+guard', generative: 'unsupported', structured: 'supported', status: 'experimental', trained_by: 'HARZ learning factory ' + RUN_1_2.run_id },
+  'harz-arith-2':     { reasoning: 'unsupported', arithmetic: 'deterministic (v0.11): binary, rate x counts (multi-step), percent-of, unit conversion, expression evaluation; div-by-zero and malformed -> deterministic refusal', coding: 'unsupported', evidence_extraction: 'unsupported', refusal: 'deterministic-invalid-operation', generative: 'unsupported', structured: 'unsupported' },
   'reason-core':       { reasoning: 'supported', arithmetic: 'supported', coding: 'supported', evidence_extraction: 'supported', refusal: 'supported', generative: 'supported', structured: 'supported', external: true },
   'reason-fallback':   { reasoning: 'supported', arithmetic: 'supported', coding: 'supported', evidence_extraction: 'supported', refusal: 'supported', generative: 'supported', structured: 'supported', external: true },
 };
@@ -188,6 +189,7 @@ const AGENT_REGISTRY = {
   'harz-reasoner-1.1':{ agent_id: 'harz-reasoner-1.1', role: 'reasoner', version: '1.1', capabilities: ['evidence_extraction:strong', 'reasoning:limited', 'structured:supported', 'refusal:supported+guard'], unsupported_capabilities: ['arithmetic', 'coding', 'generative', 'service_enumeration_synthesis'], evidence_requirements: ['retrieved_evidence_units', 'content_term_match_for_answerability'], fallback_policy: 'final_refusal_only (v0.5 Option 2): refusal is an output, not an error; external fallback ONLY on registry-declared incapability', verification_policy: 'claim_check_required', orchestrator_only: true },
   'harz-reasoner-1.2': { agent_id: 'harz-reasoner-1.2', role: 'reasoner', version: '1.2', status: 'experimental', trained_by: 'HARZ learning factory ' + RUN_1_2.run_id, capabilities: ['reasoning:limited', 'evidence_extraction:sentence-level (learned thresholds)', 'refusal:supported+guard', 'structured:supported'], unsupported_capabilities: ['arithmetic', 'coding', 'generative'], evidence_requirements: ['grounded evidence units; memory is never evidence'], fallback_policy: 'registry-declared incapability only (arithmetic -> external, recorded)', verification_policy: 'claim_check_required', orchestrator_only: true },
   'harz-code-1':      { agent_id: 'harz-code-1', role: 'coder', version: '1.0', capabilities: ['code_analysis:strong (deterministic static analysis, v0.5.1 direct answer path)', 'coding:template-only', 'refusal:supported'], unsupported_capabilities: ['arithmetic', 'evidence_extraction', 'generative_beyond_templates'], evidence_requirements: ['none (deterministic analysis of the request/code text)'], fallback_policy: 'no findings -> route to reasoner; template-miss on generation -> declared incapable -> external per registry', verification_policy: 'claim_check_required', orchestrator_only: true },
+  'harz-arith-2':     { agent_id: 'harz-arith-2', role: 'analyst', version: '2.0', capabilities: ['arithmetic:deterministic (binary, multi-step rate x counts, percent-of, unit conversion, parenthesized expressions)', 'refusal:deterministic-invalid-operation (division by zero, malformed expression)'], unsupported_capabilities: ['reasoning', 'coding', 'evidence_extraction', 'generative'], evidence_requirements: ['all numbers in the question must be bound by the computation structure — unbound numbers => declared incapable'], fallback_policy: 'unparseable arithmetic (numbers that cannot be bound) stays registry-declared incapable -> external fallback (recorded, lawful)', verification_policy: 'expression and result recorded in execution_log; result recomputed identically on retry (deterministic)', orchestrator_only: true },
   'harz-verify-1':    { agent_id: 'harz-verify-1', role: 'verifier', version: '1.0', capabilities: ['claim_checking:strong'], unsupported_capabilities: ['reasoning', 'arithmetic', 'coding', 'generative', 'retrieval'], evidence_requirements: ['answer_text', 'evidence_units'], fallback_policy: 'n/a — verification is mandatory on every answer', verification_policy: 'issues per-claim verdicts; unsupported claims never survive to ANSWER', orchestrator_only: true },
   'harz-embed-1':     { agent_id: 'harz-embed-1', role: 'embedder', version: '1.0', capabilities: ['embedding:strong (local deterministic)'], unsupported_capabilities: ['all_language_generation'], evidence_requirements: ['input_text'], fallback_policy: 'n/a', verification_policy: 'deterministic — no verification needed', orchestrator_only: true },
   'reason-core':      { agent_id: 'reason-core', role: 'external_backend', version: 'n/a (external)', capabilities: ['reasoning:supported', 'arithmetic:supported', 'coding:supported', 'evidence_extraction:supported', 'refusal:supported', 'generative:supported', 'structured:supported'], unsupported_capabilities: [], evidence_requirements: ['none (provider-side)'], fallback_policy: 'adapter only — never a silent dependency; used ONLY on registry-declared incapability or explicit engine=external', verification_policy: 'answers flagged external-assisted; still claim-checked and receipted', orchestrator_only: false, external: true },
@@ -206,7 +208,7 @@ const TASK_REGISTRY = {
   url_lookup:            { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'canonical_url_extraction', policy: 'v0.8: exact URL from evidence only; no URL reconstruction by the reasoner; no identity match -> reasoner refusal' },
   identifier_lookup:     { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'value_extraction', policy: 'v0.8: account/USSD values extracted from evidence with provenance; conflicts exposed, never silently chosen; no candidate -> reasoner' },
   payment_qa:            { required_capability: 'evidence_extraction', harz_specialist: 'harz-reasoner-1.1', direct_path: 'payment_step_assembly', policy: 'v0.8: payment procedure assembled from evidence step structure; method/account/amount/status kept distinct' },
-  arithmetic_exact:     { required_capability: 'exact_arithmetic', harz_specialist: 'harz-arith-1', direct_path: 'deterministic_local_compute', policy: 'v0.9: money-context arithmetic computed locally, zero external; non-numeric arithmetic stays declared_incapable' },
+  arithmetic_exact:    { required_capability: 'arithmetic', harz_specialist: 'harz-arith-2', direct_path: 'deterministic_local_compute', policy: 'AMENDED 2026-09-24 (Dad, Option B formal amendment): sovereign computation since v0.11 — binary, multi-step rate x counts, percent, unit conversion, expressions; division-by-zero and malformed -> deterministic refusal; ONLY unbindable-number arithmetic remains declared incapable -> recorded external fallback' },
   count_lookup:         { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'count_from_evidence', policy: 'v0.9: counts assembled only from quoted evidence items; completeness stated honestly; no countable evidence -> reasoner' },
   comparison:           { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'two_entity_quote_assembly', policy: 'v0.9: verbatim quotes per entity; no synthesized differences; missing entity -> reasoner refusal' },
   summary_flow:         { required_capability: 'evidence_extraction', harz_specialist: 'harz-search-1', direct_path: 'flow_summary_assembly', policy: 'v0.9: documented flows summarized from evidence step structure; absent flow -> honest refusal, never generated' },
@@ -395,34 +397,153 @@ async function buildFeeAnswer(packet) {
 // ============ v0.9 sovereign specialists ============
 // exactArithmetic: deterministic money-context computation. Two or more explicit numbers plus one
 // operator word and a money/wallet context -> computed locally. Zero generation, zero external.
-function exactArithmetic(message) {
+// ============ v0.11 harz-arith-2: sovereign computation engine ============
+// Deterministic local compute. NO generation, NO retrieval, NO external calls.
+// Returns { value, expr, path } on success, { refuse, path } on an invalid operation
+// (division by zero, malformed expression -> deterministic refusal is the ANSWER),
+// or null when the numbers cannot be bound to a computation structure — then and
+// only then arithmetic stays registry-declared incapable and the external fallback
+// (recorded, lawful) applies. The calculator must never become a hallucination engine:
+// every number in the question must be accounted for by the structure it binds.
+const ARITH_CTX = /(₦|ngn|naira|wallet|balance|amount|total|money|fund|payment|harz|block|chain|token|spend|charge|fee|price|cost|usd|dollar)/i;
+const COMPUTE_INTENT = /(what is|what's|calculate|compute|how much is|convert|equals|=)/i;
+function fmtNum(n) { return Number.isInteger(n) ? n.toLocaleString('en-US') : String(Number(n.toFixed(4))); }
+function normExprText(s) {
+  return String(s).toLowerCase()
+    .replace(/multiplied by/g, '*').replace(/\btimes\b/g, '*').replace(/×/g, '*')
+    .replace(/\bplus\b/g, '+').replace(/\bminus\b/g, '-')
+    .replace(/divided by|divided over/g, '/').replace(/÷/g, '/')
+    .replace(/(\d)\s*x\s*(\d)/g, '$1 * $2')
+    .replace(/n(₦?\s?[\d,]+(?:\.\d+)?)/g, '$1')
+    .replace(/,/g, '');
+}
+function parseAndEval(text) {
+  // tokenizer: numbers, + - * / ( )
+  const toks = [];
+  const re = /\s*(\d+(?:\.\d+)?|\+|-|\*|\/|\(|\))\s*/y;
+  let i = 0, m;
+  while (i < text.length) {
+    if (/\s/.test(text[i])) { i++; continue; }
+    re.lastIndex = i;
+    m = re.exec(text);
+    if (!m || m.index !== i) return { error: 'malformed expression' };
+    toks.push(m[1]); i += m[0].length;
+  }
+  if (!toks.length || !toks.some(t => /[+\-*/]/.test(t))) return { error: 'no operator' };
+  let p = 0;
+  const peek = () => toks[p], eat = () => toks[p++];
+  function factor() {
+    const t = peek();
+    if (t === undefined) throw 'malformed expression';
+    if (t === '(') { eat(); const v = expr1(); if (peek() !== ')') throw 'malformed expression'; eat(); return v; }
+    if (/[+\-*/]/.test(t)) throw 'malformed expression';
+    eat(); return Number(t);
+  }
+  function term() {
+    let v = factor();
+    while (peek() === '*' || peek() === '/') {
+      const op = eat(); const r = factor();
+      if (op === '/') { if (r === 0) throw 'division by zero'; v = v / r; }
+      else v = v * r;
+    }
+    return v;
+  }
+  function expr1() {
+    let v = term();
+    while (peek() === '+' || peek() === '-') { const op = eat(); const r = term(); v = op === '+' ? v + r : v - r; }
+    return v;
+  }
+  try {
+    const v = expr1();
+    if (p !== toks.length) throw 'malformed expression';
+    if (!Number.isFinite(v)) throw 'invalid operation';
+    return { value: v };
+  } catch (e) { return { error: String(e) }; }
+}
+function harzCompute(message) {
   const M = String(message || '');
-  const L = ' ' + M.toLowerCase() + ' ';
   if (!/\d/.test(M)) return null;
-  if (!/(₦|ngn|naira|wallet|balance|amount|total|money|fund|payment|harz|block|chain|token)/i.test(M)) return null;
-  const nums = (M.match(/\d[\d,]*(?:\.\d+)?/g) || []).map(s => Number(s.replace(/,/g, ''))).filter(n => Number.isFinite(n));
-  // EXACTLY two explicit numbers: a pure binary expression. Three or more numbers (rate-per-count,
-  // multi-step spend questions) are NOT pure binary arithmetic — those stay with the registry
-  // (frozen v0.5 law: arithmetic=unsupported -> declared_incapable -> external fallback).
-  // Exception: a rate stated twice + one count ('50 HARZ per block ... exactly 50 HARZ ... height 10,979,937')
-  // collapses to the binary rate x count (bench R1) — only when the first two numbers are IDENTICAL.
+  const numsAll = (M.match(/\d[\d,]*(?:\.\d+)?/g) || []).map(s => Number(s.replace(/,/g, '')));
+  // ---- P1: percent-of (fees, taxes, rates) ----
+  const pm = M.match(/(\d+(?:\.\d+)?)\s*%\s*(?:[a-z]{0,15}\s)?(?:of|on|for)\s+(?:a\s+|an\s+|the\s+|my\s+)?₦?\s?(?:n\s?)?([\d,]+(?:\.\d+)?)/i);
+  if (pm) {
+    const pct = Number(pm[1]), base = Number(pm[2].replace(/,/g, ''));
+    if (numsAll.length === 2 && numsAll.includes(pct) && numsAll.includes(base) && (ARITH_CTX.test(M) || /%|fee|tax|rate/.test(M)))
+      return { value: fmtNum(base * pct / 100), expr: fmtNum(base) + ' x ' + pct + '% (' + pct + ' per 100)', path: 'percent_of' };
+  }
+  // ---- P2: unit conversion (rate must be IN the question — never a remembered rate) ----
+  const cm = M.match(/convert\s+([\d,]+(?:\.\d+)?)\s*(?:usd|united states dollars?|dollars?)\s+to\s+(?:ngn|naira).{0,40}?([\d,]+(?:\.\d+)?)\s*(?:per\s*(?:dollar|usd)|:\s*1)/i);
+  if (cm) {
+    const amt = Number(cm[1].replace(/,/g, '')), rate = Number(cm[2].replace(/,/g, ''));
+    if (numsAll.length === 2)
+      return { value: fmtNum(amt * rate), expr: fmtNum(amt) + ' USD x ' + fmtNum(rate) + ' NGN/USD', path: 'unit_conversion' };
+  }
+  // ---- P3: explicit arithmetic expression ----
+  const L3 = normExprText(M);
+  const hasOpWord = /\b(plus|minus|times|multiplied by|divided by)\b/.test(M.toLowerCase()) || /[×÷]/.test(M) || /\d\s*[*/+\-]\s*\d|\d\s+x\s+\d/.test(L3);
+  if (hasOpWord && COMPUTE_INTENT.test(M)) {
+    const seg = L3.replace(/^.*?(what is|what's|calculate|compute|how much is|convert|equals)\s*/, '').replace(/\?\s*$/, '').replace(/^(is|the total|total)\s*/, '');
+    const ev = parseAndEval(seg);
+    if (ev.error === 'division by zero') return { refuse: 'division by zero — the operation is mathematically undefined', path: 'expression' };
+    if (ev.error === 'malformed expression') return { refuse: 'malformed arithmetic expression — the expression as written cannot be evaluated deterministically', path: 'expression' };
+    if (ev.value !== undefined) {
+      // number accounting: every number in the message must appear in the expression segment
+      const segNums = (seg.match(/\d+(?:\.\d+)?/g) || []).map(Number);
+      if (segNums.length === numsAll.filter(n => segNums.includes(n)).length || segNums.length === numsAll.length)
+        return { value: fmtNum(ev.value), expr: seg.replace(/\*/g, ' x ').replace(/\//g, ' / ').trim(), path: 'expression' };
+    }
+  }
+  // ---- P4: rate x counts (single or multi-step spend: '50 per query, 3 today and 2 tomorrow') ----
+  if (ARITH_CTX.test(M) || /\bper\b/.test(M.toLowerCase())) {
+    const rm = /(\d[\d,]*(?:\.\d+)?)\s*(?:[a-z€£]+\s+){0,2}(?:per|each|for every)\s+([a-z]+)/i.exec(M);
+    if (rm && rm.index !== undefined) {
+      const rate = Number(rm[1].replace(/,/g, ''));
+      const rateIdx = M.indexOf(rm[1]);
+      const after = M.slice(rateIdx + rm[1].length);
+      const counts = [];
+      let cm2;
+      const cre = /(\d[\d,]*(?:\.\d+)?)/g;
+      while ((cm2 = cre.exec(after)) !== null) {
+        const n = Number(cm2[1].replace(/,/g, ''));
+        // restatement of the rate (same value AND the rate's unit/currency word near it) is not a count
+        const ctx = after.slice(Math.max(0, cm2.index - 30), cm2.index + cm2[1].length + 30);
+        const unitWord = rm[2] || 'naira|ngn|harz';
+        if (n === rate && new RegExp(unitWord + '|' + /(?:naira|ngn|harz|usd|dollar|block|query)/.source, 'i').test(ctx)) continue;
+        counts.push(n);
+      }
+      if (counts.length >= 1) {
+        // every number must be bound: rate + counts
+        const bound = [rate, ...counts];
+        if (bound.length === numsAll.length) {
+          const sum = counts.reduce((a, b) => a + b, 0);
+          return { value: fmtNum(rate * sum), expr: fmtNum(rate) + ' x (' + counts.map(fmtNum).join(' + ') + ')', path: 'rate_x_counts' };
+        }
+        if (counts.length === 1 && numsAll.length === 2 && numsAll.includes(rate) && numsAll.includes(counts[0])) {
+          return { value: fmtNum(rate * counts[0]), expr: fmtNum(rate) + ' x ' + fmtNum(counts[0]), path: 'rate_x_counts' };
+        }
+      }
+    }
+  }
+  // ---- P5: pure binary (v0.9 law, unchanged) ----
+  const L = ' ' + M.toLowerCase() + ' ';
+  if (!ARITH_CTX.test(M)) return null;
+  const nums = [...numsAll];
   if (nums.length === 3 && /\bper\b/.test(L)) {
     const [n0, n1, n2] = nums;
-    if (n0 === n1 || n0 === n2) { nums.length = 1; nums.push(n0 === n1 ? n2 : n1); }       // rate stated at positions 1-2 or 1-3
-    else if (n1 === n2) { nums.length = 1; nums.push(n0); }                                  // rate stated at positions 2-3
+    if (n0 === n1 || n0 === n2) { nums.length = 1; nums.push(n0 === n1 ? n2 : n1); }
+    else if (n1 === n2) { nums.length = 1; nums.push(n0); }
   }
   if (nums.length !== 2) return null;
-  // rate-per-count with exactly two numbers is multiplication: '50 HARZ per block, height 10,979,937' (bench R1).
   const op = /\b(subtract|minus|take away|less)\b/.test(L) ? '-' : /\b(times|multiply|multiplied by)\b|\bx\b[^a-z]/.test(L) ? '*' : /\b(divide|divided by|split|shared)\b/.test(L) ? '/' : /\bper\b/.test(L) ? '*' : /\b(add|plus|sum|total|and then)\b/.test(L) ? '+' : null;
   if (!op) return null;
   const a = nums[0], b = nums[1];
-  if (op === '/' && b === 0) return null;
+  if (op === '/' && b === 0) return { refuse: 'division by zero — the operation is mathematically undefined', path: 'binary' };
   const val = op === '+' ? a + b : op === '-' ? a - b : op === '*' ? a * b : a / b;
   if (!Number.isFinite(val)) return null;
-  const pretty = Number.isInteger(val) ? val.toLocaleString('en-US') : String(Number(val.toFixed(4)));
   const sym = { '+': ' + ', '-': ' - ', '*': ' x ', '/': ' / ' }[op];
-  return { value: pretty, expr: a.toLocaleString('en-US') + sym + b.toLocaleString('en-US') };
+  return { value: fmtNum(val), expr: fmtNum(a) + sym + fmtNum(b), path: 'binary' };
 }
+function exactArithmetic(message) { return harzCompute(message); }
 
 // buildCountAnswer: counts are computed from quoted evidence items only, with honest completeness.
 function buildCountAnswer(packet) {
@@ -497,7 +618,7 @@ function classifyTask(message) {
   // v0.9: sovereign exact arithmetic runs FIRST — if the question is money-context arithmetic with
   // explicit numbers, it is computed locally and never routed to the external fallback.
   if (exactArithmetic(message))
-    return { class: 'arithmetic_exact', harzCapable: true, reason: 'registry: exact money arithmetic computed locally (harz-arith-1, v0.9)' };
+    return { class: 'arithmetic_exact', harzCapable: true, reason: 'registry: sovereign computation — deterministic local compute (harz-arith-2, v0.11)' };
   if (/\b(calculate|compute|how much is|total of|total spend|sum of|multipl)\w*/.test(L) || (/\d/.test(L) && /\b(per|each|every)\b/.test(L)))
     return { class: 'arithmetic', harzCapable: false, reason: 'registry: arithmetic=unsupported' };
   if (/write a (function|code|script|program)|implement a |create a function|code that validates|generate code|write.*function that validates/.test(L))
@@ -920,9 +1041,14 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
       }
     } else if (taskClass.class === 'arithmetic_exact') {
       const ar = exactArithmetic(message);
-      if (ar) {
-        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-1: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.9)', backend: 'harz-arith-1', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
-        execution_log.push({ model: 'harz-arith-1', ok: true, direct_path: 'deterministic_local_compute', expression: ar.expr, result: ar.value });
+      if (ar && ar.refuse) {
+        // v0.11: an invalid operation (division by zero, malformed expression) is answered with a
+        // DETERMINISTIC REFUSAL — never a guessed value, never an external call.
+        specialistRes = { ok: true, content: '**Answer**\n\nI cannot compute this: ' + ar.refuse + '. This refusal is deterministic (harz-arith-2): no value was guessed, retrieved, or generated.\n\nCONFIDENCE: high — deterministic invalid-operation refusal (v0.11)', backend: 'harz-arith-2', mode: 'specialist-arith-refusal', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-2', ok: true, direct_path: 'deterministic_refusal', reason: ar.refuse });
+      } else if (ar) {
+        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-2 via the ' + ar.path + ' path: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.11)', backend: 'harz-arith-2', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-2', ok: true, direct_path: 'deterministic_local_compute', path: ar.path, expression: ar.expr, result: ar.value });
       }
     } else if (taskClass.class === 'count_lookup') {
       const ct = buildCountAnswer(packet);
@@ -1205,9 +1331,14 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
       }
     } else if (taskClass.class === 'arithmetic_exact') {
       const ar = exactArithmetic(message);
-      if (ar) {
-        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-1: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.9)', backend: 'harz-arith-1', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
-        execution_log.push({ model: 'harz-arith-1', ok: true, direct_path: 'deterministic_local_compute', expression: ar.expr, result: ar.value });
+      if (ar && ar.refuse) {
+        // v0.11: an invalid operation (division by zero, malformed expression) is answered with a
+        // DETERMINISTIC REFUSAL — never a guessed value, never an external call.
+        specialistRes = { ok: true, content: '**Answer**\n\nI cannot compute this: ' + ar.refuse + '. This refusal is deterministic (harz-arith-2): no value was guessed, retrieved, or generated.\n\nCONFIDENCE: high — deterministic invalid-operation refusal (v0.11)', backend: 'harz-arith-2', mode: 'specialist-arith-refusal', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-2', ok: true, direct_path: 'deterministic_refusal', reason: ar.refuse });
+      } else if (ar) {
+        specialistRes = { ok: true, content: '**Answer**\n\n' + ar.value + ' — computed exactly from the numbers in your question (' + ar.expr + '). Performed deterministically by harz-arith-2 via the ' + ar.path + ' path: no value was guessed, retrieved, or generated.\n\nNote: this is the arithmetic result only. A live wallet balance is account state, not knowledge-base evidence.\n\nCONFIDENCE: high — deterministic local computation (v0.11)', backend: 'harz-arith-2', mode: 'specialist-arith', role: 'analyst', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-arith-2', ok: true, direct_path: 'deterministic_local_compute', path: ar.path, expression: ar.expr, result: ar.value });
       }
     } else if (taskClass.class === 'count_lookup') {
       const ct = buildCountAnswer(packet);
@@ -1535,7 +1666,14 @@ async function runV05Gate() {
   rec('12-signed-receipt', /^[0-9a-f]{64}$/.test((r1.verification || {}).receipt_sha256 || ''), ((r1.verification || {}).receipt_sha256 || '').slice(0, 14));
   const rAr = await orchestrate({ message: 'HARZ AI Pay charges 50 Naira per query. A customer runs 3 queries today and 2 tomorrow. What is their total spend?', conversation_id: 'gate-v05-2' });
   const rCo = await orchestrate({ message: 'Write a JavaScript function that validates a Nigerian phone number (11 digits starting with 0).', conversation_id: 'gate-v05-3' });
-  rec('2-correct-model-selection', String(rAr.meta.engine.backend).startsWith('reason-') && !!rAr.meta.routing.declared_incapable && rCo.meta.engine.backend === 'harz-code-1' && r1.meta.engine.backend === 'harz-reasoner-1.1', 'arith->' + rAr.meta.engine.backend + ' code->' + rCo.meta.engine.backend + ' qa->' + r1.meta.engine.backend);
+  // CONSTITUTIONAL AMENDMENT (2026-09-24, authorized by Dad — Option B formal amendment):
+  // the v0.5 law 'arithmetic=unsupported -> declared_incapable -> external fallback' is AMENDED for
+  // computable arithmetic. Multi-step rate arithmetic is sovereign since v0.11 (harz-arith-2).
+  // The historical law is preserved in git history (commit e0aea2c and earlier). Only UNBINDABLE
+  // arithmetic (numbers that no deterministic structure accounts for) remains declared incapable.
+  const arAmended = (rAr.answer || '').includes('250') && String(rAr.meta.engine.backend).startsWith('harz-arith') && (rAr.meta.external_calls || 0) === 0;
+  rec('2-correct-model-selection', arAmended && rCo.meta.engine.backend === 'harz-code-1' && r1.meta.engine.backend === 'harz-reasoner-1.1',
+    'AMENDED v0.11: arith->' + rAr.meta.engine.backend + ' ext=' + (rAr.meta.external_calls || 0) + ' | code->' + rCo.meta.engine.backend + ' | qa->' + r1.meta.engine.backend);
   const r4 = await orchestrate({ message: 'Summarize https://dead-harz-nonexistent-xyz.invalid/doc and tell me what payment methods HARZ Pay supports.', conversation_id: 'gate-v05-4' });
   rec('4-agent-failure-recovery', !!(r4.verification || {}).receipt_sha256 && r4.agent_trace && r4.agent_trace.length >= 3, 'fetch failed, pipeline completed, receipt ' + ((r4.verification || {}).receipt_sha256 || '').slice(0, 10));
   const vConf = verify1Check({ answer: 'HARZ Pay supports Paystack. The moon is made of green cheese.', units: [{ id: 'S1', title: 'HARZ Pay', text: 'HARZ Pay supports Paystack and UBA transfer.' }, { id: 'S2', title: 'Other doc', text: 'HARZ Pay supports GDEG token payments.' }] });
@@ -1663,7 +1801,11 @@ async function runV051Gate() {
   // T6 arithmetic still routes externally (registry-declared incapable)
   const r2 = byId('R2');
   const rAr = await orchestrate({ message: r2.case, conversation_id: 'gate-v051-6' });
-  rec('6-arithmetic-external-by-registry', rAr.meta.external_calls > 0 && !!rAr.meta.routing.declared_incapable, 'ext=' + rAr.meta.external_calls + ', declared=' + !!rAr.meta.routing.declared_incapable);
+  // CONSTITUTIONAL AMENDMENT (2026-09-24, Dad — Option B): computable arithmetic is sovereign
+  // since v0.11; this case previously asserted the lawful external fallback and now asserts the
+  // amended law: harz-arith-2 computes it locally with ZERO external calls.
+  rec('6-arithmetic-sovereign-by-registry', (rAr.answer || '').includes('250') && String(rAr.meta.engine.backend).startsWith('harz-arith') && (rAr.meta.external_calls || 0) === 0,
+    'AMENDED v0.11: ext=' + rAr.meta.external_calls + ', backend=' + rAr.meta.engine.backend);
 
   // T7 no agent bypasses the orchestrator
   const orchOnly = Object.entries(AGENT_REGISTRY).filter(([id, a]) => !a.external).every(([id, a]) => a.orchestrator_only === true);
@@ -2007,6 +2149,63 @@ export default {
         verdict: passed9 === T9.length ? 'PASS' : 'FAIL',
         law: 'money-context arithmetic is computed deterministically locally (never generated, never external); counts come only from quoted evidence items with honest completeness; comparisons quote verbatim per entity and synthesize nothing; when-questions without date-bearing evidence refuse; frozen v0.5 registry incapability law unchanged' });
     }
+    if (path === '/api/agents/v1/test11') {
+      // v0.11 GATE: Sovereign Computation (harz-arith-2) + the CONSTITUTIONAL AMENDMENT test.
+      // Pipeline under test: request -> capability registry -> computation parser -> deterministic
+      // evaluator -> verification -> result -> receipt. Never a language model guessing a number.
+      // Split ?part=1 (computation cases 1-6) / ?part=2 (constitutional + provenance + regressions 7-12).
+      const PART11 = String(url.searchParams.get('part') || '1');
+      const T11 = []; const P11 = (name, ok, detail) => T11.push({ name, ok: !!ok, detail: detail || '' });
+      const idx11 = await currentIndexDigest();
+      const R2CASE = 'HARZ AI Pay charges 50 Naira per AI query. A customer runs 3 queries today and 2 queries tomorrow. What is their total spend in Naira?';
+      if (PART11 === '1') {
+        // 1. multi-step arithmetic — the exact case that caused the single external call
+        const r1 = await orchestrate({ message: R2CASE, conversation_id: 'gate-v11-1' });
+        P11('multi_step_rate_x_counts', (r1.answer || '').includes('250') && String(r1.meta?.engine?.backend).startsWith('harz-arith') && (r1.meta?.external_calls || 0) === 0, 'backend=' + r1.meta?.engine?.backend + ' ext=' + (r1.meta?.external_calls || 0));
+        // 2. percent-of
+        const r2 = await orchestrate({ message: 'What is 5% of 20,000 NGN?', conversation_id: 'gate-v11-2' });
+        P11('percent_of', (r2.answer || '').includes('1,000') && (r2.meta?.external_calls || 0) === 0, 'ext=' + (r2.meta?.external_calls || 0));
+        // 3. fee/tax percentage on an amount
+        const r3 = await orchestrate({ message: 'If HARZ Pay charges a 1.5% fee on a 10,000 NGN transaction, what is the fee?', conversation_id: 'gate-v11-3' });
+        P11('fee_percent', (r3.answer || '').includes('150') && String(r3.meta?.engine?.backend).startsWith('harz-arith') && (r3.meta?.external_calls || 0) === 0, 'ext=' + (r3.meta?.external_calls || 0));
+        // 4. unit conversion (rate stated in question)
+        const r4 = await orchestrate({ message: 'Convert 50 USD to NGN at a rate of 1,600 per dollar.', conversation_id: 'gate-v11-4' });
+        P11('unit_conversion', (r4.answer || '').includes('80,000') && (r4.meta?.external_calls || 0) === 0, 'ext=' + (r4.meta?.external_calls || 0));
+        // 5. parenthesized expression evaluation
+        const r5 = await orchestrate({ message: 'What is 50 times (3 plus 2)?', conversation_id: 'gate-v11-5' });
+        P11('expression_parens', (r5.answer || '').includes('250') && String(r5.meta?.engine?.backend).startsWith('harz-arith') && (r5.meta?.external_calls || 0) === 0, 'ext=' + (r5.meta?.external_calls || 0));
+        // 6. division-by-zero -> deterministic refusal, never a guessed value, never a crash
+        const r6 = await orchestrate({ message: 'What is 100 divided by 0?', conversation_id: 'gate-v11-6' });
+        P11('division_by_zero_refusal', /cannot compute this: division by zero/i.test(r6.answer || '') && (r6.meta?.external_calls || 0) === 0, 'ext=' + (r6.meta?.external_calls || 0));
+      } else {
+        // 7. malformed/adversarial expression -> deterministic refusal
+        const r7 = await orchestrate({ message: 'What is 5 times times 7?', conversation_id: 'gate-v11-7' });
+        P11('malformed_refusal', /cannot compute this: malformed/i.test(r7.answer || '') && (r7.meta?.external_calls || 0) === 0, 'ext=' + (r7.meta?.external_calls || 0));
+        // 8. CONSTITUTIONAL: engine=harz, zero external
+        const r8 = await orchestrate({ message: R2CASE, engine: 'harz', conversation_id: 'gate-v11-8' });
+        P11('constitutional_engine_harz', (r8.answer || '').includes('250') && (r8.meta?.external_calls || 0) === 0, 'ext=' + (r8.meta?.external_calls || 0));
+        // 9. CONSTITUTIONAL: engine=offline (external provider unavailable), zero external
+        const r9 = await orchestrate({ message: R2CASE, engine: 'offline', conversation_id: 'gate-v11-9' });
+        P11('constitutional_engine_offline', (r9.answer || '').includes('250') && (r9.meta?.external_calls || 0) === 0, 'ext=' + (r9.meta?.external_calls || 0));
+        // 10. provenance: expression + path recorded in execution log, deterministic backend, receipt
+        const r10 = await orchestrate({ message: R2CASE, conversation_id: 'gate-v11-10' });
+        const log10 = r10.execution_log || [];
+        const ar10 = log10.find(e => e.model === 'harz-arith-2');
+        P11('provenance_expression_recorded', !!ar10 && !!ar10.expression && !!ar10.result && String(r10.meta?.engine?.backend).startsWith('harz-arith'), ar10 ? 'expr=' + ar10.expression + ' -> ' + ar10.result : 'no arith log entry');
+        // 11. binary regression (v0.9)
+        const r11 = await orchestrate({ message: 'If I add N10,000 and then N5,000 to my HarzPay wallet, what is my balance?', conversation_id: 'gate-v11-11' });
+        P11('binary_regression', (r11.answer || '').includes('15,000') && (r11.meta?.external_calls || 0) === 0, 'ext=' + (r11.meta?.external_calls || 0));
+        // 12. death-refusal regression (no evidence, no external)
+        const r12 = await orchestrate({ message: "What is the name of the CFO of HARZ Intelligence's cat?", conversation_id: 'gate-v11-12' });
+        P11('death_refusal_regression', /will not guess|refus/i.test(r12.answer || '') && (r12.meta?.external_calls || 0) === 0, 'ext=' + (r12.meta?.external_calls || 0));
+      }
+      const passed11 = T11.filter(t => t.ok).length;
+      return json({ gate: 'v0.11-sovereign-computation-gate', part: PART11, passed: passed11, total: T11.length, index_version: idx11,
+        all_passed: passed11 === T11.length, tests: T11,
+        verdict: passed11 === T11.length ? 'PASS' : 'FAIL',
+        amendment: 'v0.5 capability registry law AMENDED 2026-09-24 by Dad (Option B formal): computable arithmetic is sovereign via harz-arith-2; division-by-zero and malformed expressions are deterministic refusals; ONLY unbindable-number arithmetic remains declared incapable (recorded external fallback)',
+        law: 'request -> capability registry -> computation parser -> deterministic evaluator -> verification -> result -> receipt. Every number in the question must be accounted for by the structure that binds it — otherwise declared incapable, never a guess. The calculator must never become a hallucination engine.' });
+    }
     if (path === '/api/agents/v1/test7') {
       // v0.7 GATE: Search-1 death tests (Dad's six + wiring laws).
       // Split into ?part=1 (tests 1-4) and ?part=2 (tests 5-8): one invocation = max 50 platform
@@ -2057,7 +2256,9 @@ export default {
       return json(await runV051Gate());
     }
     if (path === '/api/agents/v1/registry') {
-      return json({ version: VERSION, schema: ['agent_id', 'capabilities', 'unsupported_capabilities', 'evidence_requirements', 'fallback_policy', 'verification_policy', 'version'], delegation_law: 'a sovereign model refusal is an output, not an error — final refusal, no external call; external fallback ONLY on registry-declared incapability', agents: AGENT_REGISTRY, task_registry: TASK_REGISTRY });
+      // v0.11 constitutional amendment record
+      const amendments = [{ date: '2026-09-24', authorized_by: 'Dad (Rabiu Hamza Mohammed)', change: 'v0.5 capability registry law AMENDED (Option B formal amendment): computable arithmetic (binary, multi-step rate x counts, percent-of, unit conversion, parenthesized expressions) is sovereign via harz-arith-2 since v0.11. Division-by-zero and malformed expressions are deterministic refusals. ONLY unbindable-number arithmetic remains registry-declared incapable -> recorded external fallback. Historical law preserved in git (commit e0aea2c and earlier).' }];
+      return json({ version: VERSION, amendments, capabilities: CAPS, schema: ['agent_id', 'capabilities', 'unsupported_capabilities', 'evidence_requirements', 'fallback_policy', 'verification_policy', 'version'], delegation_law: 'a sovereign model refusal is an output, not an error — final refusal, no external call; external fallback ONLY on registry-declared incapability', agents: AGENT_REGISTRY, task_registry: TASK_REGISTRY });
     }
     if (path === '/api/health') {
       const search = await harzSearch('harz', 1);
