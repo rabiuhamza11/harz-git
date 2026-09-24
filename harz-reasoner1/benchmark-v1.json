@@ -1,0 +1,63 @@
+{
+  "benchmark": "HARZ-REASONER-BENCH v1.0",
+  "frozen_at": "2026-09-24T11:05:00Z",
+  "frozen_by": "Hauwa for Dad — gate: HARZ-REASONER-1 / SOVEREIGN REASONING v0.3",
+  "rule": "Frozen BEFORE any scoring run. No edits after results are seen. Same suite, same checks, both targets (A external adapter, B harz-reasoner-1). Raw outputs recorded verbatim, failures included.",
+  "scored_measures": [
+    "latency_ms: end-to-end per case",
+    "cpu_ms: worker CPU per case (where measurable)",
+    "memory: runtime envelope (Workers isolate, no GPU)",
+    "external_calls: count of external AI API invocations per case",
+    "offline: full-chain success with external provider disconnected"
+  ],
+  "cases": [
+    { "id": "R1", "category": "reasoning", "case": "If HARZ Chain yields 50 HARZ per block and the current height is 10,979,937 blocks, what is the total HARZ ever issued if every block issued exactly 50 HARZ? Answer with the number.", "check": { "type": "contains_number", "value": 548996850 } },
+    { "id": "R2", "category": "reasoning", "case": "HARZ AI Pay charges 50 Naira per AI query. A customer runs 3 queries today and 2 queries tomorrow. What is their total spend in Naira?", "check": { "type": "contains_number", "value": 250 } },
+    { "id": "R3", "category": "reasoning", "case": "List in order the steps a customer takes to receive a payment and get a receipt in HARZ Pay.", "check": { "type": "contains_all", "values": ["amount", "method"] } },
+
+    { "id": "K1", "category": "harz_knowledge", "case": "What payment methods does HARZ Pay support?", "check": { "type": "contains_all", "values": ["Paystack", "UBA"] } },
+    { "id": "K2", "category": "harz_knowledge", "case": "What is HARZ Search?", "check": { "type": "contains_all", "values": ["search"] } },
+    { "id": "K3", "category": "harz_knowledge", "case": "Which services does the HARZ ecosystem offer? Name at least three.", "check": { "type": "min_distinct_mentions", "count": 3, "pattern": "HARZ" } },
+
+    { "id": "RE1", "category": "retrieval", "case": "What is the URL of the HARZ payment gateway worker?", "check": { "type": "contains_any", "values": ["harz-payment.harz.workers.dev", "harz-payments.hamzarabiu390"] } },
+    { "id": "RE2", "category": "retrieval", "case": "Describe the unified payment gateway and cite the evidence documents you used.", "check": { "type": "cites_evidence" } },
+
+    { "id": "C1", "category": "coding", "case": "Write a JavaScript function that validates a Nigerian phone number (11 digits starting with 0).", "check": { "type": "code_artifact" } },
+    { "id": "C2", "category": "coding", "case": "Explain why a fetch to an http:// (non-TLS) internal URL fails inside a Cloudflare Worker, and how to fix it.", "check": { "type": "contains_any", "values": ["https", "TLS", "tls"] } },
+
+    { "id": "S1", "category": "structured_output", "case": "Classify the sentiment of this sentence: 'HARZ runs its own rails and I love it'. Respond with JSON.", "check": { "type": "json_field", "field": "sentiment", "value": "positive" } },
+    { "id": "S2", "category": "structured_output", "case": "Classify the sentiment of this sentence: 'The gateway failed and my payment was lost'. Respond with JSON.", "check": { "type": "json_field", "field": "sentiment", "value": "negative" } },
+
+    { "id": "T1", "category": "tool_use", "case": "What is the current HARZ chain height right now?", "check": { "type": "tool_used", "tool": "chain_status" } },
+    { "id": "T2", "category": "tool_use", "case": "How many wallets are on the HARZ chain right now?", "check": { "type": "tool_used", "tool": "chain_status" } },
+
+    { "id": "H1", "category": "hallucination", "case": "What was HARZ Pay's total revenue in March 2019?", "check": { "type": "refusal_or_evidence_bounded" } },
+    { "id": "H2", "category": "hallucination", "case": "Who is the CFO of HARZ Intelligence?", "check": { "type": "refusal_or_evidence_bounded" } },
+
+    { "id": "LC1", "category": "long_context", "case": "From the HARZ ecosystem documentation, list every payment method mentioned in the unified gateway, including any rate or fee shown.", "check": { "type": "contains_all", "values": ["Paystack", "UBA"] } },
+    { "id": "LC2", "category": "long_context", "case": "List the HARZ worker domains named in the ecosystem documentation.", "check": { "type": "contains_any", "values": ["harz-", ".workers.dev"] } },
+
+    { "id": "N1", "category": "nigerian_context", "case": "Which Nigerian bank does HARZ use for NGN transfers?", "check": { "type": "contains_any", "values": ["UBA"] } },
+    { "id": "N2", "category": "nigerian_context", "case": "What USSD code does a customer dial for a UBA instant loan?", "check": { "type": "refusal_or_evidence_bounded" } },
+
+    { "id": "O1", "category": "offline", "case": "[external provider disconnected] What payment methods does HARZ Pay support?", "check": { "type": "offline_success" } },
+    { "id": "O2", "category": "offline", "case": "[external provider disconnected] Full chain: answer the HARZ Search question and issue a receipt.", "check": { "type": "offline_receipt" } }
+  ],
+  "check_definitions": {
+    "contains_number": "answer text contains the expected numeric value (formatting-tolerant: commas, spaces, N allowed)",
+    "contains_all": "answer contains every listed string (case-insensitive)",
+    "contains_any": "answer contains at least one listed string (case-insensitive)",
+    "cites_evidence": "answer contains an evidence citation marker (S1..S9 or 【S) referencing retrieved evidence",
+    "code_artifact": "answer contains a function definition or a code block with code lines",
+    "json_field": "answer parses as JSON (or contains a JSON object) with the expected field and value",
+    "tool_used": "pipeline executed the named tool for this case (execution_log)",
+    "refusal_or_evidence_bounded": "answer explicitly declines / states no evidence / does not assert invented specifics; citation-bounded answers pass; invented specifics fail",
+    "min_distinct_mentions": "at least N distinct mentions matching pattern (case-insensitive, deduplicated)",
+    "offline_success": "full pipeline completed with external_calls = 0 and a substantive answer",
+    "offline_receipt": "full pipeline completed with external_calls = 0 and a SHA-256 receipt issued"
+  },
+  "targets": {
+    "A": "external adapter via HARZ Model Interface (reason-core → reason-fallback)",
+    "B": "harz-reasoner-1 via HARZ Model Interface (HARZ-owned backend, no external provider)"
+  }
+}
