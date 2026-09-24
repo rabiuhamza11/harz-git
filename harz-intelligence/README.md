@@ -1,17 +1,24 @@
-# HARZ Intelligence Core v0.1
+# HARZ Intelligence Core v0.2
 
-Sovereign AI intelligence worker — the first build of the Intelligence gate.
-Live: https://harz-intelligence.harz.workers.dev
+Sovereign AI intelligence worker. Live: https://harz-intelligence.harz.workers.dev
 
 Core loop: ask → plan → search (HARZ Search index) → tools (chain_status, fetch_url) →
-reason (NVIDIA Nemotron via OpenRouter, nano-30b default, lightning fallback) →
+reason (role-routed through the HARZ MODEL INTERFACE — provider-blind) →
 verify (SHA-256 receipt on every answer) → memory (user-owned, explicit "remember" only).
 
+v0.2 — HARZ MODEL INTERFACE: the orchestrator and agents call ROLES via five
+interface calls (generate, reason, tool_call, structured_output, embed) and never
+see a provider name. External models are adapters only. harz-embed-1 is the first
+HARZ-owned backend (local deterministic embedder, zero external provider).
+/api/models shows the interface; /api/hmi/test exercises all five calls with a
+sovereignty check (PASS = no provider name above the adapter layer).
+
 Routes: /api/chat/start + /api/chat/result/:id (job polling), /api/chat/stream (streaming),
-/api/chat (JSON), /api/agents, /api/health, /api/bench, / (PWA shell).
+/api/chat (JSON), /api/agents, /api/models, /api/hmi/test, /api/health, /api/bench, / (PWA shell).
 
 Bindings: MEMORY (KV), SEARCH_SVC (harz-search), CHAIN_SVC (harz-chain-v2).
 
-Gate status (Sept 24, 2026): 5-check gate PASSED — PWA, light theme, in-ecosystem,
-mobile-ready (job polling), browser-tested (grounded answer + receipt 4166840654d6).
-Honest limits recorded in PLAN.md. Benchmark task suites land at v0.2/v0.3.
+Gate status v0.2 (Sept 24, 2026): 5-check gate PASSED (browser-tested: v0.2.0 header,
+grounded answer + receipt c059566c39f1, benchmark tab, light theme, PWA 200s).
+Honest limits recorded in PLAN.md. Next: v0.3 = HARZ-Reasoner-1, first HARZ-owned
+reasoning model, benchmarked against external adapters.
