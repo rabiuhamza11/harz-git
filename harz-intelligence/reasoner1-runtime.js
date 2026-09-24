@@ -17,9 +17,9 @@ export function reasoner1Call({ messages }) {
 
   // parse evidence units from context block
   const units = [];
-  const searchBlock = userMsg.match(/SEARCH RESULTS:\n([\s\S]*?)(?=\n\nCHAIN STATUS:|\n\nFETCHED DOCUMENT|\n\nUSER REQUEST|$)/);
+  const searchBlock = userMsg.match(/SEARCH RESULTS:\n([\s\S]*?)(?=\n\nCHAIN STATUS:|\n\nFETCHED DOCUMENT|\n\nCONVERSATION MEMORY:|\n\nCONVERSATION MEMORY|\n\nAUTHORIZED MEMORIES|\n\nUSER REQUEST|$)/);
   if (searchBlock) {
-    const re = /\[S(\d+)\] ([^\n]+) \(([^)]+)\)\n([\s\S]*?)(?=\n\[S\d+\]|$)/g;
+    const re = /\[S(\d+)\] ([^\n]+) \(([^)]+)\)\n([\s\S]*?)(?=\n\[S\d+\]|\n\nCONVERSATION MEMORY|\n\nAUTHORIZED MEMORIES|$)/g;
     let m;
     while ((m = re.exec(searchBlock[1])) !== null) {
       units.push({ id: 'S' + m[1], title: m[2], url: m[3], text: m[4].trim(), weight: 1 });
