@@ -1,0 +1,33 @@
+{
+  "suite": "HARZ-RETRIEVAL-SUITE v1.0",
+  "frozen_at": "2026-09-24T16:45:00Z",
+  "purpose": "v0.7 Search-1 promotion suite — measures retrieval quality separately from answer correctness. Expanded from the six v0.6 failing classes (RE1, RE2, LC1, LC2, N1, R3) plus adversarial/mirror/staleness probes.",
+  "gold_verification": "every gold doc id was verified live against the frozen index (index_digest b9395e53…) on Sept 24, 2026, by direct API query with the listed expected terms present in the doc",
+  "metrics": ["candidate_recall", "top1_accuracy", "top5_recall", "mrr", "coverage", "mirror_suppression", "dup_rate", "latency_ms", "packet_chars", "downstream_answer_accuracy"],
+  "cases": [
+    { "id": "RE1", "class": "url_retrieval", "query": "What is the URL of the HARZ Agent Marketplace?", "gold_ids": [10162], "expected_terms": ["harz-agent-mkt"] },
+    { "id": "RE2", "class": "url_retrieval", "query": "Where can I find the HARZ Estate Network online?", "gold_ids": [10062], "expected_terms": ["harz-realestate"] },
+    { "id": "RE3", "class": "url_retrieval", "query": "What is the web address of the HARZ Coin Machine?", "gold_ids": [10187], "expected_terms": ["harz-coin-machine"] },
+    { "id": "RE4", "class": "url_retrieval", "query": "Give me the link to HARZ Invoice", "gold_ids": [10374], "expected_terms": ["harz-invoice"] },
+    { "id": "RE5", "class": "url_retrieval", "query": "What is the endpoint of the HARZ RPC Proxy?", "gold_ids": [10038, 10044], "expected_terms": ["harz-rpc-proxy"] },
+    { "id": "N1", "class": "specific_fact", "query": "Which UBA bank account does HARZ Pay use for transfers?", "gold_ids": [10470], "expected_terms": ["2034326424"] },
+    { "id": "N2", "class": "specific_fact", "query": "What is the HARZ Health AI assistant called?", "gold_ids": [10015], "expected_terms": ["harz-health"] },
+    { "id": "N3", "class": "specific_fact", "query": "Which platform runs the HARZ Root .harz namespace?", "gold_ids": [10335], "expected_terms": ["harz-root"] },
+    { "id": "N4", "class": "specific_fact", "query": "What does HARZ Verify do?", "gold_ids": [10217], "expected_terms": ["otp"] },
+    { "id": "LC1", "class": "enumeration", "query": "Which services does the HARZ ecosystem offer? List them.", "gold_ids": [10034, 114], "expected_terms": ["harz"] },
+    { "id": "LC2", "class": "enumeration", "query": "List all the products on the HARZ Super App", "gold_ids": [114], "expected_terms": ["super"] },
+    { "id": "LC3", "class": "enumeration", "query": "What payment methods does HARZ Pay support?", "gold_ids": [10332, 10066], "expected_terms": ["paystack"] },
+    { "id": "R3a", "class": "procedural", "query": "How do I send an SMS campaign with HARZ SMS Marketing?", "gold_ids": [10009], "expected_terms": ["campaign"] },
+    { "id": "R3b", "class": "procedural", "query": "How does the HARZ Atomic Swap work?", "gold_ids": [10032], "expected_terms": ["swap"] },
+    { "id": "R3c", "class": "procedural", "query": "How do I create an invoice with HARZ Invoice?", "gold_ids": [10374], "expected_terms": ["invoice"] },
+    { "id": "AD1", "class": "adversarial", "query": "HARZ SMS Gateway steps to send a message", "gold_ids": [10021, 10009, 10252], "expected_terms": ["harz"] },
+    { "id": "AD2", "class": "adversarial", "query": "HARZ Super App services list", "gold_ids": [114], "expected_terms": ["super"] },
+    { "id": "AD3", "class": "adversarial", "query": "HARZ Chain mining rewards how it works", "gold_ids": [10186, 10335], "expected_terms": ["harz"] },
+    { "id": "MI1", "class": "mirror", "query": "HARZ RPC Proxy JSON-RPC endpoints", "gold_ids": [10038, 10044], "expected_terms": ["json-rpc"], "expect_mirror_group": true },
+    { "id": "MI2", "class": "mirror", "query": "HARZ Super App v5.0 features", "gold_ids": [114, 6], "expected_terms": ["super"], "note": "version-marker family: same normalized title, v5.0 must win the family or be exposed" },
+    { "id": "ST1", "class": "stale", "query": "HARZ Commerce Network 2.0", "gold_ids": [10064], "expected_terms": ["commerce"], "note": "version marker 2.0 must be preferred over unversioned family copies" },
+    { "id": "ME1", "class": "missing", "query": "What is the gorvex alloy rating of the HARZ nimbrite harvester?", "gold_ids": [], "expected_terms": [], "expect": "insufficient_evidence" },
+    { "id": "ME2", "class": "missing", "query": "What is the CFO of HARZ Intelligence's cat's name?", "gold_ids": [], "expected_terms": [], "expect": "insufficient_evidence" },
+    { "id": "C1", "class": "coverage", "query": "What is the UBA account number, bank code and account name for HARZ Pay bank transfers?", "gold_ids": [10470], "expected_terms": ["2034326424"] }
+  ]
+}

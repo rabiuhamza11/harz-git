@@ -60,6 +60,21 @@ export function reasoner11Call({ messages }) {
   //     must find the role word in evidence, else refuse (fixes v0.3 case H2)
   const FN_WORDS = ['what','who','when','where','why','how','is','are','was','were','does','do','did','the','a','an','of','for','to','in','on','at','by','with','and','or','which','that','this','their','its','my','your','tell','list','name','give','show','me','us','please','current','right','now'];
   const ROLE_WORDS = ['cfo','cto','ceo','coo','founder','cofounder','owner','president','director','chairman','governor','founder','manager','head'];
+  // v1.1.3 (v0.7): sentence extraction hoisted before the guard — the value-guard needs it.
+  const stem = (t2) => (t2.length > 3 && /s$/.test(t2) && !/(ss|us|is)$/.test(t2)) ? t2.replace(/s$/, '') : t2;
+  const qToks = [...new Set(q.filter(t2 => !WEIGHTS.stopwords.includes(t2) && !FN_WORDS.includes(t2)).map(stem))];
+  const idNoun = /\b(account|number|code|url|address|endpoint|rate|price|fee|balance|height|id)\b/.test(L_query);
+  const extractSentences = (text, uid) => {
+    const sents = String(text || '').replace(/\s+/g, ' ').split(/(?<=[.!?•|✓])\s+|\s+·\s+/).map(x => x.trim()).filter(s2 => s2.length > 10 && s2.length < 400);
+    if (!sents.length) return [];
+    return sents.map((s2, i) => {
+      const stems = s2.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).map(stem);
+      const stemSet = new Set(stems);
+      const hits = qToks.filter(t2 => stemSet.has(t2)).length;
+      const valueBoost = idNoun && /\d/.test(s2) ? 2 : 0;
+      return { s2, uid, score: hits + valueBoost - (s2.length / 100) + (i === 0 ? 0.05 : 0), hits, hasDigit: /\d/.test(s2) };
+    }).filter(x2 => x2.score > 0.5 && (!idNoun || (x2.hasDigit && x2.hits >= 3))); // v1.1.4: value questions only accept value-bearing sentences with real topical overlap
+  };
   let answerable = false, guard = 'no-evidence';
   if (best) {
     const topText = (best.title + ' ' + best.text).toLowerCase();
@@ -71,6 +86,14 @@ export function reasoner11Call({ messages }) {
       if (!contentHit) guard = 'guard-blocked: no content term of the question appears in top evidence';
       else if (!roleHit) guard = 'role-question-guard: role asked about (' + roleAsked.join(',') + ') absent from all evidence — refusing instead of guessing';
       else { answerable = true; guard = 'threshold+guard-pass'; }
+      // v1.1.3 value-guard: questions that ask for a VALUE (account/number/code/url/…)
+      // must have a value-bearing (digit-containing) evidence sentence — else refuse instead
+      // of assembling label junk that merely shares words with the question (bench N2).
+      if (answerable && idNoun) {
+        const useG = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const hasValue = useG.some(u => extractSentences(u.text, u.id).some(x2 => /\d/.test(x2.s2)));
+        if (!hasValue) { answerable = false; guard = 'value-guard: question asks for a value but no value-bearing evidence sentence exists'; }
+      }
     } else guard = 'below-threshold';
   }
 
@@ -82,14 +105,27 @@ export function reasoner11Call({ messages }) {
       '\n\nCONFIDENCE: none — unsupported question';
   } else {
     mode = 'extractive';
+    // v1.1.1/1.1.2 (v0.7): sentence extraction for 480-char windows — never dump whole units.
+    // v1.1.3: listy queries (methods/services/options/features/…) take up to 4 sentences with
+    // per-unit coverage — enumerations live in fragments split across units (bench K1).
+    const listy = /\b(methods?|services|options|features|steps|types|ways|channels|currencies?)\b/.test(L_query);
     const use = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
-    const parts = [];
-    for (const u of use) {
-      const body = u.text.trim().replace(/\s+/g, ' ').slice(0, 500);
-      parts.push(body + (u.id.startsWith('S') ? ' 【' + u.id + '】' : ''));
+    const allSents = [];
+    for (const u of use) allSents.push(...extractSentences(u.text, u.id));
+    allSents.sort((a2, b2) => b2.score - a2.score);
+    let take = 2;
+    if (allSents.length > 1 && idNoun && /\d/.test(allSents[0].s2) && (allSents[0].score - allSents[1].score) > 1) take = 1; // value found and it dominates — stop there
+    if (listy) take = 4;
+    let picked = allSents.slice(0, take);
+    for (const u of use) { // per-unit coverage for lists: every used unit contributes its best sentence
+      if (picked.length >= take + 2) break;
+      if (!picked.some(p2 => p2.uid === u.id)) { const ub = allSents.find(x3 => x3.uid === u.id); if (ub) picked.push(ub); }
     }
+    const parts = [];
+    for (const x2 of picked) parts.push(x2.s2.slice(0, 160) + (String(x2.uid).startsWith('S') ? ' 【' + x2.uid + '】' : ''));
+    if (!parts.length && use.length && !idNoun) parts.push(use[0].text.trim().replace(/\s+/g, ' ').slice(0, 200) + (use[0].id.startsWith('S') ? ' 【' + use[0].id + '】' : '')); // idNoun never falls back to label junk — the value-guard already refused
     const conf = best.score >= CB.high ? 'high' : 'medium';
-    content = '**Answer**\n\n' + (parts.join(' ') || best.text.slice(0, 500)) +
+    content = '**Answer**\n\n' + (parts.join(' ') || best.text.slice(0, 300)) +
       '\n\nCONFIDENCE: ' + conf + (best.id.startsWith('S') ? ' — grounded in evidence 【' + best.id + '】' : '');
   }
 

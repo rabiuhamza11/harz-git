@@ -1,0 +1,373 @@
+{
+ "benchmark": "HARZ-REASONER-BENCH v1.0",
+ "frozen": true,
+ "target": "F",
+ "at": "2026-09-24T16:34:51.097Z",
+ "passed": 14,
+ "failed": 6,
+ "total_external_calls": 2,
+ "harz_owned_passes": 13,
+ "avg_latency_ms": 3726,
+ "results": [
+  {
+   "id": "R1",
+   "category": "reasoning",
+   "passed": false,
+   "latency_ms": 6283,
+   "external": 1,
+   "backend": "reason-core",
+   "sovereign": "external-assisted",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "arithmetic",
+    "sovereign": false,
+    "refusal_final": false,
+    "declared_incapable": "arithmetic — registry: arithmetic=unsupported"
+   },
+   "receipt": "1f80788890e4741cfeb30e8806594a2b669896e7955a50627b90d658cffe10b1",
+   "answer_head": "The total HARZ ever issued would be:\n\n\\(50 \\text{ HARZ/block} \\times 10{,}979{,}937 \\text{ blocks} = 548{,}996{,}850 \\text{ HARZ}\\"
+  },
+  {
+   "id": "R2",
+   "category": "reasoning",
+   "passed": true,
+   "latency_ms": 6134,
+   "external": 1,
+   "backend": "reason-core",
+   "sovereign": "external-assisted",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "arithmetic",
+    "sovereign": false,
+    "refusal_final": false,
+    "declared_incapable": "arithmetic — registry: arithmetic=unsupported"
+   },
+   "receipt": "798097214a424823122966615f96d82e1efbe325b1db7d8fcf5bab0b01c75dff",
+   "answer_head": "The pricing listed for HARZ AI Pay states **₦50 per query** (S1).  \n- Queries today: 3  \n- Queries tomorrow: 2  \n- Total queries ="
+  },
+  {
+   "id": "R3",
+   "category": "reasoning",
+   "passed": false,
+   "latency_ms": 3090,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "2dced76b4f9075d6583689e38d4ca56f70b628b6f8ec01a9dff4e2a72a4a88f7",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "K1",
+   "category": "harz_knowledge",
+   "passed": true,
+   "latency_ms": 3090,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "56f29fa699fc41e498d6cfe02c83b5b3008cc4092c02b9fe2b3cd2d779fdd43d",
+   "answer_head": "**Answer**\n\n💳 HARZ Pay Unified payment gateway 【S2】 💳 Harz Pay 🔔 AH Total Balance ₦0 Nigerian Naira (NGN) 0 Transactions ₦0 Tot"
+  },
+  {
+   "id": "K2",
+   "category": "harz_knowledge",
+   "passed": true,
+   "latency_ms": 3136,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "8a75c1d2528028afe725ec0865df65dc62a7902b6d9ba021365914466da58890",
+   "answer_head": "**Answer**\n\nevery API call. Full API docs at the bottom of this page. Create customer site Deploy Site Included in plan. Extra sit"
+  },
+  {
+   "id": "K3",
+   "category": "harz_knowledge",
+   "passed": true,
+   "latency_ms": 3102,
+   "external": 0,
+   "backend": "harz-search-1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_enumeration",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "a71a03678b697b062ed6a4b740f4183c05e4ad1b6f40f11d8b7b3366d97e3d54",
+   "answer_head": "**Answer**\n\nThe HARZ ecosystem offers these services, assembled directly from retrieved HARZ knowledge base evidence:\n\n1. HARZ Roo"
+  },
+  {
+   "id": "RE1",
+   "category": "retrieval",
+   "passed": false,
+   "latency_ms": 3153,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "2187d39f6b658d605e0893883e988679768a8aded06d289a9dea6e64183a5a9e",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "RE2",
+   "category": "retrieval",
+   "passed": true,
+   "latency_ms": 3153,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "9ecd92edce8253b728dc21488f02e33ea8b2442a4383d16f31a85aa65a61b9b9",
+   "answer_head": "**Answer**\n\n💳 HARZ Pay Unified payment gateway 【S3】 Try these: Payment gateway with invoices Barbershop booking system Student fe"
+  },
+  {
+   "id": "C1",
+   "category": "coding",
+   "passed": true,
+   "latency_ms": 3106,
+   "external": 0,
+   "backend": "harz-code-1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "code_generation",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "47af5563af779b4b214245fdd969a5ce62d8f00a012155f77f08afcc96b7ae06",
+   "answer_head": "**Answer**\n\nNigerian phone number validation — HARZ template library (harz-code-1):\n\n```javascript\nfunction isValidNGPhone(v) {\n  "
+  },
+  {
+   "id": "C2",
+   "category": "coding",
+   "passed": true,
+   "latency_ms": 3082,
+   "external": 0,
+   "backend": "harz-code-1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "code_analysis",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "d32c1127d01901a30d9fa55a8d0733f288b0684e1d93da3398faab85b643a2e7",
+   "answer_head": "**Answer**\n\nHARZ Code-1 deterministic static analysis of your request — findings:\n\n1. [error] http:// (non-TLS) URL — blocked in C"
+  },
+  {
+   "id": "S1",
+   "category": "structured_output",
+   "passed": true,
+   "latency_ms": 3086,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "structured",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "a50ebdd5d9c5f1b06e6a5b9f9bf9663a9b624c4ed0a298017d3a42f4efd7b760",
+   "answer_head": "{\"sentiment\":\"positive\"}"
+  },
+  {
+   "id": "S2",
+   "category": "structured_output",
+   "passed": true,
+   "latency_ms": 3114,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "structured",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "0651b905de89569976171ce03a1ffe35133bae9f71ef9fb5c6fd6b4d46ccae1d",
+   "answer_head": "{\"sentiment\":\"negative\"}"
+  },
+  {
+   "id": "T1",
+   "category": "tool_use",
+   "passed": true,
+   "latency_ms": 3095,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "a3b04c81885b4521b3dd73683b4a246318118438b46ecddf6d15094f06d5bf77",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "T2",
+   "category": "tool_use",
+   "passed": true,
+   "latency_ms": 3161,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "f1a8d0b8b45014903ab18b46236ad7e8d610874ffc20cf55133de807a64c99a6",
+   "answer_head": "**Answer**\n\nHARZ Chain live: height 11092134, wallets 186, consensus Proof-of-Edge, v8.3.0.\n\nCONFIDENCE: medium"
+  },
+  {
+   "id": "H1",
+   "category": "hallucination",
+   "passed": true,
+   "latency_ms": 6147,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "0dc0f4c1257f2cdf84e8e3e24a019f3f2a5b33ff6b65d2125f73626831310792",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "H2",
+   "category": "hallucination",
+   "passed": true,
+   "latency_ms": 3111,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "f86f2ae19778fa6d1e010b671dd42e8394c4ba8a52d2fb9baa1209348c93e287",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "LC1",
+   "category": "long_context",
+   "passed": false,
+   "latency_ms": 3095,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "3a009065c039e4469010c01500638f1c3503365e0e3c1c56d7d2fd118266a9f3",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "LC2",
+   "category": "long_context",
+   "passed": false,
+   "latency_ms": 3134,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "afd6ba00df55e667197fc9a75fca1227b4039a3bda04fb2cf01f7ad653119826",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  },
+  {
+   "id": "N1",
+   "category": "nigerian_context",
+   "passed": false,
+   "latency_ms": 6134,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": false,
+    "declared_incapable": null
+   },
+   "receipt": "7dd401f0537596060497ddd0aa1385cf0baf6b5aa89178d4a046d9a9486f7fc8",
+   "answer_head": "**Answer**\n\nby HARZ. 🧮 Construction Tools Phase 3 Concrete (slab/foundation) Steel / Rebar Paint Tiles Roofing Sheets Blocks (fou"
+  },
+  {
+   "id": "N2",
+   "category": "nigerian_context",
+   "passed": true,
+   "latency_ms": 3104,
+   "external": 0,
+   "backend": "harz-reasoner-1.1",
+   "sovereign": "harz-owned",
+   "routing": {
+    "routed_by": "capability-registry",
+    "task_class": "evidence_qa",
+    "sovereign": true,
+    "refusal_final": true,
+    "declared_incapable": null
+   },
+   "receipt": "8c756be1f29e6ebef5a7a713402695fdfa0d40a3826dc3ba478bc3128f810522",
+   "answer_head": "**Answer**\n\nI do not have grounded evidence for this in the HARZ knowledge base, and I will not guess. The retrieved evidence does"
+  }
+ ]
+}

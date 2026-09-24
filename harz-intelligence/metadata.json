@@ -1,0 +1,1 @@
+{"main_module":"worker.js","compatibility_date":"2026-09-01","bindings":[{"type":"kv_namespace","name":"MEMORY","namespace_id":"ce7ad54be5d84ef8b5919950fc7dbabd"},{"type":"secret_text","name":"OPENROUTER_API_KEY","text":"","old_name":"OPENROUTER_API_KEY"}]}
