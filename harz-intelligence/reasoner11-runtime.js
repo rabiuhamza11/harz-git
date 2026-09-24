@@ -70,7 +70,11 @@ export function reasoner11Call({ messages }) {
     return sents.map((s2, i) => {
       const stems = s2.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).map(stem);
       const stemSet = new Set(stems);
-      const hits = qToks.filter(t2 => stemSet.has(t2)).length;
+      // v1.1.5: idf-weighted hits — a sentence matching a RARE question term (method, support,
+      // paystack-class content) outranks one that merely repeats common words (harz, pay).
+      const stemW = (t2) => (WEIGHTS.stopwords.includes(t2) ? 0 : (WEIGHTS.idf[t2] || 2.5));
+      const hitsRaw = qToks.filter(t2 => stemSet.has(t2)).length;
+      const hits = qToks.filter(t2 => stemSet.has(t2)).reduce((a, t2) => a + stemW(t2), 0);
       const valueBoost = idNoun && /\d/.test(s2) ? 2 : 0;
       return { s2, uid, score: hits + valueBoost - (s2.length / 100) + (i === 0 ? 0.05 : 0), hits, hasDigit: /\d/.test(s2) };
     }).filter(x2 => x2.score > 0.5 && (!idNoun || (x2.hasDigit && x2.hits >= 3))); // v1.1.4: value questions only accept value-bearing sentences with real topical overlap
@@ -124,8 +128,12 @@ export function reasoner11Call({ messages }) {
     const parts = [];
     for (const x2 of picked) parts.push(x2.s2.slice(0, 160) + (String(x2.uid).startsWith('S') ? ' 【' + x2.uid + '】' : ''));
     if (!parts.length && use.length && !idNoun) parts.push(use[0].text.trim().replace(/\s+/g, ' ').slice(0, 200) + (use[0].id.startsWith('S') ? ' 【' + use[0].id + '】' : '')); // idNoun never falls back to label junk — the value-guard already refused
+    // v0.8: explicit source list — every cited unit listed as [sN] with its document title.
+    const unitTitle = (uid) => { const u2 = units.find(u3 => u3.id === uid); return u2 ? u2.title : ''; };
+    const citedIds = [...new Set([...picked.map(p => p.uid), best.id])].filter(id => String(id).startsWith('S'));
+    const srcLine = citedIds.length ? '\n\nSources: ' + citedIds.map(id => '[' + String(id).toLowerCase() + '] ' + unitTitle(id)).join('; ') : '';
     const conf = best.score >= CB.high ? 'high' : 'medium';
-    content = '**Answer**\n\n' + (parts.join(' ') || best.text.slice(0, 300)) +
+    content = '**Answer**\n\n' + (parts.join(' ') || best.text.slice(0, 300)) + srcLine +
       '\n\nCONFIDENCE: ' + conf + (best.id.startsWith('S') ? ' — grounded in evidence 【' + best.id + '】' : '');
   }
 

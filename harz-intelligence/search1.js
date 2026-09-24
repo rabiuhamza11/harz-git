@@ -1,3 +1,4 @@
+import WEIGHTS from './reasoner1-weights.js'; // stopwords table (HARZ-owned)
 // HARZ Search-1 v1.0 — Retrieval & Evidence Engine (HARZ Intelligence v0.7)
 // ---------------------------------------------------------------------------
 // A deterministic ranking/assembly layer ABOVE the frozen HARZ Search v0.3
@@ -20,8 +21,8 @@
 
 const COVER_MIN = 0.6;          // S2: packet must cover >=60% of query content tokens
 const HARZ_DOMAIN_RE = /(^|\.)(harz\.workers\.dev|hamzarabiu390\.workers\.dev|rabiuhamza11\.github\.io|harzco-business\.workers\.dev)$/i;
-const TOP_K_EVIDENCE = 4;       // canonical packet size (evidence units)
-const ENRICH_TOP_N = 3;         // fetch full pages for top N candidates
+const TOP_K_EVIDENCE = 6;       // v0.8: canonical packet size (was 4 in v0.7) — richer units, still every one cited
+const ENRICH_TOP_N = 5;         // v0.8: fetch full pages for top N candidates (was 3)
 const WINDOW = 480;             // evidence window chars per unit
 
 const SW = new Set(('a an the of in on for to and or is are was were be been with as at by from this that it its will can has have not but if you your we they he she i us them there here do does did what which who when where why how me my all list link url address give').split(' '));
@@ -49,6 +50,13 @@ export function analyzeQuery(question) {
   if (ents && content.length) variants.push((ents + ' ' + content.slice(0, 4).join(' ')));
   if (content.length) variants.push(content.slice(0, 6).join(' '));
   if (content.length > 2) variants.push(content.slice(0, 2).join(' '));
+  // v0.8: rare-content variant — discriminative terms only, ordered by corpus idf
+  // (junk question-words default to LOW weight, so 'payment method unified gateway fee'
+  // surfaces docs that the broad variants drown out).
+  const FN_EXT = ['any','every','each','some','other','more','most','many','such','including','included','mentioned','shown','named','list','listed','tell','give','please','now','current','right','today','available','offer','offered'];
+  const rare = [...new Set(content)].filter(t2 => !SW.has(t2) && !FN_EXT.includes(t2) && WEIGHTS.idf[t2] !== undefined)
+    .sort((a2, b2) => (WEIGHTS.idf[b2] - WEIGHTS.idf[a2])).slice(0, 4);
+  if (rare.length >= 3) variants.push(rare.join(' '));
   // compound variants: 'harz pay' also searched as 'harzpay' (index tokenizes compounds)
   const compounds = [];
   if (entities.length > 1) {
@@ -154,7 +162,13 @@ export function bestWindow(text, terms, len = WINDOW) {
   const step = Math.max(40, Math.floor(len / 6));
   for (let i = 0; i < Math.max(1, clean.length - len); i += step) {
     const w = lower.slice(i, i + len);
-    const score = terms.reduce((acc, t) => acc + (t ? (w.split(t).length - 1) : 0), 0);
+    // v0.8: idf-weighted, repeat-capped window selection — a window dense in RARE query
+    // terms (paystack, uba, ussd) beats one that merely repeats common ones (harz, pay).
+    const score = terms.reduce((acc, t) => {
+      if (!t) return acc;
+      const idfW = WEIGHTS.stopwords.includes(t) ? 0 : (WEIGHTS.idf[t] || 2.5);
+      return acc + Math.min(w.split(t).length - 1, 2) * idfW;
+    }, 0);
     if (score > bestScore) { bestScore = score; best = i; }
   }
   if (bestScore === 0) return clean.slice(0, len);
@@ -163,14 +177,14 @@ export function bestWindow(text, terms, len = WINDOW) {
 
 async function enrich(top, fetchPage, terms) {
   const topN = top.slice(0, ENRICH_TOP_N);
-  const texts = await Promise.all(topN.map(c => fetchPage(c.doc.url).catch(() => '')));
+  const texts = await Promise.all(topN.map(c => fetchPage(c.doc).catch(() => '')));
   const out = topN.map((c, i) => {
     const text = texts[i];
     const window = text ? bestWindow(text, terms) : (c.doc.snippet || '');
-    return { title: c.doc.title, url: c.doc.url, domain: c.doc.domain, text: window || c.doc.snippet || '', fetched: !!text };
+    return { document_id: c.doc.id, title: c.doc.title, url: c.doc.url, domain: c.doc.domain, text: window || c.doc.snippet || '', fullText: text ? text.slice(0, 6000) : '', fetched: !!text };
   });
   for (const c of top.slice(ENRICH_TOP_N, TOP_K_EVIDENCE)) {
-    out.push({ title: c.doc.title, url: c.doc.url, domain: c.doc.domain, text: c.doc.snippet || '', fetched: false });
+    out.push({ document_id: c.doc.id, title: c.doc.title, url: c.doc.url, domain: c.doc.domain, text: c.doc.snippet || '', fetched: false });
   }
   return out;
 }
@@ -204,6 +218,115 @@ export function coverageOf(qa, evidence) {
   return +(hit / all.length).toFixed(3);
 }
 
+// ---------- Stage 9 (v0.8): semantic classification + structured candidates ----------
+// v0.8 capabilities, all EVIDENCE-EXTRACTED (never generated):
+//   url_candidates        exact canonical URLs from evidence, identity-checked
+//   value_candidates      account numbers / USSD codes from evidence, context-checked
+//   enumeration           { status: complete|partial|insufficient, expected_count, retrieved_count, basis }
+//   payment               { sub_type: method|account|amount|procedure|status }
+const URL_RE = /https?:\/\/[A-Za-z0-9._~:\/?#@!$&'()*+,;=%-]+/g;
+const GENERIC_URL_WORDS = new Set(['url', 'link', 'web', 'address', 'endpoint', 'http', 'https', 'www', 'harz', 'workers', 'dev', 'com', 'app', 'api', 'site', 'page', 'portal', 'worker']);
+const PAY_WORDS = { method: /how can i pay|payment method|ways to pay|what.*(cards?|methods?)|accept/, account: /bank account|account number|transfer to|which.*(account|bank)/, amount: /how much|price|fee|cost|charge|amount/, procedure: /how (do|can) i|steps|how to|process|procedure|receive a payment/, status: /payment status|has .* payment|is .* payment (confirmed|received|processed)|my payment/ };
+
+export function semanticOf(question) {
+  const L = ' ' + String(question || '').toLowerCase() + ' ';
+  const out = { url_lookup: /\b(url|link|web ?address)\b/.test(L) && /what|which|give me/.test(L), identifier_lookup: /(which|what is the|tell me the).*(account|bank)|account (number|details)|ussd code/.test(L), enumeration: /(list|name|enumerate|which|what)\s+(all |every |the )?(services|methods|options|features|domains|products|channels|currencies)/.test(L) || /list (all|every)/.test(L) || /\b(list|name|enumerate)\b[^.?!]*\b(services?|methods?|options?|features?|domains?)\b/.test(L), payment: /\b(pay|payment|transfer|checkout|invoice|fee|refund)\b/.test(L) };
+  out.payment = out.payment && !out.identifier_lookup ? Object.keys(PAY_WORDS).find(k => PAY_WORDS[k].test(L)) || 'general' : null;
+  return out;
+}
+
+const stemS9 = (t) => (t.length > 3 && /s$/.test(t) && !/(ss|us|is)$/.test(t)) ? t.slice(0, -1) : t;
+
+export function extractUrlCandidates(qa, evidence) {
+  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2));
+  const distinguishing = [...qStems].filter(t => !GENERIC_URL_WORDS.has(t));
+  const out = [];
+  for (const e of evidence) {
+    const titleStems = new Set(String(e.title).toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+    for (const m of String(e.fullText || e.text).matchAll(URL_RE)) {
+      const url = m[0].replace(/[.,;:'")\s]+$/, '');
+      const line = String(e.text).slice(Math.max(0, m.index - 120), m.index + url.length + 120);
+      const lineStems = new Set(line.toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+      const urlStems = new Set(url.toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+      // identity rule: EVERY distinguishing stem of the question must be established by the URL itself, its line, or the unit title.
+      if (distinguishing.length && !distinguishing.every(d => urlStems.has(d) || lineStems.has(d) || titleStems.has(d))) continue;
+      if (out.some(o => o.url === url)) continue;
+      out.push({ url, source: e.title, document_id: e.document_id, line: line.trim().slice(0, 160) });
+    }
+  }
+  return out.slice(0, 5);
+}
+
+export function extractValueCandidates(qa, evidence) {
+  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2));
+  const out = [];
+  const addIf = (value, kind, e, line) => {
+    const lineStems = new Set(line.toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+    const unitStems = new Set((String(e.title) + ' ' + String(e.fullText || e.text)).toLowerCase().slice(0, 3000).split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+    // v0.8 entity-must rule: a question naming a specific entity (UBA, Paystack, a product)
+    // only accepts values from units that mention that entity — a USSD code from a
+    // different provider's page is not evidence for a UBA question.
+    // Geographic/nationality modifiers are context, never discriminators between products or orgs.
+    const GEO_CTX = new Set(['nigerian','nigeria','african','africa','national','federal','international','global','local']);
+    const entStems = [...new Set((qa.entities || []).map(e2 => stemS9(e2.toLowerCase())).filter(t => t.length > 2 && !GEO_CTX.has(t)))];
+    if (entStems.some(t => !unitStems.has(t))) return;
+    const shared = [...qStems].filter(t => unitStems.has(t));
+    const lineShared = [...qStems].filter(t => lineStems.has(t));
+    if (shared.length >= 2 && lineShared.length >= 1) out.push({ value, kind, source: e.title, document_id: e.document_id, line: line.trim().slice(0, 160), matched_stems: shared.slice(0, 6) });
+  };
+  for (const e of evidence) {
+    const text = String(e.fullText || e.text || '');
+    for (const m of text.matchAll(/(?<![\d/])\b\d{10}\b(?![\d/])/g)) {
+      let line = text.slice(Math.max(0, m.index - 100), m.index + m[0].length + 100).replace(/\s+/g, ' ').trim();
+      const sp = line.indexOf(' '); if (m.index - 100 > 0 && sp > 0 && sp < 40) line = line.slice(sp + 1);
+      addIf(m[0], 'account_number', e, line);
+    }
+    for (const m of text.matchAll(/\*\d{3,}[\d#*]*/g)) {
+      let line = text.slice(Math.max(0, m.index - 80), m.index + m[0].length + 80).replace(/\s+/g, ' ').trim();
+      const sp = line.indexOf(' '); if (m.index - 80 > 0 && sp > 0 && sp < 40) line = line.slice(sp + 1);
+      addIf(m[0], 'ussd_code', e, line);
+    }
+  }
+  const seen = new Set(); const dedup = [];
+  for (const v of out) { const k = v.kind + ':' + v.value; if (!seen.has(k)) { seen.add(k); dedup.push(v); } }
+  return dedup.slice(0, 6);
+}
+
+export function enumerationCoverage(qa, evidence) {
+  const NOUNS = /(services?|methods?|options?|features?|domains?|products?|channels?|currencies?)/i;
+  const items = new Set();
+  for (const e of evidence) {
+    const raw = String(e.fullText || e.text);
+    for (const t of [e.title, ...raw.split(/[\n•|✓;]+/)]) {
+      const mm = String(t).match(/^\s*(harz[ -][a-z0-9' -]{2,40})\b/i);
+      if (mm) items.add(mm[1].toLowerCase().split(/[—–-]/)[0].trim());
+      else if (NOUNS.test(t) && /harz/i.test(t)) items.add(String(t).toLowerCase().replace(/\s+/g, ' ').slice(0, 60));
+    }
+    // v0.8: payment-method declarations — ✓/✅-marked or 'via/—' method lines are quoted
+    // from evidence verbatim (card / bank transfer / crypto / paystack / ussd classes).
+    for (const m2 of raw.split(/[\n•|;]+/)) {
+      const ln = m2.trim();
+      if (ln.length > 4 && ln.length <= 90 && !/[.!?]$/.test(ln) && /(card|bank transfer|crypto|usdt|paystack|ussd|wallet|gateway)/i.test(ln) && (/[✓✔]|via\b|—/i.test(ln))) items.add(ln.toLowerCase().replace(/\s+/g, ' ').replace(/^[-–] /, ''));
+    }
+    // v0.8: 'name — URL' declaration pairs (HMS-style topology lists) + distinct harz worker URLs
+    for (const m2 of raw.matchAll(/\b([a-z][a-z-]{2,20})\s*[—–-]+\s*https?:\/\/[a-z0-9.-]*harz[a-z0-9.-]*\.[a-z]{2,}/gi)) items.add(m2[1].toLowerCase());
+    for (const m2 of raw.matchAll(/https:\/\/[a-z0-9-]+\.(?:harz|hamzarabiu390)\.workers\.dev/gi)) items.add(m2[0].toLowerCase().replace(/^https:\/\//, '').split('.')[0]);
+  }
+  let expected = null, marker = null;
+  for (const e of evidence) {
+    for (const m of String(e.title + ' ' + (e.fullText || e.text)).matchAll(/\b(\d{1,4})\s*\+?\s*(services?|methods?|domains?|options?|features?|workers?|products?|channels?)\b/gi)) {
+      const n = +m[1];
+      if (n >= 2 && (!expected || n < expected)) { expected = n; marker = (m[2] + ' count declared in evidence: ' + m[0]); }
+    }
+  }
+  const retrieved = items.size;
+  const out = { items: [...items].slice(0, 12) };
+  if (!evidence.length) return { ...out, status: 'insufficient', expected_count: null, retrieved_count: 0, basis: 'no evidence retrieved' };
+  if (expected !== null && retrieved >= expected) return { ...out, status: 'complete', expected_count: expected, retrieved_count: retrieved, basis: marker + '; assembled distinct items meet or exceed the declared count' };
+  if (expected !== null) return { ...out, status: 'partial', expected_count: expected, retrieved_count: retrieved, basis: marker + '; only ' + retrieved + ' distinct items assembled from evidence' };
+  return { ...out, status: 'partial', expected_count: null, retrieved_count: retrieved, basis: 'no enumeration-count marker found in evidence — completeness not established' };
+}
+
 // ---------- Packet digest (FNV-1a cascade, deterministic) ----------
 export function packetDigest(obj) {
   const s = JSON.stringify(obj);
@@ -219,6 +342,21 @@ export function packetDigest(obj) {
 export async function buildPacket({ question, baselineSearch, fetchPage, indexVersion, conversation }) {
   const t0 = Date.now();
   const qa = analyzeQuery(question);
+  // v0.8: value-context expansion — identifier questions add WHERE-such-values-live terms
+  // (bank transfer / account number / ussd dial context), never the answer itself.
+  const semEarly = semanticOf(question);
+  if (semEarly.identifier_lookup) {
+    const anchor = qa.entities.find(x => /^harz/.test(x.toLowerCase())) || 'harz';
+    qa.variants.push((/ussd/.test(question.toLowerCase()) ? anchor + ' ussd code dial' : anchor + ' bank transfer account number').trim());
+  }
+  if (semEarly.url_lookup) {
+    const anchor = qa.entities.find(x => /^harz/.test(x.toLowerCase())) || 'harz';
+    qa.variants.push((anchor + ' api endpoint url https').trim());
+  }
+  if (semEarly.payment && semEarly.payment !== 'general') {
+    const anchor = qa.entities.find(x => /^harz/.test(x.toLowerCase())) || 'harz';
+    qa.variants.push((anchor + ' payment method steps amount ' + (semEarly.payment === 'status' ? 'confirmed pending' : '')).trim());
+  }
   const results = [];
   for (const v of qa.variants) {
     const r = await baselineSearch(v);
@@ -235,6 +373,15 @@ export async function buildPacket({ question, baselineSearch, fetchPage, indexVe
     if (!prev || r.doc.scoreW > prev.doc.scoreW) byId.set(r.doc.id, r);
   }
   let cands = [...byId.values()].map(r => ({ ...scoreCandidate(r.doc, qa), doc: r.doc, via: r.via, mirrors: [] }));
+  // v0.8: identifier questions prioritize VALUE-BEARING evidence — a doc whose snippet
+  // already carries an account number/USSD code outranks label-only matches (honest: the
+  // value must still pass extraction identity filters before it can be answered).
+  if (semEarly.identifier_lookup) {
+    for (const c of cands) {
+      const snip = String(c.doc.snippet || '');
+      if (HARZ_DOMAIN_RE.test(c.doc.domain || '') && (/\b\d{10}\b/.test(snip) || /\*\d{3,}/.test(snip))) { c.score = +(c.score + 7).toFixed(2); c.reasons.push('value_bearing_harz:+7'); }
+    }
+  }
   cands.sort((a, b) => b.score - a.score || a.doc.id - b.doc.id);
   const candidate_ids = cands.slice(0, 12).map(c => c.doc.id);
   const { kept, mirror_groups } = dedupCandidates(cands);
@@ -243,18 +390,38 @@ export async function buildPacket({ question, baselineSearch, fetchPage, indexVe
   const evidence = await enrich(top, fetchPage, [...qa.entities, ...qa.tokens.slice(0, 6)]);
   const conflicts = detectConflicts(evidence);
   const coverage = coverageOf(qa, evidence);
+  // v0.8 Stage 9: structured candidates + semantics (evidence-extracted, never generated)
+  const semantic = semanticOf(question);
+  const url_candidates = semantic.url_lookup ? extractUrlCandidates(qa, evidence) : [];
+  const value_candidates = semantic.identifier_lookup ? extractValueCandidates(qa, evidence) : [];
+  const enumeration = semantic.enumeration ? enumerationCoverage(qa, evidence) : null;
   const packet = {
     search_id: null,
     query: question, intent: qa.intent, query_variants: qa.variants,
     index_version: indexVersion || 'unknown',
     candidate_ids, ranking: diverse.slice(0, 8).map(c => ({ id: c.doc.id, title: c.doc.title, score: c.score, reasons: c.reasons, mirrors: c.mirrors })),
     selected_evidence: evidence, conflicts, mirror_groups,
+    semantic, url_candidates, value_candidates, enumeration,
     metrics: {
       candidates: byId.size, deduped: mirror_groups.length, coverage, latency_ms: Date.now() - t0,
       packet_chars: evidence.reduce((a, e) => a + e.text.length, 0), fetched_full_pages: evidence.filter(e => e.fetched).length,
     },
     status: coverage >= COVER_MIN && evidence.length ? 'ok' : 'insufficient_evidence',
   };
+  // v0.8 corpus-presence probe (subject-guard, honest-refusal side): a content term of the
+  // question that appears in NO selected unit AND returns zero corpus results does not exist
+  // in the knowledge base — the question subject is unknown, so downstream reasoning must
+  // refuse instead of extracting sentences that merely share common words with the question.
+  // Probes only terms missing from the units (rare), capped at 2 per packet.
+  const unitTexts = evidence.map(e => (e.title + ' ' + (e.fullText || e.text)).toLowerCase()).join(' ');
+  const absentTerms = [];
+  for (const tok of [...new Set(String(question).toLowerCase().split(/[^a-z0-9]+/))]) {
+    if (tok.length < 8 || WEIGHTS.stopwords.includes(tok) || /s$/.test(tok) && WEIGHTS.stopwords.includes(tok.slice(0, -1))) continue;
+    if (unitTexts.includes(tok)) continue;
+    if (absentTerms.length >= 2) break;
+    try { const pr = await baselineSearch(tok); if (!((pr && pr.results) || []).length) absentTerms.push(tok); } catch (e) {}
+  }
+  if (absentTerms.length) packet.subject_absent = absentTerms;
   packet.search_id = packetDigest({ q: question, idx: packet.index_version, ids: packet.selected_evidence.map(e => e.title + e.url), ts: new Date().toISOString().slice(0, 13) });
   packet.evidence_digest = packetDigest(packet.selected_evidence.map(e => ({ t: e.title, u: e.url, x: e.text })));
   return packet; // S3: 'conversation' is accepted as a param ONLY so the caller can prove Search-1 ignores it
