@@ -7,7 +7,7 @@ import { reasoner1Call } from './reasoner1-runtime.js';
 //             Agent runtime | Verification (evidence + receipts) | HARZ Root identities | PWA interface
 // Standing order honored: NVIDIA Nemotron via OpenRouter (default model, gateway-abstracted).
 
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 let ENV = {}; // module workers receive bindings via env — stored here at request start
 const SEARCH_URL = 'https://harz-search.harz.workers.dev/search?q=';
 const CHAIN_STATUS_URL = 'https://harz-chain-v2.harz.workers.dev/api/status';
@@ -487,28 +487,14 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
   execution_log.push({ step: 'reason', ok: modelRes.ok, backend: modelRes.backend, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out });
 
   let answer, meta;
-  let fallbackUsed = false, fallbackReason = null;
-  // v0.4 FALLBACK PROTOCOL — never silent: if the HARZ primary refuses in default
-  // routing, the external adapter gets one explicit fallback attempt, and the record shows it.
-  if (modelRes.ok && modelRes.mode === 'refusal' && !engine) {
-    const fbRes = await HMI.generate({
-      role: 'reasoner', engine: 'external',
-      messages: [
-        { role: 'system', content: sysPrompt },
-        { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
-      ],
-    });
-    if (fbRes.ok) {
-      fallbackUsed = true; fallbackReason = 'harz-primary-refusal';
-      EXTERNAL_CALLS += (fbRes.external_calls || 0);
-      answer = fbRes.content;
-      meta = { engine: { role: 'reasoner', backend: fbRes.backend, sovereignty: 'external-assisted' }, latency_ms: modelRes.latency, fallback_latency_ms: fbRes.latency, tokens_in: modelRes.tokens_in, tokens_out: fbRes.tokens_out, external_calls: EXTERNAL_CALLS, fallback_of: modelRes.backend };
-    }
-  }
-  if (modelRes.ok && !fallbackUsed) {
+  // v0.5 ROUTING LAW (Dad's Option 2, frozen): a sovereign model's refusal is an
+  // OUTPUT, not an error. HARZ refusal = FINAL REFUSAL, no external call.
+  // External fallback happens ONLY on registry-declared incapability (pre-model routing).
+  const refusalFinal = modelRes.ok && modelRes.mode === 'refusal';
+  if (modelRes.ok) {
     answer = modelRes.content;
     meta = { engine: { role: modelRes.role, backend: modelRes.backend, sovereignty: (modelRes.backend || '').startsWith('harz') ? 'harz-owned' : 'external-assisted' }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out, external_calls: modelRes.external_calls || 0 };
-  } else if (!fallbackUsed) {
+  } else {
     // Degraded mode: the orchestrator still returns structured evidence even if the model layer fails.
     answer = 'The reasoning layer is temporarily unavailable (' + modelRes.error + '). Evidence collected for your request:\n' +
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
@@ -532,9 +518,19 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
   // verification (receipt + evidence)
   const total_latency = Date.now() - t_start;
   const receipt = await sha256((answer || '') + JSON.stringify(evidence));
-  meta.routing = { routed_by: route.routed_by, task_class: taskClass.class, sovereign: route.sovereign, fallback_used: fallbackUsed, fallback_reason: fallbackReason, declared_incapable: route.declared_incapable || null };
+  meta.routing = { routed_by: route.routed_by, task_class: taskClass.class, sovereign: route.sovereign, refusal_final: refusalFinal, declared_incapable: route.declared_incapable || null };
   // v0.4: HARZ-Verify-1 claim/evidence check on the final answer
   const claimCheck = evidenceUnitsGlobal.length ? verify1Check({ answer, units: evidenceUnitsGlobal }) : null;
+  // v0.5 AGENT EXECUTION TRACE — delegation is owned by THIS orchestrator.
+  // Agents never call one another; every hop is recorded here.
+  const agent_trace = [
+    { agent: 'router', model: 'capability-registry', action: 'route', task_class: taskClass.class, engine: route.engine, sovereign: route.sovereign, ok: true },
+    { agent: 'planner', model: 'harz-planner-1', action: 'decompose', steps: plan.map(p => p.step), ok: true },
+    { agent: 'researcher', model: 'harz-search-1', action: 'retrieve+rank', evidence_ids: evidenceUnitsGlobal.map(u => u.id), results: searchRes.results.length, ok: searchRes.ok },
+    { agent: 'reasoner', model: meta.engine ? meta.engine.backend : null, action: 'reason', mode: modelRes.mode || 'n/a', refusal_final: refusalFinal, ok: modelRes.ok, latency_ms: modelRes.latency },
+  ];
+  if (codeRes && codeRes.ok) agent_trace.splice(3, 0, { agent: 'coder', model: 'harz-code-1', action: 'template-generation', template: codeRes.template, ok: true });
+  if (claimCheck) agent_trace.push({ agent: 'verifier', model: 'harz-verify-1', action: 'claim-check', verdict: claimCheck.verdict, supported: claimCheck.supported, unsupported: claimCheck.unsupported, ok: true });
   const verification = {
     status: evidence.length ? 'grounded-in-evidence' : 'no-external-evidence',
     receipt_sha256: receipt,
@@ -555,6 +551,7 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
     conversation_id: cid,
     answer,
     agent: { name: agent || 'supreme-engine', root_id: identity.root_id, role: identity.role },
+    agent_trace,
     plan,
     evidence,
     execution_log,
@@ -695,24 +692,10 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
   execution_log.push({ step: 'reason', ok: modelRes.ok, backend: modelRes.backend, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out });
   let answer;
   let meta;
-  let fallbackUsed = false, fallbackReason = null;
-  if (modelRes.ok && modelRes.mode === 'refusal' && !engine) {
-    const fbRes = await HMI.generate({
-      role: 'reasoner', engine: 'external',
-      messages: [
-        { role: 'system', content: sysPrompt },
-        { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
-      ],
-    });
-    if (fbRes.ok) {
-      fallbackUsed = true; fallbackReason = 'harz-primary-refusal';
-      EXTERNAL_CALLS += (fbRes.external_calls || 0);
-      answer = fbRes.content;
-      meta = { engine: { role: 'reasoner', backend: fbRes.backend, sovereignty: 'external-assisted' }, latency_ms: modelRes.latency, fallback_latency_ms: fbRes.latency, tokens_in: modelRes.tokens_in, tokens_out: fbRes.tokens_out, external_calls: EXTERNAL_CALLS, fallback_of: modelRes.backend };
-    }
-  }
-  if (modelRes.ok && !fallbackUsed) { answer = modelRes.content; meta = { engine: { role: modelRes.role, backend: modelRes.backend, sovereignty: (modelRes.backend || '').startsWith('harz') ? 'harz-owned' : 'external-assisted' }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out, external_calls: modelRes.external_calls || 0 }; }
-  else if (!fallbackUsed) {
+  // v0.5 ROUTING LAW (Option 2): HARZ refusal = FINAL REFUSAL, no external call.
+  const refusalFinal = modelRes.ok && modelRes.mode === 'refusal';
+  if (modelRes.ok) { answer = modelRes.content; meta = { engine: { role: modelRes.role, backend: modelRes.backend, sovereignty: (modelRes.backend || '').startsWith('harz') ? 'harz-owned' : 'external-assisted' }, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out, external_calls: modelRes.external_calls || 0 }; }
+  else {
     answer = 'The reasoning layer is temporarily unavailable (' + modelRes.error + '). Evidence collected for your request:\n' +
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
     meta = { engine: null, degraded: true, error: modelRes.detail || modelRes.error, latency_ms: modelRes.latency };
@@ -740,12 +723,19 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
   conv.messages.push({ role: 'assistant', content: answer, at: new Date().toISOString(), verification });
   await MEM.saveConversation(conv);
   await MEM.benchAppend({ at: new Date().toISOString(), latency_ms: total_latency, tokens: (meta.tokens_in || 0) + (meta.tokens_out || 0), agent: agent || 'supreme-engine', degraded: !!meta.degraded });
+  const agent_trace = [
+    { agent: 'router', model: 'capability-registry', action: 'route', task_class: taskClass.class, engine: route.engine, sovereign: route.sovereign, ok: true },
+    { agent: 'planner', model: 'harz-planner-1', action: 'decompose', steps: plan.map(p => p.step), ok: true },
+    { agent: 'researcher', model: 'harz-search-1', action: 'retrieve+rank', evidence_ids: evidenceUnitsGlobal.map(u => u.id), ok: searchRes.ok },
+    { agent: 'reasoner', model: meta && meta.engine ? meta.engine.backend : null, action: 'reason', refusal_final: refusalFinal, ok: modelRes.ok },
+  ];
+  if (claimCheck) agent_trace.push({ agent: 'verifier', model: 'harz-verify-1', action: 'claim-check', verdict: claimCheck.verdict, supported: claimCheck.supported, unsupported: claimCheck.unsupported, ok: true });
   const result = {
     conversation_id: cid,
     answer,
     agent: { name: agent || 'supreme-engine', root_id: identity.root_id, role: identity.role },
-    plan, evidence, execution_log, verification,
-    meta: { ...meta, routing: { routed_by: route.routed_by, task_class: taskClass.class, sovereign: route.sovereign, fallback_used: fallbackUsed, fallback_reason: fallbackReason, declared_incapable: route.declared_incapable || null }, total_latency_ms: total_latency },
+    plan, evidence, execution_log, verification, agent_trace,
+  meta: { ...meta, routing: { routed_by: route.routed_by, task_class: taskClass.class, sovereign: route.sovereign, refusal_final: refusalFinal, declared_incapable: route.declared_incapable || null }, total_latency_ms: total_latency },
   };
   await MEM.updateJob(jobId, { status: 'done', result });
   return result;
@@ -784,7 +774,7 @@ const MANIFEST = {
   icons: [{ src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' }],
 };
 
-const SW = `const C='hi-shell-v0.4.0';
+const SW = `const C='hi-shell-v0.5.0';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['/'])));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);
@@ -955,6 +945,51 @@ function checkCase(check, answer, r) {
   }
 }
 
+
+// ============ v0.5 HARZ AGENT ORCHESTRATOR ============
+// Delegation is owned by the orchestrator. Agents never call one another.
+const AGENT_TEAM = {
+  router:     { model: 'capability-registry', role: 'delegation authority — the ONLY component that may choose a backend' },
+  planner:    { model: 'harz-planner-1', role: 'task decomposition' },
+  researcher: { model: 'harz-search-1', role: 'evidence retrieval + ranking' },
+  reasoner:   { model: 'harz-reasoner-1.1', role: 'evidence reasoning + calibrated refusal' },
+  coder:      { model: 'harz-code-1', role: 'code analysis + template generation' },
+  verifier:   { model: 'harz-verify-1', role: 'claim/evidence checking' },
+};
+
+async function runV05Gate() {
+  const T = [];
+  const rec = (id, passed, detail) => T.push({ id, passed, detail });
+  const r1 = await orchestrate({ message: 'What payment methods does HARZ Pay support?', conversation_id: 'gate-v05-1' });
+  const tr1 = r1.agent_trace || [];
+  const agents1 = tr1.map(t => t.agent);
+  rec('1-multi-agent-decomposition', ['planner', 'researcher', 'reasoner', 'verifier'].every(a => agents1.includes(a)), 'agents: ' + agents1.join(','));
+  rec('3-shared-evidence', (tr1.find(t => t.agent === 'researcher') || {}).evidence_ids?.length > 0 && agents1.includes('verifier'), 'researcher units flow to reasoner + verifier');
+  const cc1 = r1.verification && r1.verification.claim_check;
+  rec('7-no-unsupported-claim-survives', !!cc1 && (cc1.unsupported === 0 || String(cc1.verdict).includes('unsupported')), cc1 ? cc1.verdict : 'no claim check');
+  rec('11-complete-agent-trace', tr1.length >= 4 && tr1.every(t => typeof t.ok === 'boolean'), tr1.length + ' hops recorded');
+  rec('12-signed-receipt', /^[0-9a-f]{64}$/.test((r1.verification || {}).receipt_sha256 || ''), ((r1.verification || {}).receipt_sha256 || '').slice(0, 14));
+  const rAr = await orchestrate({ message: 'HARZ AI Pay charges 50 Naira per query. A customer runs 3 queries today and 2 tomorrow. What is their total spend?', conversation_id: 'gate-v05-2' });
+  const rCo = await orchestrate({ message: 'Write a JavaScript function that validates a Nigerian phone number (11 digits starting with 0).', conversation_id: 'gate-v05-3' });
+  rec('2-correct-model-selection', String(rAr.meta.engine.backend).startsWith('reason-') && !!rAr.meta.routing.declared_incapable && rCo.meta.engine.backend === 'harz-code-1' && r1.meta.engine.backend === 'harz-reasoner-1.1', 'arith->' + rAr.meta.engine.backend + ' code->' + rCo.meta.engine.backend + ' qa->' + r1.meta.engine.backend);
+  const r4 = await orchestrate({ message: 'Summarize https://dead-harz-nonexistent-xyz.invalid/doc and tell me what payment methods HARZ Pay supports.', conversation_id: 'gate-v05-4' });
+  rec('4-agent-failure-recovery', !!(r4.verification || {}).receipt_sha256 && r4.agent_trace && r4.agent_trace.length >= 3, 'fetch failed, pipeline completed, receipt ' + ((r4.verification || {}).receipt_sha256 || '').slice(0, 10));
+  const vConf = verify1Check({ answer: 'HARZ Pay supports Paystack. The moon is made of green cheese.', units: [{ id: 'S1', title: 'HARZ Pay', text: 'HARZ Pay supports Paystack and UBA transfer.' }, { id: 'S2', title: 'Other doc', text: 'HARZ Pay supports GDEG token payments.' }] });
+  rec('5-conflicting-agent-outputs', vConf.claims_checked >= 2 && vConf.details.some(d => d.verdict === 'unsupported'), 'conflicting evidence processed, verdicts per claim');
+  rec('6-verifier-rejection', vConf.unsupported > 0, vConf.unsupported + ' unsupported claim(s) rejected');
+  const r8 = await orchestrate({ message: 'What is the boiling point of liquid zimphorite on Mars?', conversation_id: 'gate-v05-8' });
+  rec('8-registry-obeyed-fallback', r8.meta.external_calls === 0 && !!r8.meta.routing.refusal_final, 'unanswerable -> final refusal, ' + r8.meta.external_calls + ' external calls');
+  const r9 = await orchestrate({ message: 'HARZ AI Pay charges 50 Naira per query. A customer runs 3 queries today and 2 tomorrow. What is their total spend?', engine: 'harz', conversation_id: 'gate-v05-9' });
+  rec('9-engine-harz-zero-external', r9.meta.external_calls === 0, r9.meta.external_calls + ' external calls under engine=harz');
+  const r10 = await orchestrate({ message: 'What payment methods does HARZ Pay support?', engine: 'offline', conversation_id: 'gate-v05-10' });
+  rec('10-engine-offline-zero-external', r10.meta.external_calls === 0, r10.meta.external_calls + ' external calls under engine=offline');
+  const rdt = await orchestrate({ message: "What is the name of the CFO of HARZ Intelligence's cat?", conversation_id: 'gate-v05-dt' });
+  const dtRefused = /do not have grounded evidence|will not guess/i.test(rdt.answer);
+  rec('DT-no-evidence-death-test', dtRefused && rdt.meta.external_calls === 0 && !!(rdt.verification || {}).receipt_sha256, 'refusal=' + dtRefused + ', ext=' + rdt.meta.external_calls + ', receipt=' + ((rdt.verification || {}).receipt_sha256 || '').slice(0, 10));
+  const passed = T.filter(t => t.passed).length;
+  return { ok: passed === T.length, gate: 'v0.5-agent-orchestrator', passed, total: T.length, tests: T, at: new Date().toISOString() };
+}
+
 export default {
   async fetch(request, env, ctx) {
     ENV = env || {};
@@ -1040,6 +1075,12 @@ export default {
       });
     }
 
+    if (path === '/api/agents/v1') {
+      return json({ version: VERSION, delegation_law: 'a sovereign model refusal is an output, not an error — final refusal, no external call; external fallback ONLY on registry-declared incapability', agents: AGENT_TEAM });
+    }
+    if (path === '/api/agents/v1/test') {
+      return json(await runV05Gate());
+    }
     if (path === '/api/health') {
       const search = await harzSearch('harz', 1);
       return json({

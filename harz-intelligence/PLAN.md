@@ -103,3 +103,17 @@ A 8/20 @2319ms (20 ext) | B 8/20 @487ms (0 ext) | C 9/20 @424ms (0 ext, H2 fixed
 no regressions) | F production router 11/20 @1393ms | offline death test 2/2, 0 ext,
 receipts 79931323026a6d / 8077883ed84df4. Every answer records engine + sovereignty
 + task_class + routing + claim check. Cards: REASONER11-CARD.md, FAMILY-REGISTRY.md.
+
+## V0.5 GATE — HARZ AGENT ORCHESTRATOR (Sept 24, 2026) — PASSED 13/13
+Dad's Option 2 frozen as the routing law: a sovereign model's refusal is an OUTPUT,
+not an error. Final refusal on HARZ refusal — no external call. External fallback
+ONLY on registry-declared incapability. Agent orchestrator deployed: router
+(capability registry) is the sole delegation authority; planner/researcher/reasoner/
+coder/verifier never call one another; every hop recorded in agent_trace.
+Gate /api/agents/v1/test: 13/13 PASS incl. the no-evidence death test (CFO's cat:
+refusal, 0 external calls, receipt e65095999e). Frozen bench F under Option 2:
+10/20 @800ms avg, 2 external calls total (arithmetic only) vs v0.4 fallback policy
+11/20 @1393ms, 20 external. Honest costs: K3 + C2 regress (external used to answer
+them; HARZ refuses/cannot synthesize) — queued as v0.5.1 improvements (Code-1
+analysis answers routed directly). engine=harz and engine=offline re-verified
+zero-external. Raw: gate-v05-raw.json, bench-F-v05-raw.json.
