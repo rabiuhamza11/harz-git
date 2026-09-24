@@ -1,0 +1,1447 @@
+{
+ "index_digest": "b9395e5388a45320dab33ca0f5860c393374bba7e17c54f8b3075653d2042bed",
+ "seeds": [
+  "harz chain",
+  "harz pay",
+  "harz root dns",
+  "harz invoice",
+  "harz sms gateway",
+  "harz oracle",
+  "harz coin machine",
+  "harz agents marketplace",
+  "harz health",
+  "harz treasury",
+  "harz wallet",
+  "harz mining",
+  "harc-20 token",
+  "harz api",
+  "harz telegram bot",
+  "harz whatsapp",
+  "harz super app",
+  "harz edge",
+  "harz rpc proxy",
+  "harz broadcast",
+  "harz broadcast engine",
+  "harz nft",
+  "harz marketplace",
+  "harz bridge",
+  "harz cold storage",
+  "harz pos",
+  "harz recharge",
+  "harz school",
+  "harz film",
+  "harz music"
+ ],
+ "docs": [
+  {
+   "id": 2,
+   "title": "HARZSwap \u2014 Sovereign DEX on HARZ Chain",
+   "url": "https://harz-swap.harz.workers.dev/",
+   "domain": "harz-swap.harz.workers.dev",
+   "snippet": "\u20bf HARZSwap Sovereign DEX on HARZ Chain \u2014 everything trades on our public chain \u00b7 constant-product x\u00b7y=k, 0.3% fee v6.0.8 world-dex Market prices (no policy) HARZcoin set \u2026",
+   "source": "HARZ",
+   "seed": "harz chain",
+   "digest": "1e9853f3af2338a0"
+  },
+  {
+   "id": 3,
+   "title": "HARZ Chain Explorer \u2014 Proof of Edge",
+   "url": "https://harz-chain-v2.harz.workers.dev/",
+   "domain": "harz-chain-v2.harz.workers.dev",
+   "snippet": "\u26d3\ufe0f HARZ Chain Explorer Proof of Edge \u2022 EVM Compatible \u2022 SHA-256 \u2022 Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask",
+   "source": "HARZ",
+   "seed": "harz chain",
+   "digest": "fe569253a3fa33da"
+  },
+  {
+   "id": 10335,
+   "title": "HARZ Root \u2014 .harz",
+   "url": "https://harz-root.harz.workers.dev/",
+   "domain": "harz-root.harz.workers.dev",
+   "snippet": "HARZ Root Our own root nameserver \u2014 the .harz namespace, one law, one zone Canonical zone 77 names \u00b7 height 1 Zone hash e94b9693e94a229065f7\u2026 Signature Ed25519 VALID Sign\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "8e483be066d74f17"
+  },
+  {
+   "id": 10281,
+   "title": "HARZ CLOUD \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Clo\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "23464c93f1834817"
+  },
+  {
+   "id": 10274,
+   "title": "HARZ CLOUD \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/cloud",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Clo\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "23464c93f1834817"
+  },
+  {
+   "id": 10108,
+   "title": "HARZ Faucet \u2014 Claim Free Tokens",
+   "url": "https://harz-faucet.hamzarabiu390.workers.dev/",
+   "domain": "harz-faucet.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udeb0 HARZ Faucet FREE Part of HARZ Ecosystem Super App Wallet Chain Explorer Exchange Super Cloud \u2014 Block Height \u2014 Circulating \u2014 Wallets 100 HARZ Free claim \u2014 one per walle\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "3128ee0a8c813ba2"
+  },
+  {
+   "id": 10030,
+   "title": "HARZ Bridge",
+   "url": "https://harz-bridge.harz.workers.dev/",
+   "domain": "harz-bridge.harz.workers.dev",
+   "snippet": "HARZ Bridge Cross-chain bridge \u2022 HARZ Chain \u2194 Polygon \u26d3\ufe0f HARZ Chain Chain ID 7701 \u21c4 \ud83d\udfe3 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "a58f5a456e331919"
+  },
+  {
+   "id": 10187,
+   "title": "HARZ Coin Machine",
+   "url": "https://harz-coin-machine.hamzarabiu390.workers.dev/",
+   "domain": "harz-coin-machine.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Coin Machine Turn a contract address into a *real* coin \u2014 or mint a new one straight onto HARZ Chain Real HRC-20 coins, live on HARZ Chain L1. Every coin gets a real\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "740aa70496202d62"
+  },
+  {
+   "id": 10038,
+   "title": "HARZ RPC Proxy",
+   "url": "https://harz-rpc-proxy.hamzarabiu390.workers.dev/",
+   "domain": "harz-rpc-proxy.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udd0c HARZ RPC Proxy JSON-RPC gateway for HARZ Chain L1 38.3M Block Height 92 Wallets 50.6% Mined RPC Endpoints POST / \u2014 JSON-RPC 2.0 (eth_* methods) GET /api/health \u2014 Servi\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "e799140b6891a562"
+  },
+  {
+   "id": 10186,
+   "title": "HARZ Miner Cron",
+   "url": "https://harz-miner-cron.hamzarabiu390.workers.dev/",
+   "domain": "harz-miner-cron.hamzarabiu390.workers.dev",
+   "snippet": "\u26cf\ufe0f HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "0b851347ff421deb"
+  },
+  {
+   "id": 10044,
+   "title": "HARZ RPC Proxy",
+   "url": "https://harz-rpc-proxy.harz.workers.dev/",
+   "domain": "harz-rpc-proxy.harz.workers.dev",
+   "snippet": "HARZ RPC Proxy JSON-RPC gateway for HARZ Chain L1 -- Block Height 7701 Chain ID v3.1 Version RPC Endpoints POST / \u2014 JSON-RPC 2.0 (eth_* methods) GET /api/health \u2014 Service\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "9a914570ef3bb55f"
+  },
+  {
+   "id": 10097,
+   "title": "HARZ Governance \u2014 Community Pilot",
+   "url": "https://harz-governance.harz.workers.dev/",
+   "domain": "harz-governance.harz.workers.dev",
+   "snippet": "\u2696\ufe0f GOVERNANCE PILOT HARZ Governance The community voice of the HARZ ecosystem \u2014 Chain 7701 Honest disclosure: Community governance pilot \u2014 votes are advisory. Chain admin\u2026",
+   "source": "harz-estate",
+   "seed": "harz chain",
+   "digest": "d919e11ce7dcf84a"
+  },
+  {
+   "id": 10378,
+   "title": "HARZ AI Pay \u2014 Pay Per AI Query",
+   "url": "https://harz-ai-pay.harz.workers.dev/",
+   "domain": "harz-ai-pay.harz.workers.dev",
+   "snippet": "HARZ AI Pay Pay-Per-Query AI Access \u2014 5 Agents Available 0 USERS 0 QUERIES TODAY 0 REVENUE Pricing Plans Pay As You Go \u20a650 /query No commitment. Top up credits. Use anyti\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "0f183ff12033760f"
+  },
+  {
+   "id": 10332,
+   "title": "HARZ Pay \u2014 Payment Gateway",
+   "url": "https://harz-payment.harz.workers.dev/",
+   "domain": "harz-payment.harz.workers.dev",
+   "snippet": "\ud83d\udcb3 HARZ Pay Unified payment gateway \u00b7 Paystack \u00b7 UBA \u00b7 GDEG \u00b7 USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG To\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "bc41cf1aefef6bb8"
+  },
+  {
+   "id": 10066,
+   "title": "HARZ Pay",
+   "url": "https://harz-payments.hamzarabiu390.workers.dev/",
+   "domain": "harz-payments.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method \ud83c\udfe6 UBA Bank Transfer LIVE \ud83d\udcb3 Paystack (Card) LIVE ?\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "6f0d4be68a3acf90"
+  },
+  {
+   "id": 1,
+   "title": "HARZ Store",
+   "url": "https://harz-store.harz.workers.dev/",
+   "domain": "harz-store.harz.workers.dev",
+   "snippet": "HARZ Store Marketplace \u00b7 Instant delivery NEW: The HARZ Knowledge Bundle Engineering \u00b7 Science \u00b7 Commerce \u00b7 Marketing \u2014 four foundations in one book, with a 30-day plan. \u2026",
+   "source": "HARZ",
+   "seed": "harz pay",
+   "digest": "3aeb1b12232b1039"
+  },
+  {
+   "id": 10036,
+   "title": "HARZ Unified Onboarding",
+   "url": "https://harz-onboard.harz.workers.dev/",
+   "domain": "harz-onboard.harz.workers.dev",
+   "snippet": "HARZ Onboarding One Account. All 80+ Platforms. 0 TOTAL USERS 80+ PLATFORMS 1 SIGNUP Create Your HARZ Account One signup gives you instant access to all HARZ platforms. Y\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "038679ca50327cc5"
+  },
+  {
+   "id": 10148,
+   "title": "HARZ Ad Network \u2014 67 PWAs, One Ad Platform",
+   "url": "https://harz-ads.harz.workers.dev/",
+   "domain": "harz-ads.harz.workers.dev",
+   "snippet": "HARZ Ad Network 67 PWAs, One Ad Platform \u2014 Self-Serve Advertising 0 CAMPAIGNS 0 IMPRESSIONS 0 REVENUE Launch Ad Campaign All 67 Platforms HARZ Store Only HarzMusic Only A\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "e50632091673870e"
+  },
+  {
+   "id": 10350,
+   "title": "N-DEX \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/ndex",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "N-DEX Real AMM on HARZ Chain \u2014 swaps settle on the L1 ledger Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super C\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "c4fc9e6b5ddf2d5c"
+  },
+  {
+   "id": 10045,
+   "title": "HARZ Jobs Abuja \u2014 Job Board for Nigerias Capital",
+   "url": "https://harz-jobs.harz.workers.dev/",
+   "domain": "harz-jobs.harz.workers.dev",
+   "snippet": "HARZ Jobs Abuja Job Board for Nigerias Capital \u2014 Employers Pay to Post 0 ACTIVE JOBS 0 EMPLOYERS 0 REVENUE Post a Job Technology Finance Healthcare Education Construction\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "d4783500b14ce83e"
+  },
+  {
+   "id": 10149,
+   "title": "HARZ ECP-1 \u2014 Shutdown-Proof Economy",
+   "url": "https://harz-ecp1.hamzarabiu390.workers.dev/",
+   "domain": "harz-ecp1.hamzarabiu390.workers.dev",
+   "snippet": "HARZ ECP-1 Economic Continuity Protocol v0.1 \u2014 the Shutdown-Proof Economy demo SANDBOX VALUE ONLY \u2014 no real money. Chain settlement is queued (needs HARZ Chain admin key)\u2026",
+   "source": "harz-estate",
+   "seed": "harz pay",
+   "digest": "57c7d01bb58404f6"
+  },
+  {
+   "id": 10117,
+   "title": "UNMUTANT \u2014 join the second internet",
+   "url": "https://harz-names.harz.workers.dev/",
+   "domain": "harz-names.harz.workers.dev",
+   "snippet": "\u2026not dead, not off. Your wallet, with a human name. Pay name.harz , not 0x\u2026 Join the second internet \u2014 3 steps 1. Get your wallet open wallet \u2192 2. Claim the faucet (100 HA\u2026",
+   "source": "harz-estate",
+   "seed": "harz root dns",
+   "digest": "455c6af202bed4f4"
+  },
+  {
+   "id": 10374,
+   "title": "HARZ Invoice \u2014 Create & Send Invoices",
+   "url": "https://harz-invoice.harz.workers.dev/",
+   "domain": "harz-invoice.harz.workers.dev",
+   "snippet": "HARZ Invoice Create invoices. Get paid via Paystack. New Invoice Your Business Name Your Phone Your Email Client Name Client Email (optional) Due Date (optional) Items + \u2026",
+   "source": "harz-estate",
+   "seed": "harz invoice",
+   "digest": "46f781d9e063d336"
+  },
+  {
+   "id": 10075,
+   "title": "HARZ Genesis Hospital",
+   "url": "https://harz-genesis-hospital.hamzarabiu390.workers.dev/",
+   "domain": "harz-genesis-hospital.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R\u2026",
+   "source": "harz-estate",
+   "seed": "harz invoice",
+   "digest": "69d42fb3c81d68c0"
+  },
+  {
+   "id": 10034,
+   "title": "HARZ Ecosystem \u2014 Everything in One Place",
+   "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+   "domain": "harz-ecosystem-ad.harz.workers.dev",
+   "snippet": "\u26a1 HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. \ud83c\uddf3\ud83c\uddec Built in Nigeria \u2022 Powered by Cloudflare Edge ?\u2026",
+   "source": "harz-estate",
+   "seed": "harz invoice",
+   "digest": "ab3602e4090a0220"
+  },
+  {
+   "id": 10349,
+   "title": "HARZ Wholesale Cloud \u2014 Reseller Hosting Platform",
+   "url": "https://harz-wholesale.hamzarabiu390.workers.dev/",
+   "domain": "hostmaster.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Wholesale Cloud Reseller hosting platform \u2014 white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You \u2026",
+   "source": "harz-estate",
+   "seed": "harz invoice",
+   "digest": "051bbb3549f54545"
+  },
+  {
+   "id": 10119,
+   "title": "HARZ Monetize \u2014 All Products",
+   "url": "https://harz-monetize.harz.workers.dev/",
+   "domain": "harz-monetize.harz.workers.dev",
+   "snippet": "HARZ Products 27 products across 12 platforms harz-crm CRM Starter Manage up to 100 customers, basic reports N2,000 /month CRM Pro Unlimited customers, advanced analytics\u2026",
+   "source": "harz-estate",
+   "seed": "harz invoice",
+   "digest": "f8234af5c44623e9"
+  },
+  {
+   "id": 10009,
+   "title": "HARZ SMS Marketing \u2014 Campaign Platform",
+   "url": "https://harz-sms-mkt.harz.workers.dev/",
+   "domain": "harz-sms-mkt.harz.workers.dev",
+   "snippet": "HARZ SMS Marketing Bulk SMS Campaign Platform \u2014 Powered by HARZ Gateway 0 Campaigns 0 SMS Sent 0 Contacts New Campaign Campaign Name Message Recipients (comma-separated p\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "cbcaf58da1ffef0b"
+  },
+  {
+   "id": 10021,
+   "title": "HARZ Gateway \u2014 Your Telecom API Platform",
+   "url": "https://harz-gateway.harz.workers.dev/",
+   "domain": "harz-gateway.harz.workers.dev",
+   "snippet": "HARZ Gateway Your Telecom API Platform SMPP v3.4 EDGE LIVE Build Your Own Telecom SMS \u2022 OTP \u2022 Voice \u2022 Airtime APIs for Nigerian businesses Live on HARZ infrastructure Get\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "998dd6352c447986"
+  },
+  {
+   "id": 10252,
+   "title": "HARZ Edge Telecom \u2014 SMS API on Edge Compute",
+   "url": "https://harz-telecom-landing.harz.workers.dev/",
+   "domain": "harz-telecom-landing.harz.workers.dev",
+   "snippet": "HARZ Edge Telecom World's First Telecom Operator on Edge Compute SMS API, OTP Delivery, Voice Calling, eSIM \u2014 on 330+ Cloudflare Edge PoPs Get API Key \u2192 View Docs SendCha\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "6c6371c29ef0a38e"
+  },
+  {
+   "id": 10217,
+   "title": "HARZ Verify \u2014 OTP Verification API",
+   "url": "https://harz-verify.harz.workers.dev/",
+   "domain": "harz-verify.harz.workers.dev",
+   "snippet": "HARZ Verify OTP Verification API \u2014 Powered by HARZ Gateway SMS Send OTP Phone Number Purpose (optional) Send Verification Code Verify OTP Phone Number Code Verify Code Fe\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "9d8abc9f13d306c4"
+  },
+  {
+   "id": 10028,
+   "title": "HARZ SMPP Edge",
+   "url": "https://harz-smpp-edge.harz.workers.dev/",
+   "domain": "harz-smpp-edge.harz.workers.dev",
+   "snippet": "HARZ SMPP Edge Outbound SMS sender \u2014 SMPP v3.4 client on Cloudflare Workers Outbound SMS SMPP 3.4 Edge TCP Role: the outbound arm of HARZ telecom infrastructure \u2014 an SMPP\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "1767b6d89d32634e"
+  },
+  {
+   "id": 10403,
+   "title": "HARZ Telecom \u2014 Dashboard",
+   "url": "https://harz-telecom.harz.workers.dev/dashboard",
+   "domain": "harz-telecom.harz.workers.dev",
+   "snippet": "HARZ Telecom The World's First Edge Telecom Set Home NOC \ud83d\udcde Incoming call... Join Call Dismiss HARZ Balance N0 No virtual number SMS Voice Data USSD HLR Send SMS via Edge\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "73ffe411a8d535fc"
+  },
+  {
+   "id": 10215,
+   "title": "HARZ Digital Services \u2014 Infrastructure for Africa's Digital Economy",
+   "url": "https://harz-website.hamzarabiu390.workers.dev/",
+   "domain": "harz-website.hamzarabiu390.workers.dev",
+   "snippet": "Infrastructure for Africa's Digital Economy HARZ Digital Services builds vertically integrated digital infrastructure \u2014 payments, blockchain settlement, AI workforce, and\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "5228bfd255453882"
+  },
+  {
+   "id": 10368,
+   "title": "HARZ NOC \u2014 Network Operations Center",
+   "url": "https://harz-telecom.harz.workers.dev/noc",
+   "domain": "harz-telecom.harz.workers.dev",
+   "snippet": "HARZ NOC LIVE \u2014 EDGE NETWORK Home Dashboard CLOUDFLARE EDGE LOCATIONS 330 Your telecom core is distributed across 330+ cities worldwide \ud83d\udcf1 HLR ONLINE \ud83d\udcac SMSC ONLINE \u26a1 Rat\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "7c072225246d41e9"
+  },
+  {
+   "id": 10088,
+   "title": "HARZ Telecom Exchange",
+   "url": "https://harz-telecom-exchange.harz.workers.dev/",
+   "domain": "harz-telecom-exchange.harz.workers.dev",
+   "snippet": "HARZ Telecom Exchange SS7 / SMPP gateway \u2014 we are the telecom, not the renter Sessions routed 3 Billed (test data) \u20a67.50 Rate \u20a62.50 / session E2E test 11/11 PASSED The St\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "f820595ddf32da59"
+  },
+  {
+   "id": 10061,
+   "title": "HARZ Telecom \u2014 The World's First Edge Telecom",
+   "url": "https://harz-telecom.harz.workers.dev/",
+   "domain": "harz-telecom.harz.workers.dev",
+   "snippet": "WORLD'S FIRST EDGE TELECOM MTN runs on towers. HARZ runs on the edge. The entire telecom core network \u2014 HLR, SMSC, billing, routing \u2014 runs on Cloudflare's 330+ edge locat\u2026",
+   "source": "harz-estate",
+   "seed": "harz sms gateway",
+   "digest": "a3e5bf52e0cec607"
+  },
+  {
+   "id": 10421,
+   "title": "HARZ Oracle \u2014 Prediction Market & Feeds",
+   "url": "https://harz-oracle.hamzarabiu390.workers.dev/",
+   "domain": "harz-oracle.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udd2e HARZ Oracle Phone-based prediction market & edge-native price feeds Markets Price Feeds Triggers My Positions Create Market Loading markets... Loading feeds... Loading\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "6796385140165efc"
+  },
+  {
+   "id": 10251,
+   "title": "HARZ SkyEye \u2014 Satellite Oracle for Feature Phones",
+   "url": "https://harz-skyeye.harz.workers.dev/",
+   "domain": "harz-skyeye.harz.workers.dev",
+   "snippet": "\ud83d\udc41\ufe0f HARZ SkyEye The world's first satellite oracle for feature phones \u2014 no internet, no apps, any phone World-First Invention \u2022 HARZ Ecosystem Try It \u2014 Live USSD Simulato\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "a187adc9d21441e1"
+  },
+  {
+   "id": 5,
+   "title": "HARZ Wallet v3 \u2014 Honest Registry",
+   "url": "https://harz-crypto-wallet.harz.workers.dev/",
+   "domain": "harz-crypto-wallet.harz.workers.dev",
+   "snippet": "HARZ Wallet v3 \u2014 Honest Registry 8 Chains \u00b7 Naira-First \u00b7 Browser-Only \u00b7 Keys Never Leave This Device Total Portfolio Value \u20a6 \u2014 Prices: HARZ Swap Oracle \u00b7 NGN: live FX Po\u2026",
+   "source": "HARZ",
+   "seed": "harz oracle",
+   "digest": "111422104b032413"
+  },
+  {
+   "id": 10407,
+   "title": "Neural Protocol \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/neural",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "\u2026ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Proto\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "1638e2bf4b2e3c00"
+  },
+  {
+   "id": 10282,
+   "title": "HAEG \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/haeg",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "HAEG HARZ Autonomous Energy Grid Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE \u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "3a36524d19b22d1e"
+  },
+  {
+   "id": 10228,
+   "title": "N-Insure \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/ninsure",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "\u2026ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Insur\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "5a089e0436ef4661"
+  },
+  {
+   "id": 4,
+   "title": "HARZ Exchange \u2014 OTC Buy & Sell Desk",
+   "url": "https://harz-exchange.harz.workers.dev/",
+   "domain": "harz-exchange.harz.workers.dev",
+   "snippet": "HARZ Exchange OTC Buy/Sell Desk | Live market prices NGN/USD loading... Markets Chart Trade Wallet Portfolio P2P Loading live prices from HARZSwap... All prices are live \u2026",
+   "source": "HARZ",
+   "seed": "harz oracle",
+   "digest": "d976e2638507cb1b"
+  },
+  {
+   "id": 10203,
+   "title": "HARZ Cloud \u2014 The AI Operating System for Africa",
+   "url": "https://harz-cloud-landing.harz.workers.dev/",
+   "domain": "harz-cloud-landing.harz.workers.dev",
+   "snippet": "\u2026blocks, 80 wallets The AI Operating System built for Africa HARZ Cloud gives you blockchain, DeFi, AI, payments, and governance on a single platform \u2014 with real infrastru\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "b653a6cfd3efa885"
+  },
+  {
+   "id": 10433,
+   "title": "/manifest.json",
+   "url": "https://harz-oracle.hamzarabiu390.workers.dev/manifest.json",
+   "domain": "harz-oracle.hamzarabiu390.workers.dev",
+   "snippet": "{\"name\":\"HARZ Oracle\",\"short_name\":\"Oracle\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"data:image/svg+xm\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "5ebfe8c0f8dcbad7"
+  },
+  {
+   "id": 10340,
+   "title": "/manifest.json",
+   "url": "https://harz-skyeye.harz.workers.dev/manifest.json",
+   "domain": "harz-skyeye.harz.workers.dev",
+   "snippet": "{\"name\":\"HARZ SkyEye \u2014 Satellite Oracle for Feature Phones\",\"short_name\":\"SkyEye\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2\u2026",
+   "source": "harz-estate",
+   "seed": "harz oracle",
+   "digest": "c476ea30ee2c9266"
+  },
+  {
+   "id": 10032,
+   "title": "HARZ Atomic Swap",
+   "url": "https://harz-atomic-swap.hamzarabiu390.workers.dev/",
+   "domain": "harz-atomic-swap.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Atomic Swap Bridgeless exchange \u2014 two coins trade directly, *no one* holds the funds R14 pilot: the machine checks both sides, executes both legs at once, rolls back\u2026",
+   "source": "harz-estate",
+   "seed": "harz coin machine",
+   "digest": "9d2c9fcac7fa17d1"
+  },
+  {
+   "id": 10257,
+   "title": "/manifest.json",
+   "url": "https://harz-coin-machine.hamzarabiu390.workers.dev/manifest.json",
+   "domain": "harz-coin-machine.hamzarabiu390.workers.dev",
+   "snippet": "{\"name\":\"HARZ Coin Machine\",\"short_name\":\"Coin Machine\",\"description\":\"Turn contract addresses into real coins on HARZ Chain.\",\"start_url\":\"/\",\"display\":\"standalone\",\"bac\u2026",
+   "source": "harz-estate",
+   "seed": "harz coin machine",
+   "digest": "be98575bbdff0184"
+  },
+  {
+   "id": 10162,
+   "title": "HARZ Agent Marketplace",
+   "url": "https://harz-agent-mkt.hamzarabiu390.workers.dev/",
+   "domain": "harz-agent-mkt.hamzarabiu390.workers.dev",
+   "snippet": "\ud83e\udd16 HARZ Agents Agent Marketplace \u2014 Deploy to WhatsApp & Telegram Loading... \u2014 Agents \u2014 Creators \u2014 Deploys \u2014 Revenue Browse Publish Creators Builder Loading... To publish \u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "c30a5dbd86375787"
+  },
+  {
+   "id": 10233,
+   "title": "HARZ Workforce Network",
+   "url": "https://harz-workforce.hamzarabiu390.workers.dev/",
+   "domain": "harz-workforce.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udcbc HARZ Workforce Network Human + AI Workforce Economy 10 Revenue Streams \u00b7 12 AI Agents \u00b7 8 Service Categories Overview Revenue AI Agents Human Services Hybrid Projects \u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "d8ca5e46a35e3460"
+  },
+  {
+   "id": 10064,
+   "title": "HARZ Commerce Network 2.0",
+   "url": "https://harz-commerce-network.hamzarabiu390.workers.dev/",
+   "domain": "harz-commerce-network.hamzarabiu390.workers.dev",
+   "snippet": "\ud83c\udf10 HARZ Commerce Network 2.0 Transaction Network Revenue Engine 10 Revenue Streams Overview Revenue Streams Lifecycle Revenue Calculator Network Model The Big Shift From \u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "bf6725164a706710"
+  },
+  {
+   "id": 10,
+   "title": "Abuja Estate City \u2014 Real Estate & Construction Marketplace",
+   "url": "https://abuja-estate-city.hamzarabiu390.workers.dev/",
+   "domain": "abuja-estate-city.hamzarabiu390.workers.dev",
+   "snippet": "\u2026te a tenancy, sale, service or consultancy contract free at HARZ LegalDoc AI \u2014 8 Nigerian contract templates with NDPA 2023 clauses. \ud83d\udcb0 Wallet &amp; Escrow Phase 4 Sign i\u2026",
+   "source": "HARZ",
+   "seed": "harz agents marketplace",
+   "digest": "96eabd806742752d"
+  },
+  {
+   "id": 10011,
+   "title": "HARZ Venture Engine",
+   "url": "https://harz-venture.hamzarabiu390.workers.dev/",
+   "domain": "harz-venture.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\ude80 HARZ Ventures From Opportunity to Operating Business Loading... \u2014 Ventures \u2014 Active \u2014 Revenue \u2014 Est. Profit Discover My Ventures Execution Revenue How It Works \ud83d\udd0d Vent\u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "9ebe35e9613d99a1"
+  },
+  {
+   "id": 10328,
+   "title": "HARZ Digital Infrastructure \u2014 Enterprise Architecture Overview",
+   "url": "https://harz-architecture.hamzarabiu390.workers.dev/",
+   "domain": "harz-architecture.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Digital Infrastructure Enterprise Architecture Overview \u2014 Prepared for Sterling Bank Innovation, IT & Compliance Teams HARZ Digital Services CAC RC: 321424 | TIN: 24\u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "30d61e26ac91461b"
+  },
+  {
+   "id": 10405,
+   "title": "/manifest.json",
+   "url": "https://harz-agent-mkt.hamzarabiu390.workers.dev/manifest.json",
+   "domain": "harz-agent-mkt.hamzarabiu390.workers.dev",
+   "snippet": "{\"name\":\"HARZ Agent Marketplace\",\"short_name\":\"HARZ Agents\",\"description\":\"Buy and deploy AI agents to WhatsApp and Telegram\",\"start_url\":\"/\",\"display\":\"standalone\",\"back\u2026",
+   "source": "harz-estate",
+   "seed": "harz agents marketplace",
+   "digest": "bad8ffdf09917ee0"
+  },
+  {
+   "id": 10015,
+   "title": "HARZ Health \u2014 AI Health Assistant",
+   "url": "https://harz-health.hamzarabiu390.workers.dev/",
+   "domain": "harz-health.hamzarabiu390.workers.dev",
+   "snippet": "\ud83e\ude7a HARZ Health AI Health Assistant for Nigeria \ud83e\udd12 Triage \ud83c\udfe5 Clinics \ud83d\udc64 Profile \u23f0 Reminders \ud83e\udd12 Symptom Triage Describe your symptoms and get instant AI-powered guidance. Y\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "c30c452b8f7bc7f0"
+  },
+  {
+   "id": 10092,
+   "title": "HARZ Health Network",
+   "url": "https://harz-omega-health.harz.workers.dev/",
+   "domain": "harz-omega-health.harz.workers.dev",
+   "snippet": "\u2695\ufe0f HARZ Health Healthcare Services Network Loading... \u2014 Doctors \u2014 Appointments \u2014 Pharmacy \u2014 Revenue Doctors Pharmacy Telemedicine Book Appointment Loading... Loading... L\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "79c50052a7a57172"
+  },
+  {
+   "id": 10190,
+   "title": "HARZ Network Fabric",
+   "url": "https://harz-nlcl.hamzarabiu390.workers.dev/",
+   "domain": "harz-nlcl.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Network Fabric HARZ Global Network - Connectivity Intelligence HNF v2.4.0 -- Services -- Online -- Tiers -- Nodes Live Status Overview Topology Services Connectivity\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "dc3a5285305afd8e"
+  },
+  {
+   "id": 0,
+   "title": "HARZ Network Fabric",
+   "url": "https://super-cloud.harz.workers.dev/",
+   "domain": "super-cloud.harz.workers.dev",
+   "snippet": "HARZ Network Fabric HARZ Global Network - Connectivity Intelligence HNF v4.0.0 -- Services -- Online -- Tiers -- Nodes Live Status Overview Topology Services Connectivity\u2026",
+   "source": "HARZ",
+   "seed": "harz health",
+   "digest": "7e6e8440ca837afd"
+  },
+  {
+   "id": 10094,
+   "title": "HARZ WhatsApp Handler",
+   "url": "https://harz-whatsapp-handler.hamzarabiu390.workers.dev/",
+   "domain": "harz-whatsapp-handler.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udcac WhatsApp Handler WhatsApp message processing for HARZ ecosystem Endpoints POST /webhook \u2014 Receive WhatsApp messages POST /api/send \u2014 Send WhatsApp message GET /api/hea\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "963f5c97b5c92c4f"
+  },
+  {
+   "id": 10193,
+   "title": "HARZ CRM",
+   "url": "https://harz-crm.harz.workers.dev/",
+   "domain": "harz-crm.harz.workers.dev",
+   "snippet": "HARZ CRM Customer Relationship Management Dashboard Contacts, leads, deals and pipeline management D1 Storage API Active API Endpoints GET /api/contacts \u2014 List contacts P\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "9b29020e71ddceb6"
+  },
+  {
+   "id": 10020,
+   "title": "HARZ Daily Runner",
+   "url": "https://harz-daily.harz.workers.dev/",
+   "domain": "harz-daily.harz.workers.dev",
+   "snippet": "HARZ Daily Runner Automated ecosystem reports /run/morning Morning briefing (5 AM WAT) /run/evening Evening revenue (9 PM WAT) /run/report Daily full report (8 AM WAT) /r\u2026",
+   "source": "harz-estate",
+   "seed": "harz health",
+   "digest": "edd3060cc6aa8e54"
+  },
+  {
+   "id": 10408,
+   "title": "N-Gov \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/ngov",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "\u2026ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Gover\u2026",
+   "source": "harz-estate",
+   "seed": "harz treasury",
+   "digest": "f3b58ec06f5e6c60"
+  },
+  {
+   "id": 22,
+   "title": "HARZ Watchdog",
+   "url": "https://harz-monitor.harz.workers.dev/",
+   "domain": "harz-monitor.harz.workers.dev",
+   "snippet": "HARZ Watchdog v1.0.0 \u2014 checks every 10 minutes \u00b7 last run 9/20/2026, 10:17:24 AM chain-v2 ONLINE v8.3.0 \u00b7 232ms \u00b7 up 24h: 100.0% swap ONLINE v6.0.7 \u00b7 30ms \u00b7 up 24h: 100.0\u2026",
+   "source": "HARZ",
+   "seed": "harz treasury",
+   "digest": "a1136c5ca4c3f897"
+  },
+  {
+   "id": 102,
+   "title": "HARZ Apex Bank",
+   "url": "https://harz-apex-bank.harz.workers.dev/",
+   "domain": "harz-apex-bank.harz.workers.dev",
+   "snippet": "HARZ Apex Bank Central Bank &nbsp;|&nbsp; Financial Regulator LIVE Open Account Deposit Borrow Repay My Account My Loans Dashboard Open a Bank Account Open your HARZ Apex\u2026",
+   "source": "HARZ",
+   "seed": "harz treasury",
+   "digest": "91fcb39fc87c94c2"
+  },
+  {
+   "id": 10091,
+   "title": "HARZ Contract Address Generator",
+   "url": "https://harz-contract-gen.hamzarabiu390.workers.dev/",
+   "domain": "harz-contract-gen.hamzarabiu390.workers.dev",
+   "snippet": "HARZ ContractGen FREE TOOL Part of the HARZ Ecosystem Super App Crypto Wallet HARZSwap Exchange Chain Treasury Store Super Cloud \u26a1 HARZ Tools Contract Address Generator C\u2026",
+   "source": "harz-estate",
+   "seed": "harz treasury",
+   "digest": "31ec3829b2679282"
+  },
+  {
+   "id": 10361,
+   "title": "HARZ Concord \u2014 Security &amp; Sovereignty Boundary",
+   "url": "https://harz-concord.harz.workers.dev/boundary",
+   "domain": "harz-concord.harz.workers.dev",
+   "snippet": "HARZ Concord Security &amp; Sovereignty Boundary &middot; permanent disclosure &middot; v0.1.0 &middot; 2026-09-09 This document is part of the system, not an external cl\u2026",
+   "source": "harz-estate",
+   "seed": "harz treasury",
+   "digest": "7336141cd05cbbe3"
+  },
+  {
+   "id": 10416,
+   "title": "/",
+   "url": "https://harz-treasury.harz.workers.dev/",
+   "domain": "harz-treasury.harz.workers.dev",
+   "snippet": "{ \"service\": \"HARZ Token Treasury\", \"version\": \"4.0.1\", \"description\": \"Live treasury status \u2014 aggregated from the real bridge, PRISM and chain endpoints\", \"storage\": \"no\u2026",
+   "source": "harz-estate",
+   "seed": "harz treasury",
+   "digest": "43380e2d8b7ebd49"
+  },
+  {
+   "id": 10441,
+   "title": "HARZ Quidax Bridge",
+   "url": "https://harz-quidax-bridge.harz.workers.dev/",
+   "domain": "harz-quidax-bridge.harz.workers.dev",
+   "snippet": "\u2026 ETH USDT Wallet Loading... 0 USDT Actions Sync Balances to HARZ Wallet Generate New BTC Address Generate New ETH Address HARZ Digital Services | Quidax Bridge v1.0 Power\u2026",
+   "source": "harz-estate",
+   "seed": "harz wallet",
+   "digest": "4593519ce12ed16d"
+  },
+  {
+   "id": 6,
+   "title": "HARZ Super App v5.0",
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-super-app.html",
+   "domain": "rabiuhamza11.github.io",
+   "snippet": "\u26a1 HARZ \ud83c\udf19 Login Connecting to HARZ Cloud... \ud83d\udcca Ecosystem Overview Quick Actions \ud83d\udd0d Search \ud83d\udcb3 Wallet \ud83e\udd16 Agents \ud83d\udcc8 Analytics \ud83d\udcf1 Platforms \u2699\ufe0f Settings \ud83c\udf9b\ufe0f Admin \ud83d\udd10 Security \u2026",
+   "source": "HARZ",
+   "seed": "harz wallet",
+   "digest": "c7c95bfaad4c1dbe"
+  },
+  {
+   "id": 10060,
+   "title": "HARZ Pool Aggregator - Compare Bitcoin Mining Pools",
+   "url": "https://harz-pool.harz.workers.dev/",
+   "domain": "harz-pool.harz.workers.dev",
+   "snippet": "HARZ Pool Aggregator Compare 6 real Bitcoin mining pools. Find the best fees. Disclaimer: Pool data is for comparison purposes. Fees and minimum payouts can change. Alway\u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "1af15c04fbc9367b"
+  },
+  {
+   "id": 10022,
+   "title": "HARZ Loyalty \u2014 Earn Points Across All Platforms",
+   "url": "https://harz-loyalty.harz.workers.dev/",
+   "domain": "harz-loyalty.harz.workers.dev",
+   "snippet": "HARZ Loyalty Earn GDEG Points Across All 67 Platforms 0 MEMBERS 0 TOTAL POINTS 0 POINTS SPENT Your Account Check My Points Tiers Bronze 0-999 Silver 1K-4K Gold 5K-19K Pla\u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "c43a0182b442506b"
+  },
+  {
+   "id": 111,
+   "title": "G4 \u2014 Harz Mesh: The People's Internet, now with Voice",
+   "url": "https://harz-edge-telecom.harz.workers.dev/mesh",
+   "domain": "harz-edge-telecom.harz.workers.dev",
+   "snippet": "\ud83d\udce1 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN \u2014 SEP 6, 2026 Overview Validation Gates The App G3 Network Harz Radio \u2014 the sound rail Messages ca\u2026",
+   "source": "HARZ",
+   "seed": "harz mining",
+   "digest": "2291b929dcd5d88e"
+  },
+  {
+   "id": 10239,
+   "title": "HARZ Upsell Engine",
+   "url": "https://harz-upsell.harz.workers.dev/",
+   "domain": "harz-upsell.harz.workers.dev",
+   "snippet": "\u2026EVENUE How It Works When a customer makes a purchase on any HARZ platform, the engine analyzes their action and recommends the next logical purchase. Recommendations are \u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "3ef2c6b19cb6b7b4"
+  },
+  {
+   "id": 10123,
+   "title": "HARZ Affiliates \u2014 Earn 5% Per Referral",
+   "url": "https://harz-affiliates.harz.workers.dev/",
+   "domain": "harz-affiliates.harz.workers.dev",
+   "snippet": "HARZ Affiliates Earn 5% Commission on Every Referral 0 MEMBERS 0 REFERRALS 0 TOTAL PAID Join Affiliate Program Get My Referral Link Your Referral Link Share this link. Ea\u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "bd85587c61845d3f"
+  },
+  {
+   "id": 10013,
+   "title": "HARZ Affiliate Tracking",
+   "url": "https://harz-affiliate-tracker.harz.workers.dev/",
+   "domain": "harz-affiliate-tracker.harz.workers.dev",
+   "snippet": "\u2026licks, we track the visit 3. If they make a purchase on ANY HARZ platform, you earn 5% 4. Commissions accumulate in your affiliate account 5. Cash out via bank transfer o\u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "8231c24b18f31edf"
+  },
+  {
+   "id": 10154,
+   "title": "HARZ POI \u2014 Proof-of-Intelligence Consensus",
+   "url": "https://harz-poi.hamzarabiu390.workers.dev/",
+   "domain": "harz-poi.hamzarabiu390.workers.dev",
+   "snippet": "Home Stats Nodes Verify \ud83e\udde0 HARZ POI Proof-of-Intelligence Consensus Protocol 6 Layers 3 Nodes Zero Gas Zero Mining 0 Total Tx 0 Approved 0 Rejected 0 Fraud \ud83d\udd12 6 Verificat\u2026",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "82c2f2a6e1e0ec3c"
+  },
+  {
+   "id": 10298,
+   "title": "HARZ Payment Collector",
+   "url": "https://harz-pay-collector.harz.workers.dev/",
+   "domain": "harz-pay-collector.harz.workers.dev",
+   "snippet": "\u2026ll platforms. Recently Collected No payments collected yet. HARZ Digital Services | Payment Collector WhatsApp: 08028687857",
+   "source": "harz-estate",
+   "seed": "harz mining",
+   "digest": "10bfdd9522f9ee4c"
+  },
+  {
+   "id": 10266,
+   "title": "HARZ Contract Token",
+   "url": "https://harz-contract-token.hamzarabiu390.workers.dev/",
+   "domain": "harz-contract-token.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Contract Token Forge an agreement into a token \u2014 with zero value attached Zero-value protocol: every token records obligations only. It carries 0 value, cannot be tr\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "aaf6f459a070f228"
+  },
+  {
+   "id": 10006,
+   "title": "HARZ Token Factory",
+   "url": "https://harz-token-factory.hamzarabiu390.workers.dev/",
+   "domain": "harz-token-factory.hamzarabiu390.workers.dev",
+   "snippet": "\ud83c\udf31 HARZ Token Factory Create a real on-chain token \u2014 deployed from your own wallet Token Creation Service \u20a6100,000 flat fee \u00b7 gas paid by your wallet \u2705 Real ERC-20 on Pol\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "e45f7f6487ce2120"
+  },
+  {
+   "id": 10171,
+   "title": "HARZ PRISM \u2014 Edge Token Protocol",
+   "url": "https://harz-prism.hamzarabiu390.workers.dev/",
+   "domain": "harz-prism.hamzarabiu390.workers.dev",
+   "snippet": "HARZ PRISM Edge-Native Token Protocol \u2014 World First Network Stats \u2014 Tokens \u2014 Balances \u2014 Transfers \u2014 Mints Live Tokens Loading... API Endpoints GET /api/health GET /api/to\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "edc90e311f6da351"
+  },
+  {
+   "id": 10348,
+   "title": "GDEG Token \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/gdeg",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "GDEG Token GLOBAL DIGITAL ENERGY GRID Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EV\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "2e540ccb4f8562a4"
+  },
+  {
+   "id": 10101,
+   "title": "HARZ Bull \u2014 Token Control v4",
+   "url": "https://harz-bull-control.hamzarabiu390.workers.dev/",
+   "domain": "harz-bull-control.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udc02 HARZ Bull Control Token Supply, Parking & Burn Management v4.1.0 \u2014 Five-Layer Tracking + Poly Graduation Loading live data from all layers... Data pulled live from PRI\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "56b9848aed36401f"
+  },
+  {
+   "id": 10035,
+   "title": "GDEG Token \u2014 Africa's Digital Payment Layer",
+   "url": "https://gdeg-web.hamzarabiu390.workers.dev/",
+   "domain": "gdeg-web.hamzarabiu390.workers.dev",
+   "snippet": "Home Whitepaper Tokenomics Buy \ud83d\udfe2 GDEG Token Africa's Digital Payment Layer Live on Polygon 10M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = USD \u20a615 1 G\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "1419a466529cf21d"
+  },
+  {
+   "id": 1096,
+   "title": "EOL Fix Available | Quarkus Cross-Tenant Authorization Bypass \u2014 CVE-2026-19625 | Quarkus",
+   "url": "https://herodevs.com/vulnerability-directory/cve-2026-19625",
+   "domain": "herodevs.com",
+   "snippet": "\u2026 endpoints with OpenID Connect providers and handles bearer token authentication, the authorization code flow, multi-tenancy, and optional caching of remote token introsp\u2026",
+   "source": "TECHNOLOGY",
+   "seed": "harc-20 token",
+   "digest": "930e01ddfd178922"
+  },
+  {
+   "id": 5580,
+   "title": "Get started with origin trials | Web Platform | Chrome for DevelopersXGitHubMastodonBlueskyHomepage",
+   "url": "https://developer.chrome.com/docs/web-platform/origin-trials",
+   "domain": "chrome.com",
+   "snippet": "Skip to main content English Deutsch Espa\u00f1ol \u2013 Am\u00e9rica Latina Fran\u00e7ais Indonesia Italiano Nederlands Polski Portugu\u00eas \u2013 Brasil Ti\u00ea\u0301ng Vi\u00ea\u0323t T\u00fcrk\u00e7e \u0420\u0443\u0441\u0441\u043a\u0438\u0439 \u05e2\u05d1\u05e8\u05d9\u05ea \u0627\u0644\u0639\u0631\u0628\u064a\u0651\u0629 \u2026",
+   "source": "REVISIT",
+   "seed": "harc-20 token",
+   "digest": "0337e2b2a080b60e"
+  },
+  {
+   "id": 4236,
+   "title": "MiniMax-M2.5: API Provider Performance Benchmarking & Price Analysis | Artificial Analysis",
+   "url": "https://artificialanalysis.ai/models/minimax-m2-5/providers",
+   "domain": "artificialanalysis.ai",
+   "snippet": "\u2026continue performance benchmarking for the default 10k input token workload. Results for other workloads are historical and no longer updated. MiniMax has launched a newer\u2026",
+   "source": "TECHNOLOGY",
+   "seed": "harc-20 token",
+   "digest": "601272d29634cd0f"
+  },
+  {
+   "id": 9298,
+   "title": "Google News API - SerpApi",
+   "url": "https://serpapi.com/google-news-api",
+   "domain": "serpapi.com",
+   "snippet": "\u2026ted Google languages. Advanced Google News Parameters topic_token Optional Parameter defines the Google News topic token. It is used for accessing the news results for a \u2026",
+   "source": "OPEN-SOURCE",
+   "seed": "harc-20 token",
+   "digest": "9a517784230694d2"
+  },
+  {
+   "id": 4233,
+   "title": "DeepSeek V3.2: API Provider Performance Benchmarking & Price Analysis | Artificial Analysis",
+   "url": "https://artificialanalysis.ai/models/deepseek-v3-2-reasoning/providers",
+   "domain": "artificialanalysis.ai",
+   "snippet": "\u2026continue performance benchmarking for the default 10k input token workload. Results for other workloads are historical and no longer updated. DeepSeek has launched a newe\u2026",
+   "source": "TECHNOLOGY",
+   "seed": "harc-20 token",
+   "digest": "d64b0e8a6764721d"
+  },
+  {
+   "id": 10436,
+   "title": "GDEG Images",
+   "url": "https://gdeg-images.hamzarabiu390.workers.dev/",
+   "domain": "gdeg-images.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\uddbc\ufe0f GDEG Images Token image service for GDEG ecosystem Token Images \ud83e\ude99 GDEG \ud83d\udc8e NRL \u26a1 HARZ API Endpoints GET /api/token/:symbol \u2014 Token image GET /api/health \u2014 Service hea\u2026",
+   "source": "harz-estate",
+   "seed": "harc-20 token",
+   "digest": "2a88f3bf70f4b3c9"
+  },
+  {
+   "id": 10057,
+   "title": "HARZ API Gateway \u2014 Monetize Your APIs",
+   "url": "https://harz-api-gw.harz.workers.dev/",
+   "domain": "harz-api-gw.harz.workers.dev",
+   "snippet": "HARZ API Gateway 73 Workers. 50+ Endpoints. Paid Access. 0 API KEYS 0 REQUESTS TODAY 0 MONTHLY REVENUE Free Tier \u20a60 /month 100 requests/day. Community support. Basic endp\u2026",
+   "source": "harz-estate",
+   "seed": "harz api",
+   "digest": "180bee135b5cef6b"
+  },
+  {
+   "id": 10024,
+   "title": "HARZ AI Infrastructure Cloud",
+   "url": "https://harz-ai-cloud.hamzarabiu390.workers.dev/",
+   "domain": "harz-ai-cloud.hamzarabiu390.workers.dev",
+   "snippet": "\u2601\ufe0f HARZ AI Cloud AI Infrastructure for Builders Loading... \u2014 APIs \u2014 Developers \u2014 API Calls \u2014 Revenue APIs Pricing API Keys Docs Loading... Developer Name Email Plan Free \u2026",
+   "source": "harz-estate",
+   "seed": "harz api",
+   "digest": "654deae1df7e381d"
+  },
+  {
+   "id": 10078,
+   "title": "HARZ Intelligence Network",
+   "url": "https://harz-intel.hamzarabiu390.workers.dev/",
+   "domain": "harz-intel.hamzarabiu390.workers.dev",
+   "snippet": "\ud83d\udcca HARZ Intelligence Economic Intelligence Network Loading... \ud83d\udd12 Privacy-First \u2014 Signals \u2014 Sectors \u2014 Opportunities \u2014 Revenue Opportunity Engine Market Intel Forecasting D\u2026",
+   "source": "harz-estate",
+   "seed": "harz api",
+   "digest": "ec5280f7a6d994a1"
+  },
+  {
+   "id": 10001,
+   "title": "Harzdm.com \u2014 Digital Products Store | Getly",
+   "url": "https://www.getly.store/store/harzdm-com-mr951f69",
+   "domain": "www.getly.store",
+   "snippet": "\u2026hopping_cart Log in Sign up search H person_add Follow flag Harzdm.com Nigeria #1 Digital Products Marketplace \u2014 87+ products across 33 categories. AI tools, templates, c\u2026",
+   "source": "harz-estate",
+   "seed": "harz telegram bot",
+   "digest": "27dd5ed3aa0145b2"
+  },
+  {
+   "id": 10040,
+   "title": "HARZ WhatsApp Bot",
+   "url": "https://harz-wa-bot.harz.workers.dev/",
+   "domain": "harz-wa-bot.harz.workers.dev",
+   "snippet": "HARZ WhatsApp Bot Interact with 16 Revenue Platforms via WhatsApp 0 SESSIONS 0 COMMANDS TODAY 0 USERS How It Works Send a WhatsApp message to 08028687857 with any command\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "513bca79497e9330"
+  },
+  {
+   "id": 10425,
+   "title": "Harz Digital Store \u2014 HARZ Digital Learning Series",
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-store.html",
+   "domain": "rabiuhamza11.github.io",
+   "snippet": "12-BOOK COMPLETE SERIES HARZ Digital Learning Practical Computer Skills Series. From beginner to job-ready professional. 12 books, 108+ chapters, hands-on exercises. Auth\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "727bc44cb935a0eb"
+  },
+  {
+   "id": 10212,
+   "title": "HARZ Revenue Audit",
+   "url": "https://harz-revenue-audit.harz.workers.dev/",
+   "domain": "harz-revenue-audit.harz.workers.dev",
+   "snippet": "HARZ Revenue Audit Real-time Revenue Monitor Across 16 Platforms \u20a60 Total Revenue Across All Platforms 0 ACTIVE PLATFORMS 0 TRANSACTIONS 0 ACTIVE USERS Platform Breakdown\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "54aebba4d846ed9f"
+  },
+  {
+   "id": 10324,
+   "title": "HARZ Agent Builder",
+   "url": "https://harz-agent-builder.harz.workers.dev/",
+   "domain": "harz-agent-builder.harz.workers.dev",
+   "snippet": "HARZ Agent Builder Produce AI agents. Connect to WhatsApp, Telegram, Slack. Workers AI Powered D1 Memory Multi-Channel Like Base44 Superagent, but yours. Create AI agents\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "cbc9b35a4ce79302"
+  },
+  {
+   "id": 10051,
+   "title": "HARZ Notification Engine",
+   "url": "https://harz-notifications.harz.workers.dev/",
+   "domain": "harz-notifications.harz.workers.dev",
+   "snippet": "HARZ Notify Notification Engine for 16 Revenue Platforms 0 TOTAL SENT 0 PENDING 0 DELIVERED Send Notification WhatsApp Email SMS Escrow Subscriptions Micro-Lending Proper\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "5de603bce3ac7f28"
+  },
+  {
+   "id": 103,
+   "title": "HARZ FX \u2014 Live Exchange Rates",
+   "url": "https://harz-fx.harz.workers.dev/",
+   "domain": "harz-fx.harz.workers.dev",
+   "snippet": "HARZ FX Live Foreign Exchange & Currency Converter Loading... Convert Fiat Rates Crypto Chart Alerts Currency Converter \ud83c\uddfa\ud83c\uddf8 USD \ud83c\uddf3\ud83c\uddec NGN \ud83c\uddea\ud83c\uddfa EUR \ud83c\uddec\ud83c\udde7 GBP \ud83c\uddec\ud83c\udded GHS \ud83c\uddf0\ud83c\uddea \u2026",
+   "source": "HARZ",
+   "seed": "harz whatsapp",
+   "digest": "c3d13f68dd1daf2d"
+  },
+  {
+   "id": 10039,
+   "title": "HARZ Connect \u2014 Social Platform",
+   "url": "https://harz-connect.harz.workers.dev/",
+   "domain": "harz-connect.harz.workers.dev",
+   "snippet": "\u2026le content. Accounts, posting and storage are not live yet. HARZ Connect Connect. Share. Build Together. 0 MEMBERS 0 GROUPS 0 POSTS Popular Communities Abuja Traders Cryp\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "261da0a19925abfe"
+  },
+  {
+   "id": 10146,
+   "title": "HARZ Certifications",
+   "url": "https://harz-cert.harz.workers.dev/",
+   "domain": "harz-cert.harz.workers.dev",
+   "snippet": "HARZ Certifications Verifiable Certificates for HARZ Courses 0 COURSES 0 EXAMS TAKEN 0 CERTIFICATES Available Certifications Loading... Take an Exam Select a course... Cr\u2026",
+   "source": "harz-estate",
+   "seed": "harz whatsapp",
+   "digest": "0894da494c542bbe"
+  },
+  {
+   "id": 114,
+   "title": "HARZ Super App",
+   "url": "https://harz-super-app.harz.workers.dev/",
+   "domain": "harz-super-app.harz.workers.dev",
+   "snippet": "HARZ Super App 76 services \u2022 Updated Sep 9, 2026 PWA \u2022 Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Cloud \u2022 76 Workers Power\u2026",
+   "source": "HARZ",
+   "seed": "harz super app",
+   "digest": "9b6de2cdc372f5da"
+  },
+  {
+   "id": 109,
+   "title": "The App \u2014 HARZ Edge Telecom",
+   "url": "https://harz-edge-telecom.harz.workers.dev/app",
+   "domain": "harz-edge-telecom.harz.workers.dev",
+   "snippet": "\ud83d\udce1 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN \u2014 SEP 6, 2026 Overview Validation Gates The App G3 Network HARZ Edge v2.1 \u2014 Android mesh client Th\u2026",
+   "source": "HARZ",
+   "seed": "harz super app",
+   "digest": "76c9d6dbc4cdfd04"
+  },
+  {
+   "id": 1499,
+   "title": "HARZ Magic \u2014 Instant Deploy & Build Automation",
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-magic.html",
+   "domain": "rabiuhamza11.github.io",
+   "snippet": "HARZ Magic Instant deployment & build automation \u2014 One click to HARZ Cloud Deploy with Magic Push to HARZ Cloud, DeployForge, HarzGit, and Super App \u2014 all at once 88 Page\u2026",
+   "source": "HARZ",
+   "seed": "harz super app",
+   "digest": "ed9f04261a314771"
+  },
+  {
+   "id": 10469,
+   "title": "HarzGit \u2014 HARZ Code Repository",
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzgit.html",
+   "domain": "rabiuhamza11.github.io",
+   "snippet": "HarzGit HARZ-native code repository \u2014 All HARZ source code, deployed on HARZ Cloud Repositories Commits Deployments File Browser Repository Stats Total Repos 6 Total File\u2026",
+   "source": "harz-estate",
+   "seed": "harz super app",
+   "digest": "9aa09affc2f83417"
+  },
+  {
+   "id": 10185,
+   "title": "HARZ ETERNITY \u2014 On-Chain Digital Inheritance",
+   "url": "https://harz-eternity.hamzarabiu390.workers.dev/",
+   "domain": "harz-eternity.hamzarabiu390.workers.dev",
+   "snippet": "\u26a1 HARZ ETERNITY ON-CHAIN Part of HARZ Ecosystem Super App Wallet Swap Exchange Chain Super Cloud Connect Your Wallet Connect MetaMask to create and manage on-chain inheri\u2026",
+   "source": "harz-estate",
+   "seed": "harz super app",
+   "digest": "3900be258eeefc53"
+  },
+  {
+   "id": 110,
+   "title": "Validation Gates \u2014 HARZ Edge Telecom",
+   "url": "https://harz-edge-telecom.harz.workers.dev/gates",
+   "domain": "harz-edge-telecom.harz.workers.dev",
+   "snippet": "\ud83d\udce1 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN \u2014 SEP 6, 2026 Overview Validation Gates The App G3 Network G1/G2 Field Test Protocol v1.0 \u2014 frozen\u2026",
+   "source": "HARZ",
+   "seed": "harz super app",
+   "digest": "7ab687734d0bc586"
+  },
+  {
+   "id": 10189,
+   "title": "HARZ Orbital \u2014 Satellite Intelligence Grid",
+   "url": "https://harz-orbital.harz.workers.dev/",
+   "domain": "harz-orbital.harz.workers.dev",
+   "snippet": "\ud83d\udef0\ufe0f HARZ Orbital Africa's Satellite Intelligence Grid \u2014 8 endpoints, NASA satellite data, zero data cost Part of HARZ Ecosystem Location Latitude Longitude Abuja Lagos Ka\u2026",
+   "source": "harz-estate",
+   "seed": "harz super app",
+   "digest": "2a993d196db109e8"
+  },
+  {
+   "id": 10079,
+   "title": "HARZ Edge Cloud \u2014 Reserve Your Spot",
+   "url": "https://harz-hec-onboard.harz.workers.dev/",
+   "domain": "harz-hec-onboard.harz.workers.dev",
+   "snippet": "HARZ Edge Cloud Nigerian edge infrastructure. Coming soon. Reserve Your Spot HARZ Edge Cloud is bringing VPS, databases, and Kubernetes to Nigerian edge infrastructure \u2014 \u2026",
+   "source": "harz-estate",
+   "seed": "harz edge",
+   "digest": "2859ff105ba65206"
+  },
+  {
+   "id": 10354,
+   "title": "HARZ Edge Cloud",
+   "url": "https://harz-edge-cloud.harz.workers.dev/",
+   "domain": "harz-edge-cloud.harz.workers.dev",
+   "snippet": "HARZ Edge Cloud v1.0.0 | Deploy anywhere. Run everywhere. Overview Compute Storage Network Regions API Ecosystem Account Platform Status - INSTANCES - EDGE NODES 2 ACTIVE\u2026",
+   "source": "harz-estate",
+   "seed": "harz edge",
+   "digest": "37e30eecbc2e8002"
+  },
+  {
+   "id": 8,
+   "title": "HARZ Edge Telecom \u2014 Phone Mesh Network",
+   "url": "https://harz-edge-telecom.harz.workers.dev/",
+   "domain": "harz-edge-telecom.harz.workers.dev",
+   "snippet": "\ud83d\udce1 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN \u2014 SEP 6, 2026 Overview Validation Gates The App G3 Network Phones are the infrastructure HARZ Edge\u2026",
+   "source": "HARZ",
+   "seed": "harz edge",
+   "digest": "f696e254c3ba5d33"
+  },
+  {
+   "id": 10205,
+   "title": "HARZ Edge Runtime",
+   "url": "https://harz-edge-net.hamzarabiu390.workers.dev/runtime",
+   "domain": "harz-edge-net.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Edge Runtime EdgeNet v1.0 This phone is a node, not a terminal. Keys are held on-device (WebCrypto, non-extractable). The economic layer never knows what transport e\u2026",
+   "source": "harz-estate",
+   "seed": "harz edge",
+   "digest": "33bd9ce43d69cdd2"
+  },
+  {
+   "id": 10115,
+   "title": "HARZ Edge Telecom \u2014 Download",
+   "url": "https://harz-apk-server.hamzarabiu390.workers.dev/",
+   "domain": "harz-apk-server.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Edge Telecom v2.0 Free phone-to-phone calling No antenna needed No cell tower needed No internet needed Phones connect directly via Wi-Fi Direct All calls encrypted \u2026",
+   "source": "harz-estate",
+   "seed": "harz edge",
+   "digest": "639013638b165387"
+  },
+  {
+   "id": 10025,
+   "title": "HARZ Edge Net OS",
+   "url": "https://harz-edge-net.hamzarabiu390.workers.dev/",
+   "domain": "harz-edge-net.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Edge Net OS v0.3.0 Hardware-independent Edge Network Operating Layer \u2014 the app never knows what transport exists 1. Run the proof &#9654; Run Hostile-Transport Scena\u2026",
+   "source": "harz-estate",
+   "seed": "harz edge",
+   "digest": "f2fe149214e3a629"
+  },
+  {
+   "id": 10270,
+   "title": "/manifest.json",
+   "url": "https://harz-rpc-proxy.hamzarabiu390.workers.dev/manifest.json",
+   "domain": "harz-rpc-proxy.hamzarabiu390.workers.dev",
+   "snippet": "{\"name\":\"HARZ RPC Proxy\",\"short_name\":\"RPC Proxy\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"/icon.svg\",\u2026",
+   "source": "harz-estate",
+   "seed": "harz rpc proxy",
+   "digest": "c16d32b54ffa1088"
+  },
+  {
+   "id": 10184,
+   "title": "/manifest.json",
+   "url": "https://harz-rpc-proxy.harz.workers.dev/manifest.json",
+   "domain": "harz-rpc-proxy.harz.workers.dev",
+   "snippet": "{\"name\":\"HARZ RPC Proxy\",\"short_name\":\"RPC\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#1a237e\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\u2026",
+   "source": "harz-estate",
+   "seed": "harz rpc proxy",
+   "digest": "b697f9f5897c5c81"
+  },
+  {
+   "id": 10322,
+   "title": "HARZ Broadcast \u2014 Mass SMS Engine",
+   "url": "https://harz-broadcast.harz.workers.dev/",
+   "domain": "harz-broadcast.harz.workers.dev",
+   "snippet": "HARZ Broadcast Mass SMS Broadcast Engine \u2014 Powered by HARZ SMSC 0 Broadcasts 0 SMS Sent 0 Subscribers Send Broadcast Message Recipients (comma-separated, or leave empty t\u2026",
+   "source": "harz-estate",
+   "seed": "harz broadcast",
+   "digest": "783a4af4c05b6f2f"
+  },
+  {
+   "id": 701,
+   "title": "HARZ Radio \u2014 Sound Rail",
+   "url": "https://harz-edge-telecom.harz.workers.dev/radio",
+   "domain": "harz-edge-telecom.harz.workers.dev",
+   "snippet": "HARZ RADIO The sound rail \u2014 v1.4 \u00b7 62.5 bits/sec text \u00b7 send + broadcast + push-to-talk + voice inbox \u00b7 closed loop on Harz Mesh Self-test RUN SOUND ROUND TRIP Encodes a \u2026",
+   "source": "HARZ",
+   "seed": "harz broadcast",
+   "digest": "ad22dd48200b98ec"
+  },
+  {
+   "id": 10337,
+   "title": "/manifest.json",
+   "url": "https://harz-broadcast.harz.workers.dev/manifest.json",
+   "domain": "harz-broadcast.harz.workers.dev",
+   "snippet": "{\"name\":\"HARZ Broadcast\",\"short_name\":\"HARZ BC\",\"description\":\"Mass SMS Broadcast Engine on HARZ rails\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\u2026",
+   "source": "harz-estate",
+   "seed": "harz broadcast",
+   "digest": "9a76b9e144b628b8"
+  },
+  {
+   "id": 10369,
+   "title": "testbed/three_node_test.py \u2014 HARZ Mesh Lab",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=testbed%2Fthree_node_test.py",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "\u2026h Lab testbed/three_node_test.py #!/usr/bin/env python3 \"\"\" HARZ Mesh Lab \u2014 3-node protocol testbed. Replicates the APK's frame/relay/voice logic 1:1 as three separate pr\u2026",
+   "source": "harz-estate",
+   "seed": "harz broadcast",
+   "digest": "b39f781aacedf14b"
+  },
+  {
+   "id": 10113,
+   "title": "/",
+   "url": "https://harz-edge-app.harz.workers.dev/",
+   "domain": "harz-edge-app.harz.workers.dev",
+   "snippet": "{ \"name\": \"HARZ Edge Telecom\", \"version\": \"2.0.1\", \"status\": \"live\", \"hosted_on\": \"HARZ ecosystem\", \"downloads\": { \"apk\": \"/download/apk\", \"zip\": \"/download/zip\" }, \"debu\u2026",
+   "source": "harz-estate",
+   "seed": "harz broadcast",
+   "digest": "15a31c06e5366c4f"
+  },
+  {
+   "id": 10244,
+   "title": "HARZ Mesh Lab \u2014 3-node protocol test",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/vtest",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "\u2026 node C actually received The sender transmitted morse code HARZ (H&nbsp;=&nbsp;4 dits, A&nbsp;=&nbsp;dit-dah, R&nbsp;=&nbsp;dit-dah-dit, Z&nbsp;=&nbsp;dah-dah-dit-dit) a\u2026",
+   "source": "harz-estate",
+   "seed": "harz broadcast",
+   "digest": "a1e8fe08adb662dc"
+  },
+  {
+   "id": 10096,
+   "title": "HARZ NFT Market \u2014 Music & Film Tokenized",
+   "url": "https://harz-nft.harz.workers.dev/",
+   "domain": "harz-nft.harz.workers.dev",
+   "snippet": "HARZ NFT Market Tokenize Music & Film Rights on Polygon 0 LISTINGS 0 SALES VALUE 0 FEES EARNED Mint New NFT Mint NFT \u2014 2.5% Platform Fee Marketplace Loading... HARZ Digit\u2026",
+   "source": "harz-estate",
+   "seed": "harz nft",
+   "digest": "1411f776e02edfc1"
+  },
+  {
+   "id": 10227,
+   "title": "GDEG Energy \u2014 HARZ Cloud",
+   "url": "https://harz-rate-updater.harz.workers.dev/gdeg-energy",
+   "domain": "harz-rate-updater.harz.workers.dev",
+   "snippet": "\u2026ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Energ\u2026",
+   "source": "harz-estate",
+   "seed": "harz nft",
+   "digest": "c6f0b5c7debc6236"
+  },
+  {
+   "id": 10155,
+   "title": "/manifest.json",
+   "url": "https://harz-nft.harz.workers.dev/manifest.json",
+   "domain": "harz-nft.harz.workers.dev",
+   "snippet": "{\"name\":\"HARZ NFT Market\",\"short_name\":\"NFT\",\"start_url\":\"/\",\"display\":\"standalone\",\"orientation\":\"portrait\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#1a1a2e\",\"icons\":\u2026",
+   "source": "harz-estate",
+   "seed": "harz nft",
+   "digest": "3c2f03d31df99c52"
+  },
+  {
+   "id": 10246,
+   "title": "HARZ Energy Network",
+   "url": "https://harz-energy.hamzarabiu390.workers.dev/",
+   "domain": "harz-energy.hamzarabiu390.workers.dev",
+   "snippet": "\u26a1 HARZ Energy Power Marketplace Loading... \u2014 Solar \u2014 Trading \u2014 Orders \u2014 Revenue Solar Energy Trading Equipment Get Quote Loading... Loading... Loading... Service Type Sol\u2026",
+   "source": "harz-estate",
+   "seed": "harz marketplace",
+   "digest": "158ee83cacb891da"
+  },
+  {
+   "id": 10043,
+   "title": "HARZ Business OS",
+   "url": "https://harz-business-os.hamzarabiu390.workers.dev/",
+   "domain": "harz-business-os.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Business OS AI Workforce for African Business Welcome Give HARZ your business. HARZ runs the digital side of it. Get Started I already have an account How it works 1\u2026",
+   "source": "harz-estate",
+   "seed": "harz marketplace",
+   "digest": "f509ff15f88c97d6"
+  },
+  {
+   "id": 10012,
+   "title": "HARZ Economic Sky v1.0",
+   "url": "https://harz-economic-sky.hamzarabiu390.workers.dev/",
+   "domain": "harz-economic-sky.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Economic Sky v2.0.0 \u2014 7-Layer Economic Platform 7 Layers \u2014 All Active L1 Identity \u2014 8 entity types, orgs, providers L2 Trust \u2014 Explainable 7-domain scoring L3 Resour\u2026",
+   "source": "harz-estate",
+   "seed": "harz marketplace",
+   "digest": "6805fd74af0b5b81"
+  },
+  {
+   "id": 10292,
+   "title": "app/src/main/java/com/harz/mesh/MainActivity.kt \u2014 HARZ Mesh Lab",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=app%2Fsrc%2Fmain%2Fjava%2Fcom%2Fharz%2Fmesh%2FMainActivity.kt",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "&#8592; All files \u00b7 &#8592; Mesh Lab app/src/main/java/com/harz/mesh/MainActivity.kt package com.harz.mesh import android.Manifest import android.annotation.SuppressLint \u2026",
+   "source": "harz-estate",
+   "seed": "harz bridge",
+   "digest": "c237b07130dc10b6"
+  },
+  {
+   "id": 10343,
+   "title": "testbed/cloud_node.py \u2014 HARZ Mesh Lab",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=testbed%2Fcloud_node.py",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "\u2026rty node (\"you mount one phone, me mount mine\"). Speaks the HARZ Mesh frame protocol over the live bridge worker: - answers every ping from a phone with a pong (real inte\u2026",
+   "source": "harz-estate",
+   "seed": "harz bridge",
+   "digest": "32df4e8d5fe276ad"
+  },
+  {
+   "id": 10234,
+   "title": "testbed/fake_phone.py \u2014 HARZ Mesh Lab",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=testbed%2Ffake_phone.py",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "\u2026ct, sys, time, urllib.request, urllib.parse BASE = \"https://harz-mesh-lab.hamzarabiu390.workers.dev\" WHO = \"PHONE-dotest\" last = \"\" rtts = [] voice_rx = bytearray() def s\u2026",
+   "source": "harz-estate",
+   "seed": "harz bridge",
+   "digest": "c478493c754950be"
+  },
+  {
+   "id": 10166,
+   "title": "HARZ Mesh Lab \u2014 G1/G2 Radio Reality",
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/",
+   "domain": "harz-mesh-lab.hamzarabiu390.workers.dev",
+   "snippet": "HARZ Mesh Lab \u2014 G1/G2 Radio Reality Can ordinary Android phones form a useful, autonomous, multi-hop network without cellular infrastructure? The gates, the harness, and \u2026",
+   "source": "harz-estate",
+   "seed": "harz bridge",
+   "digest": "b5a20c4efd12b3ed"
+  },
+  {
+   "id": 10424,
+   "title": "/manifest.json",
+   "url": "https://harz-bridge.harz.workers.dev/manifest.json",
+   "domain": "harz-bridge.harz.workers.dev",
+   "snippet": "{\"name\":\"HARZ Bridge\",\"short_name\":\"HARZ Bridge\",\"description\":\"HARZ Chain \u2194 Polygon bridge\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_co\u2026",
+   "source": "harz-estate",
+   "seed": "harz bridge",
+   "digest": "541f00144d484e69"
+  },
+  {
+   "id": 10176,
+   "title": "DPB-1 Test (HARZ)",
+   "url": "https://harz-dpb1.hamzarabiu390.workers.dev/",
+   "domain": "harz-dpb1.hamzarabiu390.workers.dev",
+   "snippet": "DPB-1 Persistence Test HARZ Delay-Tolerant Bundle Protocol \u2014 Gateway Test Console STORAGE: Cloudflare KV \u2014 state survives cold starts and isolates (v1.1 fix) SENT: 0 ACKE\u2026",
+   "source": "harz-estate",
+   "seed": "harz cold storage",
+   "digest": "083d3b10da814f22"
+  },
+  {
+   "id": 10047,
+   "title": "HARZ Mail \u2014 @mail.harz",
+   "url": "https://harz-mail.hamzarabiu390.workers.dev/",
+   "domain": "harz-mail.hamzarabiu390.workers.dev",
+   "snippet": "M HARZ Mail @mail.harz \u2014 your address, your ecosystem Sign up Accounts Log out Log in to @mail.harz Log in New here? Create an address \u2192 Forgot password? \u2192 Reset your pas\u2026",
+   "source": "harz-estate",
+   "seed": "harz pos",
+   "digest": "5fe19861d34c4cd2"
+  },
+  {
+   "id": 10130,
+   "title": "HARZ 100-Merchant Revenue Experiment",
+   "url": "https://harz-revenue-experiment.hamzarabiu390.workers.dev/",
+   "domain": "harz-revenue-experiment.hamzarabiu390.workers.dev",
+   "snippet": "\ud83e\uddea HARZ Revenue Experiment Phase 1: 20 Merchants \u2192 Measure Real GMV Controlled Experiment Experiment Merchant Tracker The Flywheel Financing Layer Phase 1 \u2014 20 Merchants \u2026",
+   "source": "harz-estate",
+   "seed": "harz pos",
+   "digest": "b54b7502e6e7ed23"
+  },
+  {
+   "id": 10172,
+   "title": "HARZ White-Label PWA Factory \u2014 Apps for Nigerian Businesses",
+   "url": "https://harz-whitelabel.harz.workers.dev/",
+   "domain": "harz-whitelabel.harz.workers.dev",
+   "snippet": "HARZ White-Label Factory PWA Templates for Nigerian Businesses \u2014 Deploy in Minutes 0 ORDERS 0 REVENUE 0 ACTIVE CLIENTS Available Templates Restaurant PWA \u20a650,000 setup + \u2026",
+   "source": "harz-estate",
+   "seed": "harz school",
+   "digest": "bdc482e61a7d4602"
+  },
+  {
+   "id": 10004,
+   "title": "HARZ Forms \u2014 Build Forms That Collect Payments",
+   "url": "https://harz-forms.harz.workers.dev/",
+   "domain": "harz-forms.harz.workers.dev",
+   "snippet": "HARZ Forms Build Forms That Collect Payments via Paystack Drag & Drop Builder Create forms with text, email, phone, select, radio, checkbox fields. Paystack Integration A\u2026",
+   "source": "harz-estate",
+   "seed": "harz school",
+   "digest": "2bc8e06b7ba1d524"
+  },
+  {
+   "id": 10394,
+   "title": "HarzOS One \u2014 Your Number Is A Computer",
+   "url": "https://harzos-one.harz.workers.dev/",
+   "domain": "harzos-one.harz.workers.dev",
+   "snippet": "HarzOS One Serverless \u2022 No device Your phone number is a computer. Identity, money and school \u2014 running on one number, on zero servers. Works on a 5,000 naira feature pho\u2026",
+   "source": "harz-estate",
+   "seed": "harz school",
+   "digest": "1a46b4aedff0a7a5"
+  }
+ ]
+}

@@ -117,3 +117,55 @@ refusal, 0 external calls, receipt e65095999e). Frozen bench F under Option 2:
 them; HARZ refuses/cannot synthesize) — queued as v0.5.1 improvements (Code-1
 analysis answers routed directly). engine=harz and engine=offline re-verified
 zero-external. Raw: gate-v05-raw.json, bench-F-v05-raw.json.
+
+## v0.6 — Learning & Improvement Gate (Sept 24, 2026) — PASSED 12/12
+The factory works; the model achieved parity, not superiority. All numbers below
+are from today's frozen-suite runs (HARZ-REASONER-BENCH v1.0, integrity digest
+30851363…, unchanged).
+
+What was built (all deployed at harz-intelligence.harz.workers.dev, version 0.6):
+1. Dataset firewall (learning/firewall.js): contamination, duplicates, poison,
+   memory-leak, and vanishing-evidence rejection — all proven live during the
+   build (caught benchmark-verbatim tool cases and train/holdout mirror-URL
+   collisions on its own initiative).
+2. Training-data factory (learning/factory.js): 63 provenance-carrying records
+   built from HARZ Search corpus sample (141 docs), HARZ specs, human-reviewed
+   corrections (H2 CFO lesson, v0.5.1 memory-leak lesson), verified agent traces,
+   and HARZ synthetic refusal data. 58 accepted, 5 firewall rejections.
+3. Trainer (learning/trainer.js): deterministic IDF recalibration, learned term
+   expansion (co-occurrence), sentence-level extraction thresholds, answer/refuse
+   calibration with refusal-recall floor = 100%. Zero external calls.
+   Run RUN-61bb5b50c588, weights digest afb246f06917, reproducible in-worker
+   (/api/learning/v1/reproduce: byte-identical).
+4. HARZ-Reasoner-1.2 (reasoner12-runtime.js): first factory-trained model.
+   Registered as experimental; bench target D added.
+5. Protected evaluation: frozen benchmark + 18-case private holdout (mirror-dedup,
+   KV-stored, never served by any endpoint). Holdout: 1.1 and 1.2 both 17/18,
+   refusal recall 1.0 both, memory boundary intact both, zero hallucinations both.
+6. Learning API: /api/learning/v1/{status,dataset,reproduce,test}.
+
+Benchmark verdict (frozen 20-case suite, today):
+A external: 11/20 @5645ms, 22 ext calls
+B HARZ-1.0 (frozen): 8/20 @335ms, 0 ext
+C HARZ-1.1 (production primary): 11/20 @271ms, 0 ext
+D HARZ-1.2 (trained): 13/20 @~335ms owned-case avg, 4 ext (arithmetic fallback
+  only, registry-declared). Harz-owned set IDENTICAL to C's 11 (K1,K2,K3,C2,S1,S2,T1,T2,H1,H2,N2).
+F production router: 14/20 @3486ms, 3 ext
+offline death test: 2/2, 0 ext
+
+Honest verdict per Dad's law (the benchmark decides): 1.2 = 1.1 in HARZ-owned
+capability (parity, zero regressions, refusal willingness and memory boundary
+fully preserved). Promotion NOT taken — 1.1 stays production primary; 1.2 stays
+validated-experimental as bench target D. The v0.6 gain is the FACTORY (safe,
+reproducible, contamination-proof learning), not this model iteration.
+The benchmark also localized the real bottleneck for v0.7: evidence retrieval
+quality — RE1, RE2, LC1, LC2, N1, R3 fail for ALL engines including the external
+provider (11/20). Next gain lives in Search-1 ranking/assembly, not in weights.
+
+Gate: /api/learning/v1/test 12/12 (contamination, duplicates, poison,
+unsupported synthetic, vanishing source, reproduction, overfit detector,
+refusal preservation, memory boundary live + at dataset boundary, external
+unavailability, frozen-bench integrity, K3 enumeration stability [15,15,15]).
+Frozen gates: v0.5 13/13, v0.5.1 10/10 — unchanged. Browser-verified live:
+grounded answer, receipt e52830de5c2c, shell v0.6 (SW cache bumped).
+Raw: gates/bench-v06-{A,B,C,D,F,offline}.json, learning/*.

@@ -1,0 +1,285 @@
+{
+ "evaluated_at": "2026-09-24",
+ "r11": {
+  "model": "HARZ-Reasoner-1.1",
+  "holdout_pass": 17,
+  "holdout_total": 18,
+  "holdout_accuracy": 0.9444,
+  "refusal_recall": 1,
+  "memory_boundary_pass": true,
+  "hallucinations": 0,
+  "by_type": {
+   "extraction": {
+    "pass": 7,
+    "n": 8
+   },
+   "refusal": {
+    "pass": 4,
+    "n": 4
+   },
+   "memory_boundary": {
+    "pass": 2,
+    "n": 2
+   },
+   "arithmetic": {
+    "pass": 2,
+    "n": 2
+   },
+   "structured": {
+    "pass": 2,
+    "n": 2
+   }
+  },
+  "rows": [
+   {
+    "id": "HX0",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX1",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX2",
+    "type": "extraction",
+    "pass": false,
+    "detail": "refused"
+   },
+   {
+    "id": "HX3",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX4",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX5",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX6",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX7",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HR0",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR1",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR2",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR3",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HM1",
+    "type": "memory_boundary",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HM2",
+    "type": "memory_boundary",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HA1",
+    "type": "arithmetic",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HA2",
+    "type": "arithmetic",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HS1",
+    "type": "structured",
+    "pass": true,
+    "detail": "json:positive"
+   },
+   {
+    "id": "HS2",
+    "type": "structured",
+    "pass": true,
+    "detail": "json:negative"
+   }
+  ]
+ },
+ "r12": {
+  "model": "HARZ-Reasoner-1.2",
+  "holdout_pass": 17,
+  "holdout_total": 18,
+  "holdout_accuracy": 0.9444,
+  "refusal_recall": 1,
+  "memory_boundary_pass": true,
+  "hallucinations": 0,
+  "by_type": {
+   "extraction": {
+    "pass": 7,
+    "n": 8
+   },
+   "refusal": {
+    "pass": 4,
+    "n": 4
+   },
+   "memory_boundary": {
+    "pass": 2,
+    "n": 2
+   },
+   "arithmetic": {
+    "pass": 2,
+    "n": 2
+   },
+   "structured": {
+    "pass": 2,
+    "n": 2
+   }
+  },
+  "rows": [
+   {
+    "id": "HX0",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX1",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX2",
+    "type": "extraction",
+    "pass": false,
+    "detail": "refused"
+   },
+   {
+    "id": "HX3",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX4",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX5",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX6",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HX7",
+    "type": "extraction",
+    "pass": true,
+    "detail": "answered"
+   },
+   {
+    "id": "HR0",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR1",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR2",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HR3",
+    "type": "refusal",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HM1",
+    "type": "memory_boundary",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HM2",
+    "type": "memory_boundary",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HA1",
+    "type": "arithmetic",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HA2",
+    "type": "arithmetic",
+    "pass": true,
+    "detail": "refused"
+   },
+   {
+    "id": "HS1",
+    "type": "structured",
+    "pass": true,
+    "detail": "json:positive"
+   },
+   {
+    "id": "HS2",
+    "type": "structured",
+    "pass": true,
+    "detail": "json:negative"
+   }
+  ]
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "generated_at": "2026-09-24",
+ "corpus_docs": 141,
+ "train_pool": 31,
+ "holdout_pool": 110,
+ "records_built": 63,
+ "accepted": 58,
+ "rejected": [
+  {
+   "sample_id": "SMP-eb82e600c8e0",
+   "rejections": [
+    "CONTAMINATION: holdout-question-variant vs HX2"
+   ]
+  },
+  {
+   "sample_id": "SMP-8addfc10954d",
+   "rejections": [
+    "CONTAMINATION: holdout-question-variant vs HX2"
+   ]
+  },
+  {
+   "sample_id": "SMP-ae36e5ac234d",
+   "rejections": [
+    "CONTAMINATION: holdout-question-variant vs HX1"
+   ]
+  },
+  {
+   "sample_id": "SMP-7e9dd468e866",
+   "rejections": [
+    "CONTAMINATION: holdout-question-variant vs HX5"
+   ]
+  },
+  {
+   "sample_id": "SMP-0e50e1f70ee4",
+   "rejections": [
+    "CONTAMINATION: holdout-question-variant vs HX1"
+   ]
+  }
+ ],
+ "by_type": {
+  "harz_knowledge": 29,
+  "reasoning": 18,
+  "refusal": 7,
+  "tool_selection": 3,
+  "policy": 1
+ }
+}

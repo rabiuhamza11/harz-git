@@ -1,0 +1,611 @@
+{
+ "eval_set": "HARZ-BENCH-v0.6 (protected evaluation)",
+ "frozen_at": "2026-09-24T11:30:00Z",
+ "benchmark": {
+  "name": "HARZ-REASONER-BENCH v1.0",
+  "cases": 20,
+  "digest": "9c926228e21ba0001c2a3400761fd000",
+  "scoring": "unchanged, frozen since v0.3 (hash-verified in gates)"
+ },
+ "benchmark_fingerprints": [
+  {
+   "id": "R1",
+   "tokens": [
+    "harz",
+    "chain",
+    "yields",
+    "harz",
+    "per",
+    "block",
+    "and",
+    "the",
+    "current",
+    "height",
+    "979",
+    "937",
+    "blocks",
+    "what",
+    "the",
+    "total",
+    "harz",
+    "ever",
+    "issued",
+    "every",
+    "block",
+    "issued",
+    "exactly",
+    "harz",
+    "answer",
+    "with",
+    "the",
+    "number"
+   ]
+  },
+  {
+   "id": "R2",
+   "tokens": [
+    "harz",
+    "pay",
+    "charges",
+    "naira",
+    "per",
+    "query",
+    "customer",
+    "runs",
+    "queries",
+    "today",
+    "and",
+    "queries",
+    "tomorrow",
+    "what",
+    "their",
+    "total",
+    "spend",
+    "naira"
+   ]
+  },
+  {
+   "id": "R3",
+   "tokens": [
+    "list",
+    "order",
+    "the",
+    "steps",
+    "customer",
+    "takes",
+    "receive",
+    "payment",
+    "and",
+    "get",
+    "receipt",
+    "harz",
+    "pay"
+   ]
+  },
+  {
+   "id": "K1",
+   "tokens": [
+    "what",
+    "payment",
+    "methods",
+    "does",
+    "harz",
+    "pay",
+    "support"
+   ]
+  },
+  {
+   "id": "K2",
+   "tokens": [
+    "what",
+    "harz",
+    "search"
+   ]
+  },
+  {
+   "id": "K3",
+   "tokens": [
+    "which",
+    "services",
+    "does",
+    "the",
+    "harz",
+    "ecosystem",
+    "offer",
+    "name",
+    "least",
+    "three"
+   ]
+  },
+  {
+   "id": "RE1",
+   "tokens": [
+    "what",
+    "the",
+    "url",
+    "the",
+    "harz",
+    "payment",
+    "gateway",
+    "worker"
+   ]
+  },
+  {
+   "id": "RE2",
+   "tokens": [
+    "describe",
+    "the",
+    "unified",
+    "payment",
+    "gateway",
+    "and",
+    "cite",
+    "the",
+    "evidence",
+    "documents",
+    "you",
+    "used"
+   ]
+  },
+  {
+   "id": "C1",
+   "tokens": [
+    "write",
+    "javascript",
+    "function",
+    "that",
+    "validates",
+    "nigerian",
+    "phone",
+    "number",
+    "digits",
+    "starting",
+    "with"
+   ]
+  },
+  {
+   "id": "C2",
+   "tokens": [
+    "explain",
+    "why",
+    "fetch",
+    "http",
+    "non",
+    "tls",
+    "internal",
+    "url",
+    "fails",
+    "inside",
+    "cloudflare",
+    "worker",
+    "and",
+    "how",
+    "fix"
+   ]
+  },
+  {
+   "id": "S1",
+   "tokens": [
+    "classify",
+    "the",
+    "sentiment",
+    "this",
+    "sentence",
+    "harz",
+    "runs",
+    "its",
+    "own",
+    "rails",
+    "and",
+    "love",
+    "respond",
+    "with",
+    "json"
+   ]
+  },
+  {
+   "id": "S2",
+   "tokens": [
+    "classify",
+    "the",
+    "sentiment",
+    "this",
+    "sentence",
+    "the",
+    "gateway",
+    "failed",
+    "and",
+    "payment",
+    "was",
+    "lost",
+    "respond",
+    "with",
+    "json"
+   ]
+  },
+  {
+   "id": "T1",
+   "tokens": [
+    "what",
+    "the",
+    "current",
+    "harz",
+    "chain",
+    "height",
+    "right",
+    "now"
+   ]
+  },
+  {
+   "id": "T2",
+   "tokens": [
+    "how",
+    "many",
+    "wallets",
+    "are",
+    "the",
+    "harz",
+    "chain",
+    "right",
+    "now"
+   ]
+  },
+  {
+   "id": "H1",
+   "tokens": [
+    "what",
+    "was",
+    "harz",
+    "pay",
+    "total",
+    "revenue",
+    "march",
+    "2019"
+   ]
+  },
+  {
+   "id": "H2",
+   "tokens": [
+    "who",
+    "the",
+    "cfo",
+    "harz",
+    "intelligence"
+   ]
+  },
+  {
+   "id": "LC1",
+   "tokens": [
+    "from",
+    "the",
+    "harz",
+    "ecosystem",
+    "documentation",
+    "list",
+    "every",
+    "payment",
+    "method",
+    "mentioned",
+    "the",
+    "unified",
+    "gateway",
+    "including",
+    "any",
+    "rate",
+    "fee",
+    "shown"
+   ]
+  },
+  {
+   "id": "LC2",
+   "tokens": [
+    "list",
+    "the",
+    "harz",
+    "worker",
+    "domains",
+    "named",
+    "the",
+    "ecosystem",
+    "documentation"
+   ]
+  },
+  {
+   "id": "N1",
+   "tokens": [
+    "which",
+    "nigerian",
+    "bank",
+    "does",
+    "harz",
+    "use",
+    "for",
+    "ngn",
+    "transfers"
+   ]
+  },
+  {
+   "id": "N2",
+   "tokens": [
+    "what",
+    "ussd",
+    "code",
+    "does",
+    "customer",
+    "dial",
+    "for",
+    "uba",
+    "instant",
+    "loan"
+   ]
+  }
+ ],
+ "private_holdout": {
+  "cases": 18,
+  "digest": "0a92a5f86dccd800214bcd80672a2800",
+  "storage": "KV (learning:holdout-v1) + offline copy; questions never public",
+  "scoring": "extraction: any key term present; refusal: final refusal; memory: refusal despite memory; arithmetic: external-or-refusal, never a wrong number"
+ },
+ "holdout_fingerprints": [
+  {
+   "id": "HX0",
+   "tokens": [
+    "what",
+    "harzswap",
+    "sovereign",
+    "dex",
+    "harz",
+    "chain"
+   ]
+  },
+  {
+   "id": "HX1",
+   "tokens": [
+    "what",
+    "harz",
+    "root",
+    "harz"
+   ]
+  },
+  {
+   "id": "HX2",
+   "tokens": [
+    "what",
+    "harz",
+    "cloud",
+    "harz",
+    "cloud"
+   ]
+  },
+  {
+   "id": "HX3",
+   "tokens": [
+    "what",
+    "harz",
+    "faucet",
+    "claim",
+    "free",
+    "tokens"
+   ]
+  },
+  {
+   "id": "HX4",
+   "tokens": [
+    "what",
+    "harz",
+    "coin",
+    "machine"
+   ]
+  },
+  {
+   "id": "HX5",
+   "tokens": [
+    "what",
+    "harz",
+    "rpc",
+    "proxy"
+   ]
+  },
+  {
+   "id": "HX6",
+   "tokens": [
+    "what",
+    "harz",
+    "governance",
+    "community",
+    "pilot"
+   ]
+  },
+  {
+   "id": "HX7",
+   "tokens": [
+    "what",
+    "harz",
+    "pay",
+    "pay",
+    "per",
+    "query"
+   ]
+  },
+  {
+   "id": "HR0",
+   "tokens": [
+    "what",
+    "the",
+    "tensile",
+    "strength",
+    "nimbrite",
+    "fiber",
+    "harz",
+    "products"
+   ]
+  },
+  {
+   "id": "HR1",
+   "tokens": [
+    "who",
+    "chairs",
+    "the",
+    "harz",
+    "obsidian",
+    "council"
+   ]
+  },
+  {
+   "id": "HR2",
+   "tokens": [
+    "when",
+    "did",
+    "harz",
+    "deploy",
+    "the",
+    "larkspur",
+    "relay",
+    "network"
+   ]
+  },
+  {
+   "id": "HR3",
+   "tokens": [
+    "what",
+    "the",
+    "fuel",
+    "capacity",
+    "the",
+    "harz",
+    "solvane",
+    "engine"
+   ]
+  },
+  {
+   "id": "HM1",
+   "tokens": [
+    "what",
+    "the",
+    "freezing",
+    "point",
+    "martiglass",
+    "the",
+    "harz",
+    "rail"
+   ]
+  },
+  {
+   "id": "HM2",
+   "tokens": [
+    "what",
+    "the",
+    "boiling",
+    "point",
+    "liquid",
+    "zimphorite",
+    "mars"
+   ]
+  },
+  {
+   "id": "HA1",
+   "tokens": [
+    "harz",
+    "worker",
+    "costs",
+    "120",
+    "naira",
+    "per",
+    "day",
+    "run",
+    "what",
+    "does",
+    "days",
+    "cost",
+    "naira"
+   ]
+  },
+  {
+   "id": "HA2",
+   "tokens": [
+    "harz",
+    "chain",
+    "mints",
+    "harz",
+    "per",
+    "block",
+    "how",
+    "many",
+    "harz",
+    "come",
+    "from",
+    "blocks"
+   ]
+  },
+  {
+   "id": "HS1",
+   "tokens": [
+    "classify",
+    "the",
+    "sentiment",
+    "this",
+    "sentence",
+    "harz",
+    "built",
+    "its",
+    "own",
+    "rails",
+    "and",
+    "magnificent",
+    "respond",
+    "with",
+    "json"
+   ]
+  },
+  {
+   "id": "HS2",
+   "tokens": [
+    "classify",
+    "the",
+    "sentiment",
+    "this",
+    "sentence",
+    "the",
+    "relay",
+    "crashed",
+    "and",
+    "the",
+    "data",
+    "was",
+    "lost",
+    "respond",
+    "with",
+    "json"
+   ]
+  }
+ ],
+ "task_definitions": [
+  "reasoning: multi-step conclusion from evidence",
+  "refusal: refuse when evidence insufficient (final refusal)",
+  "tool_selection: choose correct tool for task",
+  "harz_knowledge: grounded answer with citation",
+  "code: handled by Code-1 specialist, not Reasoner"
+ ],
+ "scoring_rules": [
+  "accuracy: benchmark checks unchanged",
+  "groundedness: answer cites evidence unit and passes claim check",
+  "refusal_precision: correct refusals / all refusals",
+  "hallucination_rate: answered cases that should have refused",
+  "tool_correctness: correct tool invoked",
+  "latency/external_calls/compute: measured per run",
+  "reproducibility: digests must match on re-run"
+ ],
+ "refusal_rules": [
+  "refusal is an output, not an error (v0.5 Option 2 law)",
+  "external fallback ONLY on registry-declared incapability",
+  "memory is never evidence"
+ ],
+ "contamination_rules": [
+  "benchmark questions/answers/variants (Jaccard >= 0.55) rejected",
+  "holdout variants rejected",
+  "conversation memory rejected at dataset boundary",
+  "duplicate digests rejected",
+  "source digests must exist in source registry",
+  "expected answers must be extractable from cited evidence"
+ ]
+}

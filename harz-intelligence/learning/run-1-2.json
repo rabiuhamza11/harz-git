@@ -1,0 +1,53 @@
+{
+ "run_id": "RUN-61bb5b50c588",
+ "model": "HARZ-Reasoner-1.2",
+ "config": {
+  "id": "train-cfg-v1",
+  "seed": 7701,
+  "threshold_grid": [
+   0.16,
+   0.18,
+   0.2,
+   0.22,
+   0.24,
+   0.26,
+   0.28,
+   0.3,
+   0.32,
+   0.34,
+   0.36,
+   0.38,
+   0.4
+  ],
+  "sentence_grid": [
+   0.1,
+   0.12,
+   0.14,
+   0.16,
+   0.18,
+   0.2,
+   0.24,
+   0.28
+  ],
+  "expansion": {
+   "max_per_term": 3,
+   "min_co": 2,
+   "weight": 0.4,
+   "max_terms": 4000
+  },
+  "refusal_recall_floor": 1,
+  "external_calls_allowed": 0
+ },
+ "dataset_digest": "9bb398ffa4900c00c66881006ee61400",
+ "corpus_index_digest": "b9395e5388a45320dab33ca0f5860c393374bba7e17c54f8b3075653d2042bed",
+ "weights_digest": "afb246f06917ff001da0570057c43800",
+ "train_metrics": {
+  "knowledge_accuracy": 0.9787,
+  "refusal_recall": 1,
+  "answer_threshold": 0.16,
+  "sentence_threshold": 0.28,
+  "train_records": 58,
+  "pipeline_external_calls": 0
+ },
+ "latency_ms": 74
+}

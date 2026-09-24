@@ -1,0 +1,1513 @@
+{
+ "dataset": "HARZ-TRAIN-v1.0",
+ "dataset_digest": "9bb398ffa4900c00c66881006ee61400",
+ "manifest_benchmark_digest": "9c926228e21ba0001c2a3400761fd000",
+ "records": [
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Chain Explorer — Proof of Edge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask",
+     "url": "https://harz-chain-v2.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "explorer",
+    "chain",
+    "proof"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "fe569253a3fa33da"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-a1f839eb77b6",
+   "digest": "e13a44afc37d44008b68e400f94d6400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Bridge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…",
+     "url": "https://harz-bridge.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "bridge",
+    "chain",
+    "polygon"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "a58f5a456e331919"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-dd82d6ac2096",
+   "digest": "c94e46e4c8cdb8003bb8c000f6fe1400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Miner Cron?",
+   "evidence_units": [
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…",
+     "url": "https://harz-miner-cron.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "miner",
+    "cron",
+    "block"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "0b851347ff421deb"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-56c8698c64c1",
+   "digest": "44e4c9ef61c14600f85acc00bc592800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ ECP-1 — Shutdown-Proof Economy?",
+   "evidence_units": [
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…",
+     "url": "https://harz-ecp1.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "ecp",
+    "shutdown",
+    "proof"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "57c7d01bb58404f6"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-692d72dfb02d",
+   "digest": "0ca58b713625480004d4b8009c5a7000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Genesis Hospital?",
+   "evidence_units": [
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…",
+     "url": "https://harz-genesis-hospital.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "hospital",
+    "genesis",
+    "register"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "69d42fb3c81d68c0"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-67e773d02cfb",
+   "digest": "61944c986b26d300e7cbb40085d06200",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Wholesale Cloud — Reseller Hosting Platform?",
+   "evidence_units": [
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …",
+     "url": "https://harz-wholesale.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "reseller",
+    "wholesale",
+    "hosting"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "051bbb3549f54545"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-b146422cc5b6",
+   "digest": "bea029d89bb774008c06fa80f8283200",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Edge Telecom — SMS API on Edge Compute?",
+   "evidence_units": [
+    {
+     "title": "HARZ Edge Telecom — SMS API on Edge Compute",
+     "text": "HARZ Edge Telecom World's First Telecom Operator on Edge Compute SMS API, OTP Delivery, Voice Calling, eSIM — on 330+ Cloudflare Edge PoPs Get API Key → View Docs SendCha…",
+     "url": "https://harz-telecom-landing.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "edge",
+    "compute",
+    "telecom"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "6c6371c29ef0a38e"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-6c54fe785e32",
+   "digest": "b6e044508d990700ba76f0805ce63a00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Verify — OTP Verification API?",
+   "evidence_units": [
+    {
+     "title": "HARZ Verify — OTP Verification API",
+     "text": "HARZ Verify OTP Verification API — Powered by HARZ Gateway SMS Send OTP Phone Number Purpose (optional) Send Verification Code Verify OTP Phone Number Code Verify Code Fe…",
+     "url": "https://harz-verify.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "verify",
+    "otp",
+    "verification"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "9d8abc9f13d306c4"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-6a9f76d32c19",
+   "digest": "6192c760f8b88000f4768800710d5800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ SkyEye — Satellite Oracle for Feature Phones?",
+   "evidence_units": [
+    {
+     "title": "HARZ SkyEye — Satellite Oracle for Feature Phones",
+     "text": "👁️ HARZ SkyEye The world's first satellite oracle for feature phones — no internet, no apps, any phone World-First Invention • HARZ Ecosystem Try It — Live USSD Simulato…",
+     "url": "https://harz-skyeye.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "skyeye",
+    "satellite",
+    "feature"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "a187adc9d21441e1"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-a340ca9c58e0",
+   "digest": "95e688ec2d895400f15e7a0092b9ec00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Workforce Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Workforce Network",
+     "text": "💼 HARZ Workforce Network Human + AI Workforce Economy 10 Revenue Streams · 12 AI Agents · 8 Service Categories Overview Revenue AI Agents Human Services Hybrid Projects …",
+     "url": "https://harz-workforce.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "workforce",
+    "human",
+    "agents"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "d8ca5e46a35e3460"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-1bc82134dd26",
+   "digest": "43b3be087b74e8007555a60034109000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Health — AI Health Assistant?",
+   "evidence_units": [
+    {
+     "title": "HARZ Health — AI Health Assistant",
+     "text": "🩺 HARZ Health AI Health Assistant for Nigeria 🤒 Triage 🏥 Clinics 👤 Profile ⏰ Reminders 🤒 Symptom Triage Describe your symptoms and get instant AI-powered guidance. Y…",
+     "url": "https://harz-health.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "health",
+    "assistant",
+    "triage"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "c30c452b8f7bc7f0"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-0baab168420d",
+   "digest": "a1ae9f041d18b0005f41ca008c59c400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Health Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Health Network",
+     "text": "⚕️ HARZ Health Healthcare Services Network Loading... — Doctors — Appointments — Pharmacy — Revenue Doctors Pharmacy Telemedicine Book Appointment Loading... Loading... L…",
+     "url": "https://harz-omega-health.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "doctors",
+    "pharmacy",
+    "health"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "79c50052a7a57172"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-3fd720037b0f",
+   "digest": "12aa9d507c044000bbdef6804b6c9100",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Daily Runner?",
+   "evidence_units": [
+    {
+     "title": "HARZ Daily Runner",
+     "text": "HARZ Daily Runner Automated ecosystem reports /run/morning Morning briefing (5 AM WAT) /run/evening Evening revenue (9 PM WAT) /run/report Daily full report (8 AM WAT) /r…",
+     "url": "https://harz-daily.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "wat",
+    "daily",
+    "run"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "edd3060cc6aa8e54"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4acabce00c04",
+   "digest": "9f7d470928235700bd11740024be5800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is /?",
+   "evidence_units": [
+    {
+     "title": "/",
+     "text": "{ \"service\": \"HARZ Token Treasury\", \"version\": \"4.0.1\", \"description\": \"Live treasury status — aggregated from the real bridge, PRISM and chain endpoints\", \"storage\": \"no…",
+     "url": "https://harz-treasury.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "treasury",
+    "aggregated",
+    "prism"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "43380e2d8b7ebd49"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-f4d1ca103602",
+   "digest": "d8db98a42c220800cdcc13807f28b800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Quidax Bridge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Quidax Bridge",
+     "text": "… ETH USDT Wallet Loading... 0 USDT Actions Sync Balances to HARZ Wallet Generate New BTC Address Generate New ETH Address HARZ Digital Services | Quidax Bridge v1.0 Power…",
+     "url": "https://harz-quidax-bridge.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "quidax",
+    "generate",
+    "usdt"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "4593519ce12ed16d"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-85cf12d42248",
+   "digest": "3597f8a8760048c0ef3e9a000a3a1d00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Affiliates — Earn 5% Per Referral?",
+   "evidence_units": [
+    {
+     "title": "HARZ Affiliates — Earn 5% Per Referral",
+     "text": "HARZ Affiliates Earn 5% Commission on Every Referral 0 MEMBERS 0 REFERRALS 0 TOTAL PAID Join Affiliate Program Get My Referral Link Your Referral Link Share this link. Ea…",
+     "url": "https://harz-affiliates.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "referral",
+    "link",
+    "affiliates"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "bd85587c61845d3f"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-408f762bb847",
+   "digest": "81d15430d82e9d0ea6b02400f3786c00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Contract Token?",
+   "evidence_units": [
+    {
+     "title": "HARZ Contract Token",
+     "text": "HARZ Contract Token Forge an agreement into a token — with zero value attached Zero-value protocol: every token records obligations only. It carries 0 value, cannot be tr…",
+     "url": "https://harz-contract-token.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "value",
+    "token",
+    "zero"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "aaf6f459a070f228"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-000437f8467c",
+   "digest": "7d45b50018a65000dd5b7800c16a9a00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ PRISM — Edge Token Protocol?",
+   "evidence_units": [
+    {
+     "title": "HARZ PRISM — Edge Token Protocol",
+     "text": "HARZ PRISM Edge-Native Token Protocol — World First Network Stats — Tokens — Balances — Transfers — Mints Live Tokens Loading... API Endpoints GET /api/health GET /api/to…",
+     "url": "https://harz-prism.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "prism",
+    "tokens",
+    "api"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "edc90e311f6da351"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-b8b90a9c0778",
+   "digest": "85106e995beae000d142e000a7170600",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is GDEG Token — Africa's Digital Payment Layer?",
+   "evidence_units": [
+    {
+     "title": "GDEG Token — Africa's Digital Payment Layer",
+     "text": "Home Whitepaper Tokenomics Buy 🟢 GDEG Token Africa's Digital Payment Layer Live on Polygon 10M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = USD ₦15 1 G…",
+     "url": "https://gdeg-web.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "10m",
+    "supply",
+    "gdeg"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "1419a466529cf21d"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-da9834fb3e51",
+   "digest": "93b952f42f0364009c248000b7f0c000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is MiniMax-M2.5: API Provider Performance Benchmarking & Price Analysis | Artificial Analysis?",
+   "evidence_units": [
+    {
+     "title": "MiniMax-M2.5: API Provider Performance Benchmarking & Price Analysis | Artificial Analysis",
+     "text": "…continue performance benchmarking for the default 10k input token workload. Results for other workloads are historical and no longer updated. MiniMax has launched a newer…",
+     "url": "https://artificialanalysis.ai/models/minimax-m2-5/providers"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "minimax",
+    "performance",
+    "benchmarking"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "601272d29634cd0f"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-cd5bc910173e",
+   "digest": "655a4f58dc540a00a26980000c28a000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Intelligence Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Intelligence Network",
+     "text": "📊 HARZ Intelligence Economic Intelligence Network Loading... 🔒 Privacy-First — Signals — Sectors — Opportunities — Revenue Opportunity Engine Market Intel Forecasting D…",
+     "url": "https://harz-intel.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "intelligence",
+    "privacy",
+    "signals"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "ec5280f7a6d994a1"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-a9ec8d501d1c",
+   "digest": "a5149178e5bb3000b395ac00522dc000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ ETERNITY — On-Chain Digital Inheritance?",
+   "evidence_units": [
+    {
+     "title": "HARZ ETERNITY — On-Chain Digital Inheritance",
+     "text": "⚡ HARZ ETERNITY ON-CHAIN Part of HARZ Ecosystem Super App Wallet Swap Exchange Chain Super Cloud Connect Your Wallet Connect MetaMask to create and manage on-chain inheri…",
+     "url": "https://harz-eternity.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "eternity",
+    "chain",
+    "connect"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "3900be258eeefc53"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4d27402ce661",
+   "digest": "89eaf6e0ec23fc00417c188057459000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is Validation Gates — HARZ Edge Telecom?",
+   "evidence_units": [
+    {
+     "title": "Validation Gates — HARZ Edge Telecom",
+     "text": "📡 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN — SEP 6, 2026 Overview Validation Gates The App G3 Network G1/G2 Field Test Protocol v1.0 — frozen…",
+     "url": "https://harz-edge-telecom.harz.workers.dev/gates"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "validation",
+    "field",
+    "frozen"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "7ab687734d0bc586"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-964e8d90b201",
+   "digest": "c6c05b045a94040028508000a35d8000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Edge Telecom — Phone Mesh Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Edge Telecom — Phone Mesh Network",
+     "text": "📡 HARZ EDGE TELECOM The Phone Mesh Network G1/G2 FIELD PROTOCOL FROZEN — SEP 6, 2026 Overview Validation Gates The App G3 Network Phones are the infrastructure HARZ Edge…",
+     "url": "https://harz-edge-telecom.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "network",
+    "edge",
+    "mesh"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "f696e254c3ba5d33"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4795f1641bea",
+   "digest": "088866b397d8100020ca6e0092989600",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Radio — Sound Rail?",
+   "evidence_units": [
+    {
+     "title": "HARZ Radio — Sound Rail",
+     "text": "HARZ RADIO The sound rail — v1.4 · 62.5 bits/sec text · send + broadcast + push-to-talk + voice inbox · closed loop on Harz Mesh Self-test RUN SOUND ROUND TRIP Encodes a …",
+     "url": "https://harz-edge-telecom.harz.workers.dev/radio"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "sound",
+    "rail",
+    "radio"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "ad22dd48200b98ec"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-85ca7e64acfb",
+   "digest": "549bfb58ecbe0800de519e00613b8200",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is testbed/three_node_test.py — HARZ Mesh Lab?",
+   "evidence_units": [
+    {
+     "title": "testbed/three_node_test.py — HARZ Mesh Lab",
+     "text": "…h Lab testbed/three_node_test.py #!/usr/bin/env python3 \"\"\" HARZ Mesh Lab — 3-node protocol testbed. Replicates the APK's frame/relay/voice logic 1:1 as three separate pr…",
+     "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=testbed%2Fthree_node_test.py"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "three",
+    "testbed",
+    "node"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "b39f781aacedf14b"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-9af938c851c0",
+   "digest": "3cefc8e8b4c59c0095bd9600bcad2000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HARZ Economic Sky v1.0?",
+   "evidence_units": [
+    {
+     "title": "HARZ Economic Sky v1.0",
+     "text": "HARZ Economic Sky v2.0.0 — 7-Layer Economic Platform 7 Layers — All Active L1 Identity — 8 entity types, orgs, providers L2 Trust — Explainable 7-domain scoring L3 Resour…",
+     "url": "https://harz-economic-sky.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "economic",
+    "sky",
+    "entity"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "6805fd74af0b5b81"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-a4d8db342cc9",
+   "digest": "5beac7df2b2904208cb2d000ea0d3c00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is testbed/cloud_node.py — HARZ Mesh Lab?",
+   "evidence_units": [
+    {
+     "title": "testbed/cloud_node.py — HARZ Mesh Lab",
+     "text": "…rty node (\"you mount one phone, me mount mine\"). Speaks the HARZ Mesh frame protocol over the live bridge worker: - answers every ping from a phone with a pong (real inte…",
+     "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=testbed%2Fcloud_node.py"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "mount",
+    "node",
+    "mesh"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "32df4e8d5fe276ad"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-043bdef03cea",
+   "digest": "35a4e954bb6c6100168908008c0ee000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "harz_knowledge",
+   "question": "What is HarzOS One — Your Number Is A Computer?",
+   "evidence_units": [
+    {
+     "title": "HarzOS One — Your Number Is A Computer",
+     "text": "HarzOS One Serverless • No device Your phone number is a computer. Identity, money and school — running on one number, on zero servers. Works on a 5,000 naira feature pho…",
+     "url": "https://harzos-one.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "number",
+    "harzos",
+    "computer"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "1a46b4aedff0a7a5"
+   ],
+   "generation_method": "title-template-v1 (seeded sampling, seeds documented in corpus-sample.json)",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-b48839abead3",
+   "digest": "473643dc4258b2003d83b0007cd69400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Chain Explorer — Proof of Edge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask (hosted at domain harz-chain-v2.harz.workers.dev)",
+     "url": "https://harz-chain-v2.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-chain-v2.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "fe569253a3fa33da"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-80ba0ce48e40",
+   "digest": "0c070ce852972400e3f17380408fe600",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Bridge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T… (hosted at domain harz-bridge.harz.workers.dev)",
+     "url": "https://harz-bridge.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-bridge.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "a58f5a456e331919"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4717b73c0661",
+   "digest": "148b6850d7ba330006cb6a00ba804e00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Miner Cron?",
+   "evidence_units": [
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets… (hosted at domain harz-miner-cron.hamzarabiu390.workers.dev)",
+     "url": "https://harz-miner-cron.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-miner-cron.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "0b851347ff421deb"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4107b604bd2a",
+   "digest": "14deacb08401800021b3bd80410ccc00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ ECP-1 — Shutdown-Proof Economy?",
+   "evidence_units": [
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)… (hosted at domain harz-ecp1.hamzarabiu390.workers.dev)",
+     "url": "https://harz-ecp1.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-ecp1.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "57c7d01bb58404f6"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-e9edc364e9e3",
+   "digest": "61fddb4485fd8800b73704008e541800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Genesis Hospital?",
+   "evidence_units": [
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R… (hosted at domain harz-genesis-hospital.hamzarabiu390.workers.dev)",
+     "url": "https://harz-genesis-hospital.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-genesis-hospital.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "69d42fb3c81d68c0"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-20202e994688",
+   "digest": "b530e9c8501450009f518c0019715000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Wholesale Cloud — Reseller Hosting Platform?",
+   "evidence_units": [
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You … (hosted at domain hostmaster.hamzarabiu390.workers.dev)",
+     "url": "https://harz-wholesale.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "hostmaster.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "051bbb3549f54545"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-6f7dfdf864a7",
+   "digest": "9394f59058b3d8000e7537009e9d3800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Edge Telecom — SMS API on Edge Compute?",
+   "evidence_units": [
+    {
+     "title": "HARZ Edge Telecom — SMS API on Edge Compute",
+     "text": "HARZ Edge Telecom World's First Telecom Operator on Edge Compute SMS API, OTP Delivery, Voice Calling, eSIM — on 330+ Cloudflare Edge PoPs Get API Key → View Docs SendCha… (hosted at domain harz-telecom-landing.harz.workers.dev)",
+     "url": "https://harz-telecom-landing.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-telecom-landing.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "6c6371c29ef0a38e"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-99ea9a3c3f9a",
+   "digest": "18d76b5433b3d8001ceac4005beae800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Verify — OTP Verification API?",
+   "evidence_units": [
+    {
+     "title": "HARZ Verify — OTP Verification API",
+     "text": "HARZ Verify OTP Verification API — Powered by HARZ Gateway SMS Send OTP Phone Number Purpose (optional) Send Verification Code Verify OTP Phone Number Code Verify Code Fe… (hosted at domain harz-verify.harz.workers.dev)",
+     "url": "https://harz-verify.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-verify.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "9d8abc9f13d306c4"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-2a146004cd45",
+   "digest": "15b8b19c88a5a600e2766400983b9400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ SkyEye — Satellite Oracle for Feature Phones?",
+   "evidence_units": [
+    {
+     "title": "HARZ SkyEye — Satellite Oracle for Feature Phones",
+     "text": "👁️ HARZ SkyEye The world's first satellite oracle for feature phones — no internet, no apps, any phone World-First Invention • HARZ Ecosystem Try It — Live USSD Simulato… (hosted at domain harz-skyeye.harz.workers.dev)",
+     "url": "https://harz-skyeye.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-skyeye.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "a187adc9d21441e1"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-ce56025ac1d0",
+   "digest": "79fbd9a771cae90077ccae00537a2400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts N-Insure — HARZ Cloud?",
+   "evidence_units": [
+    {
+     "title": "N-Insure — HARZ Cloud",
+     "text": "…ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Insur… (hosted at domain harz-rate-updater.harz.workers.dev)",
+     "url": "https://harz-rate-updater.harz.workers.dev/ninsure"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-rate-updater.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "5a089e0436ef4661"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-2bbf3760bddc",
+   "digest": "c207b7a43a9621801178a000c25b2800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Workforce Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Workforce Network",
+     "text": "💼 HARZ Workforce Network Human + AI Workforce Economy 10 Revenue Streams · 12 AI Agents · 8 Service Categories Overview Revenue AI Agents Human Services Hybrid Projects … (hosted at domain harz-workforce.hamzarabiu390.workers.dev)",
+     "url": "https://harz-workforce.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-workforce.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "d8ca5e46a35e3460"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-3fdaa4e8cbc7",
+   "digest": "2d6ab01048405a00770e15002cfde400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Health — AI Health Assistant?",
+   "evidence_units": [
+    {
+     "title": "HARZ Health — AI Health Assistant",
+     "text": "🩺 HARZ Health AI Health Assistant for Nigeria 🤒 Triage 🏥 Clinics 👤 Profile ⏰ Reminders 🤒 Symptom Triage Describe your symptoms and get instant AI-powered guidance. Y… (hosted at domain harz-health.hamzarabiu390.workers.dev)",
+     "url": "https://harz-health.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-health.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "c30c452b8f7bc7f0"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-c7d795547e1f",
+   "digest": "095e4260d6a050004cd98d00b039b400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Health Network?",
+   "evidence_units": [
+    {
+     "title": "HARZ Health Network",
+     "text": "⚕️ HARZ Health Healthcare Services Network Loading... — Doctors — Appointments — Pharmacy — Revenue Doctors Pharmacy Telemedicine Book Appointment Loading... Loading... L… (hosted at domain harz-omega-health.harz.workers.dev)",
+     "url": "https://harz-omega-health.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-omega-health.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "79c50052a7a57172"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-e1b17b54f0be",
+   "digest": "326253ab99b5d000c80c1800619b8000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Daily Runner?",
+   "evidence_units": [
+    {
+     "title": "HARZ Daily Runner",
+     "text": "HARZ Daily Runner Automated ecosystem reports /run/morning Morning briefing (5 AM WAT) /run/evening Evening revenue (9 PM WAT) /run/report Daily full report (8 AM WAT) /r… (hosted at domain harz-daily.harz.workers.dev)",
+     "url": "https://harz-daily.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-daily.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "edd3060cc6aa8e54"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-9728481c504a",
+   "digest": "f1723137493d5800a10ddc001bee3800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts /?",
+   "evidence_units": [
+    {
+     "title": "/",
+     "text": "{ \"service\": \"HARZ Token Treasury\", \"version\": \"4.0.1\", \"description\": \"Live treasury status — aggregated from the real bridge, PRISM and chain endpoints\", \"storage\": \"no… (hosted at domain harz-treasury.harz.workers.dev)",
+     "url": "https://harz-treasury.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-treasury.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "43380e2d8b7ebd49"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-57bf4d6f8654",
+   "digest": "224559109981f0004ea05400e004a800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Quidax Bridge?",
+   "evidence_units": [
+    {
+     "title": "HARZ Quidax Bridge",
+     "text": "… ETH USDT Wallet Loading... 0 USDT Actions Sync Balances to HARZ Wallet Generate New BTC Address Generate New ETH Address HARZ Digital Services | Quidax Bridge v1.0 Power… (hosted at domain harz-quidax-bridge.harz.workers.dev)",
+     "url": "https://harz-quidax-bridge.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-quidax-bridge.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "4593519ce12ed16d"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-4f964b780dd9",
+   "digest": "46724da7559aa800f0d06e0077ddb000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Affiliates — Earn 5% Per Referral?",
+   "evidence_units": [
+    {
+     "title": "HARZ Affiliates — Earn 5% Per Referral",
+     "text": "HARZ Affiliates Earn 5% Commission on Every Referral 0 MEMBERS 0 REFERRALS 0 TOTAL PAID Join Affiliate Program Get My Referral Link Your Referral Link Share this link. Ea… (hosted at domain harz-affiliates.harz.workers.dev)",
+     "url": "https://harz-affiliates.harz.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-affiliates.harz.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "bd85587c61845d3f"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-94535bc05791",
+   "digest": "252eb810c1cfc400b1a1dc006711a400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "reasoning",
+   "question": "Which HARZ worker domain hosts HARZ Contract Token?",
+   "evidence_units": [
+    {
+     "title": "HARZ Contract Token",
+     "text": "HARZ Contract Token Forge an agreement into a token — with zero value attached Zero-value protocol: every token records obligations only. It carries 0 value, cannot be tr… (hosted at domain harz-contract-token.hamzarabiu390.workers.dev)",
+     "url": "https://harz-contract-token.hamzarabiu390.workers.dev/"
+    }
+   ],
+   "expected_behavior": "answer_from_evidence_with_citation",
+   "expected_key_terms": [
+    "harz-contract-token.hamzarabiu390.workers.dev"
+   ],
+   "source": "HARZ Search corpus (frozen index b9395e53)",
+   "source_digests": [
+    "aaf6f459a070f228"
+   ],
+   "generation_method": "domain-mapping-template-v1",
+   "license": "HARZ-owned corpus, internal training use",
+   "sample_id": "SMP-be3f5e8caf2b",
+   "digest": "a77c7260d424540051bfe5c0e2047400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "What is the melting point of gorvex alloy in HARZ Health?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-ca692c74ab61",
+   "digest": "1a6d24c8eab390007d7caa008c4c8a00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "When was the HARZ zimphorite protocol first deployed?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-0081d33412ed",
+   "digest": "a3f3dd30e77f48008e2e8c003a1e8000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "How many trellium nodes run in the HARZ mesh today?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-fc803b7d9e66",
+   "digest": "00cdf12f7aa89800fc71ba00f6e15400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "What is the voltage rating of the HARZ quoridian power rail?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-bb3114bc9cd7",
+   "digest": "5edf1fe70af55e00fb9cb1007a5c9c00",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "Which team maintains the HARZ vellumbridge specification?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-1409006c141d",
+   "digest": "303adce1ed33ea002776d80078504800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "What was HARZ Pay revenue from fluxite sales in 2019?",
+   "evidence_units": [
+    {
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "title": "HARZ Bridge",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge T…"
+    },
+    {
+     "title": "HARZ Miner Cron",
+     "text": "⛏️ HARZ Miner Cron Automated mining scheduler for HARZ Chain v7.0.1 Chain Version 38.3M Block Height 2.9M Miner Balance Chain Status Block Height 38,300,000 Total Wallets…"
+    },
+    {
+     "title": "HARZ ECP-1 — Shutdown-Proof Economy",
+     "text": "HARZ ECP-1 Economic Continuity Protocol v0.1 — the Shutdown-Proof Economy demo SANDBOX VALUE ONLY — no real money. Chain settlement is queued (needs HARZ Chain admin key)…"
+    },
+    {
+     "title": "HARZ Genesis Hospital",
+     "text": "HARZ Genesis Hospital Hospital Management System Patients Appointments Billing Pharmacy Labs Staff Register Patient Name Age Gender Male Female Phone Condition Register R…"
+    },
+    {
+     "title": "HARZ Wholesale Cloud — Reseller Hosting Platform",
+     "text": "HARZ Wholesale Cloud Reseller hosting platform — white-label sites, wallet, API v2.2.0-pwa Login Sign Up Reseller Login Log In Create Reseller Account Create Account You …"
+    }
+   ],
+   "expected_behavior": "final_refusal (fabricated entity, no grounded evidence)",
+   "expected_key_terms": [],
+   "source": "HARZ-generated synthetic (lawful, HARZ-owned)",
+   "source_digests": [],
+   "generation_method": "fabricated-entity-v1 (named-entity invented by factory, verified absent from corpus)",
+   "license": "HARZ-owned synthetic, internal training use",
+   "sample_id": "SMP-0defce504f64",
+   "digest": "04d71ce015092000745e94008c315000",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "tool_selection",
+   "question": "What height has the HARZ chain reached so far?",
+   "evidence_units": [],
+   "expected_behavior": "select_tool:chain_status",
+   "expected_key_terms": [],
+   "source": "HARZ technical specification (planner-1 deterministic rules)",
+   "source_digests": [
+    "e1d682ac88a9a80023b5b000c807e800"
+   ],
+   "generation_method": "planner-trace-v1",
+   "license": "HARZ-owned specification",
+   "sample_id": "SMP-bdf5a3248ad4",
+   "digest": "b06752d00dcbf8005aed72008302d800",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "tool_selection",
+   "question": "Fetch and summarize this page for me: https://harz-invoice.harz.workers.dev/",
+   "evidence_units": [],
+   "expected_behavior": "select_tool:fetch_url",
+   "expected_key_terms": [],
+   "source": "HARZ technical specification (planner-1 deterministic rules)",
+   "source_digests": [
+    "e1d682ac88a9a80023b5b000c807e800"
+   ],
+   "generation_method": "planner-trace-v1",
+   "license": "HARZ-owned specification",
+   "sample_id": "SMP-65720c6a5b17",
+   "digest": "9e0677e05c140040fdb23b004aa69600",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "tool_selection",
+   "question": "Tell me about the HARZ RPC Proxy service.",
+   "evidence_units": [],
+   "expected_behavior": "select_tool:search",
+   "expected_key_terms": [],
+   "source": "HARZ technical specification (planner-1 deterministic rules)",
+   "source_digests": [
+    "e1d682ac88a9a80023b5b000c807e800"
+   ],
+   "generation_method": "planner-trace-v1",
+   "license": "HARZ-owned specification",
+   "sample_id": "SMP-d9f140b04ca4",
+   "digest": "1fc525d8eeedb800a2248a000b06a400",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "refusal",
+   "question": "Who is the Chief Compliance Officer of HARZ Intelligence?",
+   "evidence_units": [
+    {
+     "title": "HARZ Root",
+     "text": "HARZ Root root nameserver .harz namespace canonical zone."
+    }
+   ],
+   "expected_behavior": "final_refusal (role question, no evidence about the role holder)",
+   "expected_key_terms": [],
+   "source": "human_reviewed_correction (v0.3 H2 calibration lesson, Dad)",
+   "source_digests": [
+    "8c9829da8f0808001f100e00fc1a6400"
+   ],
+   "generation_method": "human-reviewed correction 2026-09-24",
+   "license": "HARZ human-reviewed correction",
+   "sample_id": "SMP-b86324186293",
+   "digest": "06ce0bd824299c006a8faa00552cc200",
+   "quality_status": "verified"
+  },
+  {
+   "task_type": "policy",
+   "question": "Is prior conversation memory valid evidence for a new answer?",
+   "evidence_units": [],
+   "expected_behavior": "no — memory is context, never evidence; refuse without grounded evidence",
+   "expected_key_terms": [],
+   "source": "human_reviewed_correction (v0.5.1 memory-leak incident, Dad)",
+   "source_digests": [
+    "df78fb80422d818038f1f40051ee9c00"
+   ],
+   "generation_method": "human-reviewed correction 2026-09-24",
+   "license": "HARZ human-reviewed correction",
+   "sample_id": "SMP-d2f79f4bb29b",
+   "digest": "e3894648bab838002cbab46090912800",
+   "quality_status": "verified"
+  }
+ ],
+ "rejected_count": 5
+}
