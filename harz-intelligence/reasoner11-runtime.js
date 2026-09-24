@@ -105,6 +105,13 @@ export function reasoner11Call({ messages }) {
         const hasDate = useG2.some(u => extractSentences(u.text, u.id).some(x2 => /\b(19|20)\d{2}\b/.test(x2.s2)));
         if (!hasDate) { answerable = false; guard = 'temporal-guard: question asks when, but no date-bearing evidence sentence exists'; }
       }
+      // v0.10 price-guard: fee/price/cost questions must find a currency/percent-bearing evidence
+      // sentence — enumerating items is not an answer to a pricing question (gap scan: multihop dump).
+      if (answerable && /\b(fee|fees|price|pricing|cost|costs|charge|charged|rate)\b/.test(L_query)) {
+        const useG3 = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const hasFee = useG3.some(u => extractSentences(u.text, u.id).some(x2 => /(\d+(?:\.\d+)?\s*%|₦\s?\d|\bNGN\s?\d|\$\d)/.test(x2.s2)));
+        if (!hasFee) { answerable = false; guard = 'price-guard: question asks about a fee/price/cost, but no fee-bearing evidence sentence exists'; }
+      }
     } else guard = 'below-threshold';
   }
 

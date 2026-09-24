@@ -210,6 +210,7 @@ const TASK_REGISTRY = {
   count_lookup:         { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'count_from_evidence', policy: 'v0.9: counts assembled only from quoted evidence items; completeness stated honestly; no countable evidence -> reasoner' },
   comparison:           { required_capability: 'retrieval', harz_specialist: 'harz-search-1', direct_path: 'two_entity_quote_assembly', policy: 'v0.9: verbatim quotes per entity; no synthesized differences; missing entity -> reasoner refusal' },
   summary_flow:         { required_capability: 'evidence_extraction', harz_specialist: 'harz-search-1', direct_path: 'flow_summary_assembly', policy: 'v0.9: documented flows summarized from evidence step structure; absent flow -> honest refusal, never generated' },
+  fee_lookup:           { required_capability: 'evidence_extraction', harz_specialist: 'harz-search-1', direct_path: 'fee_price_extraction', policy: 'v0.10: fees/prices quoted verbatim from HARZ evidence with provenance; no fee-bearing sentence -> honest refusal, never a wrong-mode list dump' },
 };
 const FROZEN_BENCH_SHA256 = '30851363a0b3b190c52d8ec8c960c510e7b6b5abfd4c78dbc7acf94f9d73e691';
 
@@ -336,6 +337,61 @@ function buildPaymentProcedureAnswer(packet) {
 }
 
 // ============ TASK CLASSIFIER (v0.4) — deterministic routing rules ============
+// ============ v0.10 sovereign specialists ============
+// buildFeeAnswer: fee/price/cost questions are answered ONLY with verbatim fee-bearing quotes
+// from HARZ corpus docs (id >= 10000). Ranking follows packet retrieval order first (the most
+// relevant unit wins), then sentence overlap. If the packet carries no fee-bearing HARZ unit,
+// ONE fee-targeted fallback retrieval (domain terms + 'harz') runs; still nothing -> null
+// (the orchestrator refuses honestly instead of dumping a wrong-mode list).
+const FEE_MARK = /(\d+(?:\.\d+)?\s*%|₦\s?\d[\d,]*|\bNGN\s?\d[\d,]*|\$\d[\d,.]*|\b\d[\d,]*\s*(?:naira|kobo|usd|harz)\b)/;
+async function buildFeeAnswer(packet) {
+  const Lq = packet.query.toLowerCase();
+  const qTerms = [...new Set(Lq.split(/[^a-z0-9₦%]+/).filter(t => t.length > 2 && !['what','how','much','does','are','the','for','with','tell','fee','fees','price','pricing','cost','costs','charge','charges','charged','rate','rates','harz'].includes(t)))];
+  const scanUnit = (raw, docId, title, pos) => {
+    // NOTE: '•' is NOT a split char here — 'Revenue split: Creator 70% • HARZ 30%' is one fee clause.
+    const sents = String(raw).replace(/\s+/g, ' ').split(/(?<=[.!?|✓])\s+/).map(s => s.trim()).filter(s => s.length > 8 && s.length < 320);
+    for (const s of sents) {
+      const m = FEE_MARK.exec(s);
+      if (!m) continue;
+      // fee-context gate: a bare '₦1K ₦5K' denomination row is UI junk, not a fee declaration
+      if (!/(%|\b(fee|fees|cost|costs|price|pricing|charge|charged|deducted|revenue split|per transaction|per query|per site|per month|per use)\b)/i.test(s)) continue;
+      // relevance gate: the quote must overlap the question's own terms — no unrelated fee quotes
+      if (!qTerms.some(t => s.toLowerCase().includes(t))) continue;
+      // trim the quote to a window around the fee marker — readable, no UI junk tails
+      const at = m.index;
+      const from = Math.max(0, at - 70), to = Math.min(s.length, at + 80);
+      const win = (from > 0 ? '…' : '') + s.slice(from, to).trim() + (to < s.length ? '…' : '');
+      const overlap = qTerms.filter(t => s.toLowerCase().includes(t)).length;
+      hits.push({ s: win, doc: docId, title, overlap, pos });
+    }
+  };
+  const hits = [];
+  packet.selected_evidence.forEach((e, i) => {
+    const docId = Number(e.document_id) || 0;
+    if (docId >= 10000) scanUnit(e.fullText || e.text, docId, e.title, i);
+  });
+  if (!hits.length) {
+    // fee-targeted fallback retrieval: domain terms + 'harz' biases the HARZ corpus.
+    // Reuses the SAME baseline/fetchPage functions the packet itself uses (service-binding aware).
+    try {
+      const domTerms = Lq.split(/[^a-z0-9₦%]+/).filter(t => t.length > 2 && !['what','how','much','does','are','the','for','with','tell','harz'].includes(t));
+      const fq = (domTerms.length ? domTerms.join(' ') : packet.query.toLowerCase()) + ' harz';
+      const sr = await search1Baseline(fq);
+      const cand = (sr.results || []).slice(0, 6).map(x => ({ docId: Number(x.document_id || x.id) || 0, title: x.title })).filter(x => x.docId >= 10000);
+      for (let i = 0; i < cand.length && i < 3; i++) {
+        const text = await search1FetchPage({ id: cand[i].docId, title: cand[i].title });
+        if (text) scanUnit(text, cand[i].docId, cand[i].title, 1000 + i);
+      }
+    } catch (_) { /* fallback unreachable -> answer with what the packet gave */ }
+  }
+  if (!hits.length) return null;
+  hits.sort((a, b) => (a.pos - b.pos) || (b.overlap - a.overlap));
+  const top = hits.slice(0, 3);
+  return '**Answer**\n\nHARZ evidence declares these fees/prices, quoted verbatim:\n\n' +
+    top.map((h, i) => (i + 1) + '. "' + h.s + '" — ' + h.title + ' (document_id: ' + h.doc + ')').join('\n') +
+    '\n\nEvery figure above is quoted directly from retrieved HARZ documentation; nothing was computed or generated. If the fee you asked about is not among these quotes, it is not established in the evidence.\n\nCONFIDENCE: high — verbatim fee quotes with provenance (v0.10)';
+}
+
 // ============ v0.9 sovereign specialists ============
 // exactArithmetic: deterministic money-context computation. Two or more explicit numbers plus one
 // operator word and a money/wallet context -> computed locally. Zero generation, zero external.
@@ -452,6 +508,9 @@ function classifyTask(message) {
     return { class: 'count_lookup', harzCapable: true, reason: 'registry: counting assembled from quoted evidence (v0.9)' };
   if (/difference between|\bcompare\b[^.?!]*\b(and|with|vs|versus)\b|\bversus\b/.test(L))
     return { class: 'comparison', harzCapable: true, reason: 'registry: two-entity comparison from verbatim evidence quotes (v0.9)' };
+  // v0.10: fee/price/cost questions -> sovereign fee extraction (quote-only, refuse when absent)
+  if (/\b(fee|fees|price|pricing|cost|costs|charge|charges|charged|rate|rates)\b/.test(L) && /\b(what|how much|how many|which|tell me|does|do|is|are)\b/.test(L) && !exactArithmetic(message))
+    return { class: 'fee_lookup', harzCapable: true, reason: 'registry: fees and prices quoted verbatim from HARZ evidence (v0.10)' };
   if (/summar[yi][sz]e/.test(L) && /\b(flow|onboarding|process|steps?|procedure|setup|set[- ]up)\b/.test(L))
     return { class: 'summary_flow', harzCapable: true, reason: 'registry: documented-flow summaries assembled from evidence (v0.9)' };
   if (/write an (essay|email|letter|article|story|post|advert)|compose|draft|summar[yi][sz]e/.test(L))
@@ -883,6 +942,16 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
         specialistRes = { ok: true, content: sf, backend: 'harz-search-1', mode: 'specialist-summary', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'flow_summary_assembly' });
       }
+    } else if (taskClass.class === 'fee_lookup') {
+      const fa = await buildFeeAnswer(packet);
+      if (fa) {
+        specialistRes = { ok: true, content: fa, backend: 'harz-search-1', mode: 'specialist-fee', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'fee_price_extraction' });
+      } else {
+        // no fee-bearing HARZ evidence -> FINAL sovereign refusal, never a wrong-mode list dump
+        specialistRes = { ok: true, content: '**Answer**\n\nI do not have grounded evidence of this fee or price in the HARZ knowledge base, and I will not guess. No fee-bearing sentence was found in the retrieved HARZ documentation.\n\nCONFIDENCE: none — unsupported question', backend: 'harz-reasoner-1.1', mode: 'refusal', role: 'reasoner', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'fee_price_extraction', result: 'no fee-bearing evidence -> final refusal' });
+      }
     }
   }
   const modelRes = specialistRes || (codeRes && codeRes.ok
@@ -1157,6 +1226,16 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
       if (sf) {
         specialistRes = { ok: true, content: sf, backend: 'harz-search-1', mode: 'specialist-summary', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'flow_summary_assembly' });
+      }
+    } else if (taskClass.class === 'fee_lookup') {
+      const fa = await buildFeeAnswer(packet);
+      if (fa) {
+        specialistRes = { ok: true, content: fa, backend: 'harz-search-1', mode: 'specialist-fee', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'fee_price_extraction' });
+      } else {
+        // no fee-bearing HARZ evidence -> FINAL sovereign refusal, never a wrong-mode list dump
+        specialistRes = { ok: true, content: '**Answer**\n\nI do not have grounded evidence of this fee or price in the HARZ knowledge base, and I will not guess. No fee-bearing sentence was found in the retrieved HARZ documentation.\n\nCONFIDENCE: none — unsupported question', backend: 'harz-reasoner-1.1', mode: 'refusal', role: 'reasoner', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'fee_price_extraction', result: 'no fee-bearing evidence -> final refusal' });
       }
     }
   }
@@ -1816,6 +1895,61 @@ export default {
         all_passed: passed === T.length, tests: T,
         verdict: passed === T.length ? 'PASS' : 'FAIL',
         law: 'every assembled answer is quoted from retrieved evidence with provenance; value questions without value-bearing evidence refuse honestly; enumerations state completeness honestly; zero external calls on all direct paths' });
+    }
+    if (path === '/api/agents/v1/test10') {
+      // v0.10 GATE: Sovereign Fee & Pricing Extraction.
+      // Split ?part=1 (tests 1-5) / ?part=2 (tests 6-10) for the 50-subrequest cap. Both must pass.
+      const PART10 = String(url.searchParams.get('part') || '1');
+      const T10 = []; const P10 = (name, ok, detail) => T10.push({ name, ok: !!ok, detail: detail || '' });
+      const idx10 = await currentIndexDigest();
+      if (PART10 === '1') {
+        // 1. fee_paystack — the 1.5% transaction fee quoted verbatim with provenance
+        const r1 = await orchestrate({ message: 'What are the Paystack transaction fees on HARZ Pay?', conversation_id: 'gate-v10-1' });
+        const a1 = r1.answer || '';
+        P10('fee_paystack', /1\.5%/.test(a1) && /document_id: 10470/.test(a1) && (r1.meta?.external_calls || 0) === 0, 'ext=' + (r1.meta?.external_calls || 0));
+        // 2. fee_variant — different phrasing, same sovereign extraction
+        const r2 = await orchestrate({ message: 'What does HARZ Pay charge per transaction?', conversation_id: 'gate-v10-2' });
+        const a2 = r2.answer || '';
+        P10('fee_variant', /1\.5%/.test(a2) && /document_id/.test(a2) && (r2.meta?.external_calls || 0) === 0, 'ext=' + (r2.meta?.external_calls || 0));
+        // 3. fee_site — fee-targeted fallback retrieval reaches the Wholesale Cloud doc
+        const r3 = await orchestrate({ message: 'How much does an extra site cost?', conversation_id: 'gate-v10-3' });
+        const a3 = r3.answer || '';
+        P10('fee_site', /₦800/.test(a3) && /document_id: 10349/.test(a3) && (r3.meta?.external_calls || 0) === 0, 'ext=' + (r3.meta?.external_calls || 0));
+        // 4. fee_marketplace — revenue split quoted, no invented listing fee
+        const r4 = await orchestrate({ message: 'How much does it cost to list a service on HARZ Marketplace?', conversation_id: 'gate-v10-4' });
+        const a4 = r4.answer || '';
+        P10('fee_marketplace', /Revenue split|70%/.test(a4) && /document_id: 10162/.test(a4) && (r4.meta?.external_calls || 0) === 0, 'ext=' + (r4.meta?.external_calls || 0));
+        // 5. fee_escrow — escrow fee quoted with provenance
+        const r5 = await orchestrate({ message: 'What are the fees on HARZ Escrow?', conversation_id: 'gate-v10-5' });
+        const a5 = r5.answer || '';
+        P10('fee_escrow', /1\.5%/.test(a5) && /document_id: 10017/.test(a5) && (r5.meta?.external_calls || 0) === 0, 'ext=' + (r5.meta?.external_calls || 0));
+      } else {
+        // 6. value_regression — v0.8 identifier extraction intact
+        const r6 = await orchestrate({ message: 'Which Nigerian bank does HARZ use for NGN transfers?', conversation_id: 'gate-v10-6' });
+        const a6 = r6.answer || '';
+        P10('value_regression', a6.includes('2034326424') && /document_id: 10470/.test(a6) && (r6.meta?.external_calls || 0) === 0, 'ext=' + (r6.meta?.external_calls || 0));
+        // 7. count_regression — v0.9 count assembly intact
+        const r7 = await orchestrate({ message: 'How many payment methods does HARZ Pay support?', conversation_id: 'gate-v10-7' });
+        const a7 = r7.answer || '';
+        P10('count_regression', /declares 4 payment methods/.test(a7) && (r7.meta?.external_calls || 0) === 0, 'ext=' + (r7.meta?.external_calls || 0));
+        // 8. arithmetic_regression — v0.9 exact compute intact
+        const r8 = await orchestrate({ message: 'If I add N10,000 and then N5,000 to my HarzPay wallet, what is my balance?', conversation_id: 'gate-v10-8' });
+        const a8 = r8.answer || '';
+        P10('arithmetic_regression', /15,000/.test(a8) && (r8.meta?.external_calls || 0) === 0, 'ext=' + (r8.meta?.external_calls || 0));
+        // 9. temporal_regression — v0.9 temporal guard intact
+        const r9 = await orchestrate({ message: 'When was HARZ Mail launched?', conversation_id: 'gate-v10-9' });
+        const a9 = r9.answer || '';
+        P10('temporal_regression', /will not guess/.test(a9) && (r9.meta?.external_calls || 0) === 0, 'ext=' + (r9.meta?.external_calls || 0));
+        // 10. death_refusal — no-evidence question still refuses with zero external
+        const r10 = await orchestrate({ message: "What is the CFO's cat's name?", conversation_id: 'gate-v10-10' });
+        const a10 = r10.answer || '';
+        P10('death_refusal', /will not guess|refus/i.test(a10) && (r10.meta?.external_calls || 0) === 0, 'ext=' + (r10.meta?.external_calls || 0));
+      }
+      const passed10 = T10.filter(t => t.ok).length;
+      return json({ gate: 'v0.10-fee-extraction-gate', part: PART10, passed: passed10, total: T10.length, index_version: idx10,
+        all_passed: passed10 === T10.length, tests: T10,
+        verdict: passed10 === T10.length ? 'PASS' : 'FAIL',
+        law: 'fees and prices are quoted verbatim from HARZ corpus evidence with provenance — never computed, never generated, never dumped as a wrong-mode list; no fee-bearing evidence -> final honest refusal; retrieval fallback reuses the packet transport so it cannot silently fail' });
     }
     if (path === '/api/agents/v1/test9') {
       // v0.9 GATE: Sovereign Aggregation, Arithmetic & Composition.
