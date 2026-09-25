@@ -1453,6 +1453,45 @@ const V2B_GATE = {
   completion_rule: 'V2-B passes when all 15 frozen cases pass and the full regression battery (INTAKE M1-M4, V1, V2-A, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; V2-A must remain unchanged underneath. V2-C TTS stays frozen out until Dad orders it.'
 };
 
+// ---------- v0.16 VOICE V2-C CONTRACT — FROZEN BEFORE IMPLEMENTATION ----------
+// (Dad, Sept 25, 2026: "V2-B is frozen and closed. Next move: freeze V2-C contract before implementation.")
+// Built on the verified-text side of the frozen voice stack (V1 WAV law, V2-A stream law, V2-B recognition law all unchanged underneath).
+const V2C_GATE = {
+  gate: 'HARZ-VOICE-V2C v1.0 — TTS / OUTPUT VOICE SOVEREIGNTY GATE (third layer of Voice V2; speaker identification and live mic remain frozen OUT)',
+  frozen_at: new Date('2026-09-25T13:00:00Z').toISOString(),
+  executor_status: 'not implemented (frozen before implementation, per the layered discipline)',
+  architecture: 'verified text -> speech generation -> audio artifact preservation -> SHA-256 -> output metadata -> playback verification -> receipt',
+  creation_law: 'Create -> Test -> Verify -> Browser/live playback -> Receipt, exactly like every other HARZ artifact (Dad, frozen verbatim intent)',
+  laws: [
+    'DELIVERY HONESTY LAW (verbatim, Dad): HARZ must never represent generated speech as successfully delivered merely because an audio file was produced.',
+    'Only verified text may enter TTS: evidence-backed text (ingested or recognition-proven, provenance carried through) or explicit operator text; no fabricated content is ever spoken.',
+    'Every generated audio artifact is preserved with SHA-256 over the produced bytes, true byte length, format (WAV PCM, obeying the frozen V1 parse law), and output metadata: engine id, model version, voice, sovereign/external, generation params, source text provenance.',
+    'Playback verification is INSIDE the gate: produced audio must round-trip through HARZ\'s own frozen V1 WAV parser — duration/rate/channels derived from the produced bytes, never from claimed metadata.',
+    'Delivery state is honest and explicit: generated / playback_verified / delivered / failed. "Delivered" is claimed ONLY after live client-side playback confirmation; a produced file alone never upgrades the state.',
+    'Deterministic generation: same text + pinned engine + same params -> byte-identical audio (same SHA-256), or the nondeterminism is disclosed honestly.',
+    'Hausa and Unicode text: source text preserved exactly in provenance; encoding exact.',
+    'Injection in text-to-speak is data under the frozen M1 law, never instructions.',
+    'External TTS adapters are temporary dev dependencies only (Dad\'s v0.2 standing directive); every invocation disclosed per-call; unavailable = honest failure, zero fabricated audio. Receipts and evidence stay in-worker at zero external calls.',
+    'Failures are honest: empty text -> refusal, zero fabricated audio; oversized text -> honest cap/refusal disclosed; engine failure -> disclosed, never a silent substitute.'
+  ],
+  scope: 'V2-C TTS/output voice ONLY. Speaker identification OUT. Live microphone transport OUT. Recognition (V2-B) and intake laws unchanged underneath.',
+  cases: [
+    'V2C-1 clear_text_to_speech: verified text -> WAV generated, sha256 + true byte length + duration/rate/channels from bytes',
+    'V2C-2 playback_verification: generated audio round-trips the frozen V1 WAV parser; claimed metadata matches byte-derived truth',
+    'V2C-3 hausa_unicode: Hausa + Unicode text spoken; source text preserved exactly in provenance',
+    'V2C-4 empty_text: honest refusal, zero fabricated audio',
+    'V2C-5 oversized_text: honest cap/refusal disclosed, never a silent partial claim',
+    'V2C-6 injection_in_text: injection flagged as data, never obeyed; audio still produced as data or refused honestly',
+    'V2C-7 deterministic_replay: same text + pinned engine + params -> byte-identical audio, same SHA-256',
+    'V2C-8 external_tts_unavailable: honest failure, zero fabricated audio',
+    'V2C-9 delivery_honesty: a produced file alone reports generated_not_delivered; "delivered" ONLY after live playback confirmation',
+    'V2C-10 format_law: output WAV obeys the frozen V1 parse law (RIFF/fmt/data), playable by HARZ and standard players',
+    'V2C-11 spoken_fee_chain: speak the fee line from recognized evidence (NGN25/txn) -> generated -> playback verified -> receipt; Verify-1 traces to source text provenance',
+    'V2C-12 browser_live_playback: live browser playback of a generated artifact upgrades its receipt to delivered (or stays honestly undelivered if playback fails)'
+  ],
+  completion_rule: 'V2-C passes when all 12 frozen cases pass and the full regression battery (INTAKE M1-M4, V1, V2-A, V2-B, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; V1/V2-A/V2-B must remain unchanged underneath. Speaker ID stays frozen out until Dad orders it.'
+};
+
 // ---------- v0.16 VOICE V2-B EXECUTOR (implements frozen HARZ-VOICE-V2B contract) ----------
 // Sovereign reference recognizer behind the frozen adapter interface. FIRST LAW (verbatim):
 // Recognition uncertainty must remain uncertainty. HARZ must never turn an uncertain acoustic
@@ -4627,6 +4666,9 @@ if (request.method === 'GET' && path === '/api/voice/v1/recognize' && (new URL(r
         recognition: { status: rec.status, result: rec.result, engine: rec.engine, recognition_id: rec.recognition_id,
           determinism_fingerprint: rec.determinism_fingerprint, evidence_status: rec.evidence_status, external_calls: rec.external_calls },
         segments: (rec.segments || []).map(x => ({ text: x.text, confidence: x.confidence, provenance: x.provenance })) });
+    }
+if (path === '/api/voice/v1/testv2c') {
+      return json({ gate: V2C_GATE.gate, frozen_at: V2C_GATE.frozen_at, architecture: V2C_GATE.architecture, creation_law: V2C_GATE.creation_law, laws: V2C_GATE.laws, cases: V2C_GATE.cases.length, scope: V2C_GATE.scope, completion_rule: V2C_GATE.completion_rule, executor_status: V2C_GATE.executor_status, permanent_evidence_note: 'KV ~1-write/sec/key is an implementation/platform constraint, NOT a constitutional voice law (preserved per Dad, V2-A countersignature)', scored: false, honest_note: 'Gate frozen before implementation; scoring only after the TTS engine exists.' });
     }
 if (path === '/api/voice/v1/testv2b') {
       const t0 = Date.now();
