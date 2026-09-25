@@ -1492,6 +1492,49 @@ const V2C_GATE = {
   completion_rule: 'V2-C passes when all 12 frozen cases pass and the full regression battery (INTAKE M1-M4, V1, V2-A, V2-B, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; V1/V2-A/V2-B must remain unchanged underneath. Speaker ID stays frozen out until Dad orders it.'
 };
 
+// ---------- v0.16 VISION V1 CONTRACT — FROZEN BEFORE IMPLEMENTATION ----------
+// (Dad, Sept 25, 2026: "V2-C is closed. Voice is now a complete sovereign interface. The next gate is Vision V1.")
+const VISIONV1_GATE = {
+  gate: 'HARZ-VISION-V1 v1.0 — IMAGE INTAKE SOVEREIGNTY GATE (first vision layer; video, live camera, and scene understanding remain frozen OUT)',
+  frozen_at: new Date('2026-09-25T15:30:00Z').toISOString(),
+  executor_status: 'not implemented (frozen before implementation, per the layered discipline)',
+  architecture: 'image -> preserve original bytes -> SHA-256 -> decode/validate -> extract visual evidence -> provenance -> Search/Reasoner/Planner -> Verify -> receipt',
+  first_law_verbatim: 'HARZ must never assert visual content that it cannot establish from the image evidence, and uncertainty must remain uncertainty.',
+  laws: [
+    'FIRST LAW (verbatim, Dad): HARZ must never assert visual content that it cannot establish from the image evidence, and uncertainty must remain uncertainty.',
+    'Original bytes preserved: SHA-256 over raw bytes, true byte length, format disclosed; raw artifact never mutated.',
+    'Decode in-worker, zero libraries, zero external calls: PNG chunk law (IHDR/PLTE/IDAT/tEXt/pHYs, per-chunk CRC32 verified, IDAT zlib-decompressed via DecompressionStream, scanline unfilter); JPEG segment law (SOI/APPn/DQT/SOF/DHT/SOS/EOI, SOF dimensions, APP1 EXIF disclosed).',
+    'Visual facts ONLY from bytes: every asserted fact carries machine-checkable provenance — pixel (x,y) -> exact RGB from decompressed scanlines, or chunk/segment byte range. Nothing else is asserted.',
+    'No fabricated pixels: truncated/corrupt/CRC-mismatched = honest failure or honest partial disclosure; zero visual assertions that cannot be established from the bytes.',
+    'Uncertainty law: a question the reference engine cannot establish from image evidence (e.g. what is depicted) gets an honest cannot-establish-from-image-evidence answer with candidates/uncertainty disclosed, NEVER an asserted description.',
+    'The reference visual-facts engine is deterministic and sovereign behind the frozen adapter boundary; a real HARZ-owned vision model swaps in later without touching the provenance/evidence/receipt layer. External vision adapters are temporary dev dependencies only (v0.2 directive), disclosed per call, unavailable = honest failure, zero fabricated sight.',
+    'Injection in image metadata (tEXt/EXIF) is data under the frozen M1 law, never instructions.',
+    'Duplicates deterministic by byte SHA-256 (dedup disclosed).',
+    'Oversize honest cap/refusal disclosed, never silent partial claim.',
+    'Image questions are scoped to the actual ingested image evidence (ingest-scoped gate); the general corpus can never substitute for the image source.',
+    'Evidence sovereignty: packets, index, receipts in-worker at zero external calls; full chain visual evidence -> Search-1 -> Reasoner/Planner -> Verify-1 -> receipt.'
+  ],
+  scope: 'Vision V1 recorded image intake ONLY: PNG + JPEG first (other formats honest-unsupported, raw preserved). Video OUT. Live camera OUT. Scene/object understanding OUT until a HARZ model exists behind the adapter. Voice stack (V1, V2-A, V2-B, V2-C) unchanged underneath.',
+  cases: [
+    'VIS1-1 png_intake: valid PNG ingested, bytes preserved, sha256, IHDR decoded, dimensions/bit depth/color type from bytes, evidence packet',
+    'VIS1-2 pixel_provenance: sampled pixel (x,y) -> exact RGB from decompressed unfiltered scanlines, byte-range provenance',
+    'VIS1-3 jpeg_segment_law: SOI/SOF parse, dimensions from SOF, segment byte-range provenance, APPn/EXIF disclosed',
+    'VIS1-4 corrupt_image_honest: truncated/garbage image -> honest failure, raw preserved, zero fabricated pixels',
+    'VIS1-5 crc_mismatch_disclosed: PNG chunk with bad CRC32 -> disclosed, no silent acceptance',
+    'VIS1-6 unsupported_format_honest: non-PNG/JPEG (e.g. WebP) -> honest unsupported, raw preserved',
+    'VIS1-7 oversize_honest: image over the byte cap -> honest refusal disclosed',
+    'VIS1-8 duplicate_deterministic: same bytes ingested twice -> dedup by sha, disclosed',
+    'VIS1-9 injection_in_metadata: injection text in tEXt/EXIF -> flagged as data, never obeyed',
+    'VIS1-10 embedded_text_evidence: tEXt/EXIF comment extracted with chunk byte-range provenance, searchable as asserted text',
+    'VIS1-11 visual_question_scoped: image questions answered only from the ingested image evidence; corpus cannot substitute',
+    'VIS1-12 uncertainty_law: unestablishable visual content -> honest cannot-establish + uncertainty disclosed, never an asserted description',
+    'VIS1-13 fee_chain_from_image: fee line NGN25/txn in image metadata evidence -> quote -> 40x25=1,000 -> Verify-1 traced to chunk byte range',
+    'VIS1-14 evidence_sovereignty: packets/index/receipts in-worker, zero external calls',
+    'VIS1-15 deterministic_replay: same image re-ingested -> identical visual facts + fingerprint'
+  ],
+  completion_rule: 'Vision V1 passes when all 15 frozen cases pass at zero external calls and the full regression battery (INTAKE M1-M4, Voice V1, V2-A, V2-B, V2-C, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; the voice stack must remain unchanged underneath. Video and scene understanding stay frozen OUT until Dad orders them.'
+};
+
 // ---------- v0.16 VOICE V2-C EXECUTOR (implements frozen HARZ-VOICE-V2C contract) ----------
 // GOVERNING LAW (verbatim, Dad): HARZ must never represent generated speech as successfully
 // delivered merely because an audio file was produced. Creation: Create -> Test -> Verify ->
@@ -4532,6 +4575,9 @@ export default {
       if (m3.raw !== undefined) return new Response(m3.raw, { status: 200, headers: { 'content-type': 'application/pdf' } });
       const f = m2Fixture(c);
       return new Response(f.content, { status: 200, headers: { 'content-type': f.mime } });
+    }
+    if (path === '/api/vision/v1/testvision') {
+      return json({ gate: VISIONV1_GATE.gate, frozen_at: VISIONV1_GATE.frozen_at, architecture: VISIONV1_GATE.architecture, first_law_verbatim: VISIONV1_GATE.first_law_verbatim, laws: VISIONV1_GATE.laws, cases: VISIONV1_GATE.cases.length, scope: VISIONV1_GATE.scope, completion_rule: VISIONV1_GATE.completion_rule, executor_status: VISIONV1_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the vision engine exists.' });
     }
     if (request.method === 'POST' && (path === '/api/voice/v1/stream' || path === '/api/voice/v1/recognize' || path === '/api/voice/v1/tts' || path === '/api/voice/v1/tts/confirm')) {
       let vb = {};
