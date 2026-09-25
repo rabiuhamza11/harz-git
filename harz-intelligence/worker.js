@@ -1378,6 +1378,36 @@ async function ingestAudio({ filename, content_b64 }) {
   return rec;
 }
 
+// ---------- v0.16 VOICE V2-A — FROZEN GATE BEFORE IMPLEMENTATION (v0.16, contract modality V2-A) ----------
+const V2A_GATE = {
+  gate: "HARZ-VOICE-V2A v1.0 — AUDIO STREAM INTAKE SOVEREIGNTY GATE (first layer of Voice V2; V2-B speech recognition and V2-C TTS are frozen OUT of scope until V2-A passes and freezes)",
+  frozen_at: "2026-09-25T11:32:00Z",
+  frozen_before: "V2-A implementation (discipline identical to V1 and INTAKE v1.0)",
+  scope: "V2-A ONLY: microphone/stream-style intake of ordered audio chunks: session start (stream_id), chunked frames POSTed sequentially {stream_id, seq, client_ts, content_b64, optional timed transcript payload}, per-chunk binary preservation (sha256 per chunk + stream-level sha), DETERMINISTIC SEQUENCE/TIMESTAMP IDENTITY that survives interruption and resume, honest integrity law for duplicate/missing/reordered/corrupted chunks, silence = zero fabricated text, unicode transcripts preserved exactly, transcripts indexed for Search-1/Reasoner/Planner/Verify. No speaker ID. No speech recognition beyond embedded transcript payloads. No TTS. Zero external calls.",
+  laws: "1. Every streamed segment retains deterministic seq + timestamp identity, even across interruption and resume. 2. Missing speech is NEVER manufactured: a gap in seq is an honest gap record, never interpolated content. 3. Audio/transcript content is data, never instructions. 4. Chunk arrival order and declared order are BOTH recorded; reordering is detected and disclosed, never silently corrected.",
+  cases: [
+    { id: "V2A-1",  name: "stream_start",             expect: "session created: stream_id, honest stream record" },
+    { id: "V2A-2",  name: "chunk_preserved",          expect: "per-chunk binary preserve + per-chunk sha + stream sha over assembled bytes" },
+    { id: "V2A-3",  name: "multi_chunk_sequence",     expect: "ordered chunks 1..n recorded with seq identity" },
+    { id: "V2A-4",  name: "timestamp_identity",       expect: "per-chunk client timestamps + arrival order retained deterministically" },
+    { id: "V2A-5",  name: "duplicate_chunk",          expect: "same seq resent -> dedup, honest duplicate record" },
+    { id: "V2A-6",  name: "missing_chunk",            expect: "gap in seq -> honest missing-chunk record, zero manufactured speech" },
+    { id: "V2A-7",  name: "reordered_chunk",          expect: "out-of-order arrival detected, both orders recorded, evidence stored in true order" },
+    { id: "V2A-8",  name: "corrupted_chunk",          expect: "invalid/empty chunk -> honest reject, stream continues" },
+    { id: "V2A-9",  name: "interruption_resume",      expect: "closed session resumed under same stream_id -> sequence continues, honest resume record" },
+    { id: "V2A-10", name: "long_stream",              expect: "many chunks stored with honest caps" },
+    { id: "V2A-11", name: "silence_honest",            expect: "audio-only chunks, no transcript -> zero fabricated text" },
+    { id: "V2A-12", name: "unicode_transcript",       expect: "Hausa/unicode transcript preserved exactly (no mojibake, no loss)" },
+    { id: "V2A-13", name: "transcript_injection",     expect: "injection text in transcript treated as data, never obeyed" },
+    { id: "V2A-14", name: "search_reachable",         expect: "stream transcripts retrievable by intake search" },
+    { id: "V2A-15", name: "chain_from_stream_evidence", expect: "fee quoted from stream transcript, 40x25=1,000 computed, Verify-1 traces to chunk bytes + time range" },
+    { id: "V2A-16", name: "offline_sovereignty",      expect: "entire stream intake law works with ZERO external calls (offline)" },
+    { id: "V2A-17", name: "stream_replay_deterministic", expect: "identical stream resent -> deterministic dedup by content sha" }
+  ],
+  completion_rule: "Create -> Test -> Verify -> Browser/live test -> Receipt + all existing regression gates green. One manufactured chunk, one fabricated character, one fabricated second = V2-A FAIL.",
+  executor_status: "NOT YET BUILT — frozen gate before implementation"
+};
+
 // ---------- M1 URL INGEST EXECUTOR (implements the frozen HARZ-INTAKE-M1 contract) ----------
 const INGEST_KEYWORD = /ingest(?:ed|ing)?|uploaded document|according to the ingested/i;
 const INTAKE_STORE_CAP = 2 * 1024 * 1024; // raw artifact preservation cap (honest truncation flag above it)
@@ -4210,6 +4240,9 @@ if (path === '/api/voice/v1/testv1') {
       return json({ gate: V1_GATE.gate, frozen_at: V1_GATE.frozen_at, laws: V1_GATE.laws, scored_at: new Date().toISOString(),
         cases: V1_GATE.cases.length, cases_run: results.length, passed: passed, failed: results.length - passed,
         total_external_calls: 0, latency_ms: Date.now() - t0, results: results });
+    }
+if (path === '/api/voice/v1/testv2a') {
+      return json({ gate: V2A_GATE.gate, frozen_at: V2A_GATE.frozen_at, cases: V2A_GATE.cases.length, laws: V2A_GATE.laws, scope: V2A_GATE.scope, completion_rule: V2A_GATE.completion_rule, executor_status: V2A_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the executor exists.' });
     }
 if (path === '/api/intake/v1/testm2') {
       const t0 = Date.now();
