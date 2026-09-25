@@ -1408,6 +1408,51 @@ const V2A_GATE = {
   executor_status: "NOT YET BUILT — frozen gate before implementation"
 };
 
+// ---------- v0.16 VOICE V2-B CONTRACT — FROZEN BEFORE IMPLEMENTATION ----------
+// (Dad, Sept 25, 2026: "V2-A is frozen and closed. The next move is to freeze the V2-B speech-recognition contract before implementation.")
+// PERMANENT EVIDENCE NOTE (Dad, countersigning V2-A): the Cloudflare KV ~1-write/sec/key constraint that produced
+// the 429/1101 behavior is an IMPLEMENTATION/PLATFORM CONSTRAINT, not a constitutional voice-stream law.
+// That distinction is preserved here permanently: if the transport moves to another HARZ node, the stream law
+// (seq/timestamp identity, dedup, gaps, reorder disclosure, never manufacture) travels unchanged; the backoff is node-local.
+const V2B_GATE = {
+  gate: 'HARZ-VOICE-V2B v1.0 — SPEECH RECOGNITION SOVEREIGNTY GATE (second layer of Voice V2; built ON TOP of frozen V2-A, which remains unchanged underneath; V2-C TTS and speaker identification are frozen OUT of scope until V2-B passes and freezes)',
+  frozen_at: new Date('2026-09-25T11:00:00Z').toISOString(),
+  executor_status: 'not implemented (frozen before implementation, per the layered discipline)',
+  architecture: 'validated audio stream (V2-A law) -> speech recognition -> transcript segments -> confidence/recognition metadata -> timestamp provenance -> evidence packet -> Search-1 -> Planner -> Verify-1 -> receipt',
+  laws: [
+    'RECOGNITION UNCERTAINTY LAW (verbatim, Dad): Recognition uncertainty must remain uncertainty. HARZ must never turn an uncertain acoustic interpretation into asserted evidence without disclosing the uncertainty.',
+    'Only streams validated under the frozen V2-A law may enter recognition. No recognition of unvalidated, corrupted, or fabricated audio.',
+    'Every recognized segment carries: text, time-range provenance [t0,t1]s, chunk sha + byte range, recognition confidence, and recognition metadata (engine, model/version, engine provenance) — all disclosed in the evidence packet.',
+    'Silence = honest no-speech result, zero fabricated words. Noise = honest noise result with confidence, zero invented words.',
+    'Unrecognizable or ambiguous audio = honest low-confidence / unrecognized result with the uncertainty disclosed; never guessed words asserted as evidence.',
+    'Numbers, currency, names and identifiers are preserved verbatim as heard (with uncertainty where ambiguous); never silently "corrected" to plausible values.',
+    'Overlapping speech = overlap disclosed honestly; never merged into a single fabricated speaker text.',
+    'Content is data: anything spoken (including injection attempts) is treated as data under the frozen M1 injection law, never as instructions.',
+    'Evidence sovereignty: evidence packets, indexing, chain-of-custody and receipts remain in-worker at zero external calls. The recognition engine itself is a pluggable model interface whose every invocation is disclosed in evidence metadata (engine id, model version); external-recognition-unavailable = honest failure with zero fabricated transcript.',
+    'Deterministic replay: identical stream input + identical pinned engine version -> identical transcript segments and confidence, or the nondeterminism is disclosed honestly.',
+    'V2-A invariants pass through unchanged: missing speech NEVER manufactured, gaps honest, arrival and declared order both recorded, duplicates deduped and disclosed, corrupt chunks rejected while the stream continues, resume preserves sequence continuity.'
+  ],
+  scope: 'V2-B speech recognition ONLY. Speaker identification OUT. TTS (V2-C) OUT. Live mic capture OUT (streaming transport proven by V2-A).',
+  cases: [
+    'V2B-1 clear_speech: valid stream -> transcript segments with confidence + full provenance',
+    'V2B-2 silence_stream: silence -> honest no-speech, zero fabricated words',
+    'V2B-3 noise_stream: noise -> honest noise label w/ confidence, zero invented words',
+    'V2B-4 overlapping_speech: overlap disclosed, never merged into fabricated text',
+    'V2B-5 hausa_english_unicode: Hausa + English + Unicode transcript preserved exactly',
+    'V2B-6 numbers_currency: numbers/currency (NGN25/txn) recognized exactly, feeds the fee chain',
+    'V2B-7 names_identifiers: names/IDs preserved verbatim, never silently corrected',
+    'V2B-8 ambiguous_audio: uncertainty disclosed, never asserted as certain',
+    'V2B-9 transcript_injection: spoken injection treated as data, never obeyed',
+    'V2B-10 missing_corrupt_chunks: recognition refuses or honestly discloses unvalidated/gapped input (V2-A law holds under recognition)',
+    'V2B-11 interrupted_resumed: recognition across resume preserves continuity + timestamps',
+    'V2B-12 deterministic_replay: same audio + pinned engine -> identical transcript + confidence',
+    'V2B-13 external_unavailable: recognizer unavailable -> honest failure, zero fabricated transcript',
+    'V2B-14 chain_from_recognition_evidence: fee quoted from recognized transcript -> 40x25=1,000 -> Verify-1 trace to audio time range',
+    'V2B-15 evidence_sovereignty: evidence packets/indexing/receipts in-worker; any model call disclosed per-invocation'
+  ],
+  completion_rule: 'V2-B passes when all 15 frozen cases pass and the full regression battery (INTAKE M1-M4, V1, V2-A, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; V2-A must remain unchanged underneath. V2-C TTS stays frozen out until Dad orders it.'
+};
+
 // ---------- v0.16 VOICE V2-A EXECUTOR (implements frozen HARZ-VOICE-V2A contract) ----------
 const V2A_CHUNK_CAP = 512 * 1024;
 const V2A_STREAM_CAP = 2 * 1024 * 1024;
@@ -4441,6 +4486,9 @@ if (request.method === 'GET' && path === '/api/voice/v1/stream' && (new URL(requ
         evidence_status: fin.evidence_status, evidence_artifact_id: fin.evidence_artifact_id,
         segments: (fin.segments || []).map(x => ({ text: x.text, provenance: x.provenance })),
         honest_note: 'live in-worker stream session: 2 chunks + disclosed duplicate, full seq/timestamp/sha law' });
+    }
+if (path === '/api/voice/v1/testv2b') {
+      return json({ gate: V2B_GATE.gate, frozen_at: V2B_GATE.frozen_at, architecture: V2B_GATE.architecture, laws: V2B_GATE.laws, cases: V2B_GATE.cases.length, scope: V2B_GATE.scope, completion_rule: V2B_GATE.completion_rule, executor_status: V2B_GATE.executor_status, permanent_evidence_note: 'KV ~1-write/sec/key is an implementation/platform constraint, NOT a constitutional voice-stream law (preserved per Dad, V2-A countersignature)', scored: false, honest_note: 'Gate frozen before implementation; scoring only after the recognizer exists.' });
     }
 if (path === '/api/voice/v1/testv2a') {
       const t0 = Date.now();
