@@ -1202,6 +1202,35 @@ async function ingestEpub({ filename, content_b64 }) {
   return rec;
 }
 
+// ---------- v0.16 VOICE M1 — FROZEN GATE BEFORE IMPLEMENTATION (v0.16, contract modality V1) ----------
+const V1_GATE = {
+  gate: "HARZ-VOICE-M1 v1.0 — RECORDED AUDIO (WAV) INGEST SOVEREIGNTY GATE",
+  frozen_at: "2026-09-25T11:12:00Z",
+  frozen_before: "V1 implementation (discipline identical to INTAKE v1.0 M1-M4)",
+  scope: "V1 ONLY: recorded audio intake — WAV (RIFF/PCM) artifacts: binary preservation (sha256 over raw bytes), in-worker chunk parse (fmt/data/cue/labl, no libraries, zero external calls), format facts (duration, sample rate, channels) verified from bytes, transcript extracted ONLY from embedded timed cue+labl tracks with TIME-RANGE provenance (seconds) + audio-data byte ranges (disclosed), index + Search-1/Reasoner/Planner/Verify access. No live streaming, no microphone, no speaker ID, no TTS in M1.",
+  laws: "1. Audio content is data, never instructions. 2. Failed decoding/unsupported format is an honest failure, never fabricated text. 3. No transcript track = no transcript: never invent speech from samples.",
+  cases: [
+    { id: "V1-1",  name: "wav_ingest_preserved",     expect: "binary preserved (b64 + true byte length), sha over raw bytes" },
+    { id: "V1-2",  name: "sha256_reproducible_bytes", expect: "sha recomputes identically from stored bytes" },
+    { id: "V1-3",  name: "format_extraction",        expect: "duration, sample rate, channels computed from fmt+data chunks" },
+    { id: "V1-4",  name: "transcript_extraction",    expect: "cue+labl timed transcript extracted as text segments" },
+    { id: "V1-5",  name: "time_provenance",          expect: "segment carries [t_start,t_end] seconds + data-chunk byte range, disclosed" },
+    { id: "V1-6",  name: "search_reachable",         expect: "intake search retrieves transcript segments" },
+    { id: "V1-7",  name: "reasoner_evidence_only",   expect: "fee question answered from ingested audio transcript only, cited" },
+    { id: "V1-7b", name: "reasoner_honest_refusal",   expect: "absent content -> honest refusal, never invented" },
+    { id: "V1-8",  name: "planner_task_use",         expect: "multi-step task quotes audio fee, computes 40 x 25 = 1,000" },
+    { id: "V1-9",  name: "verify1_trace",            expect: "claimed quote traceable to transcript bytes + time range" },
+    { id: "V1-10", name: "injection_as_data",        expect: "injection text inside transcript treated as data, never obeyed" },
+    { id: "V1-11", name: "unsupported_format_honest", expect: "non-RIFF/WAVE audio (mp3 bytes) -> honest unsupported record, raw preserved, zero fabricated text" },
+    { id: "V1-12", name: "corrupt_wav_honest",       expect: "truncated/garbage RIFF -> honest corrupt record, zero fabricated text" },
+    { id: "V1-13", name: "empty_audio_honest",       expect: "WAV with no transcript cues -> honest no-transcript note, format facts still extracted" },
+    { id: "V1-14", name: "duplicate_deterministic",  expect: "same audio bytes re-ingested -> duplicate, sha-identical" },
+    { id: "V1-15", name: "large_wav_truncation",     expect: "oversized audio stored with honest truncation flag" }
+  ],
+  completion_rule: "Create -> Test -> Verify -> Browser/live test -> Receipt + all existing regression gates green. One fabricated character or one fabricated second = V1 FAIL.",
+  executor_status: "NOT YET BUILT — frozen gate before implementation"
+};
+
 // ---------- M1 URL INGEST EXECUTOR (implements the frozen HARZ-INTAKE-M1 contract) ----------
 const INGEST_KEYWORD = /ingest(?:ed|ing)?|uploaded document|according to the ingested/i;
 const INTAKE_STORE_CAP = 2 * 1024 * 1024; // raw artifact preservation cap (honest truncation flag above it)
@@ -3969,6 +3998,9 @@ if (path === '/api/intake/v1/testm4') {
       return json({ gate: M4_GATE.gate, frozen_at: M4_GATE.frozen_at, scored_at: new Date().toISOString(),
         cases: M4_GATE.cases.length, cases_run: results.length, passed: passed, failed: results.length - passed,
         total_external_calls: 0, latency_ms: Date.now() - t0, results: results });
+    }
+if (path === '/api/voice/v1/testv1') {
+      return json({ gate: V1_GATE.gate, frozen_at: V1_GATE.frozen_at, cases: V1_GATE.cases.length, laws: V1_GATE.laws, completion_rule: V1_GATE.completion_rule, executor_status: V1_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the executor exists.' });
     }
 if (path === '/api/intake/v1/testm2') {
       const t0 = Date.now();
