@@ -852,6 +852,34 @@ async function ingestFile({ filename, content, media_type }) {
   return rec;
 }
 
+// ---------- M3 PDF INGEST — FROZEN GATE BEFORE IMPLEMENTATION (v0.15, contract modality M3) ----------
+const M3_GATE = {
+  gate: "HARZ-INTAKE-M3 v1.0 — PDF INGEST SOVEREIGNTY GATE",
+  frozen_at: "2026-09-25T10:13:00Z",
+  frozen_before: "M3 implementation (discipline identical to M1/M2)",
+  scope: "M3 ONLY: PDF binary ingest — byte-preserving store, text-layer extraction (uncompressed + FlateDecode via DecompressionStream), stream-level provenance, index, Search-1/Reasoner/Planner/Verify access.",
+  cases: [
+    { id: "M3-1",  name: "pdf_ingest_preserved",      expect: "binary preserved (base64 + true byte length), sha over raw bytes" },
+    { id: "M3-2",  name: "sha256_reproducible_bytes",  expect: "sha recomputes identically from stored bytes" },
+    { id: "M3-3",  name: "text_extraction_uncompressed", expect: "fee sentence extracted from uncompressed text layer" },
+    { id: "M3-4",  name: "text_extraction_flate",      expect: "fee sentence extracted from FlateDecode stream (decompressed in-worker, zero external)" },
+    { id: "M3-5",  name: "provenance_stream_level",    expect: "media type application/pdf, stream byte-range provenance recorded and disclosed" },
+    { id: "M3-6",  name: "search_reachable",           expect: "intake search retrieves PDF segments" },
+    { id: "M3-7",  name: "reasoner_evidence_only",     expect: "fee question answered from ingested PDF only, cited" },
+    { id: "M3-7b", name: "reasoner_honest_refusal",    expect: "absent content -> honest refusal, never invented" },
+    { id: "M3-8",  name: "planner_task_use",            expect: "multi-step task quotes PDF fee, computes 40 x 25 = 1,000" },
+    { id: "M3-9",  name: "verify1_trace",              expect: "claimed quote traceable to the PDF stream byte range" },
+    { id: "M3-10", name: "injection_as_data",          expect: "injection text inside PDF treated as data, never obeyed" },
+    { id: "M3-11", name: "encrypted_honest_failure",   expect: "/Encrypt PDF -> honest unsupported note, raw preserved, zero fabricated text" },
+    { id: "M3-12", name: "no_text_layer_honest",       expect: "image-only PDF -> honest no-text-layer note, raw preserved" },
+    { id: "M3-13", name: "malformed_pdf_honest",       expect: "corrupt PDF -> honest record, zero fabricated text" },
+    { id: "M3-14", name: "duplicate_deterministic",    expect: "same PDF bytes re-ingested -> duplicate, sha-identical" },
+    { id: "M3-15", name: "large_binary_truncation",    expect: "oversized PDF stored with honest truncation flag" }
+  ],
+  completion_rule: "Create -> Test -> Verify -> Browser/live test -> Receipt + all existing regression gates green. One fabricated character = M3 FAIL.",
+  executor_status: "NOT YET BUILT — frozen gate before implementation"
+};
+
 // ---------- M1 URL INGEST EXECUTOR (implements the frozen HARZ-INTAKE-M1 contract) ----------
 const INGEST_KEYWORD = /ingest(?:ed|ing)?|uploaded document|according to the ingested/i;
 const INTAKE_STORE_CAP = 2 * 1024 * 1024; // raw artifact preservation cap (honest truncation flag above it)
@@ -3487,7 +3515,10 @@ export default {
       }
       return json(await ingestFile(body));
     }
-    if (path === '/api/intake/v1/testm2') {
+    if (path === '/api/intake/v1/testm3') {
+      return json({ gate: M3_GATE.gate, frozen_at: M3_GATE.frozen_at, cases: M3_GATE.cases.length, completion_rule: M3_GATE.completion_rule, executor_status: M3_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the executor exists. Reporting an unrun gate as passed would violate the frozen constitution.' });
+    }
+if (path === '/api/intake/v1/testm2') {
       const t0 = Date.now();
       // gate hygiene: deterministic scoring requires a clean store (test-scoped wipe)
       const reg0 = await intakeRegistry();
