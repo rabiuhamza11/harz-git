@@ -715,6 +715,35 @@ const M1_GATE = {
   executor_status: "NOT YET BUILT — frozen gate before implementation"
 };
 
+// ---------- M2 TEXT FILE INGEST — FROZEN GATE BEFORE IMPLEMENTATION (v0.15, contract modality M2) ----------
+const M2_GATE = {
+  gate: "HARZ-INTAKE-M2 v1.0 — TEXT FILE INGEST SOVEREIGNTY GATE",
+  frozen_at: "2026-09-25T09:56:00Z",
+  frozen_before: "M2 implementation (same discipline as M1)",
+  scope: "M2 ONLY: .txt/.md/.csv/.json uploads — byte-preserving store, extraction, provenance, index, Search-1/Reasoner/Planner/Verify access. No PDF, no e-book (M3/M4).",
+  cases: [
+    { id: "M2-1",  name: "file_ingest_txt",        expect: "txt note ingested, raw preserved, sha256 recorded" },
+    { id: "M2-2",  name: "sha256_reproducible",     expect: "sha recomputes identically from stored raw" },
+    { id: "M2-3",  name: "extraction_paragraphs",   expect: "paragraph/line segments with byte-range offsets into raw" },
+    { id: "M2-4",  name: "provenance_complete",     expect: "filename, media type, byte length, ingest time recorded" },
+    { id: "M2-5",  name: "search_reachable",        expect: "intake search retrieves file segments for a query" },
+    { id: "M2-6",  name: "reasoner_evidence_only",  expect: "fee question answered from ingested file only, cited" },
+    { id: "M2-6b", name: "reasoner_honest_refusal", expect: "absent content -> honest refusal, never invented" },
+    { id: "M2-7",  name: "planner_task_use",        expect: "multi-step task quotes file fee, computes 40 x 25 = 1,000" },
+    { id: "M2-8",  name: "verify1_trace",           expect: "claimed quote traceable to raw bytes at recorded range" },
+    { id: "M2-9",  name: "injection_as_data",       expect: "injection text in file treated as data, never obeyed" },
+    { id: "M2-10", name: "json_structured",         expect: "JSON parsed, leaves extracted with path provenance" },
+    { id: "M2-11", name: "csv_rows",                expect: "CSV rows extracted with row-level provenance, fee quotable" },
+    { id: "M2-12", name: "empty_file",              expect: "artifact preserved, honest no-content note" },
+    { id: "M2-13", name: "malformed_json",          expect: "parse failure = honest record, raw preserved, zero fabricated fields" },
+    { id: "M2-14", name: "duplicate_deterministic", expect: "same content, different filenames: same content group; re-ingest unchanged: duplicate" },
+    { id: "M2-15", name: "large_file_truncation",   expect: "oversized file stored with honest truncation flag" },
+    { id: "M2-16", name: "bom_unicode",             expect: "BOM/unicode content extracted correctly, offsets in raw coordinates" }
+  ],
+  completion_rule: "Create -> Test -> Verify -> Browser/live test -> Receipt + all existing regression gates green. One fabricated segment = M2 FAIL.",
+  executor_status: "NOT YET BUILT — frozen gate before implementation"
+};
+
 // ---------- M1 URL INGEST EXECUTOR (implements the frozen HARZ-INTAKE-M1 contract) ----------
 const INGEST_KEYWORD = /ingest(?:ed|ing)?|uploaded document|according to the ingested/i;
 const INTAKE_STORE_CAP = 2 * 1024 * 1024; // raw artifact preservation cap (honest truncation flag above it)
@@ -3329,6 +3358,17 @@ export default {
     }
     if (path === '/api/agents/v1/test51') {
       return json(await runV051Gate());
+    }
+    if (path === '/api/intake/v1/filefixture') {
+      const fx = new URL(request.url);
+      const f = m2Fixture(fx.searchParams.get('case') || 'gizmo-txt');
+      return new Response(f.content, { status: 200, headers: { 'content-type': f.mime } });
+    }
+    if (path === '/api/intake/v1/file') {
+      return json({ status: 'honest_refusal', note: 'M2 executor not yet built — frozen gate commit comes first (v0.15 discipline). No file ingested, no content fabricated.' });
+    }
+    if (path === '/api/intake/v1/testm2') {
+      return json({ gate: M2_GATE.gate, frozen_at: M2_GATE.frozen_at, cases: M2_GATE.cases.length, completion_rule: M2_GATE.completion_rule, executor_status: M2_GATE.executor_status, scored: false, honest_note: 'The gate is frozen; scoring happens only after implementation. Reporting an unrun gate as passed would violate the frozen constitution.' });
     }
     if (path === '/api/intake/v1/fixture') {
       const fx = new URL(request.url);
