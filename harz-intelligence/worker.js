@@ -1492,6 +1492,56 @@ const V2C_GATE = {
   completion_rule: 'V2-C passes when all 12 frozen cases pass and the full regression battery (INTAKE M1-M4, V1, V2-A, V2-B, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; V1/V2-A/V2-B must remain unchanged underneath. Speaker ID stays frozen out until Dad orders it.'
 };
 
+// ---------- v0.16 VISION V2 CONTRACT — FROZEN BEFORE IMPLEMENTATION ----------
+// (Dad, Sept 25, 2026: "The next frontier can now be chosen deliberately rather than rushed."
+//  Vision V2 = real semantic image understanding behind the frozen adapter — the bridge from the
+//  deterministic image evidence engine (V1) toward eventual HARZ multimodal intelligence. Video AFTER V2.)
+const VISIONV2_GATE = {
+  gate: 'HARZ-VISION-V2 v1.0 — SEMANTIC IMAGE UNDERSTANDING GATE (interpretation layer on top of frozen V1 byte-evidence; video, live camera remain frozen OUT until V2 closes)',
+  frozen_at: new Date('2026-09-25T16:25:00Z').toISOString(),
+  executor_status: 'not implemented (frozen before implementation, per the layered discipline)',
+  five_part_separation_verbatim: [
+    '1. What the bytes prove',
+    '2. What the vision model interprets',
+    '3. Confidence/uncertainty',
+    '4. What can become searchable evidence',
+    '5. What Verify-1 permits into the final answer'
+  ],
+  first_law_verbatim: 'If HARZ cannot establish something from evidence, it must not manufacture certainty.',
+  separation_law: 'The five layers are separated at EVERY step: byte-proven facts, model interpretations, confidence/uncertainty, searchable-evidence eligibility, and Verify-1 admission. An interpretation is never promoted into an established fact; a fact is never demoted into a mere interpretation.',
+  laws: [
+    'FIRST LAW (verbatim, Dad): If HARZ cannot establish something from evidence, it must not manufacture certainty.',
+    'LAYER A (bytes prove): everything Vision V1 establishes stays as-is — pixel (x,y)->exact RGB, IHDR/SOF dims, tEXt/COM/EXIF text, chunk/segment byte-range provenance. Layer A facts are asserted WITH provenance.',
+    'LAYER B (model interprets): interpretations are produced ONLY by a vision engine behind the frozen adapter boundary, and every interpretation is machine-checkable against Layer A (e.g. region-uniformity backed by a pixel scan, brightness/contrast/color-distribution derived from the unfiltered scanlines), with the verification method disclosed so Verify-1 can re-check it. No interpretation without a disclosed check.',
+    'LAYER C (confidence/uncertainty): every interpretation carries a deterministic confidence value + how it was computed (e.g. fraction of sampled pixels satisfying the claimed property); uncertainty remains uncertainty; uninterpretable semantics get honest cannot-interpret with uncertainty disclosed, NEVER an asserted description.',
+    'LAYER D (searchable evidence): Layer A facts index as asserted text (byte ranges). Layer B interpretations index ONLY as model_interpretation entries carrying engine id, confidence, and verification method; low-confidence or unassertable interpretations are NEVER searchable as asserted text. The general corpus can never substitute for the image source.',
+    'LAYER E (Verify-1 admission): final answers admit Layer A facts plainly; Layer B interpretations only WITH the interpretation label + confidence + verification method; Verify-1 REFUSES any answer that claims an interpretation as an established fact, and refuses unsupported conclusions.',
+    'ENGINE LAW: the reference semantic engine (harz-vis2-refsyn) is sovereign, deterministic, in-worker, zero external calls; a real HARZ-owned vision model swaps in behind the SAME adapter without touching the evidence layer; external vision models are temporary dev adapters only (v0.2 directive), disclosed per call, unavailable = honest failure, zero fabricated sight.',
+    'INJECTION LAW: injection text found or interpreted inside image content is data, never instructions, and is never promoted into any layer.',
+    'DETERMINISM: same image + same engine + same params -> identical interpretations, confidences, and fingerprints; replay dedup disclosed.',
+    'HAUSA/UNICODE EXACT through every layer.',
+    'EVIDENCE SOVEREIGNTY: all layers in-worker at zero external calls; full chain image -> Layer A/B/C -> Search/Reasoner/Planner -> Verify-1 -> receipt.'
+  ],
+  cases: [
+    'VIS2-1 layer_separation: one query returns Layer A facts and Layer B interpretations in distinct, labeled structures; no conflation',
+    'VIS2-2 deterministic_interpretation: same image re-analyzed -> byte-identical interpretations + confidences + fingerprint',
+    'VIS2-3 verifiable_interpretation: e.g. region-uniformity interpretation backed by a disclosed pixel scan Verify-1 can re-check against Layer A',
+    'VIS2-4 confidence_law: every interpretation carries a deterministic confidence + computation method; no bare interpretations',
+    'VIS2-5 uncertainty_preserved: uninterpretable semantics (what is depicted) -> honest cannot-interpret + uncertainty disclosed, never asserted',
+    'VIS2-6 searchable_evidence_law: Layer A facts searchable as asserted; interpretations searchable ONLY as model_interpretation with confidence; low-confidence excluded from asserted index',
+    'VIS2-7 verify1_admission: answer claiming an interpretation as established fact is REFUSED; fact-only claims admitted; mixed claims admitted only with labels',
+    'VIS2-8 injection_never_promoted: injection text inside image content/metadata -> flagged data, never obeyed, never indexed as evidence',
+    'VIS2-9 unicode_semantic_exact: Hausa/Unicode embedded text flows through the semantic layer exactly',
+    'VIS2-10 fee_chain_interpretive: interpretive answer (pricing notice detected in image) -> quote NGN25/txn -> 40x25=1,000 -> Verify-1 trace to bytes AND interpretation label + confidence',
+    'VIS2-11 contrast_evidence: two images differing in one pixel -> different fingerprints, both honestly interpreted, difference established from bytes',
+    'VIS2-12 external_adapter_honest: external vision adapter unavailable -> honest failure, zero fabricated interpretations',
+    'VIS2-13 evidence_sovereignty: all layers in-worker, zero external calls',
+    'VIS2-14 model_disclosure: every call discloses engine id, version, sovereign/external, layers used, per the V1 disclosure discipline'
+  ],
+  scope: 'Vision V2 semantic image understanding ONLY, on top of frozen Vision V1 (PNG pixel evidence first; JPEG stays segment-level, honestly). Video OUT; live camera OUT; cross-image corpus reasoning OUT. The real HARZ vision model swap-in slot exists behind the frozen adapter boundary. Video (frames + audio + temporal provenance -> multimodal evidence) becomes clean AFTER V2 closes.',
+  completion_rule: 'Vision V2 passes when all 14 frozen cases pass at zero external calls and the full regression battery (INTAKE M1-M4, Voice V1/V2-A/V2-B/V2-C, Vision V1, TASK H, BENCH F, offline, frozen v0.5-v0.12, learning) stays green; Vision V1 must remain unchanged underneath.'
+};
+
 // ---------- v0.16 VISION V1 EXECUTOR (implements frozen HARZ-VISION-V1 contract) ----------
 // FIRST LAW (verbatim, Dad): HARZ must never assert visual content that it cannot establish
 // from the image evidence, and uncertainty must remain uncertainty.
@@ -4900,6 +4950,9 @@ export default {
       } catch (e) {
         return json({ gate: VISIONV1_GATE.gate, error: String((e && e.message) || e), stack: String((e && e.stack) || '').slice(0, 600), partial_results: results, honest_note: 'harness threw; partial results disclosed' });
       }
+    }
+    if (path === '/api/vision/v1/testvision2') {
+      return json({ gate: VISIONV2_GATE.gate, frozen_at: VISIONV2_GATE.frozen_at, five_part_separation_verbatim: VISIONV2_GATE.five_part_separation_verbatim, first_law_verbatim: VISIONV2_GATE.first_law_verbatim, separation_law: VISIONV2_GATE.separation_law, laws: VISIONV2_GATE.laws, cases: VISIONV2_GATE.cases.length, scope: VISIONV2_GATE.scope, completion_rule: VISIONV2_GATE.completion_rule, executor_status: VISIONV2_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the semantic vision engine exists.' });
     }
     if (request.method === 'GET' && path === '/api/vision/v1/file') {
       const fx = (new URL(request.url)).searchParams.get('fixture') || 'fee-png';
