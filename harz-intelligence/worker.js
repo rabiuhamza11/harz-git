@@ -2,7 +2,7 @@
 import { reasoner11Call } from './reasoner11-runtime.js';
 import { reasoner12Call } from './reasoner12-runtime.js';
 import { train, TRAIN_CONFIG } from './learning/trainer.js';
-import { buildPacket, detectConflicts, analyzeQuery } from './search1.js';
+import { buildPacket, detectConflicts, analyzeQuery, extractUrlCandidates } from './search1.js';
 import WEIGHTS from './reasoner1-weights.js'; // v0.8: idf table for payment-flow window scoring
 const FROZEN_AB = "{\"suite\": \"HARZ-RETRIEVAL-SUITE v1.0\", \"cases\": 24, \"index_version\": \"b9395e5388a4\", \"frozen_at\": \"2026-09-24T15:40:00Z\", \"baseline\": {\"candidate_recall\": 0.771, \"top1\": 19, \"top5\": 21, \"mrr\": 0.743, \"coverage\": 0.773, \"avg_latency_ms\": 210}, \"search1\": {\"candidate_recall\": 0.792, \"top1\": 22, \"top5\": 22, \"mrr\": 0.833, \"coverage\": 0.841, \"avg_latency_ms\": 838}, \"per_case\": [{\"id\": \"RE1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE3\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE4\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE5\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N1\", \"base_top1\": 0, \"s1_top1\": 1}, {\"id\": \"N2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N3\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N4\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"LC1\", \"base_top1\": 0, \"s1_top1\": 0}, {\"id\": \"LC2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"LC3\", \"base_top1\": 0, \"s1_top1\": 1}, {\"id\": \"R3a\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"R3b\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"R3c\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD3\", \"base_top1\": 0, \"s1_top1\": 0}, {\"id\": \"MI1\", \"base_top1\": 1, \"s1_top1\": 1, \"mirror_suppressed\": 1}, {\"id\": \"MI2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"ST1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"ME1\", \"base_top1\": 1, \"s1_top1\": 1, \"insufficient_evidence\": true}, {\"id\": \"ME2\", \"base_top1\": 1, \"s1_top1\": 1, \"insufficient_evidence\": true}, {\"id\": \"C1\", \"base_top1\": 0, \"s1_top1\": 1}], \"verdict\": \"Search-1 v1.3 beats baseline on all five retrieval metrics (top1 22/24 vs 19/24, top5 22 vs 21, MRR 0.833 vs 0.743, coverage 0.841 vs 0.773, candidate recall 0.792 vs 0.771). Honest costs: ~4x latency (838ms vs 210ms, page enrichment). Honest misses: LC1 (ecosystem enumeration), AD3 (mining doc) \\u2014 both also fail for baseline. PROMOTED.\"}"; // v0.7 frozen A/B record (harness: learning/retrieval-ab.mjs)
 const SUITE_JSON = "{\n  \"suite\": \"HARZ-RETRIEVAL-SUITE v1.0\",\n  \"frozen_at\": \"2026-09-24T16:45:00Z\",\n  \"purpose\": \"v0.7 Search-1 promotion suite \u2014 measures retrieval quality separately from answer correctness. Expanded from the six v0.6 failing classes (RE1, RE2, LC1, LC2, N1, R3) plus adversarial/mirror/staleness probes.\",\n  \"gold_verification\": \"every gold doc id was verified live against the frozen index (index_digest b9395e53\u2026) on Sept 24, 2026, by direct API query with the listed expected terms present in the doc\",\n  \"metrics\": [\"candidate_recall\", \"top1_accuracy\", \"top5_recall\", \"mrr\", \"coverage\", \"mirror_suppression\", \"dup_rate\", \"latency_ms\", \"packet_chars\", \"downstream_answer_accuracy\"],\n  \"cases\": [\n    { \"id\": \"RE1\", \"class\": \"url_retrieval\", \"query\": \"What is the URL of the HARZ Agent Marketplace?\", \"gold_ids\": [10162], \"expected_terms\": [\"harz-agent-mkt\"] },\n    { \"id\": \"RE2\", \"class\": \"url_retrieval\", \"query\": \"Where can I find the HARZ Estate Network online?\", \"gold_ids\": [10062], \"expected_terms\": [\"harz-realestate\"] },\n    { \"id\": \"RE3\", \"class\": \"url_retrieval\", \"query\": \"What is the web address of the HARZ Coin Machine?\", \"gold_ids\": [10187], \"expected_terms\": [\"harz-coin-machine\"] },\n    { \"id\": \"RE4\", \"class\": \"url_retrieval\", \"query\": \"Give me the link to HARZ Invoice\", \"gold_ids\": [10374], \"expected_terms\": [\"harz-invoice\"] },\n    { \"id\": \"RE5\", \"class\": \"url_retrieval\", \"query\": \"What is the endpoint of the HARZ RPC Proxy?\", \"gold_ids\": [10038, 10044], \"expected_terms\": [\"harz-rpc-proxy\"] },\n    { \"id\": \"N1\", \"class\": \"specific_fact\", \"query\": \"Which UBA bank account does HARZ Pay use for transfers?\", \"gold_ids\": [10470], \"expected_terms\": [\"2034326424\"] },\n    { \"id\": \"N2\", \"class\": \"specific_fact\", \"query\": \"What is the HARZ Health AI assistant called?\", \"gold_ids\": [10015], \"expected_terms\": [\"harz-health\"] },\n    { \"id\": \"N3\", \"class\": \"specific_fact\", \"query\": \"Which platform runs the HARZ Root .harz namespace?\", \"gold_ids\": [10335], \"expected_terms\": [\"harz-root\"] },\n    { \"id\": \"N4\", \"class\": \"specific_fact\", \"query\": \"What does HARZ Verify do?\", \"gold_ids\": [10217], \"expected_terms\": [\"otp\"] },\n    { \"id\": \"LC1\", \"class\": \"enumeration\", \"query\": \"Which services does the HARZ ecosystem offer? List them.\", \"gold_ids\": [10034, 114], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"LC2\", \"class\": \"enumeration\", \"query\": \"List all the products on the HARZ Super App\", \"gold_ids\": [114], \"expected_terms\": [\"super\"] },\n    { \"id\": \"LC3\", \"class\": \"enumeration\", \"query\": \"What payment methods does HARZ Pay support?\", \"gold_ids\": [10332, 10066], \"expected_terms\": [\"paystack\"] },\n    { \"id\": \"R3a\", \"class\": \"procedural\", \"query\": \"How do I send an SMS campaign with HARZ SMS Marketing?\", \"gold_ids\": [10009], \"expected_terms\": [\"campaign\"] },\n    { \"id\": \"R3b\", \"class\": \"procedural\", \"query\": \"How does the HARZ Atomic Swap work?\", \"gold_ids\": [10032], \"expected_terms\": [\"swap\"] },\n    { \"id\": \"R3c\", \"class\": \"procedural\", \"query\": \"How do I create an invoice with HARZ Invoice?\", \"gold_ids\": [10374], \"expected_terms\": [\"invoice\"] },\n    { \"id\": \"AD1\", \"class\": \"adversarial\", \"query\": \"HARZ SMS Gateway steps to send a message\", \"gold_ids\": [10021, 10009, 10252], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"AD2\", \"class\": \"adversarial\", \"query\": \"HARZ Super App services list\", \"gold_ids\": [114], \"expected_terms\": [\"super\"] },\n    { \"id\": \"AD3\", \"class\": \"adversarial\", \"query\": \"HARZ Chain mining rewards how it works\", \"gold_ids\": [10186, 10335], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"MI1\", \"class\": \"mirror\", \"query\": \"HARZ RPC Proxy JSON-RPC endpoints\", \"gold_ids\": [10038, 10044], \"expected_terms\": [\"json-rpc\"], \"expect_mirror_group\": true },\n    { \"id\": \"MI2\", \"class\": \"mirror\", \"query\": \"HARZ Super App v5.0 features\", \"gold_ids\": [114, 6], \"expected_terms\": [\"super\"], \"note\": \"version-marker family: same normalized title, v5.0 must win the family or be exposed\" },\n    { \"id\": \"ST1\", \"class\": \"stale\", \"query\": \"HARZ Commerce Network 2.0\", \"gold_ids\": [10064], \"expected_terms\": [\"commerce\"], \"note\": \"version marker 2.0 must be preferred over unversioned family copies\" },\n    { \"id\": \"ME1\", \"class\": \"missing\", \"query\": \"What is the gorvex alloy rating of the HARZ nimbrite harvester?\", \"gold_ids\": [], \"expected_terms\": [], \"expect\": \"insufficient_evidence\" },\n    { \"id\": \"ME2\", \"class\": \"missing\", \"query\": \"What is the CFO of HARZ Intelligence's cat's name?\", \"gold_ids\": [], \"expected_terms\": [], \"expect\": \"insufficient_evidence\" },\n    { \"id\": \"C1\", \"class\": \"coverage\", \"query\": \"What is the UBA account number, bank code and account name for HARZ Pay bank transfers?\", \"gold_ids\": [10470], \"expected_terms\": [\"2034326424\"] }\n  ]\n}\n"; // frozen retrieval suite v1.0
@@ -261,6 +261,27 @@ function buildCodeAnalysisAnswer(message) {
 }
 
 // v0.8 direct-path builders — every value/URL below is EXTRACTED from packet evidence, never generated.
+async function canonicalFallbackUrlAnswer(message, packet) {
+  // deterministic: shape words removed, domain terms + 'harz' bias the HARZ corpus
+  const Lq = String(message).toLowerCase();
+  const domTerms = Lq.split(/[^a-z0-9]+/).filter(t => t.length > 2 && !['what','which','where','when','how','does','the','for','with','give','tell','find','online','can','its','you','me','address','url','link','website','endpoint','domain','canonical','official','exact','harz'].includes(t));
+  if (!domTerms.length) return null;
+  try {
+    const fq = domTerms.join(' ') + ' harz';
+    const sr = await search1Baseline(fq);
+    const docs = (sr.results || []).filter(x => Number(x.id) >= 10000 && /^https:\/\//.test(String(x.url || '')) && !/(^|\.)staging[.-]|^staging-|-staging\.|^dev-|\.dev\./.test(String(x.url || '')));
+    if (!docs.length) return null;
+    const qa = analyzeQuery(String(message));
+    const synth = docs.map(x => ({ url: x.url, title: x.title, document_id: Number(x.id), text: x.snippet || '' }));
+    const cands = extractUrlCandidates(qa, synth) || [];
+    if (!cands.length) return null;
+    const mini = { url_candidates: cands, evidence_digest: (packet && packet.evidence_digest) || null };
+    const ans = buildUrlAnswer(mini);
+    if (ans && ans.includes('I found ') && ans.includes('will not silently choose')) return null; // conflict stays a conflict
+    return ans ? { answer: ans, docs: docs.length } : null;
+  } catch (_) { return null; }
+}
+
 function buildUrlAnswer(packet) {
   if (!packet.url_candidates || !packet.url_candidates.length) return null;
   const canon = packet.url_candidates.filter(c => c.canonical);
@@ -505,6 +526,24 @@ function harzCompute(message) {
       const segNums = (seg.match(/\d+(?:\.\d+)?/g) || []).map(Number);
       if (segNums.length === numsAll.filter(n => segNums.includes(n)).length || segNums.length === numsAll.length)
         return { value: fmtNum(ev.value), expr: seg.replace(/\*/g, ' x ').replace(/\//g, ' / ').trim(), path: 'expression' };
+    }
+  }
+  // ---- P6 (v0.13): unit-amount x count x percent — '12 transactions, each for 2,000 Naira,
+  // Paystack takes a 1.5% fee per transaction' -> count x amount x percent (all numbers bound) ----
+  if (/(each|per)\s+(?:for\s+)?\d/i.test(M) && /\d+(?:\.\d+)?\s*%/.test(M)) {
+    const pm6 = /(\d+(?:\.\d+)?)\s*%/.exec(M);
+    const am6 = /(?:each|per)\s+(?:for\s+)?(\d[\d,]*(?:\.\d+)?)/i.exec(M);
+    const cm6 = /(\d[\d,]*(?:\.\d+)?)\s+(?:transactions?|items?|units?|queries|products?|orders?|blocks?|sales?|payments?|transfers?)/i.exec(M);
+    if (pm6 && am6 && cm6) {
+      const pct6 = Number(pm6[1]);
+      const amount6 = Number(am6[1].replace(/,/g, ''));
+      const count6 = Number(cm6[1].replace(/,/g, ''));
+      const bound6 = [pct6, amount6, count6];
+      // v0.11 law: every number in the question must be bound by the computation structure
+      if (numsAll.length === bound6.length && bound6.every(n6 => numsAll.includes(n6))) {
+        const total6 = count6 * amount6 * pct6 / 100;
+        if (Number.isFinite(total6)) return { value: fmtNum(total6), expr: fmtNum(count6) + ' x ' + fmtNum(amount6) + ' x ' + pct6 + '%', path: 'unit_amount_x_count_x_percent' };
+      }
     }
   }
   // ---- P4: rate x counts (single or multi-step spend: '50 per query, 3 today and 2 tomorrow') ----
@@ -954,6 +993,12 @@ function planTask(message, agent) {
 
 async function orchestrate({ message, conversation_id, agent, engine }) {
   EXTERNAL_CALLS = 0;
+  // v0.13: NFKC unicode normalization — fullwidth/homoglyph question text is normalized to
+  // canonical ASCII BEFORE classification and retrieval (Bench G12 finding: fullwidth text
+  // broke term matching and let an irrelevant doc's account number through the value-guard).
+  if (typeof message === 'string' && message.normalize) {
+    try { message = message.normalize('NFKC'); } catch (e) { /* keep raw on normalize failure */ }
+  }
   const taskClass = classifyTask(message);
   const route = routeEngine(engine, taskClass);
   const t_start = Date.now();
@@ -1036,7 +1081,12 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'evidence_enumeration:assembly', coverage_status: packet.enumeration ? packet.enumeration.status : null });
       }
     } else if (taskClass.class === 'url_lookup') {
-      const urlAns = buildUrlAnswer(packet);
+      let urlAns = buildUrlAnswer(packet);
+      if (!urlAns) {
+        // v0.13: one targeted canonical fallback retrieval (same identity rule, same guards)
+        const fb = await canonicalFallbackUrlAnswer(message, packet);
+        if (fb) { urlAns = fb.answer; execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_fallback', docs: fb.docs }); }
+      }
       if (urlAns) {
         specialistRes = { ok: true, content: urlAns, backend: 'harz-search-1', mode: 'specialist-url', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_extraction', candidates: (packet.url_candidates || []).length });
@@ -1326,7 +1376,12 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'evidence_enumeration:assembly', coverage_status: packet.enumeration ? packet.enumeration.status : null });
       }
     } else if (taskClass.class === 'url_lookup') {
-      const urlAns = buildUrlAnswer(packet);
+      let urlAns = buildUrlAnswer(packet);
+      if (!urlAns) {
+        // v0.13: one targeted canonical fallback retrieval (same identity rule, same guards)
+        const fb = await canonicalFallbackUrlAnswer(message, packet);
+        if (fb) { urlAns = fb.answer; execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_fallback', docs: fb.docs }); }
+      }
       if (urlAns) {
         specialistRes = { ok: true, content: urlAns, backend: 'harz-search-1', mode: 'specialist-url', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_extraction', candidates: (packet.url_candidates || []).length });

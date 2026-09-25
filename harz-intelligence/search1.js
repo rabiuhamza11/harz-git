@@ -31,9 +31,24 @@ const tokenize = (t) => (String(t || '').toLowerCase().match(/[a-z0-9][a-z0-9'-]
 
 // ---------- Stage 1: query analysis ----------
 export function analyzeQuery(question) {
-  const raw = String(question || '');
+  // v0.13 QUERY FRAME-STRIPPER (Dad, Sept 25): interrogative frames and location adverbs
+  // are dropped UPSTREAM of the frozen tokenizer, so eligibility is decided by identity
+  // terms only — 'Where can I find the HARZ payment gateway online?' retrieves as
+  // {harz, payment, gateway} and the correct doc can enter the race.
+  // NFKC normalization lives in this same stage (one place): fullwidth/homoglyph text is
+  // canonicalized before tokenization.
+  // Intent/semantics still read the ORIGINAL text below — classification is unchanged.
+  // The stripper only fires on interrogative/location patterns; statement queries
+  // reach the frozen core untouched.
+  const raw = String(question || '').normalize('NFKC');
   const lower = raw.toLowerCase();
-  const tokens = tokenize(raw);
+  const stripped = raw
+    .replace(/\b(?:where|how)\s+(?:can|do|does|did)\s+(?:i\s+|we\s+|you\s+)?(?:find|get|see|locate|access|reach)\b/gi, ' ')
+    .replace(/\b(?:where|how)\s+(?:is|are|do|does|can)\b/gi, ' ')
+    .replace(/\bon\s+the\s+(?:internet|web)\b/gi, ' ')
+    .replace(/\bonline\b/gi, ' ')
+    .replace(/\s+/g, ' ');
+  const tokens = tokenize(stripped);
   // entities: capitalized multi-char words in the original + harz-prefixed tokens
   const capWords = (raw.match(/\b[A-Z][A-Za-z0-9'-]{2,}/g) || []).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')).filter(Boolean);
   // v0.9: sentence-initial directive verbs are not entities — 'Summarize the HarzPay flow' must
@@ -241,7 +256,11 @@ export function semanticOf(question) {
 const stemS9 = (t) => (t.length > 3 && /s$/.test(t) && !/(ss|us|is)$/.test(t)) ? t.slice(0, -1) : t;
 
 export function extractUrlCandidates(qa, evidence) {
-  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2));
+  // v0.13 (Bench G4 finding): meaningful 2-char tokens like 'AI' were dropped by the old
+  // length>2 filter, so 'HARZ AI Pay' matched every 'HARZ Pay' doc -> false 3-way conflict.
+  // 2-char tokens are now kept minus a stoplist of incidental 2-letter words.
+  const STOP2 = new Set(['of','to','in','on','is','it','at','by','or','an','as','we','do','be','my','so','us','up','if','no']);
+  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2 || (t.length === 2 && /^[a-z0-9]{2}$/.test(t) && !STOP2.has(t))));
   const distinguishing = [...qStems].filter(t => !GENERIC_URL_WORDS.has(t));
   const out = [];
   const pushCand = (c) => { if (!out.some(o => o.url === c.url)) out.push(c); };
@@ -255,6 +274,11 @@ export function extractUrlCandidates(qa, evidence) {
   // shape words are stemmed: 'belongs' -> 'belong' must match the stemmed question tokens
   const CANON_SHAPE_WORDS = new Set([...GENERIC_URL_WORDS, 'official', 'exact', 'canonical', 'belongs', 'give', 'tell', 'main', 'primary', 'current', 'live', 'name', 'whats',
     'which', 'what', 'where', 'when', 'wheres', 'whats', 'does', 'is', 'are', 'the', 'of', 'for', 'to', 'service', 'platform', 'system',
+    // v0.13 (Bench G3 finding): location/access vocabulary is shape, not identity —
+    // 'where can I find the gateway online' must not require 'online'/'find' in the title.
+    'online', 'find', 'locate', 'location', 'site', 'visit', 'access', 'reach', 'internet', 'web', 'browser', 'open', 'go', 'there', 'available', 'see', 'view', 'look', 'looking',
+    // v0.13: modals and possessives can never establish service identity
+    'can', 'could', 'would', 'should', 'may', 'might', 'must', 'its', 'your', 'their', 'you', 'me', 'him', 'her', 'them', 'that', 'this', 'these', 'those', 'please', 'kindly', 'want', 'need', 'know', 'tell',
     'not', 'no', 'description', 'describe', 'detail', 'details', 'instead', 'just', 'only', 'please', 'rather', 'than', 'simply', 'actual']
     .map(w => stemS9(w.toLowerCase())).filter(Boolean));
   const canonDistinguishing = [...qStems].filter(t => !CANON_SHAPE_WORDS.has(t));
@@ -288,7 +312,11 @@ export function extractUrlCandidates(qa, evidence) {
 }
 
 export function extractValueCandidates(qa, evidence) {
-  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2));
+  // v0.13 (Bench G4 finding): meaningful 2-char tokens like 'AI' were dropped by the old
+  // length>2 filter, so 'HARZ AI Pay' matched every 'HARZ Pay' doc -> false 3-way conflict.
+  // 2-char tokens are now kept minus a stoplist of incidental 2-letter words.
+  const STOP2 = new Set(['of','to','in','on','is','it','at','by','or','an','as','we','do','be','my','so','us','up','if','no']);
+  const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2 || (t.length === 2 && /^[a-z0-9]{2}$/.test(t) && !STOP2.has(t))));
   const out = [];
   const addIf = (value, kind, e, line) => {
     const lineStems = new Set(line.toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
