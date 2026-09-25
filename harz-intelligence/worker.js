@@ -1016,6 +1016,34 @@ async function ingestPdf({ filename, content_b64 }) {
   return rec;
 }
 
+// ---------- M4 EBOOK (EPUB) INGEST — FROZEN GATE BEFORE IMPLEMENTATION (v0.15, contract modality M4) ----------
+const M4_GATE = {
+  gate: "HARZ-INTAKE-M4 v1.0 — EBOOK (EPUB) INGEST SOVEREIGNTY GATE",
+  frozen_at: "2026-09-25T10:27:00Z",
+  frozen_before: "M4 implementation (discipline identical to M1/M2/M3)",
+  scope: "M4 ONLY: EPUB ebook ingest — ZIP container parsed IN-WORKER (no libraries, no external calls), text-bearing XHTML entries extracted per chapter, CRC32 verified per entry, provenance = epub-entry name + container byte range + decompressed offsets (disclosed), index + Search/Reasoner/Planner/Verify access.",
+  cases: [
+    { id: "M4-1",  name: "epub_ingest_preserved",     expect: "binary container preserved (b64 + true byte length), sha over raw bytes" },
+    { id: "M4-2",  name: "sha256_reproducible_bytes",  expect: "sha recomputes identically from stored bytes" },
+    { id: "M4-3",  name: "chapter_extraction",        expect: "text extracted from zipped XHTML chapter entries" },
+    { id: "M4-4",  name: "crc32_verified",            expect: "every extracted entry's CRC32 verified against the container; mismatch -> honest skip" },
+    { id: "M4-5",  name: "flate_and_stored_entries",  expect: "deflate-raw and STORED entries both decompressed/read correctly" },
+    { id: "M4-6",  name: "provenance_chapter_level",  expect: "media type application/epub+zip, chapter-name + container-range provenance recorded and disclosed" },
+    { id: "M4-7",  name: "search_reachable",          expect: "intake search retrieves ebook segments" },
+    { id: "M4-8",  name: "reasoner_evidence_only",    expect: "fee question answered from ingested ebook only, cited" },
+    { id: "M4-8b", name: "reasoner_honest_refusal",   expect: "absent content -> honest refusal, never invented" },
+    { id: "M4-9",  name: "planner_task_use",           expect: "multi-step task quotes ebook fee, computes 40 x 25 = 1,000" },
+    { id: "M4-10", name: "verify1_trace",             expect: "claimed quote traceable to the decompressed chapter bytes at recorded range" },
+    { id: "M4-11", name: "injection_as_data",          expect: "injection text inside ebook treated as data, never obeyed" },
+    { id: "M4-12", name: "corrupt_zip_honest",         expect: "truncated/garbage container -> honest invalid-ZIP record, zero fabricated text" },
+    { id: "M4-13", name: "wrong_container_honest",    expect: "ZIP without EPUB mimetype entry -> honest not-a-recognized-EPUB record, raw preserved" },
+    { id: "M4-14", name: "duplicate_deterministic",   expect: "same ebook bytes re-ingested -> duplicate, sha-identical" },
+    { id: "M4-15", name: "large_ebook_truncation",    expect: "oversized container stored with honest truncation flag" }
+  ],
+  completion_rule: "Create -> Test -> Verify -> Browser/live test -> Receipt + all existing regression gates green. One fabricated character = M4 FAIL.",
+  executor_status: "NOT YET BUILT — frozen gate before implementation"
+};
+
 // ---------- M1 URL INGEST EXECUTOR (implements the frozen HARZ-INTAKE-M1 contract) ----------
 const INGEST_KEYWORD = /ingest(?:ed|ing)?|uploaded document|according to the ingested/i;
 const INTAKE_STORE_CAP = 2 * 1024 * 1024; // raw artifact preservation cap (honest truncation flag above it)
@@ -3717,6 +3745,9 @@ export default {
       return json({ gate: M3_GATE.gate, frozen_at: M3_GATE.frozen_at, scored_at: new Date().toISOString(),
         cases: M3_GATE.cases.length, cases_run: results.length, passed: passed, failed: results.length - passed,
         total_external_calls: 0, latency_ms: Date.now() - t0, results: results });
+    }
+if (path === '/api/intake/v1/testm4') {
+      return json({ gate: M4_GATE.gate, frozen_at: M4_GATE.frozen_at, cases: M4_GATE.cases.length, completion_rule: M4_GATE.completion_rule, executor_status: M4_GATE.executor_status, scored: false, honest_note: 'Gate frozen before implementation; scoring only after the executor exists.' });
     }
 if (path === '/api/intake/v1/testm2') {
       const t0 = Date.now();
