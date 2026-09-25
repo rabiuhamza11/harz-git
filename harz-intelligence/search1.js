@@ -233,7 +233,7 @@ const PAY_WORDS = { method: /how can i pay|payment method|ways to pay|what.*(car
 
 export function semanticOf(question) {
   const L = ' ' + String(question || '').toLowerCase() + ' ';
-  const out = { url_lookup: /\b(url|link|web ?address)\b/.test(L) && /what|which|give me/.test(L), identifier_lookup: /(which|what is the|tell me the).*(account|bank)|account (number|details)|ussd code/.test(L), enumeration: /(list|name|enumerate|which|what)\s+(all |every |the )?(services|methods|options|features|domains|products|channels|currencies)/.test(L) || /list (all|every)/.test(L) || /\b(list|name|enumerate)\b[^.?!]*\b(services?|methods?|options?|features?|domains?)\b/.test(L), payment: /\b(pay|payment|transfer|checkout|invoice|fee|refund)\b/.test(L) };
+  const out = { url_lookup: /\b(url|link|web ?address|website|endpoint|address|domain|canonical)\b/.test(L) && /what|which|give me|where (?:is|can)|tell me/.test(L), identifier_lookup: /(which|what is the|tell me the).*(account|bank)|account (number|details)|ussd code/.test(L), enumeration: /(list|name|enumerate|which|what)\s+(all |every |the )?(services|methods|options|features|domains|products|channels|currencies)/.test(L) || /list (all|every)/.test(L) || /\b(list|name|enumerate)\b[^.?!]*\b(services?|methods?|options?|features?|domains?)\b/.test(L), payment: /\b(pay|payment|transfer|checkout|invoice|fee|refund)\b/.test(L) };
   out.payment = out.payment && !out.identifier_lookup ? Object.keys(PAY_WORDS).find(k => PAY_WORDS[k].test(L)) || 'general' : null;
   return out;
 }
@@ -244,6 +244,33 @@ export function extractUrlCandidates(qa, evidence) {
   const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2));
   const distinguishing = [...qStems].filter(t => !GENERIC_URL_WORDS.has(t));
   const out = [];
+  const pushCand = (c) => { if (!out.some(o => o.url === c.url)) out.push(c); };
+  // ---- v0.12 CANONICAL LAYER: a HARZ corpus document's OWN crawler-verified address.
+  // The crawled HARZ service registry IS the canonical registry: every HARZ service page
+  // carries its own url metadata, recorded by the crawler — a URL PLANTED in a document's
+  // text can never forge this layer, because only the document's own recorded address is used.
+  // Identity rule (stricter than the text layer): EVERY distinguishing stem of the question
+  // must appear in the DOCUMENT TITLE, so a related-but-different service cannot answer.
+  // If canonicality cannot be established -> no candidate (the reasoner refuses honestly).
+  // shape words are stemmed: 'belongs' -> 'belong' must match the stemmed question tokens
+  const CANON_SHAPE_WORDS = new Set([...GENERIC_URL_WORDS, 'official', 'exact', 'canonical', 'belongs', 'give', 'tell', 'main', 'primary', 'current', 'live', 'name', 'whats',
+    'which', 'what', 'where', 'when', 'wheres', 'whats', 'does', 'is', 'are', 'the', 'of', 'for', 'to', 'service', 'platform', 'system',
+    'not', 'no', 'description', 'describe', 'detail', 'details', 'instead', 'just', 'only', 'please', 'rather', 'than', 'simply', 'actual']
+    .map(w => stemS9(w.toLowerCase())).filter(Boolean));
+  const canonDistinguishing = [...qStems].filter(t => !CANON_SHAPE_WORDS.has(t));
+  for (const e of evidence) {
+    const own = String(e.url || '').trim().replace(/[\s]+$/, '');
+    const idNum = Number(e.document_id);
+    if (!own || !/^https:\/\//.test(own)) continue;            // malformed guard: https-only canonical answers
+    if (!(idNum >= 10000)) continue;                             // HARZ corpus only — a third-party page's own address is never a canonical HARZ answer
+    let host = '';
+    try { host = new URL(own).hostname.toLowerCase(); } catch { continue; }
+    if (/(^|\.)staging[.-]|^staging-|-staging\.|^dev-|\.dev\./.test(host)) continue; // staging/dev hosts are not production canonical answers
+    const titleStems2 = new Set(String(e.title).toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+    if (!canonDistinguishing.length) continue;                   // no identity established -> no canonical claim
+    if (!canonDistinguishing.every(d => titleStems2.has(d))) continue; // title must establish the service identity
+    pushCand({ url: own, source: e.title, document_id: e.document_id, line: 'document canonical address (crawler-verified): ' + own, canonical: true });
+  }
   for (const e of evidence) {
     const titleStems = new Set(String(e.title).toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
     for (const m of String(e.fullText || e.text).matchAll(URL_RE)) {

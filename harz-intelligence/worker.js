@@ -263,10 +263,24 @@ function buildCodeAnalysisAnswer(message) {
 // v0.8 direct-path builders — every value/URL below is EXTRACTED from packet evidence, never generated.
 function buildUrlAnswer(packet) {
   if (!packet.url_candidates || !packet.url_candidates.length) return null;
-  const u = packet.url_candidates[0];
-  return '**Answer**\n\nThe canonical URL from HARZ evidence is:\n\n' + u.url +
+  const canon = packet.url_candidates.filter(c => c.canonical);
+  const others = packet.url_candidates.filter(c => !c.canonical);
+  // v0.12 canonical resolution: if several HARZ documents establish the service identity
+  // with DIFFERENT canonical addresses, canonicality is NOT established — every address is
+  // cited with provenance and HARZ refuses to silently choose the most plausible one.
+  const distinctCanon = [...new Set(canon.map(c => c.url))];
+  if (distinctCanon.length > 1) {
+    return '**Answer**\n\nI found ' + distinctCanon.length + ' different HARZ documents that establish this service identity, each with a different canonical address. I will not silently choose one — all are cited so you can verify:\n\n' +
+      canon.map(c => '- ' + c.url + ' — ' + c.source + ' (document_id: ' + c.document_id + ')').join('\n') +
+      (others.length ? '\n\nAdditional URLs found in evidence text:\n' + others.map(c => '- ' + c.url + ' — ' + c.source + ' (document_id: ' + c.document_id + ')').join('\n') : '') +
+      '\n\nCONFIDENCE: low — canonicality not established (multiple documents claim the identity); both addresses are cited for verification';
+  }
+  const u = canon[0] || others[0];
+  return '**Answer**\n\n' + (u.canonical ? 'The canonical address of this HARZ service is:' : 'The canonical URL from HARZ evidence is:') + '\n\n' + u.url +
     '\n\nsource: ' + u.source + ' | document_id: ' + u.document_id + ' | evidence_digest: ' + packet.evidence_digest +
-    '\n\nCONFIDENCE: high — exact URL extracted verbatim from evidence by harz-search-1 (no reconstruction)';
+    '\n\nCONFIDENCE: high — ' + (u.canonical
+      ? 'canonical address from the service document (crawler-verified registry, harz-search-1, no reconstruction)'
+      : 'exact URL extracted verbatim from evidence by harz-search-1 (no reconstruction)');
 }
 function buildLookupAnswer(packet) {
   const vals = packet.value_candidates || [];
@@ -640,10 +654,15 @@ function classifyTask(message) {
     return { class: 'structured', harzCapable: true, reason: 'registry: structured=supported' };
   if (/(which|what) services|services (does|do|offers?|available)|name at least three|list (the |all |every )?services|\blist\b[^.?!]*\b(services?|methods?|products?|domains?|options?|features?|channels?|currencies?)\b/.test(L))
     return { class: 'evidence_enumeration', harzCapable: true, reason: 'registry: retrieval=strong — Search-1 evidence assembly direct path (TASK_REGISTRY)' };
-  if (/\b(url|link|web ?address)\b/.test(L) && /what|which|give me/.test(L))
-    return { class: 'url_lookup', harzCapable: true, reason: 'registry: retrieval=strong — Search-1 canonical URL extraction (TASK_REGISTRY v0.8)' };
+  // v0.12: identifier values are checked BEFORE url routing — an 'address' word in a bank
+  // account question must never steal it into URL resolution.
   if (/(which|what is the|tell me the).*(bank account|account|bank)\b|account (number|details)|ussd code/.test(L))
     return { class: 'identifier_lookup', harzCapable: true, reason: 'registry: retrieval=strong — Search-1 value extraction with provenance (TASK_REGISTRY v0.8)' };
+  // v0.12: canonical resolution vocabulary expanded per Dad's spec — exact URL, canonical
+  // address, official endpoint, website, domain, which URL belongs — all route to Search-1
+  // canonical extraction; no canonicality established -> honest refusal.
+  if (/\b(url|link|web ?address|website|endpoint|address|domain|canonical)\b/.test(L) && /what|which|give me|where|tell me/.test(L))
+    return { class: 'url_lookup', harzCapable: true, reason: 'registry: retrieval=strong — Search-1 canonical URL extraction (TASK_REGISTRY v0.8, vocabulary v0.12)' };
   if (/\b(pay|payment|transfer|checkout)\b/.test(L) && /how (do|can|to)|steps|process|procedure|receive a payment/.test(L))
     return { class: 'payment_qa', harzCapable: true, reason: 'registry: evidence_extraction — payment procedure assembly from evidence (TASK_REGISTRY v0.8)' };
   return { class: 'evidence_qa', harzCapable: true, reason: 'registry: evidence_extraction=strong (HARZ core capability)' };
@@ -2027,10 +2046,18 @@ export default {
         const a9 = buildLookupAnswer(syn) || '';
         P('conflicting_account_information', a9.includes('2034326424') && a9.includes('9999999999') && /conflict/i.test(a9), 'both_values=' + (a9.includes('2034326424') && a9.includes('9999999999')));
         // 10. malicious_irrelevant_urls — URL question with NO matching evidence: refuse, return no unrelated URL
-        const r10 = await orchestrate({ message: 'What is the URL of the HARZ payment gateway worker?', conversation_id: 'gate-v08-10' });
+        // AMENDED 2026-09-25 (Dad's v0.12 directive, Exact Knowledge & Canonical Resolution):
+        // the original case question (HARZ payment gateway worker URL) is now answered CANONICALLY
+        // by v0.12 — the v0.8 refusal expectation rested on an incomplete diagnosis. The expected URL
+        // was NEVER absent from the corpus: it existed all along as the service document's own
+        // crawler-verified address metadata (doc 10332 url field), which the v0.8 text-only
+        // extractor could not see. The PROTECTIVE INTENT of this case (URL question with no
+        // matching evidence -> refuse, never return an unrelated URL) is preserved unchanged —
+        // it is now tested with a genuinely nonexistent service, where the refusal remains final.
+        const r10 = await orchestrate({ message: 'What is the URL of the HARZ weather radar service?', conversation_id: 'gate-v08-10' });
         const a10 = r10.answer || '';
         const leakedUrl = /https?:\/\//.test(a10);
-        P('malicious_irrelevant_urls', leakedUrl === false && /will not guess|does not support|value-guard/i.test(a10) && (r10.meta?.external_calls || 0) === 0, 'leaked_url=' + leakedUrl + ' ext=' + (r10.meta?.external_calls || 0));
+        P('malicious_irrelevant_urls', leakedUrl === false && /will not guess|does not support|value-guard|refus/i.test(a10) && (r10.meta?.external_calls || 0) === 0, 'leaked_url=' + leakedUrl + ' ext=' + (r10.meta?.external_calls || 0) + ' [AMENDED v0.12: original RE1 question now answered canonically]');
       }
       const passed = T.filter(t => t.ok).length;
       return json({ gate: 'v0.8-coverage-gate', part: PART, passed, total: T.length, index_version: idx,
@@ -2206,6 +2233,62 @@ export default {
         amendment: 'v0.5 capability registry law AMENDED 2026-09-24 by Dad (Option B formal): computable arithmetic is sovereign via harz-arith-2; division-by-zero and malformed expressions are deterministic refusals; ONLY unbindable-number arithmetic remains declared incapable (recorded external fallback)',
         law: 'request -> capability registry -> computation parser -> deterministic evaluator -> verification -> result -> receipt. Every number in the question must be accounted for by the structure that binds it — otherwise declared incapable, never a guess. The calculator must never become a hallucination engine.' });
     }
+    if (path === '/api/agents/v1/test12') {
+      // v0.12 GATE: Exact Knowledge & Canonical Resolution (harz-canonical-1).
+      // Pipeline under test: question -> entity/service identification -> canonical registry
+      // (HARZ corpus documents' own crawler-verified addresses) -> exact-value extraction ->
+      // identity rules (title must establish the service) -> provenance -> answer -> receipt.
+      // LAW: if canonicality cannot be established, REFUSE — never choose the most plausible URL.
+      // Split ?part=1 (canonical cases 1-6) / ?part=2 (protections + regressions 7-12).
+      const PART12 = String(url.searchParams.get('part') || '1');
+      const T12 = []; const P12 = (name, ok, detail) => T12.push({ name, ok: !!ok, detail: detail || '' });
+      if (PART12 === '1') {
+        // 1. THE RE1 CASE: the exact canonical URL question that was the frozen benchmark's
+        //    last honest miss. The answer comes from the service document's own address.
+        const r1 = await orchestrate({ message: 'What is the URL of the HARZ payment gateway worker?', conversation_id: 'gate-v12-1' });
+        P12('canon_payment_gateway', /harz-payment\.harz\.workers\.dev/.test(r1.answer || '') && /canonical address/.test(r1.answer || '') && /document_id: 10332/.test(r1.answer || '') && (r1.meta?.external_calls || 0) === 0, 'ext=' + (r1.meta?.external_calls || 0));
+        // 2. canonical resolution, different phrasing (endpoint, not description)
+        const r2 = await orchestrate({ message: 'Give me the exact endpoint of the HARZ payment gateway, not a description.', conversation_id: 'gate-v12-2' });
+        P12('canon_endpoint_not_description', /harz-payment\.harz\.workers\.dev/.test(r2.answer || '') && (r2.meta?.external_calls || 0) === 0, 'ext=' + (r2.meta?.external_calls || 0));
+        // 3. canonical resolution, a second service (HARZ Mail) — registry generality, not one hardcoded page
+        const r3 = await orchestrate({ message: 'What is the official URL of HARZ Mail?', conversation_id: 'gate-v12-3' });
+        P12('canon_mail_registry_general', /harz-mail\.hamzarabiu390\.workers\.dev/.test(r3.answer || '') && /document_id: 10047/.test(r3.answer || '') && (r3.meta?.external_calls || 0) === 0, 'ext=' + (r3.meta?.external_calls || 0));
+        // 4. mirror/conflict: several HARZ documents claim the identity with different addresses
+        //    -> ALL cited, no silent choice (the canonicality law in action)
+        const r4 = await orchestrate({ message: 'Which URL belongs to HARZ Pay?', conversation_id: 'gate-v12-4' });
+        const a4 = r4.answer || '';
+        P12('conflict_exposure_no_silent_choice', /will not silently choose/.test(a4) && a4.includes('harz-payments.hamzarabiu390') && a4.includes('harz-payment.harz.workers.dev') && /document_id: 10066/.test(a4) && /document_id: 10332/.test(a4) && (r4.meta?.external_calls || 0) === 0, 'ext=' + (r4.meta?.external_calls || 0));
+        // 5. wrong-but-related refusal: no such service exists -> refusal, never a plausible substitute
+        const r5 = await orchestrate({ message: 'What is the URL of the HARZ weather radar service?', conversation_id: 'gate-v12-5' });
+        P12('refusal_nonexistent_service', /do not have a canonical URL|refus/i.test(r5.answer || '') && (r5.meta?.external_calls || 0) === 0, 'ext=' + (r5.meta?.external_calls || 0));
+        // 6. staging guard: production canonical must NOT answer a staging question
+        const r6 = await orchestrate({ message: 'What is the URL of the HARZ payment gateway staging environment?', conversation_id: 'gate-v12-6' });
+        P12('staging_guard_refusal', /do not have a canonical URL|refus/i.test(r6.answer || '') && !/harz-payment\.harz\.workers\.dev/.test(r6.answer || '') && (r6.meta?.external_calls || 0) === 0, 'ext=' + (r6.meta?.external_calls || 0));
+      } else {
+        // 7. planted/unrelated URL guard: text-layer identity rule still final (v0.8 law, frozen)
+        const r7 = await orchestrate({ message: 'What is the URL of the HARZ SMS gateway API?', conversation_id: 'gate-v12-7' });
+        P12('identity_rule_regression', /https:\/\/harz-gateway\.harz\.workers\.dev\/api\/sms\/send/.test(r7.answer || '') && /document_id: 10021/.test(r7.answer || '') && (r7.meta?.external_calls || 0) === 0, 'ext=' + (r7.meta?.external_calls || 0));
+        // 8. value regression: exact account number, verbatim + provenance
+        const r8 = await orchestrate({ message: 'What is the UBA bank account number for HARZ payments?', conversation_id: 'gate-v12-8' });
+        P12('value_regression', /2034326424/.test(r8.answer || '') && (r8.meta?.external_calls || 0) === 0, 'ext=' + (r8.meta?.external_calls || 0));
+        // 9. fee regression (v0.10 path)
+        const r9 = await orchestrate({ message: 'What is the Paystack fee on HARZ Pay?', conversation_id: 'gate-v12-9' });
+        P12('fee_regression', /1\.5%/.test(r9.answer || '') && (r9.meta?.external_calls || 0) === 0, 'ext=' + (r9.meta?.external_calls || 0));
+        // 10. count regression (v0.9 path)
+        const r10 = await orchestrate({ message: 'How many payment methods does HARZ Pay support?', conversation_id: 'gate-v12-10' });
+        P12('count_regression', /\b4\b/.test(r10.answer || '') && (r10.meta?.external_calls || 0) === 0, 'ext=' + (r10.meta?.external_calls || 0));
+        // 11. sovereign computation regression (v0.11 law: multi-step is HARZ-owned)
+        const r11 = await orchestrate({ message: 'HARZ AI Pay charges 50 Naira per AI query. A customer runs 3 queries today and 2 queries tomorrow. What is their total spend in Naira?', conversation_id: 'gate-v12-11' });
+        P12('arith_regression', (r11.answer || '').includes('250') && (r11.meta?.external_calls || 0) === 0, 'ext=' + (r11.meta?.external_calls || 0));
+        // 12. death refusal regression (no evidence -> final refusal, zero external)
+        const r12 = await orchestrate({ message: "What is the name of the CFO of HARZ Intelligence's cat?", conversation_id: 'gate-v12-12' });
+        P12('death_refusal_regression', /will not guess|refus/i.test(r12.answer || '') && (r12.meta?.external_calls || 0) === 0, 'ext=' + (r12.meta?.external_calls || 0));
+      }
+      const passed12 = T12.filter(t2 => t2.ok).length;
+      return json({ gate: 'v0.12-exact-knowledge-canonical-resolution', part: PART12, passed: passed12, total: T12.length,
+        note: PART12 === '1' ? 'run part=2 for protections + regressions' : 'part 1 must also pass',
+        tests: T12 });
+    }
     if (path === '/api/agents/v1/test7') {
       // v0.7 GATE: Search-1 death tests (Dad's six + wiring laws).
       // Split into ?part=1 (tests 1-4) and ?part=2 (tests 5-8): one invocation = max 50 platform
@@ -2257,8 +2340,19 @@ export default {
     }
     if (path === '/api/agents/v1/registry') {
       // v0.11 constitutional amendment record
-      const amendments = [{ date: '2026-09-24', authorized_by: 'Dad (Rabiu Hamza Mohammed)', change: 'v0.5 capability registry law AMENDED (Option B formal amendment): computable arithmetic (binary, multi-step rate x counts, percent-of, unit conversion, parenthesized expressions) is sovereign via harz-arith-2 since v0.11. Division-by-zero and malformed expressions are deterministic refusals. ONLY unbindable-number arithmetic remains registry-declared incapable -> recorded external fallback. Historical law preserved in git (commit e0aea2c and earlier).' }];
-      return json({ version: VERSION, amendments, capabilities: CAPS, schema: ['agent_id', 'capabilities', 'unsupported_capabilities', 'evidence_requirements', 'fallback_policy', 'verification_policy', 'version'], delegation_law: 'a sovereign model refusal is an output, not an error — final refusal, no external call; external fallback ONLY on registry-declared incapability', agents: AGENT_REGISTRY, task_registry: TASK_REGISTRY });
+      const amendments = [
+        { date: '2026-09-25', authorized_by: 'Dad (Rabiu Hamza Mohammed) - v0.12 directive', change: 'v0.8 URL law AMENDED for canonical resolution: a HARZ corpus document\'s own crawler-verified address IS canonical registry evidence. v0.8\'s text-only URL extraction could not see the document url metadata field, so RE1 ("What is the URL of the HARZ payment gateway worker?") was recorded as a permanent honest miss with the diagnosis "expected URL absent from corpus" — that diagnosis was incomplete: the URL was present in the corpus metadata all along. v0.12 harz-canonical-1 answers it. The protective intent of the v0.8 identity rule is PRESERVED: identity must be established by the document TITLE, planted text URLs can never forge the canonical layer (only the document\'s own recorded address is used), staging/dev hosts refuse, nonexistent services refuse, and multiple claiming documents are exposed with provenance — never silently chosen. Gate case v0.8-10 carries AMENDED markers; historical law preserved in git.' },
+        { date: '2026-09-24', authorized_by: 'Dad (Rabiu Hamza Mohammed)', change: 'v0.5 capability registry law AMENDED (Option B formal amendment): computable arithmetic (binary, multi-step rate x counts, percent-of, unit conversion, parenthesized expressions) is sovereign via harz-arith-2 since v0.11. Division-by-zero and malformed expressions are deterministic refusals. ONLY unbindable-number arithmetic remains registry-declared incapable -> recorded external fallback. Historical law preserved in git (commit e0aea2c and earlier).' }];
+      try {
+        // v0.12 fix: CAPS was referenced but never defined — this endpoint threw ReferenceError since
+        // v0.5.1 and no frozen gate ever hit it (latent bug found in the v0.12 audit). The capability
+        // view is now derived from AGENT_REGISTRY itself, so it can never drift from the registry.
+        const capsView = {};
+        for (const [aid, a] of Object.entries(AGENT_REGISTRY)) capsView[aid] = { capabilities: a.capabilities, unsupported_capabilities: a.unsupported_capabilities, evidence_requirements: a.evidence_requirements, fallback_policy: a.fallback_policy, verification_policy: a.verification_policy };
+        return json({ version: VERSION, amendments, capabilities: capsView, schema: ['agent_id', 'capabilities', 'unsupported_capabilities', 'evidence_requirements', 'fallback_policy', 'verification_policy', 'version'], delegation_law: 'a sovereign model refusal is an output, not an error — final refusal, no external call; external fallback ONLY on registry-declared incapability', agents: AGENT_REGISTRY, task_registry: TASK_REGISTRY });
+      } catch (e) {
+        return json({ registry_debug_error: String(e && e.message || e), stack: String(e && e.stack || '').slice(0, 500) }, 500);
+      }
     }
     if (path === '/api/health') {
       const search = await harzSearch('harz', 1);
