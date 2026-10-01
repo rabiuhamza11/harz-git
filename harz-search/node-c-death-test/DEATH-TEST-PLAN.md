@@ -37,3 +37,10 @@ Owner-ruled Sep 25, 2026. Sovereignty is evidence-based: frozen inputs, exact su
 ## Verdict rules
 - PASS on phone substrate + receipt → RUNG 1 CLOSED, HARZ Search declared sovereign on the spine definition (two substrates, state carried, functional equivalence).
 - Any FAIL → honest report, no sovereignty claim, fix and re-run.
+
+## FIELD KIT NOTE (Oct 1, 2026 — Magani, kit staging for rung 3)
+- index-export.json REBUILT deterministically from frozen corpus/docs.jsonl (harz-git): digest 8bdec9df4eb4df5ae3b1f9720d04b478092a021d93b4485832e776e562644d72, exactly 11,337,603 bytes, 1,409 docs / 45,484 terms / 219 domains — byte-identical to the Sep 19 frozen export. Determinism law held on regeneration.
+- Workbench re-verification after rebuild: A (8791) vs C (8795) 30/30 BYTE-IDENTICAL, /health digest matches.
+- IMPORTANT for the two-phone field run: fed-test-c.js needs a live Node A to compare against. The SECOND device must ALSO run the bundle (`PORT=8791 node server.js index-export.json`) and then `node fed-test-c.js http://<phoneC-LAN-IP>:8795`. Both phones need Termux + this folder. Alternatively pass the A base as the 3rd argument to fed-test-c.js.
+- One-command phone prep (both phones, Termux):
+  mkdir -p ~/node-c && cd ~/node-c && for f in search-core.js engine.js server.js fed-test-c.js phone-search-start.sh index-export.json; do curl -sL -o $f https://raw.githubusercontent.com/rabiuhamza11/harz-git/main/harz-search/node-c-death-test/$f; done
