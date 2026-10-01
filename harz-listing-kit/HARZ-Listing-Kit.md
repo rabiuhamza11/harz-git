@@ -66,9 +66,11 @@ CONFIRMED (chain-enforced, in section 2):
 3. Circulating 8.73B, treasury 3.0566B (35.05%)
 4. Emission = mining only; hard cap gives exchanges a fixed-supply story
 
-TO BE CONFIRMED BY DAD before any application is sent:
-1. Service discount policy — whether HARZ payment earns a discount on HARZ Pay / Super App / ecosystem services (exchanges treat a live discount as real demand)
-2. Any public allocation/marketing commitments (e.g., portion of treasury for exchange liquidity, market making, or listing promotion)
+CONFIRMED BY DAD (Oct 1, 2026):
+1. Discount policy: YES — paying with HARZ earns a discount across ecosystem services. Percentage still to be set by Dad.
+
+TO BE CONFIRMED BY DAD:
+1. Any public allocation/marketing commitments (e.g., portion of treasury for exchange liquidity, market making, or listing promotion)
 
 ---
 
@@ -94,7 +96,7 @@ After first exchange listing: apply to CoinGecko and CoinMarketCap (both free) t
 ## 8. Readiness Gaps (what stands between us and submission)
 
 1. Service discount policy (section 5) — Dad's word
-2. Public project website — harz.linkpc.net is NXDOMAIN. DNS sits on dnsexit.com (free provider, outside our 9 Cloudflare accounts). Two routes: (a) Dad logs into the DNSExit panel and adds Vercel's TXT verification + A record, or (b) per the Sovereignty Law, use an OWNED domain for applications — exchanges trust owned domains more than free subdomains. Chain desk independently endorses (b).
+2. Public project website — Dad's decision (Oct 1): the HARZ root is active and the sovereign domain is harzchain.harz. Verified 2026-10-01: harzchain.harz resolves inside HARZ rails but returns NXDOMAIN on the public internet (Cloudflare and Google DNS both). Exchanges click links on the public internet, so the application still needs a publicly resolvable domain: (a) fix harz.linkpc.net via DNSExit panel, (b) register an owned public domain (e.g. harzchain.com.ng), or (c) interim https://harz-digital.vercel.app. The sovereign .harz domain stands alongside as the in-ecosystem name.
 3. Whitepaper PDF — can be generated from the sovereign creation stack on Dad's order
 4. Community building toward the 5,000-member gates
 5. Explorer public UI (Bull Control v3 works; a clean public explorer page strengthens applications)
