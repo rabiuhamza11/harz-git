@@ -11,13 +11,28 @@ const core = require('./harz-dns-core.js');
 
 const PORT = process.env.HARZ_DOOR_PORT ? parseInt(process.env.HARZ_DOOR_PORT, 10) : 80;
 const HOST = '127.0.0.1';
-const zonePath = path.join(__dirname, '..', '..', 'harz-root-v2', 'zone-king', 'SIGNED-ZONE-V2.json');
+const zonePath = process.env.HARZ_ZONE || path.join(__dirname, '..', '..', 'harz-root-v2', 'zone-king', 'SIGNED-ZONE-V2.json');
 const state = core.boot(JSON.parse(fs.readFileSync(zonePath, 'utf8')));
 if (!state.ok) { console.error('BOOT REFUSED — FAIL-CLOSED:', state.refused); process.exit(1); }
 
 const server = http.createServer((req, res) => {
+  const url = new URL(req.url, 'http://x');
   const host = (req.headers.host || '').split(':')[0].toLowerCase().trim();
-  if (!core.PIN || !host.endsWith('.harz') && host !== 'harz') {
+  // the HARZ address bar page
+  if (url.pathname === '/' && host !== 'harz' && !host.endsWith('.harz')) {
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    res.end(fs.readFileSync(path.join(__dirname, 'harz-netapp-browser.html'), 'utf8'));
+    return;
+  }
+  // resolve API: name → sealed answer + receipt
+  if (url.pathname === '/resolve') {
+    const a = core.answer(state, url.searchParams.get('name') || '');
+    res.writeHead(a.status === 'NOERROR' ? 200 : 404, { 'content-type': 'application/json' });
+    res.end(JSON.stringify(a));
+    console.log(new Date().toISOString(), 'RESOLVE-API', a.name, a.status, a.receipt.slice(7, 19));
+    return;
+  }
+  if (host !== 'harz' && !host.endsWith('.harz')) {
     res.writeHead(404); res.end('HARZ DOOR — unknown host'); return;
   }
   const a = core.answer(state, host);
