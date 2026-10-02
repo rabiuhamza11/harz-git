@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARZ — Address Bar</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #0a0e1a; color: #e8eaf0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 16px; }
+  .bar { width: 100%; max-width: 640px; margin-top: 20vh; display: flex; gap: 8px; }
+  input { flex: 1; font-size: 18px; padding: 14px 16px; border-radius: 12px; border: 1px solid #2a3350; background: #141a2e; color: #e8eaf0; }
+  input:focus { outline: 2px solid #7c4dff; }
+  button { font-size: 16px; padding: 14px 20px; border-radius: 12px; border: 0; background: #7c4dff; color: #fff; font-weight: 700; }
+  .meta { width: 100%; max-width: 640px; margin-top: 24px; font-size: 13px; color: #8a92b0; line-height: 1.6; }
+  .receipt { font-family: monospace; color: #7c4dff; word-break: break-all; }
+  .ok { color: #3ddc84; } .nx { color: #ff6b6b; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <input id="q" type="text" placeholder="kasuwa.harz" autocapitalize="none" autocomplete="off" spellcheck="false">
+    <button onclick="go()">Open</button>
+  </div>
+  <div class="meta" id="out"></div>
+<script>
+async function go() {
+  const q = document.getElementById('q');
+  const out = document.getElementById('out');
+  const name = q.value.trim().toLowerCase();
+  if (!name) return;
+  out.textContent = 'asking the sealed zone\u2026';
+  try {
+    const r = await fetch('/resolve?name=' + encodeURIComponent(name));
+    const a = await r.json();
+    if (a.status === 'NOERROR' && a.endpoint) {
+      out.innerHTML = '<span class="ok">' + a.name + '</span> \u2192 ' + a.endpoint +
+        '<br>receipt <span class="receipt">' + a.receipt + '</span>' +
+        '<br>opening\u2026';
+      setTimeout(() => { window.location.href = a.endpoint; }, 600);
+    } else if (a.status === 'NXDOMAIN') {
+      out.innerHTML = '<span class="nx">' + a.name + '</span> does not exist in the sealed zone. Honest NXDOMAIN.' +
+        '<br>receipt <span class="receipt">' + a.receipt + '</span>';
+    } else {
+      out.textContent = 'refused: ' + (a.reason || a.status);
+    }
+  } catch (e) {
+    out.textContent = 'door unreachable: ' + e.message;
+  }
+}
+document.getElementById('q').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+</script>
+</body>
+</html>
