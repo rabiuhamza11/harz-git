@@ -91,7 +91,7 @@ async function checkAuthority(M, origin, anchor, revoked) {
   let h = await sha256('HARZ-MISSION-1|' + M.id);
   for (const r of recs) h = await sha256(h + ':' + (r || 'no-receipt'));
   if (h !== M.receipt) { ok = false; R.push('FAIL mission seal mismatch'); }
-  return ok;
+  return ok ? { ok: true } : { ok: false, reason: R.join('; ') };
 }
 
 async function main() {
@@ -115,7 +115,7 @@ async function main() {
   const states = []; const era = [];
   for (const [name, M] of Object.entries(bundle.records)) {
     const auth = await checkAuthority(M, bundle.origin, anchor, revoked);
-    if (!auth) { allAuth = false; print(name + ': NOT AUTHENTIC — refused (authority fails before continuity is even considered)'); continue; }
+    if (!auth.ok) { allAuth = false; M._fail = auth.reason; print(name + ': NOT AUTHENTIC — refused (' + (M._fail || 'authority fails before continuity is even considered') + ')'); continue; }
     const cell = M.continuity;
     if (!cell) { era.push(name); print(name + ': AUTHENTIC, UNLINKED-ERA record (law 10: valid history from before the chain; never current, never retro-linked)'); continue; }
     const { origin_signature: sig, ...cellBody } = cell;

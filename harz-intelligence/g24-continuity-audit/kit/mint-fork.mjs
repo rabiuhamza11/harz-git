@@ -12,7 +12,10 @@ const M = JSON.parse(fs.readFileSync(process.argv[2], 'utf8')); // source record
 const height = Number(process.argv[4] || tip.height + 1);
 const prior = process.argv[5] || tip.state_hash;
 const payload = sha256('state-payload:' + M.id + ':' + M.receipt + ':' + (M.designation ? M.designation.designation_receipt : 'no-designation'));
-const cell = { law: 'HARZ-STATE-CONTINUITY-V1', record: M.id, height, prior_state_hash: prior, payload_hash: payload };
+const genesis = process.argv[7] === 'genesis';
+const cell = genesis
+  ? { law: 'HARZ-STATE-CONTINUITY-V1', record: M.id, height: 1, genesis: true, prior_state_hash: null, unlinked_era: { disclosed: true, records_before_genesis: 999 }, payload_hash: payload }
+  : { law: 'HARZ-STATE-CONTINUITY-V1', record: M.id, height, prior_state_hash: prior, payload_hash: payload };
 const cellBytes = JSON.stringify(cell);
 const cellSig = { alg: 'Ed25519', fingerprint: process.argv[6], signature: sign(cellBytes) };
 const fork = JSON.parse(JSON.stringify(M));
