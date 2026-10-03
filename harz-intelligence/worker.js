@@ -9260,8 +9260,66 @@ if (path === '/api/intake/v1/testm2') {
       for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));
       mission.receipt = h;
       mission.sovereign = mission.tasks.every(t => (t.external_calls || 0) === 0);
+      // G24 STATE-CONTINUITY-V1 (additive; ruling B frozen 49df5ea): every state-carrying
+      // record joins the sovereign state chain. The cell (height + prior_state_hash +
+      // payload_hash) is SIGNED by the origin key — height is never independently
+      // trustworthy. Genesis is explicit and discloses the unlinked era; pre-continuity
+      // records are never retroactively rewritten. The signature proves the state was
+      // authorized; the chain determines whether it is still current.
+      if (ENV.ORIGIN_KEY) {
+        const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
+        const payloadHash = await mSha('state-payload:' + mid + ':' + mission.receipt + ':' + (mission.designation ? mission.designation.designation_receipt : 'no-designation'));
+        let cell;
+        if (tip) {
+          const restarted = await ENV.MEMORY.get('continuity:restarted');
+          cell = restarted
+            ? { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, restarts_after_act: restarted, payload_hash: payloadHash }
+            : { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, payload_hash: payloadHash };
+        } else {
+          const eraIdx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
+          cell = { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: 1, genesis: true, prior_state_hash: null, unlinked_era: { disclosed: true, records_before_genesis: Math.max(0, eraIdx.missions.length - 1) }, payload_hash: payloadHash };
+        }
+        const cellBytes = JSON.stringify(cell);
+        const cellSig = await originSign(cellBytes);
+        cell.origin_signature = cellSig;
+        mission.continuity = cell;
+        const stateHash = await mSha(cellBytes + ':' + (cellSig ? cellSig.signature : 'unsigned'));
+        await ENV.MEMORY.put('continuity:tip', JSON.stringify({ height: cell.height, state_hash: stateHash, record: mid }));
+      }
       await kvPutMission(mission);
       return json(mission);
+    }
+    // G24 CONTINUITY ACTS — explicit signed policy acts; history never changes silently.
+    if (path === '/api/continuity/v1' && request.method === 'GET') {
+      const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
+      const acts = (await ENV.MEMORY.get('continuity:acts', 'json')) || { acts: [] };
+      return json({ tip, acts: acts.acts, law: 'explicit signed acts only; forks are never silently selected' });
+    }
+    if (path === '/api/continuity/v1' && request.method === 'POST') {
+      if (!ENV.ORIGIN_KEY) return json({ error: 'this origin cannot sign continuity acts (no ORIGIN_KEY)' }, 400);
+      const body = await request.json().catch(() => ({}));
+      const acts = (await ENV.MEMORY.get('continuity:acts', 'json')) || { acts: [] };
+      const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
+      let act, bytes;
+      if (body.action === 'supersede') {
+        if (!body.state_hash) return json({ error: 'supersede requires state_hash' }, 400);
+        act = { law: 'HARZ-STATE-SUPERSESSION-V1', act_id: 'sup-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8), superseded_state_hash: String(body.state_hash), reason: String(body.reason || ''), chain_height_at_act: tip ? tip.height : null };
+        bytes = JSON.stringify(act);
+        act.origin_signature = await originSign(bytes);
+      } else if (body.action === 'restart') {
+        if (!body.state_hash || !body.height) return json({ error: 'restart requires state_hash + height (the re-anchor point)' }, 400);
+        act = { law: 'HARZ-CONTINUITY-RESTART-V1', act_id: 'res-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8), restarts_from_state_hash: String(body.state_hash), restarts_from_height: Number(body.height), reason: String(body.reason || '') };
+        bytes = JSON.stringify(act);
+        act.origin_signature = await originSign(bytes);
+        // rollback IS the explicit act: the tip re-anchors where the signed act says
+        await ENV.MEMORY.put('continuity:tip', JSON.stringify({ height: Number(body.height), state_hash: String(body.state_hash), record: String(body.record || 're-anchored') }));
+        await ENV.MEMORY.put('continuity:restarted', act.act_id);
+      } else {
+        return json({ error: 'unknown action (supersede | restart)' }, 400);
+      }
+      acts.acts.push(act);
+      await ENV.MEMORY.put('continuity:acts', JSON.stringify(acts));
+      return json(act);
     }
     if (path === '/api/missions/v1' && request.method === 'GET') {
       const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };

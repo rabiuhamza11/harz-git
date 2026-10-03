@@ -1,0 +1,552 @@
+{
+  "export_id": "G24-PRODUCTION-CHAIN-1",
+  "origin": "https://harz-intelligence.harz.workers.dev",
+  "law": "AUTHORITY-V2+CONTINUITY-V1",
+  "acts": [],
+  "records": {
+    "s3": {
+      "id": "m-mission-ee3ace2b-24a",
+      "goal": "G24 production state 3 (tip conflict)",
+      "pattern": "EXPLICIT",
+      "plan_reason": "explicit task chain from caller",
+      "status": "mixed",
+      "created": "2026-10-03T16:29:20.651Z",
+      "tasks": [
+        {
+          "id": 1,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-A"
+        },
+        {
+          "id": 2,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-B"
+        },
+        {
+          "id": 3,
+          "type": "compose",
+          "instruction": "Create a report stating which of these conflicting claims is true",
+          "state": "refused",
+          "agent_id": null,
+          "backend": null,
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": {
+            "evidence_refs_requested": [
+              1,
+              2
+            ]
+          },
+          "receipt": "bcfbefbee9a3cf27e7faa9dc218eaf0186296b94f2f63f593298a1a8ccce2e66",
+          "refusal": "resolution refused: the mission carries 2 independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task \u2014 resolution belongs to research; composition never adjudicates",
+          "error": null,
+          "conflict": {
+            "state": "unresolved",
+            "unresolved_claims": [
+              {
+                "source_task": 1,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+                "claims": "The GDEG test widget is priced at 500 HARZ \u3010S1\u3011",
+                "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus"
+              },
+              {
+                "source_task": 2,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+                "claims": "The GDEG test widget is priced at 800 HARZ \u3010S1\u3011",
+                "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus"
+              }
+            ],
+            "resolution_law": "resolution requires a separate research act \u2014 explicit, caller-designated; composition never adjudicates",
+            "next_lawful_step": "create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task"
+          }
+        }
+      ],
+      "receipt": "5c368eb7904672e569dfa845d10db6704d213bf4e9a4892dfa55105db7b2af33",
+      "law": "every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)",
+      "conflict_detected": true,
+      "designation": {
+        "law": "DESIGNATION-BINDING-V1",
+        "record": "m-mission-ee3ace2b-24a",
+        "role": "conflict",
+        "conflict_refs": [
+          {
+            "task": 1,
+            "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+            "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+            "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9"
+          },
+          {
+            "task": 2,
+            "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+            "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+            "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48"
+          }
+        ],
+        "designation_bytes_sha256": "77de12c37c9e38ac8087c5dbfaf102f489494adc1b66b167f863d24cd4454b4c",
+        "designation_receipt": "1b9b66598381c61ee088c9c6846b8d252f9ec03f05deb95a16369d995e3831d9",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "WB5cRhIWdebqLOKc7OilGlvQJQIxHiebC33Xs4rUwzNuQVXuGAXTVzkEOQ3jVIjXdCpKZjDr/+eSejOkDqLSCw=="
+        }
+      },
+      "sovereign": true,
+      "continuity": {
+        "law": "HARZ-STATE-CONTINUITY-V1",
+        "record": "m-mission-ee3ace2b-24a",
+        "height": 3,
+        "prior_state_hash": "d2805af32a3b94dfa927d6f31bfddff49cc27ff326cc8e5d02bde8ee0ef34ee8",
+        "payload_hash": "18934093672ebb9cb58650c8e7242c2f10e2d1e90b1f7c2d9730a32f9122df26",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "1b7Peo+G4WKsF0QeeTFyFRk5+D0pZAol6nH8bhpDnuJOgcyM3Bd4OgLqliTOcDr09P4fkjGrS/dZK/G3SibYDg=="
+        }
+      }
+    },
+    "s2": {
+      "id": "m-mission-f71e7993-5e1",
+      "goal": "G24 production state 2 (resolution)",
+      "pattern": "EXPLICIT",
+      "plan_reason": "explicit task chain from caller",
+      "status": "verified",
+      "created": "2026-10-03T16:29:16.003Z",
+      "tasks": [
+        {
+          "id": 1,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-A"
+        },
+        {
+          "id": 2,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-B"
+        },
+        {
+          "id": 3,
+          "type": "fixture",
+          "instruction": "What does the authoritative widget price registry state?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget price registry states the authoritative price is 800 HARZ \u3010S1\u3011\n\nSources: [s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "5ca4beb486fa7f3201c39f73e23846d25cb66c73e775fb8d29d3a33c8e74b342",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G16-FIX-C"
+        },
+        {
+          "id": 4,
+          "type": "fixture",
+          "instruction": "What does the GDEG test widget registry's audit note state?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget registry audit note states the price record is correct and stable at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G20 SYNTHETIC DECOY FIXTURE D \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G20 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "82d253c5365415083f1895ecbfb4dd54399016a30f48f748b3181e962e54f61e",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G20-FIX-D"
+        },
+        {
+          "id": 5,
+          "type": "compose",
+          "instruction": "Create a report stating which of these conflicting claims is true",
+          "state": "verified",
+          "agent_id": "harz-studio-refsyn",
+          "backend": "harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": {
+            "bundle_id": "3708c57c77578d2ef037258b",
+            "delivered": true,
+            "modes": [
+              "image"
+            ],
+            "evidence": [
+              {
+                "source_task": 1,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+                "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9",
+                "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus",
+                "extraction_law": "byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) \u2014 zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain"
+              },
+              {
+                "source_task": 2,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+                "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48",
+                "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus",
+                "extraction_law": "byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) \u2014 zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain"
+              },
+              {
+                "source_task": 3,
+                "source_task_type": "fixture",
+                "source_instruction": "What does the authoritative widget price registry state?",
+                "source_receipt": "5ca4beb486fa7f3201c39f73e23846d25cb66c73e775fb8d29d3a33c8e74b342",
+                "answer_sha256": "ceb241291e9c53063b481e8f4a383332ba82e07abf0af636f3d01a16260508dc",
+                "claims_sha256": "725f2642f745cbea60a5dc3457e75d1475e54e05c5f4cb1fdd649a6dc0cd8fe2",
+                "confidence": "high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus",
+                "extraction_law": "byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) \u2014 zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain"
+              },
+              {
+                "source_task": 4,
+                "source_task_type": "fixture",
+                "source_instruction": "What does the GDEG test widget registry's audit note state?",
+                "source_receipt": "82d253c5365415083f1895ecbfb4dd54399016a30f48f748b3181e962e54f61e",
+                "answer_sha256": "563b3e8a4f04e99b9f84748e0054bed5c43b50a03adfd1d099697062aa5d3d0a",
+                "claims_sha256": "7503d7cfc789d6d93bedf0764f22e15e3c64d1f5c53418f404caff9681fe7fab",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G20 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G20 SYNTHETIC DECOY FIXTURE D \u2014 test data outside the production corpus",
+                "extraction_law": "byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) \u2014 zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain"
+              }
+            ],
+            "delivered_children": [
+              {
+                "mode": "image",
+                "artifact_sha256": "5fd62ed448680420e9b09c8c9e1e15fb7def8ddd709fc67f8bb65fd231ce55b1",
+                "player_url": "/api/creation/v1/image?request_id=154fd9aa0701eb1ac4482a61.image.bdd6448a"
+              }
+            ],
+            "refused_children": []
+          },
+          "receipt": "da21b606d45fd6915ebccfa087c65431a20b465553c905ab2dee82be54ebed35",
+          "refusal": null,
+          "error": null,
+          "resolution": {
+            "requested_by_instruction": true,
+            "resolution_from": [
+              4
+            ],
+            "resolves_conflict": [
+              {
+                "source_task": 1,
+                "source_task_type": "fixture",
+                "source_receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+                "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+                "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus",
+                "resolves_law": "the conflicting evidence remains cited and carried byte-exact; this resolution extends the history, it never replaces the evidence it resolves"
+              },
+              {
+                "source_task": 2,
+                "source_task_type": "fixture",
+                "source_receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+                "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+                "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus",
+                "resolves_law": "the conflicting evidence remains cited and carried byte-exact; this resolution extends the history, it never replaces the evidence it resolves"
+              },
+              {
+                "source_task": 3,
+                "source_task_type": "fixture",
+                "source_receipt": "5ca4beb486fa7f3201c39f73e23846d25cb66c73e775fb8d29d3a33c8e74b342",
+                "claims_sha256": "725f2642f745cbea60a5dc3457e75d1475e54e05c5f4cb1fdd649a6dc0cd8fe2",
+                "answer_sha256": "ceb241291e9c53063b481e8f4a383332ba82e07abf0af636f3d01a16260508dc",
+                "provenance": "[s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus",
+                "resolves_law": "the conflicting evidence remains cited and carried byte-exact; this resolution extends the history, it never replaces the evidence it resolves"
+              }
+            ],
+            "resolution_sources": [
+              {
+                "source_task": 4,
+                "source_task_type": "fixture",
+                "source_instruction": "What does the GDEG test widget registry's audit note state?",
+                "source_receipt": "82d253c5365415083f1895ecbfb4dd54399016a30f48f748b3181e962e54f61e",
+                "claims_sha256": "7503d7cfc789d6d93bedf0764f22e15e3c64d1f5c53418f404caff9681fe7fab",
+                "answer_sha256": "563b3e8a4f04e99b9f84748e0054bed5c43b50a03adfd1d099697062aa5d3d0a"
+              }
+            ],
+            "acceptance_law": "resolution act verified (state verified + receipt + frozen format) and explicitly designated by the caller; the adapter carries its claims as material, it does not adjudicate correctness \u2014 that judgment belongs to the reader of the artifact and the provenance chain"
+          }
+        }
+      ],
+      "receipt": "953ffa0873fbaa54ed1b36661433447cd19b7e11e06cd2e2362e7bd0f49070b3",
+      "law": "every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)",
+      "designation": {
+        "law": "DESIGNATION-BINDING-V1",
+        "record": "m-mission-f71e7993-5e1",
+        "role": "resolution",
+        "resolver": [
+          {
+            "task": 4,
+            "receipt": "82d253c5365415083f1895ecbfb4dd54399016a30f48f748b3181e962e54f61e",
+            "claims_sha256": "7503d7cfc789d6d93bedf0764f22e15e3c64d1f5c53418f404caff9681fe7fab",
+            "answer_sha256": "563b3e8a4f04e99b9f84748e0054bed5c43b50a03adfd1d099697062aa5d3d0a",
+            "act": {
+              "type": "fixture",
+              "instruction": "What does the GDEG test widget registry's audit note state?",
+              "fixture_id": "G20-FIX-D"
+            }
+          }
+        ],
+        "resolved": [
+          {
+            "task": 1,
+            "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+            "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+            "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9"
+          },
+          {
+            "task": 2,
+            "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+            "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+            "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48"
+          },
+          {
+            "task": 3,
+            "receipt": "5ca4beb486fa7f3201c39f73e23846d25cb66c73e775fb8d29d3a33c8e74b342",
+            "claims_sha256": "725f2642f745cbea60a5dc3457e75d1475e54e05c5f4cb1fdd649a6dc0cd8fe2",
+            "answer_sha256": "ceb241291e9c53063b481e8f4a383332ba82e07abf0af636f3d01a16260508dc"
+          }
+        ],
+        "evidence": [
+          {
+            "task": 1,
+            "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+            "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9"
+          },
+          {
+            "task": 2,
+            "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+            "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48"
+          },
+          {
+            "task": 3,
+            "claims_sha256": "725f2642f745cbea60a5dc3457e75d1475e54e05c5f4cb1fdd649a6dc0cd8fe2",
+            "answer_sha256": "ceb241291e9c53063b481e8f4a383332ba82e07abf0af636f3d01a16260508dc"
+          },
+          {
+            "task": 4,
+            "claims_sha256": "7503d7cfc789d6d93bedf0764f22e15e3c64d1f5c53418f404caff9681fe7fab",
+            "answer_sha256": "563b3e8a4f04e99b9f84748e0054bed5c43b50a03adfd1d099697062aa5d3d0a"
+          }
+        ],
+        "designation_bytes_sha256": "012003d8b35b9757474c606d401aa1d722627ba60d57368ef14c0c9d41c7c480",
+        "designation_receipt": "ad3051526ca3ab1f34297e73a6d4c3b5367960e69b5b432ced14db53f74285a8",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "+E2erqKyzgM7+p6ZS2b18JdcSfWjq2HaazNp88btu0ogNRRl1FoII2Qg8bCIgZ8qsiRxumlpVNbF9xiarHmyDQ=="
+        }
+      },
+      "sovereign": true,
+      "continuity": {
+        "law": "HARZ-STATE-CONTINUITY-V1",
+        "record": "m-mission-f71e7993-5e1",
+        "height": 2,
+        "prior_state_hash": "ace7e7a2e6802604f649f78b4303b64247c6b993c69d2dc196eeb3101f22d242",
+        "payload_hash": "a41ae8e7e89018be3369cb48ffb3cd8252ea7c6308334a54209a8fee87ba0ea6",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "ratwktJAX1YDaxhzs6U98Dw26h/O14NImec/VtCu2FYS+sCXld2ewVlJa1OdiO9utWOX8Y84/Fw5uF33i7aZCQ=="
+        }
+      }
+    },
+    "s1": {
+      "id": "m-mission-c5bc041a-a9f",
+      "goal": "G24 production state 1 (genesis conflict)",
+      "pattern": "EXPLICIT",
+      "plan_reason": "explicit task chain from caller",
+      "status": "mixed",
+      "created": "2026-10-03T16:29:13.321Z",
+      "tasks": [
+        {
+          "id": 1,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-A"
+        },
+        {
+          "id": 2,
+          "type": "fixture",
+          "instruction": "What is the GDEG test widget price?",
+          "state": "verified",
+          "agent_id": null,
+          "backend": "g15-frozen-fixture-record",
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+          "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+          "refusal": null,
+          "error": null,
+          "fixture_id": "G15-FIX-B"
+        },
+        {
+          "id": 3,
+          "type": "compose",
+          "instruction": "Create a report stating which of these conflicting claims is true",
+          "state": "refused",
+          "agent_id": null,
+          "backend": null,
+          "latency_ms": null,
+          "external_calls": 0,
+          "internal_calls": 0,
+          "answer": {
+            "evidence_refs_requested": [
+              1,
+              2
+            ]
+          },
+          "receipt": "bcfbefbee9a3cf27e7faa9dc218eaf0186296b94f2f63f593298a1a8ccce2e66",
+          "refusal": "resolution refused: the mission carries 2 independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task \u2014 resolution belongs to research; composition never adjudicates",
+          "error": null,
+          "conflict": {
+            "state": "unresolved",
+            "unresolved_claims": [
+              {
+                "source_task": 1,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+                "claims": "The GDEG test widget is priced at 500 HARZ \u3010S1\u3011",
+                "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus"
+              },
+              {
+                "source_task": 2,
+                "source_task_type": "fixture",
+                "source_instruction": "What is the GDEG test widget price?",
+                "source_receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+                "claims": "The GDEG test widget is priced at 800 HARZ \u3010S1\u3011",
+                "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+                "confidence": "high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)",
+                "provenance": "[s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus"
+              }
+            ],
+            "resolution_law": "resolution requires a separate research act \u2014 explicit, caller-designated; composition never adjudicates",
+            "next_lawful_step": "create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task"
+          }
+        }
+      ],
+      "receipt": "132673400a963dd0bbb8967a281c8ae9e06452fa93a703d0d8ad30324e6f342c",
+      "law": "every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)",
+      "conflict_detected": true,
+      "designation": {
+        "law": "DESIGNATION-BINDING-V1",
+        "record": "m-mission-c5bc041a-a9f",
+        "role": "conflict",
+        "conflict_refs": [
+          {
+            "task": 1,
+            "receipt": "42f63fe14d7b88747d8a7684abe39274ec4199f953c7e7fa02f8ceafd2ca3881",
+            "claims_sha256": "4e2920fc140840915b6ce84913100cfa00b978e41834c57940c3f3033bc5e379",
+            "answer_sha256": "39ce438b2d576d605ef7c30f433e1461fe7379316a858e965409a42b159ea0a9"
+          },
+          {
+            "task": 2,
+            "receipt": "f1dfdff1132159c3c9366ade52887f1efbd70191aa6cf1797245b4a4e6718a99",
+            "claims_sha256": "0d3cedee01646a8c91a9162e1ae7b739328c0b3b393512803fd673b5c6dfe8bd",
+            "answer_sha256": "29ff3ea55038c95653800c9173326fe368b86d9cb73d097889cfee8e3bad6c48"
+          }
+        ],
+        "designation_bytes_sha256": "0c548e33a653ae1b9fc9c1c7c627ea9bd830af7c6a8ba4a9dd0af7d359ed4a36",
+        "designation_receipt": "805bf654df7237346cc7d88cda1690a41f6db91c32be2e7066640d25aaa3fb1f",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "5WOUphPSvxEtJkMZcQ31LIM/oLswZbOWjep09ZtbVoDI5UZg5EezFQr+i+B4Pl1alGjPeY7Mb2icHxj3dKDcBw=="
+        }
+      },
+      "sovereign": true,
+      "continuity": {
+        "law": "HARZ-STATE-CONTINUITY-V1",
+        "record": "m-mission-c5bc041a-a9f",
+        "height": 1,
+        "genesis": true,
+        "prior_state_hash": null,
+        "unlinked_era": {
+          "disclosed": true,
+          "records_before_genesis": 141
+        },
+        "payload_hash": "40176a615e17b2825753fa55711b3f06e2179d9b1ee3e78e57d75637b900816d",
+        "origin_signature": {
+          "alg": "Ed25519",
+          "fingerprint": "8ae5337b973f8e53f35e91c0eda87173cc53d08d7abb9bb335577ec985c645aa",
+          "signature": "jUxqpnN7mP/yHx2Odmr5uZh9rEkU/gmbH5eFLgT0r+0Y31M30kTNsgX7tRV47GupmTAwNRcb2sPUKsx9jmyiCg=="
+        }
+      }
+    }
+  }
+}
