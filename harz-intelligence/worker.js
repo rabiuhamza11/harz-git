@@ -52,6 +52,27 @@ async function originSign(bytes) {
     return { alg: 'Ed25519', fingerprint: fingerprint, signature: btoa(sb) };
   } catch (e) { return null; }
 }
+// G25 CHECKPOINT (additive; contract 05bceff): the origin's public fingerprint, derived
+// exactly as originSign derives it — the pinned-anchor identity of the sovereign key.
+async function originFingerprint() {
+  if (!ENV.ORIGIN_KEY) return null;
+  try {
+    const b64 = ENV.ORIGIN_KEY.replace(/-----(BEGIN|END) PRIVATE KEY-----/g, '').replace(/\s+/g, '');
+    const bin = atob(b64);
+    const pkcs8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) pkcs8[i] = bin.charCodeAt(i);
+    const key = await crypto.subtle.importKey('pkcs8', pkcs8, 'Ed25519', true, ['sign']);
+    const jwk = await crypto.subtle.exportKey('jwk', key);
+    const xb = atob(jwk.x.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(jwk.x.length / 4) * 4, '='));
+    const spki = new Uint8Array(44);
+    spki.set([0x30, 0x2a, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x03, 0x21, 0x00], 0);
+    for (let i = 0; i < 32; i++) spki[12 + i] = xb.charCodeAt(i);
+    const dg = new Uint8Array(await crypto.subtle.digest('SHA-256', spki));
+    let fingerprint = '';
+    for (const b of dg) fingerprint += b.toString(16).padStart(2, '0');
+    return fingerprint;
+  } catch (e) { return null; }
+}
 const SEARCH_URL = 'https://harz-search.harz.workers.dev/search?q=';
 const CHAIN_STATUS_URL = 'https://harz-chain-v2.harz.workers.dev/api/status';
 
@@ -9293,7 +9314,8 @@ if (path === '/api/intake/v1/testm2') {
     if (path === '/api/continuity/v1' && request.method === 'GET') {
       const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
       const acts = (await ENV.MEMORY.get('continuity:acts', 'json')) || { acts: [] };
-      return json({ tip, acts: acts.acts, law: 'explicit signed acts only; forks are never silently selected' });
+      const checkpoint = (await ENV.MEMORY.get('continuity:checkpoint', 'json')) || null;
+      return json({ tip, acts: acts.acts, checkpoint, law: 'explicit signed acts only; forks are never silently selected; the chain observes, the origin authorizes' });
     }
     if (path === '/api/continuity/v1' && request.method === 'POST') {
       if (!ENV.ORIGIN_KEY) return json({ error: 'this origin cannot sign continuity acts (no ORIGIN_KEY)' }, 400);
@@ -9314,8 +9336,34 @@ if (path === '/api/intake/v1/testm2') {
         // rollback IS the explicit act: the tip re-anchors where the signed act says
         await ENV.MEMORY.put('continuity:tip', JSON.stringify({ height: Number(body.height), state_hash: String(body.state_hash), record: String(body.record || 're-anchored') }));
         await ENV.MEMORY.put('continuity:restarted', act.act_id);
+      } else if (body.action === 'checkpoint') {
+        // G25: the origin notarizes its own chain tip onto HARZ-chain. The checkpoint
+        // is an ORIGIN ACT (signed over complete canonical bytes); HARZ-chain verifies
+        // the sovereign signature and anchors it to the current tip block. The chain
+        // observes; the origin authorizes. The chain can never manufacture validity
+        // the sovereign chain does not possess.
+        if (!ENV.ORIGIN_KEY) return json({ error: 'this origin cannot sign checkpoints (no ORIGIN_KEY)' }, 400);
+        const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
+        if (!tip) return json({ error: 'the sovereign chain has no tip to notarize' }, 400);
+        const fp = await originFingerprint();
+        const checkpoint = { law: 'HARZ-CHECKPOINT-V1', origin_id: fp, chain_height: tip.height, state_hash: tip.state_hash, notarized_at: new Date().toISOString() };
+        const cpBytes = JSON.stringify(checkpoint);
+        checkpoint.origin_signature = await originSign(cpBytes);
+        let anchor = null;
+        try {
+          // Service binding (CHAIN_SVC) — the sovereign direct call to HARZ-chain,
+          // bypassing the workers.dev-to-workers.dev subrequest limitation (the same
+          // law as the Studio direct call). Falls back to the public URL if unbound.
+          const req = new Request('https://harz-chain-v2.harz.workers.dev/api/checkpoint', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ checkpoint }) });
+          const resp = ENV.CHAIN_SVC ? await ENV.CHAIN_SVC.fetch(req) : await fetch(req);
+          anchor = await resp.json().catch(() => ({ error: 'HARZ-chain returned a non-JSON reply (HTTP ' + resp.status + ')' }));
+        } catch (e) { anchor = { error: 'HARZ-chain unreachable: ' + String(e && e.message || e) }; }
+        if (!anchor || !anchor.success) return json({ error: 'HARZ-chain refused the notarization', chain_reply: anchor, checkpoint }, 502);
+        checkpoint.anchor = { tx_id: anchor.notarized.tx_id, block_index: anchor.notarized.block_index };
+        await ENV.MEMORY.put('continuity:checkpoint', JSON.stringify(checkpoint));
+        return json({ success: true, checkpoint: checkpoint });
       } else {
-        return json({ error: 'unknown action (supersede | restart)' }, 400);
+        return json({ error: 'unknown action (supersede | restart | checkpoint)' }, 400);
       }
       acts.acts.push(act);
       await ENV.MEMORY.put('continuity:acts', JSON.stringify(acts));
