@@ -55,3 +55,21 @@ theme-color #f0f2f5 served (OFFLINE-LINKS RULE).
 1. Two-phone field runs: mesh transport, Internetless exchange, Termux search death test (RUNG 3 remainder)
 2. R8 live merge adoption window (witness seat READY; parked on owner topology call)
 3. Operator onboarding: README carries the honest one-command story
+
+## OWNER RATIFICATION + GATE ORDER (Rabiu, Oct 3)
+
+Released exactly as honestly labeled; claim NOT widened. Owner's framing on record:
+"A node is now something another person can reproduce from the sealed state, not something
+that only exists inside your development environment."
+
+Gate order ruled:
+1. Two-phone field run FIRST. No promotion of Mesh/Merge/Internetless on cold-clone evidence
+   alone; genuinely separate phones must prove the protocol against each other.
+2. Capture receipts INCLUDING failures — unexpected rejections, divergence, retry, state
+   conflicts are more valuable than a clean demo.
+3. R8 adoption window only AFTER two-phone evidence; topology decision from observed behavior.
+
+Strengths noted by owner: fresh-clone reproducibility (2 cold runs), self-test anchored to
+existing field receipts (not self-claiming), tamper resistance, lockstep-TESTED determinism,
+frozen-core discipline (both build bugs fixed without touching frozen components), honest
+evidence boundary.
