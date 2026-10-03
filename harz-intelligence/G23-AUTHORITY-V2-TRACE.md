@@ -83,3 +83,31 @@ kit origin key 2: 4ceff73d1101678dc65984c4... (transition target)
 attacker key:     9eea8110dacbc9e46e5bffca... (the parallel authority)
 production key:  74270fd52cc9d9656744284b... (deployed ORIGIN_KEY)
 transition record: keys/key-transition-v1-to-v2.json (signed by key 1)
+
+## ADDENDUM: CONFINEMENT SLIP AND THE FIRST REAL ROTATION (2026-10-03)
+A law was broken during the audit itself, and the response is
+disclosed here rather than hidden: the first push of the G23 commit
+(2db1897) accidentally included the private key PEMs — the gitignore
+pattern `keys/*.pem` did not match the nested audit path. Exposure
+window ~3 minutes on the private harz-git remote. Response:
+1. The commit was reset, the pattern corrected (`**/keys/*-key.pem`),
+   private keys removed, and history force-cleaned (8994e76) so the
+   remote tip contains no private material.
+2. The PRODUCTION key was ROTATED IMMEDIATELY — not as an exception,
+   but THROUGH the frozen transition law: production key 1
+   (74270fd52cc9d965...) signed the introduction of production key 2
+   (8ae5337b973f8e53...); harz-intelligence redeployed with key 2;
+   fresh live records verified against the pinned key-1 anchor +
+   the signed transition record -> VERIFIED; without the transition
+   record -> NOT VERIFIED (no silent rotation in production either).
+The rotation mechanism G23 built was exercised for real on its first
+day, by the very slip that proves why it exists. The law that was
+broken is the law that answered it.
+
+## KEY INVENTORY (updated; private keys confined, uncommitted)
+kit origin key 1:   771fdb0a43020e4b129f7267... (pinned kit anchor)
+kit origin key 2:   4ceff73d1101678dc65984c4... (kit transition target)
+attacker key:       9eea8110dacbc9e46e5bffca... (test-fixture parallel authority)
+production key 1:   74270fd52cc9d9656744284b... (pinned production anchor; ROTATED OUT post-slip)
+production key 2:   8ae5337b973f8e53f35e91c0... (current production signing key)
+transition records: keys/key-transition-v1-to-v2.json (kit), keys/production-key-transition.json (production)
