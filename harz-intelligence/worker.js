@@ -9015,7 +9015,8 @@ if (path === '/api/intake/v1/testm2') {
               task.state = 'refused'; task.refusal = 'fixture refused: unknown fixture id ' + (t.fixture_id || '(none)') + ' — the frozen G15 fixture table defines what exists; no improvisation'; task.receipt = await mSha('refused:' + task.refusal);
             } else {
               task.answer = fx.answer; task.state = 'verified'; task.backend = 'g15-frozen-fixture-record'; task.agent_id = null;
-              task.receipt = await mSha('verified:fixture:' + t.fixture_id + ':' + await sha256(fx.answer));
+              task.fixture_id = t.fixture_id; // G18: identity disclosure on the record so exported state is self-describing (frozen formula untouched)
+                            task.receipt = await mSha('verified:fixture:' + t.fixture_id + ':' + await sha256(fx.answer));
             }
           } else if (t.type === 'compose') {
             // direct in-worker composition through the UNCHANGED frozen V3 Studio path
