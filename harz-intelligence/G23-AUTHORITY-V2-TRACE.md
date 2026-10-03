@@ -111,3 +111,40 @@ attacker key:       9eea8110dacbc9e46e5bffca... (test-fixture parallel authority
 production key 1:   74270fd52cc9d9656744284b... (pinned production anchor; ROTATED OUT post-slip)
 production key 2:   8ae5337b973f8e53f35e91c0... (current production signing key)
 transition records: keys/key-transition-v1-to-v2.json (kit), keys/production-key-transition.json (production)
+
+## DAD'S CLOSE-OUT RULING (2026-10-03, G23 CLOSED/PASSED) + FROZEN REVOCATION LAW
+Dad confirmed G23 PASSED and ordered the following statement frozen
+permanently in the audit record (verbatim):
+
+  "The exposed key is permanently revoked/retired and must never
+  again be accepted as an origin signer. Don't rely on the repository
+  cleanup as the security boundary; the cryptographic transition is
+  the boundary."
+
+Frozen as keys/revocations.json (HARZ-KEY-REVOCATION-V1):
+- production origin key 1, 74270fd52cc9d965... — REVOKED permanently
+- kit origin key 1, 771fdb0a43020e4b... — REVOKED permanently
+- kit origin key 2, 4ceff73d1101678d... — REVOKED permanently
+- attacker key, 9eea8110dacbc9e4... — never an authorized origin
+
+The signed transition harz-production-key-1-to-2 PREDATES the
+revocation and stands as the recorded containment boundary. The
+revocation applies to designation signing from this record forward.
+STANDING ANCHORS (pinned directly, post-revocation):
+- production: 8ae5337b973f8e53... (origin key 2 — the live signer)
+- kit: de2a86867d6d447f... (origin key 3 — fresh, never exposed)
+
+ENFORCEMENT IS CRYPTOGRAPHIC, NOT DOCUMENTARY: the authority-verifier
+now loads the revocation list and refuses any designation signed by
+a revoked fingerprint — MEASURED: a state signed by revoked key
+74270fd5, presented with the old anchor plus the valid transition
+chain (which would otherwise accept it), is REFUSED with the
+revocation verdict; the current production state (key 8ae5337b)
+verifies against the standing anchor. A revoked key cannot return
+through a chain, an anchor, or an export.
+
+The audit progression, final form (Dad):
+G20 topology can be manipulated. G21 topology becomes content-bound.
+G22 content-bound topology still permits parallel authorities.
+G23 authority becomes cryptographically bound to the sovereign origin.
+G22 remains FAILED — the pre-key evidence, never patched away.

@@ -24,6 +24,12 @@ function claimsOf(answer) {
   return rest.slice(0, end);
 }
 
+function loadRevocations() {
+  const f = path.join(__dirname, 'keys/revocations.json');
+  if (!fs.existsSync(f)) return [];
+  return JSON.parse(fs.readFileSync(f, 'utf8')).revoked.map(r => r.fingerprint);
+}
+
 function loadAnchor() {
   // THE TRUST ANCHOR — pinned origin public key (not a URL)
   return JSON.parse(fs.readFileSync(path.join(__dirname, 'keys/origin-anchor.json'), 'utf8'));
@@ -50,6 +56,7 @@ async function main() {
   const stFile = process.argv[2];
   const tFile = process.argv[3]; // optional signed transition record
   const st = JSON.parse(fs.readFileSync(stFile, 'utf8'));
+  const revoked = loadRevocations();
   let anchor = loadAnchor();
   let anchorDesc = 'pinned origin key ' + anchor.fingerprint.slice(0, 16) + '...';
   if (tFile) {
@@ -112,6 +119,7 @@ async function main() {
     const S = D.origin_signature;
     if (!S) { sigOK = false; fail(name + ' designation signature: NONE — unsigned state cannot be authoritative (pre-key or stripped)'); }
     else if (S.alg !== 'Ed25519') { sigOK = false; fail(name + ' designation signature: unknown alg ' + S.alg); }
+    else if (revoked.includes(S.fingerprint)) { sigOK = false; fail(name + ' designation signature: REVOKED KEY ' + S.fingerprint.slice(0, 16) + '... — permanently retired, never again accepted as an origin signer (the transition is the boundary, not the repository cleanup)'); }
     else if (verifySignature(bytes, S.signature, anchor)) {
       (S.fingerprint === anchor.fingerprint) ? pass(name + ' designation signature VERIFIED against ' + anchorDesc) : (sigOK = false, fail(name + ' signature verifies but fingerprint ' + S.fingerprint.slice(0, 12) + ' is NOT the pinned authority — UNAUTHORIZED'));
     } else { sigOK = false; fail(name + ' designation signature: INVALID against ' + anchorDesc + ' — the parallel authority cannot manufacture authority'); }
