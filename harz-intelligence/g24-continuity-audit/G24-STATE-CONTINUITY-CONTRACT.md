@@ -111,3 +111,37 @@ now. Both must hold for autonomous missions to consume evidence safely.
 - no test transactions; all audit goals labeled in record goals
 - contract frozen BEFORE measurement; hypothesis stated BEFORE attack;
   ruling on the primitive BEFORE implementation
+
+## RULING (Dad, 2026-10-03): B — SOVEREIGN STATE CHAIN. BUILD.
+Frozen implementation target, verbatim:
+"A valid signature proves a state was authorized; the standing
+continuity chain determines whether it is still current."
+Minimum structure: height + prior_state_hash + state_payload +
+origin_signature, with the COMPLETE canonical structure signed.
+Verifier laws (all ten, verbatim intent):
+1. Genesis/anchor is explicit.
+2. Every subsequent state has exactly the required predecessor
+   relationship.
+3. Height cannot be independently trusted; it must be
+   signature-bound.
+4. prior_state_hash must resolve to the expected preceding state.
+5. A valid old state may remain historically valid without being
+   currently valid.
+6. Conflicting successors constitute a fork, not two simultaneous
+   truths.
+7. A fork cannot be silently selected by timestamp, arrival order,
+   URL, or replica preference.
+8. Supersession requires an explicit signed act.
+9. Rollback requires an explicit signed restart/recovery record.
+10. Pre-continuity records remain valid historical records of the
+    unlinked era, never retroactively rewritten into the chain.
+The distinction: height alone is never authority (a malicious replica
+can manufacture height 9,999,999 — meaningless without the signed
+predecessor chain); "latest timestamp" is never the current-state
+rule (G24 already demonstrated why).
+The authoritative relation:
+signature -> authorized state
+predecessor chain -> authorized history
+signed supersession/recovery -> legitimate change of history
+Phase 1 stays frozen at 3fc8244, exactly like G22. The wall gets
+built, then attacked again.
