@@ -9193,6 +9193,38 @@ if (path === '/api/intake/v1/testm2') {
       const anyVerified = mission.tasks.some(t => t.state === 'verified');
       const anyRefused = mission.tasks.some(t => t.state === 'refused' || t.state === 'error');
       mission.status = anyVerified && !anyRefused ? 'verified' : (!anyVerified && anyRefused ? (mission.tasks.some(t => t.state === 'refused') ? 'refused' : 'error') : 'mixed');
+      // G21 DESIGNATION-BINDING-V1 (additive; frozen a26e61e + A1): the origin emits a
+      // designation seal binding MEANINGFUL IDENTITIES (receipts + claims/answer shas + act
+      // bytes), never bare role integers. Zero frozen formulas touched; records predating
+      // this field simply lack it. Tampering any bound identity invalidates the seal.
+      const dConf = mission.tasks.find(t => t.conflict && t.conflict.unresolved_claims);
+      const dRes = mission.tasks.find(t => t.resolution && t.resolution.resolution_sources);
+      if (dConf) {
+        const dRefs = [];
+        for (const u of dConf.conflict.unresolved_claims) {
+          const src = mission.tasks.find(x => x.id === u.source_task) || {};
+          dRefs.push({ task: u.source_task, receipt: u.source_receipt, claims_sha256: u.claims_sha256, answer_sha256: await mSha(String(src.answer || '')) });
+        }
+        const dBytes = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs });
+        mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs, designation_bytes_sha256: await mSha(dBytes), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes)) };
+      }
+      if (dRes) {
+        const rs = [];
+        for (const s of dRes.resolution.resolution_sources) {
+          const src = mission.tasks.find(x => x.id === s.source_task) || {};
+          rs.push({ task: s.source_task, receipt: s.source_receipt, claims_sha256: s.claims_sha256, answer_sha256: s.answer_sha256, act: { type: src.type || '', instruction: s.source_instruction || src.instruction || '', fixture_id: src.fixture_id || '' } });
+        }
+        const resolved = [];
+        for (const c of dRes.resolution.resolves_conflict) {
+          resolved.push({ task: c.source_task, receipt: c.source_receipt, claims_sha256: c.claims_sha256, answer_sha256: c.answer_sha256 });
+        }
+        const evidence = [];
+        for (const e of (dRes.answer && dRes.answer.evidence) || []) {
+          evidence.push({ task: e.source_task, claims_sha256: e.claims_sha256, answer_sha256: e.answer_sha256 });
+        }
+        const dBytes2 = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence });
+        mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence, designation_bytes_sha256: await mSha(dBytes2), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes2)) };
+      }
       let h = await mSha('HARZ-MISSION-1|' + mid);
       for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));
       mission.receipt = h;
