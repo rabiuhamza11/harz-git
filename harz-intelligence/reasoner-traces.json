@@ -1,0 +1,863 @@
+[
+ {
+  "id": 1,
+  "question": "What is the UBA account number used for HARZ Pay bank transfers?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.2226,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 10470,
+  "best_cosine": 0.2226,
+  "q_terms": 11,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 10470,
+    "cosine": 0.2226
+   },
+   {
+    "doc": 10332,
+    "cosine": 0.1502
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.1377
+   },
+   {
+    "doc": 10066,
+    "cosine": 0.1239
+   },
+   {
+    "doc": 7,
+    "cosine": 0.0966
+   },
+   {
+    "doc": 10418,
+    "cosine": 0.0868
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  … 🎬 HarzFilm LIVE ☁️ Super Cloud LIVE 💳 Payment Methods 🏦 UBA Bank Transfer 203432642"
+ },
+ {
+  "id": 2,
+  "question": "Which crypto network is used for USDT payments in HARZ Pay?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.1471,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 10470,
+  "best_cosine": 0.1471,
+  "q_terms": 10,
+  "q_terms_hit_in_best": 5,
+  "units": [
+   {
+    "doc": 10470,
+    "cosine": 0.1471
+   },
+   {
+    "doc": 7,
+    "cosine": 0.144
+   },
+   {
+    "doc": 10407,
+    "cosine": 0.1279
+   },
+   {
+    "doc": 10066,
+    "cosine": 0.108
+   },
+   {
+    "doc": 10332,
+    "cosine": 0.1
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.0775
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  n Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Toke"
+ },
+ {
+  "id": 3,
+  "question": "What fee does HarzPay charge per transaction?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.2461,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 10470,
+  "best_cosine": 0.2461,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 10470,
+    "cosine": 0.2461
+   },
+   {
+    "doc": 5332,
+    "cosine": 0.217
+   },
+   {
+    "doc": 1897,
+    "cosine": 0.1724
+   },
+   {
+    "doc": 10107,
+    "cosine": 0.1407
+   },
+   {
+    "doc": 10446,
+    "cosine": 0.1324
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.0987
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍 Multi-Currency NGN, USD, "
+ },
+ {
+  "id": 4,
+  "question": "How do I add money to my HarzPay wallet?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.3813,
+  "th": 0.1308,
+  "gold_rank": 2,
+  "best_doc": 10446,
+  "best_cosine": 0.3813,
+  "q_terms": 8,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 10446,
+    "cosine": 0.3813
+   },
+   {
+    "doc": 10470,
+    "cosine": 0.2245
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.1903
+   },
+   {
+    "doc": 10107,
+    "cosine": 0.1763
+   },
+   {
+    "doc": 2829,
+    "cosine": 0.1724
+   },
+   {
+    "doc": 2811,
+    "cosine": 0.1724
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  Continue 💵 Add money to your wallet Start with a small amount to test your wallet. 【S1】"
+ },
+ {
+  "id": 5,
+  "question": "What is the consensus mechanism of HARZ Chain?",
+  "mode": "refusal",
+  "guard": "below-threshold",
+  "best_score": 0.0887,
+  "th": 0.1308,
+  "gold_rank": 0,
+  "best_doc": 10038,
+  "best_cosine": 0.0887,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 2,
+  "units": [
+   {
+    "doc": 10038,
+    "cosine": 0.0887
+   },
+   {
+    "doc": 3,
+    "cosine": 0.0647
+   },
+   {
+    "doc": 10030,
+    "cosine": 0.0602
+   },
+   {
+    "doc": 2,
+    "cosine": 0.0399
+   },
+   {
+    "doc": 10108,
+    "cosine": 0.0354
+   },
+   {
+    "doc": 10335,
+    "cosine": 0.0119
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 6,
+  "question": "What is the GDEG token?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.2667,
+  "th": 0.1308,
+  "gold_rank": 6,
+  "best_doc": 10215,
+  "best_cosine": 0.2667,
+  "q_terms": 5,
+  "q_terms_hit_in_best": 3,
+  "units": [
+   {
+    "doc": 10215,
+    "cosine": 0.2667
+   },
+   {
+    "doc": 10436,
+    "cosine": 0.1639
+   },
+   {
+    "doc": 10066,
+    "cosine": 0.1147
+   },
+   {
+    "doc": 10185,
+    "cosine": 0.1051
+   },
+   {
+    "doc": 10348,
+    "cosine": 0.0931
+   },
+   {
+    "doc": 10035,
+    "cosine": 0.0893
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  …atforms 300+ Digital Products 45 Categories 5 AI Agents 10M GDEG Token Supply What We B"
+ },
+ {
+  "id": 7,
+  "question": "What payment methods does HARZ Exchange accept?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.1633,
+  "th": 0.1308,
+  "gold_rank": 2,
+  "best_doc": 10332,
+  "best_cosine": 0.1633,
+  "q_terms": 6,
+  "q_terms_hit_in_best": 2,
+  "units": [
+   {
+    "doc": 10332,
+    "cosine": 0.1633
+   },
+   {
+    "doc": 4,
+    "cosine": 0.0654
+   },
+   {
+    "doc": 103,
+    "cosine": 0.0524
+   },
+   {
+    "doc": 10014,
+    "cosine": 0.0457
+   },
+   {
+    "doc": 10047,
+    "cosine": 0.0432
+   },
+   {
+    "doc": 10088,
+    "cosine": 0.0425
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA B"
+ },
+ {
+  "id": 8,
+  "question": "What services does the HARZ Super App include?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.1466,
+  "th": 0.1308,
+  "gold_rank": 4,
+  "best_doc": 114,
+  "best_cosine": 0.1466,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 3,
+  "units": [
+   {
+    "doc": 114,
+    "cosine": 0.1466
+   },
+   {
+    "doc": 1499,
+    "cosine": 0.1013
+   },
+   {
+    "doc": 10108,
+    "cosine": 0.0648
+   },
+   {
+    "doc": 6,
+    "cosine": 0.0594
+   },
+   {
+    "doc": 10281,
+    "cosine": 0.0293
+   },
+   {
+    "doc": 10335,
+    "cosine": 0.0106
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  HARZ Super App 76 services • 【S1】 76 Workers Powered by Cloudflare Workers + D1 Install "
+ },
+ {
+  "id": 9,
+  "question": "What did NCC announce about SIM type approval compliance?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.3047,
+  "th": 0.1308,
+  "gold_rank": 2,
+  "best_doc": 119,
+  "best_cosine": 0.3047,
+  "q_terms": 9,
+  "q_terms_hit_in_best": 5,
+  "units": [
+   {
+    "doc": 119,
+    "cosine": 0.3047
+   },
+   {
+    "doc": 115,
+    "cosine": 0.302
+   },
+   {
+    "doc": 1754,
+    "cosine": 0.1151
+   },
+   {
+    "doc": 704,
+    "cosine": 0.011
+   },
+   {
+    "doc": 7703,
+    "cosine": 0.0099
+   },
+   {
+    "doc": 6342,
+    "cosine": 0
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  The initiative is intended to make Type Approval compliance m 【S1】 …tool calls in eve, a"
+ },
+ {
+  "id": 10,
+  "question": "What digital learning pathways did NCC open?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.4205,
+  "th": 0.1308,
+  "gold_rank": 5,
+  "best_doc": 4968,
+  "best_cosine": 0.4205,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 3,
+  "units": [
+   {
+    "doc": 4968,
+    "cosine": 0.4205
+   },
+   {
+    "doc": 119,
+    "cosine": 0.3404
+   },
+   {
+    "doc": 4873,
+    "cosine": 0.2537
+   },
+   {
+    "doc": 4847,
+    "cosine": 0.2164
+   },
+   {
+    "doc": 116,
+    "cosine": 0.2122
+   },
+   {
+    "doc": 10425,
+    "cosine": 0.1316
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  …tor OCW Scholar OCW Use & Impact OEGlobal Office of Digital Learning Open Access Open d"
+ },
+ {
+  "id": 11,
+  "question": "How many properties does Abuja Estate City serve?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.3226,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 10,
+  "best_cosine": 0.3226,
+  "q_terms": 8,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 10,
+    "cosine": 0.3226
+   },
+   {
+    "doc": 10082,
+    "cosine": 0.2381
+   },
+   {
+    "doc": 1561,
+    "cosine": 0.2021
+   },
+   {
+    "doc": 10423,
+    "cosine": 0.1868
+   },
+   {
+    "doc": 10450,
+    "cosine": 0.1818
+   },
+   {
+    "doc": 10173,
+    "cosine": 0.0794
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  Sep 14 Real Estate and Construction 1 min Why cheap land won’t make Lagos, Abuja homes a"
+ },
+ {
+  "id": 12,
+  "question": "What does HARZSwap do?",
+  "mode": "refusal",
+  "guard": "below-threshold",
+  "best_score": 0.063,
+  "th": 0.1308,
+  "gold_rank": 6,
+  "best_doc": 10286,
+  "best_cosine": 0.063,
+  "q_terms": 4,
+  "q_terms_hit_in_best": 1,
+  "units": [
+   {
+    "doc": 10286,
+    "cosine": 0.063
+   },
+   {
+    "doc": 10141,
+    "cosine": 0.0608
+   },
+   {
+    "doc": 114,
+    "cosine": 0.0565
+   },
+   {
+    "doc": 10350,
+    "cosine": 0.0395
+   },
+   {
+    "doc": 4,
+    "cosine": 0.0377
+   },
+   {
+    "doc": 2,
+    "cosine": 0.037
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 13,
+  "question": "What does the HARZ FX service provide?",
+  "mode": "refusal",
+  "guard": "below-threshold",
+  "best_score": 0.1193,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 103,
+  "best_cosine": 0.1193,
+  "q_terms": 6,
+  "q_terms_hit_in_best": 1,
+  "units": [
+   {
+    "doc": 103,
+    "cosine": 0.1193
+   },
+   {
+    "doc": 5,
+    "cosine": 0.097
+   },
+   {
+    "doc": 10281,
+    "cosine": 0.092
+   },
+   {
+    "doc": 10335,
+    "cosine": 0.0098
+   },
+   {
+    "doc": 102,
+    "cosine": 0
+   },
+   {
+    "doc": 4,
+    "cosine": 0
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 14,
+  "question": "What is HARZ Wallet?",
+  "mode": "refusal",
+  "guard": "below-threshold",
+  "best_score": 0.1061,
+  "th": 0.1308,
+  "gold_rank": 6,
+  "best_doc": 10091,
+  "best_cosine": 0.1061,
+  "q_terms": 3,
+  "q_terms_hit_in_best": 2,
+  "units": [
+   {
+    "doc": 10091,
+    "cosine": 0.1061
+   },
+   {
+    "doc": 6,
+    "cosine": 0.0541
+   },
+   {
+    "doc": 10441,
+    "cosine": 0.0494
+   },
+   {
+    "doc": 10108,
+    "cosine": 0.0378
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.036
+   },
+   {
+    "doc": 5,
+    "cosine": 0.0326
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 15,
+  "question": "What is Koya Trading and Digital Marketing?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.2884,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 7,
+  "best_cosine": 0.2884,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 7,
+    "cosine": 0.2884
+   },
+   {
+    "doc": 10215,
+    "cosine": 0.1866
+   },
+   {
+    "doc": 8726,
+    "cosine": 0.1614
+   },
+   {
+    "doc": 9355,
+    "cosine": 0.1314
+   },
+   {
+    "doc": 1001,
+    "cosine": 0.1193
+   },
+   {
+    "doc": 10425,
+    "cosine": 0.1163
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  ₦8,000 ~$5 USD Sayi Yanzu Premium Mentorship Program Koyarwa ta musamman daga Rabiu — tr"
+ },
+ {
+  "id": 16,
+  "question": "How does the HARZ Exchange OTC desk work?",
+  "mode": "extractive",
+  "guard": "threshold+guard-pass",
+  "best_score": 0.2425,
+  "th": 0.1308,
+  "gold_rank": 2,
+  "best_doc": 5417,
+  "best_cosine": 0.2425,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 3,
+  "units": [
+   {
+    "doc": 5417,
+    "cosine": 0.2425
+   },
+   {
+    "doc": 4,
+    "cosine": 0.2185
+   },
+   {
+    "doc": 3349,
+    "cosine": 0.1495
+   },
+   {
+    "doc": 2036,
+    "cosine": 0.1475
+   },
+   {
+    "doc": 3676,
+    "cosine": 0.1409
+   },
+   {
+    "doc": 537,
+    "cosine": 0.1018
+   }
+  ],
+  "answered": true,
+  "answer_head": "**Answer**  OTC Desk + Paystack checkout + P2P market | 【S1】 🌐 Help desks for other languages This "
+ },
+ {
+  "id": 17,
+  "question": "What is the HARZ Ecosystem?",
+  "mode": "refusal",
+  "guard": "below-threshold",
+  "best_score": 0.1108,
+  "th": 0.1308,
+  "gold_rank": 6,
+  "best_doc": 10047,
+  "best_cosine": 0.1108,
+  "q_terms": 4,
+  "q_terms_hit_in_best": 3,
+  "units": [
+   {
+    "doc": 10047,
+    "cosine": 0.1108
+   },
+   {
+    "doc": 10000,
+    "cosine": 0.0855
+   },
+   {
+    "doc": 10241,
+    "cosine": 0.0539
+   },
+   {
+    "doc": 10097,
+    "cosine": 0.0502
+   },
+   {
+    "doc": 10164,
+    "cosine": 0.0475
+   },
+   {
+    "doc": 10034,
+    "cosine": 0.0376
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 18,
+  "question": "What is the airspeed velocity of an unladen qwizzleblatt?",
+  "mode": "refusal",
+  "guard": "no-evidence",
+  "best_score": 0,
+  "th": 0.1308,
+  "gold_rank": 0,
+  "best_doc": 4779,
+  "best_cosine": 0.2366,
+  "q_terms": 9,
+  "q_terms_hit_in_best": 5,
+  "units": [
+   {
+    "doc": 4779,
+    "cosine": 0.2366
+   },
+   {
+    "doc": 4053,
+    "cosine": 0.1079
+   },
+   {
+    "doc": 1746,
+    "cosine": 0.0763
+   },
+   {
+    "doc": 6922,
+    "cosine": 0.0349
+   },
+   {
+    "doc": 2604,
+    "cosine": 0.0209
+   },
+   {
+    "doc": 1199,
+    "cosine": 0.0092
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 19,
+  "question": "Who won the 2026 Bloboland national elections?",
+  "mode": "refusal",
+  "guard": "no-evidence",
+  "best_score": 0,
+  "th": 0.1308,
+  "gold_rank": 0,
+  "best_doc": 6398,
+  "best_cosine": 0.1109,
+  "q_terms": 7,
+  "q_terms_hit_in_best": 2,
+  "units": [
+   {
+    "doc": 6398,
+    "cosine": 0.1109
+   },
+   {
+    "doc": 773,
+    "cosine": 0.0866
+   },
+   {
+    "doc": 8054,
+    "cosine": 0.0838
+   },
+   {
+    "doc": 6002,
+    "cosine": 0.0555
+   },
+   {
+    "doc": 5102,
+    "cosine": 0.0555
+   },
+   {
+    "doc": 4679,
+    "cosine": 0.0539
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 20,
+  "question": "What is the zorbite concentration in the qlanari river?",
+  "mode": "refusal",
+  "guard": "no-evidence",
+  "best_score": 0,
+  "th": 0.1308,
+  "gold_rank": 0,
+  "best_doc": 6001,
+  "best_cosine": 0.1656,
+  "q_terms": 8,
+  "q_terms_hit_in_best": 4,
+  "units": [
+   {
+    "doc": 6001,
+    "cosine": 0.1656
+   },
+   {
+    "doc": 9435,
+    "cosine": 0.1543
+   },
+   {
+    "doc": 1632,
+    "cosine": 0.1199
+   },
+   {
+    "doc": 2959,
+    "cosine": 0.1048
+   },
+   {
+    "doc": 6763,
+    "cosine": 0.0625
+   },
+   {
+    "doc": 6214,
+    "cosine": 0.0532
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ },
+ {
+  "id": 21,
+  "question": "Give the UBA account number used for HARZ Pay bank transfers, the canonical URL of the HARZ Estate Network, and compute the Naira value of 2,000 GDEG at the documented rate. Cite your sources.",
+  "mode": "refusal",
+  "guard": "price-guard: question asks about a fee/price/cost, but no fee-bearing evidence sentence exists",
+  "best_score": 0.1525,
+  "th": 0.1308,
+  "gold_rank": 1,
+  "best_doc": 10470,
+  "best_cosine": 0.1525,
+  "q_terms": 27,
+  "q_terms_hit_in_best": 7,
+  "units": [
+   {
+    "doc": 10470,
+    "cosine": 0.1525
+   },
+   {
+    "doc": 10066,
+    "cosine": 0.1468
+   },
+   {
+    "doc": 10332,
+    "cosine": 0.1161
+   },
+   {
+    "doc": 7,
+    "cosine": 0.1019
+   },
+   {
+    "doc": 10418,
+    "cosine": 0.098
+   },
+   {
+    "doc": 10062,
+    "cosine": 0.0652
+   }
+  ],
+  "answered": false,
+  "answer_head": "**Answer**  I do not have grounded evidence for this in the HARZ knowledge base, and I will not gues"
+ }
+]
