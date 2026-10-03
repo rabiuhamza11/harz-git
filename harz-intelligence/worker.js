@@ -9081,7 +9081,14 @@ if (path === '/api/intake/v1/testm2') {
               }
             }
           } else {
-            const message = prev.length ? t.instruction + '\n\nVerified results from earlier mission tasks (context, not new evidence):\n' + prev.map((p, i) => (i + 1) + '. ' + p).join('\n') : t.instruction;
+            // G14 defect D2 fix (frozen e367582 before fix): research tasks receive
+            // exactly their own instruction — each source is INDEPENDENT (Dad's G14:
+            // 'multiple independently verified tasks'). Silent context injection
+            // corrupted the frozen reasoner's question decomposition (every
+            // second-position task routed to the canonical-URL fallback). Chained-
+            // context research, if ever wanted, must be an EXPLICIT reference design
+            // with its own contract — never silent injection.
+            const message = t.instruction;
             const r = await orchestrate({ message, agent: 'supreme-engine' });
             task.agent_id = (r.agent && r.agent.name) || 'supreme-engine';
             task.backend = (r.meta && r.meta.engine && r.meta.engine.backend) || null;
