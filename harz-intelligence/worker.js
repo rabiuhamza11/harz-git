@@ -8965,7 +8965,7 @@ if (path === '/api/intake/v1/testm2') {
       if (!goal) return json({ error: 'goal required' }, 400);
       let plan;
       if (Array.isArray(body.tasks) && body.tasks.length) {
-        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : 'orchestrate', instruction: String(t.instruction || t).slice(0, 2000) })).filter(t => t.instruction) };
+        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : 'orchestrate', instruction: String(t.instruction || t).slice(0, 2000), evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
         if (!plan.tasks.length) return json({ error: 'tasks[] must contain at least one instruction' }, 400);
       } else {
         plan = planMission(goal);
@@ -8992,8 +8992,37 @@ if (path === '/api/intake/v1/testm2') {
             // (createParse -> stResolveModes -> stBuildBundle -> stTest -> stDeliver).
             // Zero HTTP hops: Cloudflare error 1042 forbids a worker fetching its own
             // workers.dev URL, and a direct call is the more sovereign form anyway.
-            const parsed = await createParse({ prompt: t.instruction });
-            if (!parsed.valid) {
+            // G12 EVIDENCE HANDOFF (EVIDENCE-CREATION-AUDIT-V1, frozen b9f88a9): a compose
+            // task may EXPLICITLY reference prior tasks via evidence_from. The executor
+            // builds the canonical evidence packages from its OWN stored task records
+            // ONLY — caller-supplied evidence fields are never read (injection is data,
+            // never input). Missing/unverified evidence = honest refusal, never
+            // improvisation. Evidence bytes enter the prompt byte-exactly; creation may
+            // use them, never certify them, never alter them. The chain
+            // answer_sha256 -> prompt_sha256 -> artifact_sha256 proves derivation.
+            let handoffPrompt = t.instruction;
+            let evidenceUsed = null;
+            let handoffRefusal = null;
+            if (Array.isArray(t.evidence_from) && t.evidence_from.length) {
+              const packages = [];
+              for (const refId of t.evidence_from) {
+                const src = mission.tasks.find(x => x.id === refId);
+                if (!src) { handoffRefusal = 'evidence handoff refused: referenced task ' + refId + ' does not exist in this mission — missing evidence is an honest failure, never improvised'; break; }
+                if (src.state !== 'verified' || !src.receipt) { handoffRefusal = 'evidence handoff refused: task ' + refId + ' is not verified (state: ' + src.state + ') — unverified evidence may not enter creation'; break; }
+                const answerText = typeof src.answer === 'string' ? src.answer : JSON.stringify(src.answer);
+                const ansSha = await sha256(answerText);
+                packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, answer_sha256: ansSha, answer_text: answerText, task_receipt: src.receipt, carry_law: 'verified mission findings carried byte-exact; creation may use them, never certify them, never alter them' });
+              }
+              if (!handoffRefusal) {
+                handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — byte-exact from the cited task receipt; use but never certify or alter]\n' + JSON.stringify({ finding_packages: packages });
+                evidenceUsed = packages.map(p => ({ source_task: p.source_task, answer_sha256: p.answer_sha256, task_receipt: p.task_receipt }));
+              }
+            }
+            const parsed = handoffRefusal ? null : await createParse({ prompt: handoffPrompt });
+            if (handoffRefusal) {
+              task.state = 'refused'; task.refusal = handoffRefusal; task.receipt = await mSha('refused:' + handoffRefusal);
+              task.answer = { evidence_refs_requested: t.evidence_from };
+            } else if (!parsed.valid) {
               task.state = 'refused'; task.refusal = 'studio parser refusal: ' + (parsed.reason || 'prompt refused, never improvised');
               task.receipt = await mSha('refused:' + task.refusal);
             } else {
@@ -9020,7 +9049,7 @@ if (path === '/api/intake/v1/testm2') {
                   // mission refusal chaining the children's own refusal notes verbatim.
                   if (del.delivered && (del.delivered_children || []).length > 0 && del.receipt && del.receipt.receipt_emitted) {
                     task.state = 'verified'; task.agent_id = 'harz-studio-refsyn'; task.backend = 'harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)';
-                    task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
+                    task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, evidence: evidenceUsed, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
                     task.receipt = del.receipt.studio_receipt_sha256;
                   } else {
                     task.state = 'refused';
@@ -9028,7 +9057,7 @@ if (path === '/api/intake/v1/testm2') {
                     task.refusal = (zeroDelivery
                       ? 'zero artifacts delivered — every child boundary-refused: ' + ((del.refused_children || []).map(c => c.mode + ': ' + String(c.refusal_note || c.outcome).slice(0, 100)).join(' | ') || 'no children')
                       : 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown')));
-                    task.answer = { bundle_id: built.bundle_id, delivered: false };
+                    task.answer = { bundle_id: built.bundle_id, delivered: false, evidence: evidenceUsed };
                     task.receipt = await mSha('refused:' + task.refusal);
                   }
                 }
