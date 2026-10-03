@@ -8963,9 +8963,30 @@ if (path === '/api/intake/v1/testm2') {
       const body = await request.json().catch(() => ({}));
       const goal = String(body.goal || '').slice(0, 2000);
       if (!goal) return json({ error: 'goal required' }, 400);
+      // G15 CONFLICT AUDIT — frozen synthetic conflict fixture (contract 13e383a).
+      // TEST DATA, completely outside the production corpus: never in the search
+      // index, never reasoner evidence. Caller-explicit fixture tasks only; the
+      // planner never invents them. Verification = the answer bytes match the
+      // frozen fixture record (sha256 in the G15 contract), never corpus evidence.
+      const G15_FIXTURES = {
+        'G15-FIX-A': { answer: '**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
+        'G15-FIX-B': { answer: '**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' }
+      };
+      // G15 RESOLUTION LAW (frozen 13e383a): verification establishes each claim
+      // against its own source, NEVER their agreement. Multi-source resolution
+      // requests refuse at the mission layer; resolution belongs to research.
+      const G15_RESOLUTION_PATTERNS = [
+        /stating which/i,
+        /which (?:of (?:these|the) )?(?:conflicting )?claims? (?:is|are) (?:true|correct|right|real|valid)/i,
+        /which (?:of (?:these|the) )?(?:price|value|statement|source|one)s? (?:is|was|are|were) (?:true|correct|right|real|actual|valid)/i,
+        /(?:the|that) (?:true|correct|right|real|actual) (?:price|value|claim|answer|statement)/i,
+        /resolve (?:the |this )?(?:conflict|contradiction|dispute)/i,
+        /determin\w+ (?:the |this )?(?:correct|true|real|actual) (?:price|value|claim|answer|statement)/i,
+        /who (?:is|was) (?:right|correct)/i
+      ];
       let plan;
       if (Array.isArray(body.tasks) && body.tasks.length) {
-        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : 'orchestrate', instruction: String(t.instruction || t).slice(0, 2000), evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
+        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : (t.type === 'fixture' ? 'fixture' : 'orchestrate'), instruction: String(t.instruction || t).slice(0, 2000), fixture_id: t.type === 'fixture' ? String(t.fixture_id || '').slice(0, 64) : undefined, evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
         if (!plan.tasks.length) return json({ error: 'tasks[] must contain at least one instruction' }, 400);
       } else {
         plan = planMission(goal);
@@ -8987,7 +9008,15 @@ if (path === '/api/intake/v1/testm2') {
         const task = { id: t.id, type: t.type, instruction: t.instruction, state: 'executing', agent_id: null, backend: null, latency_ms: null, external_calls: 0, internal_calls: 0, answer: null, receipt: null, refusal: null, error: null };
         const t0 = Date.now();
         try {
-          if (t.type === 'compose') {
+          if (t.type === 'fixture') {
+            const fx = G15_FIXTURES[t.fixture_id] || null;
+            if (!fx) {
+              task.state = 'refused'; task.refusal = 'fixture refused: unknown fixture id ' + (t.fixture_id || '(none)') + ' — the frozen G15 fixture table defines what exists; no improvisation'; task.receipt = await mSha('refused:' + task.refusal);
+            } else {
+              task.answer = fx.answer; task.state = 'verified'; task.backend = 'g15-frozen-fixture-record'; task.agent_id = null;
+              task.receipt = await mSha('verified:fixture:' + t.fixture_id + ':' + await sha256(fx.answer));
+            }
+          } else if (t.type === 'compose') {
             // direct in-worker composition through the UNCHANGED frozen V3 Studio path
             // (createParse -> stResolveModes -> stBuildBundle -> stTest -> stDeliver).
             // Zero HTTP hops: Cloudflare error 1042 forbids a worker fetching its own
@@ -9029,6 +9058,9 @@ if (path === '/api/intake/v1/testm2') {
                 const ansSha = await sha256(answerText);
                 const claimsSha = await sha256(claims);
                 packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, source_receipt: src.receipt, answer_sha256: ansSha, claims: claims, claims_sha256: claimsSha, confidence: confidence, provenance: provenance !== null ? provenance : 'none — this answer type carries no Sources section (disclosed, never guessed)', extraction_law: 'byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) — zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain' });
+              }
+              if (!handoffRefusal && packages.length > 1 && G15_RESOLUTION_PATTERNS.some(rx => rx.test(t.instruction))) {
+                handoffRefusal = 'resolution refused: the mission carries ' + packages.length + ' independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task — resolution belongs to research; composition never adjudicates';
               }
               if (!handoffRefusal) {
                 handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — claims carried byte-exact from a cited verified task; use but never certify or alter]\n' + packages.map(p => p.claims).join('\n\n');
