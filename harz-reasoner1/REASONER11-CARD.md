@@ -46,3 +46,52 @@ HARZ-Reasoner-1.1 is a strictly-better revision on the frozen suite (8/20 -> 9/2
 H2 fixed, zero regressions, zero external calls, 424 ms avg). It is now the
 production primary behind the capability-registry router, with the external
 adapter as explicit, recorded fallback.
+
+---
+
+## Revision 1.1.6 — REASONER-AUDIT-V1 (2026-10-03, contract frozen eb8f421)
+
+Context: after the Packet Audit v0.1 (search1 v1.1 promoted, 17/18 gold preserved),
+Q13/Q14 still refused end-to-end with gold evidence at packet rank 1. Dad ordered the
+Reasoner-1.1 Confidence Audit: freeze -> trace -> diagnose -> test, no cross-layer
+rescue. Frozen inputs: packets-frozen.json (21 cases, exact Search-1 v0.4 + packet
+v1.1 outputs). Weights digest UNCHANGED (88eaff62...).
+
+### Diagnosis (all five below-threshold refusals share one signature)
+D1 evidence-confidence bug (PROVEN): the cosine query vector included function words
+(what/is/does, default idf 2.5) which diluted qNorm and matched generic UI text; the
+480-char window denominator diluted short subject queries below TH=0.1308 — a
+threshold calibrated on longer benchmark queries. For Q14 the cosine even MIS-RANKED:
+a Super App page beat the actual Wallet page on function-word overlap.
+D4 entity-alignment bug (PROVEN): 'harzswap' never matched 'HARZ Swap' (compound
+tokenization). Plus two composition diseases found during the fix: sentence picking
+ignored titles (two-word junk 'Same wallet' beat the wallet page's definition via the
+length penalty), and the reasoner RE-RANKED the packet by cosine, discarding Search-1's
+own ranking (the packet's S1 WAS the wallet page; a faucet page mentioning 'wallet' 8x
+won the re-rank, so the wallet page's sentences were never extracted).
+Not D2, not D3, not D5-as-rescue: the threshold itself was NOT lowered. Q21's price-guard
+refusal stands — the compute part is also registry-declared arithmetic incapability.
+
+### The four law fixes (deterministic, no special cases, no threshold change)
+R1: query vector = content terms only; FN_WORDS extended with instruction frames
+(cite/sources/quote/verbatim/reference/according — meta, never subject).
+R2: camelCase compound split on both query and evidence sides.
+R3: title-anchor law — unit vector built TITLE x2 + BODY x1; sentences from units
+whose title carries query subject terms gain that term's idf (subject page beats
+passing mentions).
+R4: layer separation — the packet's S-order IS Search-1's rank; sentence extraction
+and guards read packet top-3; cosine remains only the answerability gate.
+
+### Frozen-corpus result (A/B, original vs 1.1.6)
+12/12 previously-answering cases: unchanged mode, same guards, scores equal or higher.
+5/5 below-threshold refusals flipped to grounded answers, each now LEADING with the
+subject page's definitional sentence (Q14: 'HARZ Wallet v3 — Honest Registry 8 Chains
+【S1】'; Q5: Chain Explorer 'Proof of Edge' — the actual consensus; Q12: HARZSwap
+Sovereign DEX L1 AMM; Q13: HARZ FX live rates; Q17: Ecosystem 25+ platforms).
+3/3 negatives: unchanged honest refusals (no-evidence). T2 price-guard: unchanged.
+Determinism: identical sha256 across repeat runs (2abbdc36...).
+
+### Deployment
+harz-intelligence redeployed via the non-versioned PUT with full binding metadata
+(the versions-API path that silently drops bindings is banned for this worker —
+incident record in PACKET-AUDIT-V1-TRACE.md).

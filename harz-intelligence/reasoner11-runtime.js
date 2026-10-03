@@ -1,4 +1,17 @@
-// HARZ-Reasoner-1.1 runtime — revision 1.1 of the harz_local reasoner
+// HARZ-Reasoner-1.1 runtime — revision 1.1.6 of the harz_local reasoner
+// REVISION 1.1.6 (REASONER-AUDIT-V1, frozen contract eb8f421, 2026-10-03): four
+// diagnosed law fixes, proven on the frozen 21-case corpus, weights digest
+// UNCHANGED (88eaff62...). R1 content-terms-only query vector (function words
+// never decide relevance; instruction frames cite/sources/quote are meta, never
+// subject). R2 camelCase compound split on both sides (HARZSwap -> harz + swap).
+// R3 title-anchor law (a page's title declares its subject: unit vector TITLE x2,
+// title-anchored units boost their sentences). R4 layer separation (the packet's
+// S-order IS Search-1's rank; the reasoner reads packet top-3 for
+// sentences/guards, cosine remains only the answerability gate — no re-ranking).
+// Result on frozen corpus: 12/12 previously-answering cases unchanged, 5 honest
+// below-threshold refusals (Q5/Q12/Q13/Q14/Q17) flipped to grounded answers with
+// the subject page leading, 3 negatives still refuse, T2 price-guard intact
+// (arithmetic is registry-declared incapability — honest refusal stands).
 // CHANGE vs 1.0 (frozen v0.3 record untouched): added ANSWERABILITY GUARD.
 //   The 1.0 H2 failure (benchmark case H2: "Who is the CFO of HARZ Intelligence?")
 //   answered instead of refusing because common terms (e.g. "intelligence") lifted
@@ -30,18 +43,33 @@ export function reasoner11Call({ messages }) {
   const fetchBlock = userMsg.match(/FETCHED DOCUMENT \(([^)]+)\): ([\s\S]*?)(?=\n\nUSER REQUEST|$)/);
   if (fetchBlock) units.push({ id: 'doc', title: 'Fetched document', url: fetchBlock[1], text: fetchBlock[2].trim().slice(0, 2000) });
 
-  const toks = (t) => String(t || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 1);
+  // REASONER-AUDIT-V1 FIX R1+R2 (hoisted): the query vector is built from CONTENT
+  // terms only — function words never decide relevance (proven: 'What is HARZ Wallet?'
+  // scored the Super App page above the Wallet page on what/is overlap, and on-subject
+  // gold evidence fell below TH from function-word dilution of qNorm). Instruction
+  // frames (cite/sources/quote/...) are meta-requests, never subject matter — the
+  // same law the packet layer already applies, applied here to the reasoner's own
+  // input parsing. Compound words split camelCase deterministically on BOTH sides
+  // ('HARZSwap' -> harz + swap) — a subject must be recognizable however it is
+  // written (proven: 'harzswap' never matched 'HARZ Swap').
+  const FN_WORDS = ['what','who','when','where','why','how','is','are','was','were','does','do','did','the','a','an','of','for','to','in','on','at','by','with','and','or','which','that','this','their','its','my','your','tell','list','name','give','show','me','us','please','current','right','now','cite','cites','source','sources','citation','citations','quote','quotes','verbatim','according','reference','references'];
+  const toks = (t) => String(t || '').toLowerCase().replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2').split(/[^a-z0-9]+/).filter(w => w.length > 1);
   const q = toks(query);
   const L_query = query.toLowerCase();
   const idf = WEIGHTS.idf;
   const qW = {};
-  for (const t of q) if (!WEIGHTS.stopwords.includes(t)) qW[t] = idf[t] || Math.max(1, 2.5);
+  for (const t of q) if (!WEIGHTS.stopwords.includes(t) && !FN_WORDS.includes(t)) qW[t] = idf[t] || Math.max(1, 2.5); // FIX R1: content terms only
   const qNorm = Math.sqrt(Object.values(qW).reduce((a, b) => a + b * b, 0)) || 1;
 
   const scored = units.map(u => {
-    const uToks = toks(u.title + ' ' + u.text);
+    // FIX R3 (title-anchor law): a page's TITLE declares its subject — a query content
+    // term in the title is twice the relevance signal of one in body text (proven: for
+    // 'What is HARZ Wallet?' the Super App page outranked the actual Wallet page on
+    // nav-text 'wallet' mentions while the title match was ignored entirely).
+    const tToks = toks(u.title); const bToks = toks(u.text);
     const uW = {};
-    for (const t of uToks) if (!WEIGHTS.stopwords.includes(t)) uW[t] = idf[t] || 1;
+    for (const t of tToks) if (!WEIGHTS.stopwords.includes(t)) uW[t] = (uW[t] || 0) + 2 * (idf[t] || 1);
+    for (const t of bToks) if (!WEIGHTS.stopwords.includes(t)) uW[t] = (uW[t] || 0) + (idf[t] || 1);
     const uNorm = Math.sqrt(Object.values(uW).reduce((a, b) => a + b * b, 0)) || 1;
     let dot = 0;
     for (const [t, w] of Object.entries(qW)) dot += w * (uW[t] || 0);
@@ -58,12 +86,16 @@ export function reasoner11Call({ messages }) {
   // (b) content-term rule: top evidence must contain at least one CONTENT term
   // (c) role-question guard: who/which-questions about a ROLE (cfo, ceo, founder...)
   //     must find the role word in evidence, else refuse (fixes v0.3 case H2)
-  const FN_WORDS = ['what','who','when','where','why','how','is','are','was','were','does','do','did','the','a','an','of','for','to','in','on','at','by','with','and','or','which','that','this','their','its','my','your','tell','list','name','give','show','me','us','please','current','right','now'];
   const ROLE_WORDS = ['cfo','cto','ceo','coo','founder','cofounder','owner','president','director','chairman','governor','founder','manager','head'];
   // v1.1.3 (v0.7): sentence extraction hoisted before the guard — the value-guard needs it.
   const stem = (t2) => (t2.length > 3 && /s$/.test(t2) && !/(ss|us|is)$/.test(t2)) ? t2.replace(/s$/, '') : t2;
   const qToks = [...new Set(q.filter(t2 => !WEIGHTS.stopwords.includes(t2) && !FN_WORDS.includes(t2)).map(stem))];
   const idNoun = /\b(account|number|code|url|address|endpoint|rate|price|fee|balance|height|id)\b/.test(L_query);
+  const titleAnchor = (uid) => { // FIX R3b: sentences from the subject-declaring unit carry its title idf
+    const u2 = units.find(u3 => u3.id === uid); if (!u2) return 0;
+    const tToks = toks(u2.title);
+    return qToks.filter(t2 => tToks.includes(t2)).reduce((a, t2) => a + (WEIGHTS.stopwords.includes(t2) ? 0 : (WEIGHTS.idf[t2] || 2.5)), 0);
+  };
   const extractSentences = (text, uid) => {
     const sents = String(text || '').replace(/\s+/g, ' ').split(/(?<=[.!?•|✓])\s+|\s+·\s+/).map(x => x.trim()).filter(s2 => s2.length > 10 && s2.length < 400);
     if (!sents.length) return [];
@@ -76,7 +108,7 @@ export function reasoner11Call({ messages }) {
       const hitsRaw = qToks.filter(t2 => stemSet.has(t2)).length;
       const hits = qToks.filter(t2 => stemSet.has(t2)).reduce((a, t2) => a + stemW(t2), 0);
       const valueBoost = idNoun && /\d/.test(s2) ? 2 : 0;
-      return { s2, uid, score: hits + valueBoost - (s2.length / 100) + (i === 0 ? 0.05 : 0), hits, hasDigit: /\d/.test(s2) };
+      return { s2, uid, score: hits + valueBoost + titleAnchor(uid) - (s2.length / 100) + (i === 0 ? 0.05 : 0), hits, hasDigit: /\d/.test(s2) };
     }).filter(x2 => x2.score > 0.5 && (!idNoun || (x2.hasDigit && x2.hits >= 3))); // v1.1.4: value questions only accept value-bearing sentences with real topical overlap
   };
   let answerable = false, guard = 'no-evidence';
@@ -94,21 +126,21 @@ export function reasoner11Call({ messages }) {
       // must have a value-bearing (digit-containing) evidence sentence — else refuse instead
       // of assembling label junk that merely shares words with the question (bench N2).
       if (answerable && idNoun) {
-        const useG = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const useG = units.slice(0, 3); // FIX R4: guards read packet top-3, not cosine re-rank
         const hasValue = useG.some(u => extractSentences(u.text, u.id).some(x2 => /\d/.test(x2.s2)));
         if (!hasValue) { answerable = false; guard = 'value-guard: question asks for a value but no value-bearing evidence sentence exists'; }
       }
       // v0.9 temporal-guard: questions asking WHEN must find a date-bearing evidence sentence —
       // quoting a UI dump with no date is not an answer to a when-question (gap scan: temporal).
       if (answerable && /\bwhen\b|what year|which year|launched|founded|established|started/.test(L_query)) {
-        const useG2 = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const useG2 = units.slice(0, 3); // FIX R4
         const hasDate = useG2.some(u => extractSentences(u.text, u.id).some(x2 => /\b(19|20)\d{2}\b/.test(x2.s2)));
         if (!hasDate) { answerable = false; guard = 'temporal-guard: question asks when, but no date-bearing evidence sentence exists'; }
       }
       // v0.10 price-guard: fee/price/cost questions must find a currency/percent-bearing evidence
       // sentence — enumerating items is not an answer to a pricing question (gap scan: multihop dump).
       if (answerable && /\b(fee|fees|price|pricing|cost|costs|charge|charged|rate)\b/.test(L_query)) {
-        const useG3 = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+        const useG3 = units.slice(0, 3); // FIX R4
         const hasFee = useG3.some(u => extractSentences(u.text, u.id).some(x2 => /(\d+(?:\.\d+)?\s*%|₦\s?\d|\bNGN\s?\d|\$\d)/.test(x2.s2)));
         if (!hasFee) { answerable = false; guard = 'price-guard: question asks about a fee/price/cost, but no fee-bearing evidence sentence exists'; }
       }
@@ -127,7 +159,12 @@ export function reasoner11Call({ messages }) {
     // v1.1.3: listy queries (methods/services/options/features/…) take up to 4 sentences with
     // per-unit coverage — enumerations live in fragments split across units (bench K1).
     const listy = /\b(methods?|services|options|features|steps|types|ways|channels|currencies?)\b/.test(L_query);
-    const use = scored.filter(u => u.score >= TH * 0.5).slice(0, 3);
+    // FIX R4 (layer separation): the packet's S-order IS the retrieval ranking — the
+    // reasoner reads the packet's top evidence instead of re-ranking it with cosine
+    // (proven: for 'What is HARZ Wallet?' the packet's S1 WAS the wallet page, but a
+    // faucet page mentioning 'wallet' 8x won the cosine re-rank, so the wallet page's
+    // sentences were never even extracted). Cosine remains the answerability gate.
+    const use = units.slice(0, 3);
     const allSents = [];
     for (const u of use) allSents.push(...extractSentences(u.text, u.id));
     allSents.sort((a2, b2) => b2.score - a2.score);
