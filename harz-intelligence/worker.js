@@ -23,6 +23,35 @@ import { reasoner1Call } from './reasoner1-runtime.js';
 
 const VERSION = '0.8'; // v0.8: + MISSIONS v0.1 layer + Console PWA (contracts/MISSIONS-V1.md)
 let ENV = {}; // module workers receive bindings via env — stored here at request start
+
+// G23 AUTHORITY-V2 (additive; frozen ac08d3d): the sovereign origin signs every
+// designation over its canonical bytes with the HARZ-owned Ed25519 key. The
+// private key lives ONLY as this origin's secret binding — it never enters a
+// verifier, mirror, export, or public state. Origins without ORIGIN_KEY simply
+// emit no signature (disclosed unsigned state, refused by anchored verifiers).
+async function originSign(bytes) {
+  if (!ENV.ORIGIN_KEY) return null;
+  try {
+    const b64 = ENV.ORIGIN_KEY.replace(/-----(BEGIN|END) PRIVATE KEY-----/g, '').replace(/\s+/g, '');
+    const bin = atob(b64);
+    const pkcs8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) pkcs8[i] = bin.charCodeAt(i);
+    const key = await crypto.subtle.importKey('pkcs8', pkcs8, 'Ed25519', true, ['sign']);
+    const jwk = await crypto.subtle.exportKey('jwk', key);
+    const xb = atob(jwk.x.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(jwk.x.length / 4) * 4, '='));
+    const spki = new Uint8Array(44);
+    spki.set([0x30, 0x2a, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x03, 0x21, 0x00], 0);
+    for (let i = 0; i < 32; i++) spki[12 + i] = xb.charCodeAt(i);
+    const dg = new Uint8Array(await crypto.subtle.digest('SHA-256', spki));
+    let fingerprint = '';
+    for (const b of dg) fingerprint += b.toString(16).padStart(2, '0');
+    const sig = await crypto.subtle.sign('Ed25519', key, new TextEncoder().encode(bytes));
+    let sb = '';
+    const sb8 = new Uint8Array(sig);
+    for (let i = 0; i < sb8.length; i++) sb += String.fromCharCode(sb8[i]);
+    return { alg: 'Ed25519', fingerprint: fingerprint, signature: btoa(sb) };
+  } catch (e) { return null; }
+}
 const SEARCH_URL = 'https://harz-search.harz.workers.dev/search?q=';
 const CHAIN_STATUS_URL = 'https://harz-chain-v2.harz.workers.dev/api/status';
 
@@ -9207,6 +9236,7 @@ if (path === '/api/intake/v1/testm2') {
         }
         const dBytes = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs });
         mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs, designation_bytes_sha256: await mSha(dBytes), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes)) };
+        const sigC = await originSign(dBytes); if (sigC) mission.designation.origin_signature = sigC;
       }
       if (dRes) {
         const rs = [];
@@ -9224,6 +9254,7 @@ if (path === '/api/intake/v1/testm2') {
         }
         const dBytes2 = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence });
         mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence, designation_bytes_sha256: await mSha(dBytes2), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes2)) };
+        const sigR = await originSign(dBytes2); if (sigR) mission.designation.origin_signature = sigR;
       }
       let h = await mSha('HARZ-MISSION-1|' + mid);
       for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));

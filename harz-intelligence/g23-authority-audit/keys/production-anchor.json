@@ -1,0 +1,6 @@
+{
+  "name": "production",
+  "alg": "Ed25519",
+  "fingerprint": "74270fd52cc9d9656744284b31f9b49ceecaa4bf54eb8ce0574ec929bb704dfb",
+  "public_key_spki_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAT4GXL2cOCev0CzdXSQz3BXes+0kbsnLttSwbYWl0ICg=\n-----END PUBLIC KEY-----\n"
+}

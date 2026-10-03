@@ -1,0 +1,6 @@
+{
+  "name": "attacker",
+  "alg": "Ed25519",
+  "fingerprint": "9eea8110dacbc9e4695bffcac0068fe35ce991d00cb431e6b0d8a66aa06c9031",
+  "public_key_spki_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA/UhU4IN+0jDdBoYi8aD7801nSYVwf/8LPV7ELTP9ZAw=\n-----END PUBLIC KEY-----\n"
+}

@@ -5,3 +5,4 @@ backups/
 *.db
 *.log
 .env
+**/keys/*-key.pem

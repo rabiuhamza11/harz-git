@@ -1,0 +1,8 @@
+{
+  "transition_id": "harz-origin-key-1-to-2",
+  "from_fingerprint": "771fdb0a43020e4b129f7267707a5f994b4cb4e6d90f832e0f9157205f13e386",
+  "to_fingerprint": "4ceff73d1101678dc65984c4334c85969fba94481c55f50058f256f7e2747662",
+  "to_public_key_spki_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAV1bsJxguZJk/qBjhOcIA+20EML3zpeSJybc8uWW7RIU=\n-----END PUBLIC KEY-----\n",
+  "signature_b64": "P0hdmcASjoyaBVP2bBq9S0nQUgW7bku5SnOUT1/If2ei4UGvm34kuZXjnRdFBJ26weaZAozQiEf304KuMRVjDQ==",
+  "law": "HARZ-KEY-TRANSITION-V1"
+}
