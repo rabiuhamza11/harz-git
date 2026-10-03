@@ -1,11 +1,15 @@
 import WEIGHTS from './reasoner1-weights.js'; // stopwords table (HARZ-owned)
-// HARZ Search-1 v1.0 — Retrieval & Evidence Engine (HARZ Intelligence v0.7)
+// HARZ Search-1 v1.1 — Retrieval & Evidence Engine (HARZ Intelligence v0.7)
+// v1.1 (PACKET AUDIT v0.1, contract PACKET-AUDIT-V1, frozen 2026-10-03): FIX A
+// instruction-suffix immunity; FIX B subject-focused coverage (idf>=2.0 gate) +
+// subject-guard probe widened to 6-char terms; FIX C clause-level variants for
+// multi-part questions. S1-S7 laws unchanged. Deterministic arithmetic only.
 // ---------------------------------------------------------------------------
 // A deterministic ranking/assembly layer ABOVE the frozen HARZ Search v0.3
 // BM25 baseline. It never replaces the baseline index and never invents
 // evidence. Same corpus, same queries, measured better retrieval => promoted.
 //
-// FROZEN LAWS (v1.0):
+// FROZEN LAWS (v1.1):
 //  S1 Search-1 never invents evidence. Every evidence unit carries title, url,
 //     domain and source text extracted from retrieved documents only.
 //  S2 Insufficient coverage => packet.status = 'insufficient_evidence'.
@@ -25,7 +29,7 @@ const TOP_K_EVIDENCE = 6;       // v0.8: canonical packet size (was 4 in v0.7) �
 const ENRICH_TOP_N = 5;         // v0.8: fetch full pages for top N candidates (was 3)
 const WINDOW = 480;             // evidence window chars per unit
 
-const SW = new Set(('a an the of in on for to and or is are was were be been with as at by from this that it its will can has have not but if you your we they he she i us them there here do does did what which who when where why how me my all list link url address give').split(' '));
+const SW = new Set(('a an the of in on for to and or is are was were be been with as at by from this that it its will can has have not but if you your we they he she i us them there here do does did what which who when where why how me my all list link url address give cite source sources citation citations quote quotes reference references verbatim according').split(' '));
 const tokenize = (t) => (String(t || '').toLowerCase().match(/[a-z0-9][a-z0-9'-]{1,30}/g) || [])
   .map(w => w.replace(/['-]/g, '')).filter(w => w.length >= 2);
 
@@ -47,13 +51,19 @@ export function analyzeQuery(question) {
     .replace(/\b(?:where|how)\s+(?:is|are|do|does|can)\b/gi, ' ')
     .replace(/\bon\s+the\s+(?:internet|web)\b/gi, ' ')
     .replace(/\bonline\b/gi, ' ')
+    // v1.1 PACKET-AUDIT FIX A: instruction suffixes are not subject matter. 'Cite your
+    // sources' made 'Cite' an entity and 'sources' a content token, poisoning every
+    // variant (a lone 'sources' variant matched thousands of docs and buried gold
+    // candidates — proven in TRACE, Q14). Instruction frames are stripped upstream.
+    .replace(/\b(?:cite|quote|list|mention|include|provide)\s+(?:your\s+|the\s+|all\s+|any\s+|me\s+|us\s+)?(?:sources?|evidence|references?|citations?)\b/gi, ' ')
+    .replace(/\bwith\s+(?:proper\s+|full\s+|exact\s+)?(?:citations?|sources?|references?)\b/gi, ' ')
     .replace(/\s+/g, ' ');
   const tokens = tokenize(stripped);
   // entities: capitalized multi-char words in the original + harz-prefixed tokens
   const capWords = (raw.match(/\b[A-Z][A-Za-z0-9'-]{2,}/g) || []).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')).filter(Boolean);
   // v0.9: sentence-initial directive verbs are not entities — 'Summarize the HarzPay flow' must
   // retrieve HarzPay docs, not generic 'Summarizer API' junk that shares the directive verb.
-  const DIRECTIVE_VERBS = new Set(['summarize', 'summarise', 'list', 'name', 'show', 'compare', 'difference', 'different', 'enumerate', 'explain', 'describe', 'outline', 'detail', 'identify', 'calculate', 'compute', 'draft', 'write', 'give', 'tell', 'find', 'count', 'how', 'what', 'which', 'when', 'where', 'why', 'does', 'the', 'and', 'for']);
+  const DIRECTIVE_VERBS = new Set(['summarize', 'summarise', 'list', 'name', 'show', 'compare', 'difference', 'different', 'enumerate', 'explain', 'describe', 'outline', 'detail', 'identify', 'calculate', 'compute', 'draft', 'write', 'give', 'tell', 'find', 'count', 'how', 'what', 'which', 'when', 'where', 'why', 'does', 'the', 'and', 'for', 'cite', 'quote', 'source', 'sources', 'citation', 'citations', 'reference', 'references', 'verbatim', 'according']);
   const harzWords = tokens.filter(t => t.startsWith('harz') && t.length > 4);
   const entities = [...new Set([...capWords, ...harzWords])].filter(e => e.length >= 3 && !SW.has(e) && !DIRECTIVE_VERBS.has(e)).slice(0, 6);
   const content = tokens.filter(t => !entities.includes(t) && !SW.has(t)).slice(0, 12);
@@ -83,6 +93,24 @@ export function analyzeQuery(question) {
     }
   }
   if (!variants.length) variants.push(String(raw).slice(0, 60));
+  // v1.1b PACKET-AUDIT FIX C: multi-part questions search each clause. A comma/'and'-
+  // separated clause carries its own subject (entities + content, capped 6); single
+  // docs rarely cover every part, so part-specific candidates must be retrievable
+  // (proven: T2's 'the canonical URL of the HARZ Estate Network' never formed a
+  // variant, so gold 10062 was unreachable despite the raw engine ranking it #1).
+  const clauses = raw.split(/[,;]|\s+and\s+/i).map(cl => cl.trim()).filter(cl => tokenize(cl).length >= 2).slice(0, 4);
+  for (const cl of clauses) {
+    const clCap = (cl.match(/\b[A-Z][A-Za-z0-9'-]{2,}\b/g) || []).map(w => w.toLowerCase().replace(/[^a-z0-9]/g, '')).filter(Boolean);
+    const clTok = tokenize(cl).filter(t => !SW.has(t) && !DIRECTIVE_VERBS.has(t));
+    // v1.1b: the clause's ENTITIES ALONE are its most precise subject query — emit them
+    // first ('harz estate network' -> gold rank 1) BEFORE the wider entities+content
+    // form, which can strict-AND onto a different doc ('... canonical' pulled the
+    // HARZ Root zone page instead). Deterministic priority, both variants retained.
+    const ce = [...new Set(clCap)].filter(t => !SW.has(t) && !DIRECTIVE_VERBS.has(t) && t.length >= 2).slice(0, 6).join(' ');
+    if (ce && tokenize(ce).length >= 2) variants.push(ce);
+    const cv = [...new Set([...clCap, ...clTok])].filter(t => !SW.has(t) && !DIRECTIVE_VERBS.has(t) && t.length >= 2).slice(0, 6).join(' ');
+    if (cv && tokenize(cv).length >= 2 && cv !== ce) variants.push(cv);
+  }
   const seen = new Set(); const vv = [];
   for (const v of [...variants, ...compounds]) { const k = v.trim(); if (k && !seen.has(k)) { seen.add(k); vv.push(k); } }
   return { tokens, entities, content, intent, variants: vv };
@@ -230,10 +258,30 @@ export function detectConflicts(evidence) {
 // ---------- Stage 8: coverage ----------
 export function coverageOf(qa, evidence) {
   const packetText = evidence.map(e => (e.title + ' ' + e.text)).join(' ').toLowerCase();
-  const all = [...new Set([...qa.entities, ...qa.tokens])].filter(t => t.length >= 3 && !SW.has(t));
-  if (!all.length) return 1;
-  const hit = all.filter(t => packetText.includes(t)).length;
-  return +(hit / all.length).toFixed(3);
+  // v1.1 PACKET-AUDIT FIX B: coverage measures the QUESTION'S SUBJECT, not its
+  // natural-language verbs. Entities always count; content tokens count only when
+  // discriminative per the frozen Reasoner-1 idf table (idf >= 2.0 — keeps trained
+  // brand/finance terms like gdeg 2.56 / wallet 2.25 / network 2.34, drops untrained
+  // verb noise like provide/announce/mechanism that deflated honest packets to
+  // insufficient_evidence). A question with NO recognizable subject terms is
+  // honestly uncovered (0) — the reasoner must refuse, never guess.
+  const idf = (t) => (WEIGHTS.idf && WEIGHTS.idf[t] !== undefined) ? WEIGHTS.idf[t] : 0;
+  const ents = [...new Set(qa.entities || [])].filter(t => t.length >= 3 && !SW.has(t));
+  const cont = [...new Set(qa.content || [])].filter(t => t.length >= 3 && !SW.has(t) && idf(t) >= 2.0);
+  // v1.1b ENTITY-ANCHOR RULE: the question's subject IS its entities. When entities
+  // exist, coverage = entity hit ratio (proven: gold docs often lack the question's
+  // natural-language verbs — HARZ FX contains neither 'service' nor 'provide', so
+  // demanding them forced honest packets into false insufficient_evidence refusals).
+  // Content terms are NEVER gate-blockers when entities exist; untrained content
+  // (nonsense questions) falls back to the trained-content ratio, and a question with
+  // NO recognizable subject is honestly uncovered (0) — refusal, never a guess.
+  if (ents.length) {
+    const hit = ents.filter(t => packetText.includes(t)).length;
+    return +(hit / ents.length).toFixed(3);
+  }
+  if (!cont.length) return 0;
+  const hitC = cont.filter(t => packetText.includes(t)).length;
+  return +(hitC / cont.length).toFixed(3);
 }
 
 // ---------- Stage 9 (v0.8): semantic classification + structured candidates ----------
@@ -474,7 +522,7 @@ export async function buildPacket({ question, baselineSearch, fetchPage, indexVe
   const unitTexts = evidence.map(e => (e.title + ' ' + (e.fullText || e.text)).toLowerCase()).join(' ');
   const absentTerms = [];
   for (const tok of [...new Set(String(question).toLowerCase().split(/[^a-z0-9]+/))]) {
-    if (tok.length < 8 || WEIGHTS.stopwords.includes(tok) || /s$/.test(tok) && WEIGHTS.stopwords.includes(tok.slice(0, -1))) continue;
+    if (tok.length < 6 || WEIGHTS.stopwords.includes(tok) || /s$/.test(tok) && WEIGHTS.stopwords.includes(tok.slice(0, -1))) continue; // v1.1: 8 -> 6, backstop widens to cover untrained rare subjects honestly
     if (unitTexts.includes(tok)) continue;
     if (absentTerms.length >= 2) break;
     try { const pr = await baselineSearch(tok); if (!((pr && pr.results) || []).length) absentTerms.push(tok); } catch (e) {}

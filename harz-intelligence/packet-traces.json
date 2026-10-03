@@ -1,0 +1,5618 @@
+[
+ {
+  "id": 1,
+  "q": "What is the UBA account number used for HARZ Pay bank transfers?",
+  "gold_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "variants": [
+   "uba harz pay",
+   "uba harz pay account number used bank",
+   "account number used bank transfers",
+   "account number",
+   "transfers number account bank",
+   "uba harz pay account number used",
+   "uba harzpay",
+   "harz bank transfer account number"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10470
+  ],
+  "goldInRawQuestion": [
+   10470
+  ],
+  "variantCalls": [
+   {
+    "variant": "uba harz pay",
+    "ids": [
+     10332,
+     10066,
+     10418,
+     10407,
+     7,
+     10427,
+     10470,
+     10034,
+     10035
+    ]
+   },
+   {
+    "variant": "uba harz pay account number used bank",
+    "ids": [
+     10470
+    ]
+   },
+   {
+    "variant": "account number used bank transfers",
+    "ids": [
+     596,
+     2411,
+     2818,
+     2833,
+     1389,
+     2835,
+     2851,
+     2820,
+     2828,
+     2831,
+     2845,
+     2815
+    ]
+   },
+   {
+    "variant": "account number",
+    "ids": [
+     2818,
+     2833,
+     9531,
+     5440,
+     2835,
+     2851,
+     2820,
+     2828,
+     2831,
+     2845,
+     2815,
+     2822
+    ]
+   },
+   {
+    "variant": "transfers number account bank",
+    "ids": [
+     596,
+     2411,
+     2818,
+     2833,
+     1389,
+     2835,
+     2851,
+     2820,
+     2828,
+     2831,
+     2845,
+     2815
+    ]
+   },
+   {
+    "variant": "uba harz pay account number used",
+    "ids": [
+     10470
+    ]
+   },
+   {
+    "variant": "uba harzpay",
+    "ids": [
+     10470,
+     7,
+     10427,
+     10034
+    ]
+   },
+   {
+    "variant": "harz bank transfer account number",
+    "ids": [
+     4,
+     10470
+    ]
+   }
+  ],
+  "rawUnionCount": 25,
+  "candidate_ids": [
+   10470,
+   10332,
+   10066,
+   10418,
+   7,
+   10427,
+   10034,
+   4,
+   10035,
+   10407,
+   596,
+   2411
+  ],
+  "ranking": [
+   {
+    "id": 10470,
+    "score": 50.54,
+    "reasons": [
+     "bm25:31.29",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 10332,
+    "score": 30.63,
+    "reasons": [
+     "bm25:18.38",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10066,
+    "score": 29.19,
+    "reasons": [
+     "bm25:16.94",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10418,
+    "score": 28.16,
+    "reasons": [
+     "bm25:14.2",
+     "title_cover:+0.63",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33",
+     "harz_owned:+4",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 7,
+    "score": 28.07,
+    "reasons": [
+     "bm25:12.45",
+     "title_cover:+0.63",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 27.44,
+    "reasons": [
+     "bm25:11.81",
+     "title_cover:+0.63",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 4,
+    "score": 24.83,
+    "reasons": [
+     "bm25:19.04",
+     "title_cover:+0.63",
+     "snippet_cover:+0.50",
+     "entity_ground:+0.67",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10035,
+    "score": 23.62,
+    "reasons": [
+     "bm25:9.16",
+     "title_cover:+0.63",
+     "snippet_cover:+1.50",
+     "entity_ground:+1.33",
+     "harz_owned:+4",
+     "value_bearing_harz:+7"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10470,
+   10332,
+   10066,
+   10418,
+   7,
+   10034
+  ],
+  "selected_evidence": [
+   {
+    "id": 10470,
+    "title": "HarzPay Onboarding — Get Started",
+    "fetched": true,
+    "textLen": 480,
+    "text": "nage your wallet in Naira, Dollars, and Crypto — all in one app. 💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍 Multi-Currency NGN, USD, USDT ⚡ Instant Real-time transfers Get Started I already have an ac"
+   },
+   {
+    "id": 10332,
+    "title": "HARZ Pay — Payment Gateway",
+    "fetched": true,
+    "textLen": 335,
+    "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Pro"
+   },
+   {
+    "id": 10066,
+    "title": "HARZ Pay",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE"
+   },
+   {
+    "id": 10418,
+    "title": "Buy NRL — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "I Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull NRL Token (V2) 0xE8423c0595E6b2caD4E6f19B6F51666699be303a Supply: 11,022"
+   },
+   {
+    "id": 7,
+    "title": "HARZ Digital - Koya Trading & Digital Marketing",
+    "fetched": true,
+    "textLen": 480,
+    "text": "arketing mataimatai zuwa gaba. Kujeru kaɗan. ₦64,000 ~$40 USD Sayi Yanzu Hanyoyin Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Token Polygon Network USDT TRC20 Crypto Gumroad Global C"
+   },
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": false,
+    "textLen": 172,
+    "text": "… 🎬 HarzFilm LIVE ☁️ Super Cloud LIVE 💳 Payment Methods 🏦 UBA Bank Transfer 2034326424 — Rabiu Hamza Mohammed (code 033) 💎 GDEG Token (Polygon) 1 GDEG = ₦15 • 10% cash…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "11d48e502127631811d48e50",
+  "goldInRawUnion": [
+   10470,
+   10066,
+   7
+  ],
+  "goldInCandidate_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "goldInSelected": [
+   10470,
+   10066,
+   7
+  ],
+  "classification": "PRESERVED (value in evidence text)"
+ },
+ {
+  "id": 2,
+  "q": "Which crypto network is used for USDT payments in HARZ Pay?",
+  "gold_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "variants": [
+   "usdt harz pay",
+   "usdt harz pay crypto network used payments",
+   "crypto network used payments",
+   "crypto network",
+   "crypto payments network",
+   "usdt harz pay crypto network used",
+   "usdt harzpay"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10470,
+   10034
+  ],
+  "goldInRawQuestion": [
+   10470
+  ],
+  "variantCalls": [
+   {
+    "variant": "usdt harz pay",
+    "ids": [
+     10332,
+     10066,
+     10470,
+     10407,
+     10418,
+     10253,
+     10408,
+     10040,
+     7,
+     10427,
+     10034,
+     10001
+    ]
+   },
+   {
+    "variant": "usdt harz pay crypto network used payments",
+    "ids": [
+     10470,
+     10034
+    ]
+   },
+   {
+    "variant": "crypto network used payments",
+    "ids": [
+     1759,
+     6019,
+     10470,
+     10034,
+     10173
+    ]
+   },
+   {
+    "variant": "crypto network",
+    "ids": [
+     10148,
+     0,
+     10190,
+     9989,
+     6019,
+     10175,
+     9205,
+     644,
+     10034,
+     10470,
+     10205,
+     109
+    ]
+   },
+   {
+    "variant": "crypto payments network",
+    "ids": [
+     1759,
+     6019,
+     10470,
+     10034,
+     10173
+    ]
+   },
+   {
+    "variant": "usdt harz pay crypto network used",
+    "ids": [
+     10470,
+     10034,
+     7,
+     10427
+    ]
+   },
+   {
+    "variant": "usdt harzpay",
+    "ids": [
+     10470,
+     7,
+     10427,
+     10034
+    ]
+   }
+  ],
+  "rawUnionCount": 24,
+  "candidate_ids": [
+   10470,
+   10034,
+   7,
+   10427,
+   10332,
+   10066,
+   10407,
+   10418,
+   10040,
+   10253,
+   10408,
+   10148
+  ],
+  "ranking": [
+   {
+    "id": 10470,
+    "score": 47.99,
+    "reasons": [
+     "bm25:35.85",
+     "title_cover:+1.43",
+     "snippet_cover:+1.71",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 38.79,
+    "reasons": [
+     "bm25:29.79",
+     "title_cover:+0.71",
+     "snippet_cover:+2.29",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 7,
+    "score": 33.84,
+    "reasons": [
+     "bm25:24.27",
+     "title_cover:+0.71",
+     "snippet_cover:+2.86",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10332,
+    "score": 31.1,
+    "reasons": [
+     "bm25:18.96",
+     "title_cover:+1.43",
+     "snippet_cover:+1.71",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10066,
+    "score": 28.22,
+    "reasons": [
+     "bm25:16.08",
+     "title_cover:+1.43",
+     "snippet_cover:+1.71",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10407,
+    "score": 22.42,
+    "reasons": [
+     "bm25:13.42",
+     "title_cover:+0.71",
+     "snippet_cover:+2.29",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10418,
+    "score": 21.72,
+    "reasons": [
+     "bm25:13.29",
+     "title_cover:+0.71",
+     "snippet_cover:+1.71",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10040,
+    "score": 21.38,
+    "reasons": [
+     "bm25:12.95",
+     "title_cover:+0.71",
+     "snippet_cover:+1.71",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 0,
+    "suppressed": [
+     10190
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10470,
+   10034,
+   7,
+   10332,
+   10066,
+   10407
+  ],
+  "selected_evidence": [
+   {
+    "id": 10470,
+    "title": "HarzPay Onboarding — Get Started",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ur phone. Enter it below. Verify Use demo code (1234) Skip verification 💰 Choose your main currency You can always add more currencies later. 🇳🇬 Naira NGN 🇺🇸 Dollar USD ₮ Tether USDT ⚡ GDEG Energy Token Continue 💳 "
+   },
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": true,
+    "textLen": 480,
+    "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain w"
+   },
+   {
+    "id": 7,
+    "title": "HARZ Digital - Koya Trading & Digital Marketing",
+    "fetched": true,
+    "textLen": 480,
+    "text": "n Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Token Polygon Network USDT TRC20 Crypto Gumroad Global Card Paddle Global Checkout Shiga Affiliate Program Raba lambar tallata mu, ka sa"
+   },
+   {
+    "id": 10332,
+    "title": "HARZ Pay — Payment Gateway",
+    "fetched": true,
+    "textLen": 335,
+    "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Pro"
+   },
+   {
+    "id": 10066,
+    "title": "HARZ Pay",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE"
+   },
+   {
+    "id": 10407,
+    "title": "Neural Protocol — HARZ Cloud",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…s payments across 6 channels: Paystack, UBA Transfer, GDEG, USDT, Gumroad, Paddle Smart Routing AI Verified HARZ Cloud v17.0 — One Worker, One D1, Zero Dependencies Syste…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "17a229a075aeb14017a229a0",
+  "goldInRawUnion": [
+   10470,
+   10066,
+   7
+  ],
+  "goldInCandidate_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "goldInSelected": [
+   10470,
+   10066,
+   7
+  ],
+  "classification": "PRESERVED (value in evidence text)"
+ },
+ {
+  "id": 3,
+  "q": "What fee does HarzPay charge per transaction?",
+  "gold_ids": [
+   10470,
+   10066
+  ],
+  "variants": [
+   "harzpay",
+   "harzpay fee charge per transaction",
+   "fee charge per transaction",
+   "fee charge",
+   "charge fee per transaction",
+   "harzpay payment method steps amount"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10470,
+   10446,
+   10107,
+   10333,
+   7,
+   10427,
+   10034
+  ],
+  "goldInRawQuestion": [
+   10470
+  ],
+  "variantCalls": [
+   {
+    "variant": "harzpay",
+    "ids": [
+     10470,
+     10446,
+     10107,
+     10333,
+     7,
+     10427,
+     10034
+    ]
+   },
+   {
+    "variant": "harzpay fee charge per transaction",
+    "ids": [
+     10470,
+     10446,
+     10107,
+     10333,
+     7,
+     10427,
+     10034
+    ]
+   },
+   {
+    "variant": "fee charge per transaction",
+    "ids": [
+     1897,
+     5332,
+     6036,
+     934,
+     3490,
+     3296,
+     3489,
+     596,
+     2164
+    ]
+   },
+   {
+    "variant": "fee charge",
+    "ids": [
+     1897,
+     5332,
+     6036,
+     934,
+     3490,
+     3296,
+     3489,
+     596,
+     2164
+    ]
+   },
+   {
+    "variant": "charge fee per transaction",
+    "ids": [
+     1897,
+     5332,
+     6036,
+     934,
+     3490,
+     3296,
+     3489,
+     596,
+     2164
+    ]
+   },
+   {
+    "variant": "harzpay payment method steps amount",
+    "ids": [
+     10470
+    ]
+   }
+  ],
+  "rawUnionCount": 16,
+  "candidate_ids": [
+   10470,
+   10446,
+   10107,
+   7,
+   10333,
+   10427,
+   1897,
+   10034,
+   5332,
+   6036,
+   596,
+   934
+  ],
+  "ranking": [
+   {
+    "id": 10470,
+    "score": 31.83,
+    "reasons": [
+     "bm25:24.03",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10446,
+    "score": 28.9,
+    "reasons": [
+     "bm25:20.3",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10107,
+    "score": 17.91,
+    "reasons": [
+     "bm25:11.11",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 1897,
+    "score": 15.7,
+    "reasons": [
+     "bm25:14.1",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 12.83,
+    "reasons": [
+     "bm25:6.03",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 5332,
+    "score": 11.21,
+    "reasons": [
+     "bm25:9.61",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 6036,
+    "score": 11.05,
+    "reasons": [
+     "bm25:9.45",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 596,
+    "score": 10.43,
+    "reasons": [
+     "bm25:8.03",
+     "title_cover:+0.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10107,
+    "suppressed": [
+     10333
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10470,
+   10446,
+   10107,
+   1897,
+   10034,
+   5332
+  ],
+  "selected_evidence": [
+   {
+    "id": 10470,
+    "title": "HarzPay Onboarding — Get Started",
+    "fetched": true,
+    "textLen": 480,
+    "text": "💳 Harz Pay 🚀 Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto — all in one app. 💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍 Multi-Curren"
+   },
+   {
+    "id": 10446,
+    "title": "HarzPay — Payments for Africa",
+    "fetched": true,
+    "textLen": 237,
+    "text": "💳 Harz Pay 🔔 AH Total Balance ₦0 Nigerian Naira (NGN) 0 Transactions ₦0 Total Revenue 0 Platforms ➕ Add Money 📤 Send 🛍️ Pay 🔄 Convert My Balances Payment Methods Recent Transactions 🏠 Home 🛍️ Pay 📊 History ⚙️ Set"
+   },
+   {
+    "id": 10107,
+    "title": "/manifest.json",
+    "fetched": true,
+    "textLen": 205,
+    "text": "{\"name\":\"HARZ Pay\",\"short_name\":\"HARZPay\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}"
+   },
+   {
+    "id": 1897,
+    "title": "Pay a biller",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Loading data, Please wait ... Pay a biller Ã Warning! NIGERIAN COMMUNICATIONS COMMISSION By clicking Submit you agree to our Terms and Conditions and Privacy Policy Reset processing... Submit Guides PAYMENT SUMMARY ₦ 0."
+   },
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": true,
+    "textLen": 480,
+    "text": "rify NEW 💬 SMS Marketing LIVE 📢 Broadcast LIVE 🛠️ SaaS Tools (6 Live) 📝 HARZ Forms NEW 🔗 ShortLink NEW 💳 PayLink NEW 🧾 Invoice NEW 👤 BioLink NEW 💰 Pricing Hub LIVE 🚀 Ecosystem Platforms (25+ Live) 👛 Crypto Wal"
+   },
+   {
+    "id": 5332,
+    "title": "Homepage | Yale Graduate School of Arts and Sciences",
+    "fetched": false,
+    "textLen": 172,
+    "text": "… entire fall-term tuition charge or continuous registration fee (CRF) will be cancelled for students who withdraw from the graduate school on or before this date, or who …"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "a0e173b8a736b3d0a0e173b8",
+  "goldInRawUnion": [
+   10470
+  ],
+  "goldInCandidate_ids": [
+   10470
+  ],
+  "goldInSelected": [
+   10470
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 4,
+  "q": "How do I add money to my HarzPay wallet?",
+  "gold_ids": [
+   10470
+  ],
+  "variants": [
+   "harzpay",
+   "harzpay add money wallet",
+   "add money wallet",
+   "add money",
+   "money add wallet"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10470
+  ],
+  "goldInRawQuestion": [
+   10470
+  ],
+  "variantCalls": [
+   {
+    "variant": "harzpay",
+    "ids": [
+     10470,
+     10446,
+     10107,
+     10333,
+     7,
+     10427,
+     10034
+    ]
+   },
+   {
+    "variant": "harzpay add money wallet",
+    "ids": [
+     10470
+    ]
+   },
+   {
+    "variant": "add money wallet",
+    "ids": [
+     2829,
+     2811,
+     2821,
+     2825,
+     2830,
+     2815,
+     10470,
+     2813,
+     2819,
+     2840,
+     2843,
+     2853
+    ]
+   },
+   {
+    "variant": "add money",
+    "ids": [
+     2829,
+     2811,
+     2821,
+     2825,
+     2830,
+     2815,
+     2813,
+     2819,
+     2840,
+     2843,
+     2853,
+     2806
+    ]
+   },
+   {
+    "variant": "money add wallet",
+    "ids": [
+     2829,
+     2811,
+     2821,
+     2825,
+     2830,
+     2815,
+     10470,
+     2813,
+     2819,
+     2840,
+     2843,
+     2853
+    ]
+   }
+  ],
+  "rawUnionCount": 19,
+  "candidate_ids": [
+   10470,
+   2829,
+   2811,
+   2821,
+   2825,
+   2830,
+   2815,
+   10446,
+   2813,
+   2819,
+   2840,
+   2843
+  ],
+  "ranking": [
+   {
+    "id": 10470,
+    "score": 42.85,
+    "reasons": [
+     "bm25:31.6",
+     "title_cover:+1.25",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 2829,
+    "score": 22.2,
+    "reasons": [
+     "bm25:17.7",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 2811,
+    "score": 22.19,
+    "reasons": [
+     "bm25:17.69",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 10446,
+    "score": 21.42,
+    "reasons": [
+     "bm25:11.17",
+     "title_cover:+1.25",
+     "snippet_cover:+3.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10107,
+    "score": 13.11,
+    "reasons": [
+     "bm25:6.11",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 10.32,
+    "reasons": [
+     "bm25:3.32",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10107,
+    "suppressed": [
+     10333
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10470,
+   2829,
+   2811,
+   10446,
+   10107,
+   10034
+  ],
+  "selected_evidence": [
+   {
+    "id": 10470,
+    "title": "HarzPay Onboarding — Get Started",
+    "fetched": true,
+    "textLen": 480,
+    "text": " Add a card or bank account to fund your wallet. 💳 Debit/Credit Card Via Paystack — instant ✓ 🏦 Bank Transfer UBA — 2034326424 ✓ ₮ Crypto (USDT) TRC20 network ✓ ⏭️ Skip for now Add later in settings ✓ Continue 💵 Add m"
+   },
+   {
+    "id": 2829,
+    "title": "Add Money | Kuda. - Help Center",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to main content Search ⌘ K Add Money Before You Add Money To Your Account By Card Add Money By Card Add Money By Transfer Add Money By Cash Deposit Add Money By USSD Accounts How To Open A Kuda Account How To Create"
+   },
+   {
+    "id": 2811,
+    "title": "Add Money By Card | Kuda. - Help Center",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to main content Search ⌘ K Add Money Before You Add Money To Your Account By Card Add Money By Card Add Money By Transfer Add Money By Cash Deposit Add Money By USSD Accounts How To Open A Kuda Account How To Create"
+   },
+   {
+    "id": 10446,
+    "title": "HarzPay — Payments for Africa",
+    "fetched": true,
+    "textLen": 237,
+    "text": "💳 Harz Pay 🔔 AH Total Balance ₦0 Nigerian Naira (NGN) 0 Transactions ₦0 Total Revenue 0 Platforms ➕ Add Money 📤 Send 🛍️ Pay 🔄 Convert My Balances Payment Methods Recent Transactions 🏠 Home 🛍️ Pay 📊 History ⚙️ Set"
+   },
+   {
+    "id": 10107,
+    "title": "/manifest.json",
+    "fetched": true,
+    "textLen": 205,
+    "text": "{\"name\":\"HARZ Pay\",\"short_name\":\"HARZPay\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}"
+   },
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": false,
+    "textLen": 172,
+    "text": "… Chain Explorer LIVE 🏦 Treasury LIVE 🛒 HARZ Store LIVE 💳 HarzPay LIVE 🏠 Estate City LIVE 🧠 HARZ AI LIVE 📚 EduWealth LIVE 🛡️ CyberShield LIVE 🏗️ BuildBot AI LIVE \ud83c…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "f566a62804a68da0f566a628",
+  "goldInRawUnion": [
+   10470
+  ],
+  "goldInCandidate_ids": [
+   10470
+  ],
+  "goldInSelected": [
+   10470
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 5,
+  "q": "What is the consensus mechanism of HARZ Chain?",
+  "gold_ids": [
+   5,
+   10044,
+   10203,
+   10416
+  ],
+  "variants": [
+   "harz chain",
+   "harz chain consensus mechanism",
+   "consensus mechanism",
+   "harzchain",
+   "mechanism"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   951,
+   3029,
+   3021,
+   7310,
+   3042,
+   3043
+  ],
+  "goldInRawQuestion": [],
+  "variantCalls": [
+   {
+    "variant": "harz chain",
+    "ids": [
+     2,
+     3,
+     10335,
+     10281,
+     10274,
+     10030,
+     10108,
+     10038,
+     10186,
+     10044,
+     10350,
+     10097
+    ]
+   },
+   {
+    "variant": "harz chain consensus mechanism",
+    "ids": [
+     951,
+     3029,
+     3021,
+     7310,
+     3042,
+     3043
+    ]
+   },
+   {
+    "variant": "consensus mechanism",
+    "ids": [
+     951,
+     3029,
+     3021,
+     7310,
+     3042,
+     3043
+    ]
+   },
+   {
+    "variant": "harzchain",
+    "ids": []
+   },
+   {
+    "variant": "mechanism",
+    "ids": [
+     3731,
+     951,
+     3056,
+     7585,
+     1419,
+     3331,
+     10135,
+     754,
+     3029,
+     8530,
+     9737,
+     2073
+    ]
+   }
+  ],
+  "rawUnionCount": 28,
+  "candidate_ids": [
+   2,
+   3,
+   10030,
+   10108,
+   10038,
+   10335,
+   10186,
+   10044,
+   10350,
+   10097,
+   10281,
+   10274
+  ],
+  "ranking": [
+   {
+    "id": 2,
+    "score": 29.45,
+    "reasons": [
+     "bm25:15.95",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 3,
+    "score": 29.38,
+    "reasons": [
+     "bm25:15.88",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10030,
+    "score": 22.31,
+    "reasons": [
+     "bm25:13.06",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10108,
+    "score": 22.28,
+    "reasons": [
+     "bm25:13.03",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10038,
+    "score": 22.26,
+    "reasons": [
+     "bm25:13.01",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10335,
+    "score": 22.18,
+    "reasons": [
+     "bm25:14.93",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10186,
+    "score": 22.16,
+    "reasons": [
+     "bm25:12.91",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10350,
+    "score": 21.95,
+    "reasons": [
+     "bm25:12.7",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10038,
+    "suppressed": [
+     10044
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 10281,
+    "suppressed": [
+     10274
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   2,
+   3,
+   10030,
+   10108,
+   10038,
+   10335
+  ],
+  "selected_evidence": [
+   {
+    "id": 2,
+    "title": "HARZSwap — Sovereign DEX on HARZ Chain",
+    "fetched": true,
+    "textLen": 480,
+    "text": "pen a SYM/HARZ pool for any registered token by seeding both sides — it goes live on the DEX instantly and appears in every pool list. Token Initial HARZ Initial tokens Sign &amp; Create Pool Add Liquidity Pool HARZ amou"
+   },
+   {
+    "id": 3,
+    "title": "HARZ Chain Explorer — Proof of Edge",
+    "fetched": true,
+    "textLen": 151,
+    "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+   },
+   {
+    "id": 10030,
+    "title": "HARZ Bridge",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge Tokens HARZ → Polygon Polygon → HARZ Lock HARZ on L"
+   },
+   {
+    "id": 10108,
+    "title": "HARZ Faucet — Claim Free Tokens",
+    "fetched": true,
+    "textLen": 480,
+    "text": " per wallet, 24h cooldown Claim Your Free HARZ Your Wallet Address Claim 100 HARZ Create New Wallet Generate Wallet Address Faucet Stats — Total Claims — Today — HARZ Given How It Works 1. Create a wallet or use your exi"
+   },
+   {
+    "id": 10038,
+    "title": "HARZ RPC Proxy",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ts 50.6% Mined RPC Endpoints POST / — JSON-RPC 2.0 (eth_* methods) GET /api/health — Service status GET /api/status — Chain status Supported Methods eth_blockNumber — Current block height eth_getBalance — Wallet balance "
+   },
+   {
+    "id": 10335,
+    "title": "HARZ Root — .harz",
+    "fetched": false,
+    "textLen": 171,
+    "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "d86cc7407d0c8004d86cc740",
+  "goldInRawUnion": [
+   10044
+  ],
+  "goldInCandidate_ids": [
+   10044
+  ],
+  "goldInSelected": [],
+  "classification": "DEDUPLICATION (gold in candidate_ids, collapsed as mirror: 10044)"
+ },
+ {
+  "id": 6,
+  "q": "What is the GDEG token?",
+  "gold_ids": [
+   10035,
+   2,
+   4
+  ],
+  "variants": [
+   "gdeg",
+   "gdeg token",
+   "token"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10035,
+   10348,
+   10436,
+   10066,
+   10185,
+   10332,
+   10274,
+   10215,
+   10034,
+   10281,
+   10407,
+   10370
+  ],
+  "goldInRawQuestion": [
+   10035
+  ],
+  "variantCalls": [
+   {
+    "variant": "gdeg",
+    "ids": [
+     10035,
+     10436,
+     10227,
+     10348,
+     10066,
+     10274,
+     10460,
+     10185,
+     10332,
+     10046,
+     10034,
+     10215
+    ]
+   },
+   {
+    "variant": "gdeg token",
+    "ids": [
+     10035,
+     10348,
+     10436,
+     10066,
+     10185,
+     10332,
+     10274,
+     10215,
+     10034,
+     10281,
+     10407,
+     10370
+    ]
+   },
+   {
+    "variant": "token",
+    "ids": [
+     10266,
+     10006,
+     10101,
+     10171,
+     10348,
+     10035,
+     10436,
+     9284,
+     10185,
+     10230,
+     9246,
+     2758
+    ]
+   }
+  ],
+  "rawUnionCount": 23,
+  "candidate_ids": [
+   10035,
+   10348,
+   10436,
+   10066,
+   10185,
+   10215,
+   10227,
+   10034,
+   10332,
+   10274,
+   10281,
+   10407
+  ],
+  "ranking": [
+   {
+    "id": 10035,
+    "score": 41.39,
+    "reasons": [
+     "bm25:26.39",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10348,
+    "score": 41.15,
+    "reasons": [
+     "bm25:26.15",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10436,
+    "score": 36.18,
+    "reasons": [
+     "bm25:23.68",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10066,
+    "score": 27.45,
+    "reasons": [
+     "bm25:17.45",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10185,
+    "score": 25.31,
+    "reasons": [
+     "bm25:17.31",
+     "title_cover:+0.00",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10215,
+    "score": 25,
+    "reasons": [
+     "bm25:15",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10227,
+    "score": 24.4,
+    "reasons": [
+     "bm25:13.9",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 24,
+    "reasons": [
+     "bm25:14",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10274,
+    "suppressed": [
+     10281
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 10460,
+    "suppressed": [
+     10230
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10035,
+   10348,
+   10436,
+   10066,
+   10185,
+   10215
+  ],
+  "selected_evidence": [
+   {
+    "id": 10035,
+    "title": "GDEG Token — Africa's Digital Payment Layer",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ve, stack, or redeem for discounts. ⚡ Polygon Speed Fast transactions, low fees. Bridge to global DeFi through QuickSwap. 🔒 Contract Verified Standard ERC-20, audited, on-chain. Owner-controlled, supply locked. 🗺️ Road"
+   },
+   {
+    "id": 10348,
+    "title": "GDEG Token — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "GDEG Token GLOBAL DIGITAL ENERGY GRID Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symph"
+   },
+   {
+    "id": 10436,
+    "title": "GDEG Images",
+    "fetched": true,
+    "textLen": 238,
+    "text": "🖼️ GDEG Images Token image service for GDEG ecosystem Token Images 🪙 GDEG 💎 NRL ⚡ HARZ API Endpoints GET /api/token/:symbol — Token image GET /api/health — Service health GET /icon/:symbol — SVG icon GDEG Images v3.0."
+   },
+   {
+    "id": 10066,
+    "title": "HARZ Pay",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE"
+   },
+   {
+    "id": 10185,
+    "title": "HARZ ETERNITY — On-Chain Digital Inheritance",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ce Works 1. Connect MetaMask wallet 2. Create will — specify GDEG/NRL amounts 3. Add heirs with their Polygon wallet addresses 4. Add 3 guardians (trusted people with phone numbers) 5. Deposit GDEG tokens to heirs (on-ch"
+   },
+   {
+    "id": 10215,
+    "title": "HARZ Digital Services — Infrastructure for Africa's Digital Economy",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…atforms 300+ Digital Products 45 Categories 5 AI Agents 10M GDEG Token Supply What We Build Four layers of infrastructure, one integrated stack 💳 Payment Infrastructure …"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "8304f5a78c7264088304f5a7",
+  "goldInRawUnion": [
+   10035
+  ],
+  "goldInCandidate_ids": [
+   10035
+  ],
+  "goldInSelected": [
+   10035
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 7,
+  "q": "What payment methods does HARZ Exchange accept?",
+  "gold_ids": [
+   4
+  ],
+  "variants": [
+   "harz exchange",
+   "harz exchange payment methods accept",
+   "payment methods accept",
+   "payment methods",
+   "harzexchange",
+   "harz payment method steps amount",
+   "accept"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   2482,
+   3064,
+   5010,
+   5004,
+   1039,
+   5300,
+   10215
+  ],
+  "goldInRawQuestion": [],
+  "variantCalls": [
+   {
+    "variant": "harz exchange",
+    "ids": [
+     10088,
+     10014,
+     4,
+     103,
+     10047,
+     10281,
+     10335,
+     10108,
+     10028,
+     10097,
+     10332,
+     10012
+    ]
+   },
+   {
+    "variant": "harz exchange payment methods accept",
+    "ids": [
+     2482,
+     3064,
+     5010,
+     5004,
+     1039,
+     5300,
+     10215
+    ]
+   },
+   {
+    "variant": "payment methods accept",
+    "ids": [
+     5832,
+     5822,
+     9861
+    ]
+   },
+   {
+    "variant": "payment methods",
+    "ids": [
+     10332,
+     1809,
+     10446,
+     2795,
+     10418,
+     6,
+     6301,
+     10034,
+     5832,
+     5822,
+     4653,
+     452
+    ]
+   },
+   {
+    "variant": "harzexchange",
+    "ids": []
+   },
+   {
+    "variant": "harz payment method steps amount",
+    "ids": [
+     2412
+    ]
+   },
+   {
+    "variant": "accept",
+    "ids": [
+     6467,
+     9324,
+     881,
+     665,
+     3012,
+     2077,
+     1127,
+     355,
+     6108,
+     363,
+     353,
+     354
+    ]
+   }
+  ],
+  "rawUnionCount": 44,
+  "candidate_ids": [
+   4,
+   10088,
+   10014,
+   103,
+   10047,
+   10332,
+   10281,
+   10108,
+   10335,
+   10028,
+   10097,
+   10012
+  ],
+  "ranking": [
+   {
+    "id": 4,
+    "score": 26.17,
+    "reasons": [
+     "bm25:13.57",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10088,
+    "score": 23.48,
+    "reasons": [
+     "bm25:13.88",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10014,
+    "score": 23.26,
+    "reasons": [
+     "bm25:13.66",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 103,
+    "score": 22.97,
+    "reasons": [
+     "bm25:13.37",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10047,
+    "score": 19.76,
+    "reasons": [
+     "bm25:12.96",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10332,
+    "score": 19.74,
+    "reasons": [
+     "bm25:10.34",
+     "title_cover:+2.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10281,
+    "score": 19.47,
+    "reasons": [
+     "bm25:12.67",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10108,
+    "score": 19.45,
+    "reasons": [
+     "bm25:10.85",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   4,
+   10088,
+   10014,
+   103,
+   10047,
+   10332
+  ],
+  "selected_evidence": [
+   {
+    "id": 4,
+    "title": "HARZ Exchange — OTC Buy & Sell Desk",
+    "fetched": true,
+    "textLen": 480,
+    "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Ph"
+   },
+   {
+    "id": 10088,
+    "title": "HARZ Telecom Exchange",
+    "fetched": true,
+    "textLen": 480,
+    "text": "d Sep 10, 2026) phone dials *4279# → [network: MTN/Airtel/Glo/9mobile] → SMPP deliver_sm → HARZ Exchange (TCP) → session router → DialWeb engine (Cloudflare) → deliver_sm_resp ← reply + seal ← phone screen: LAND RECEIPT "
+   },
+   {
+    "id": 10014,
+    "title": "HARZ SMS Exchange",
+    "fetched": true,
+    "textLen": 433,
+    "text": "HARZ SMS Exchange Aggregator control plane — customers connect once, routing picks the best network Live routes ranked by ROUTE SCORE (quality + availability + speed + cost + capacity). Test routes are labeled TEST — car"
+   },
+   {
+    "id": 103,
+    "title": "HARZ FX — Live Exchange Rates",
+    "fetched": true,
+    "textLen": 480,
+    "text": "NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF → 🇺🇸 USD 🇳🇬 NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CA"
+   },
+   {
+    "id": 10047,
+    "title": "HARZ Mail — @mail.harz",
+    "fetched": true,
+    "textLen": 480,
+    "text": "M HARZ Mail @mail.harz — your address, your ecosystem Sign up Accounts Log out Log in to @mail.harz Log in New here? Create an address → Forgot password? → Reset your password A one-time code is mailed to your account's "
+   },
+   {
+    "id": 10332,
+    "title": "HARZ Pay — Payment Gateway",
+    "fetched": false,
+    "textLen": 171,
+    "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG To…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "20b432ba844df95320b432ba",
+  "goldInRawUnion": [
+   4
+  ],
+  "goldInCandidate_ids": [
+   4
+  ],
+  "goldInSelected": [
+   4
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 8,
+  "q": "What services does the HARZ Super App include?",
+  "gold_ids": [
+   6
+  ],
+  "variants": [
+   "harz super app",
+   "harz super app services include",
+   "services include",
+   "harzsuper app",
+   "include"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   114,
+   10281,
+   6,
+   10274,
+   10335,
+   1499,
+   10108,
+   22,
+   109,
+   10091,
+   10286,
+   10469
+  ],
+  "goldInRawQuestion": [
+   6
+  ],
+  "variantCalls": [
+   {
+    "variant": "harz super app",
+    "ids": [
+     114,
+     6,
+     109,
+     1499,
+     10108,
+     22,
+     10469,
+     10091,
+     10185,
+     10395,
+     111,
+     10215
+    ]
+   },
+   {
+    "variant": "harz super app services include",
+    "ids": [
+     114,
+     10281,
+     6,
+     10274,
+     10335,
+     1499,
+     10108,
+     22,
+     109,
+     10091,
+     10286,
+     10469
+    ]
+   },
+   {
+    "variant": "services include",
+    "ids": [
+     9011,
+     3034,
+     9459,
+     9486,
+     2034,
+     9849,
+     6322,
+     5925,
+     9054,
+     944,
+     89,
+     3011
+    ]
+   },
+   {
+    "variant": "harzsuper app",
+    "ids": [
+     2413,
+     2412,
+     3264,
+     943,
+     3242,
+     949,
+     3713,
+     3699,
+     3252,
+     3716,
+     3259,
+     746
+    ]
+   },
+   {
+    "variant": "include",
+    "ids": [
+     4060,
+     2450,
+     2784,
+     6586,
+     9459,
+     8439,
+     89,
+     9020,
+     2034,
+     4605,
+     3882,
+     1628
+    ]
+   }
+  ],
+  "rawUnionCount": 49,
+  "candidate_ids": [
+   114,
+   6,
+   10281,
+   10274,
+   1499,
+   10108,
+   10335,
+   10091,
+   109,
+   10286,
+   22,
+   2413
+  ],
+  "ranking": [
+   {
+    "id": 114,
+    "score": 44.06,
+    "reasons": [
+     "bm25:23.86",
+     "title_cover:+3.00",
+     "snippet_cover:+3.20",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "exact_title:+5",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 6,
+    "score": 34.91,
+    "reasons": [
+     "bm25:20.51",
+     "title_cover:+3.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10281,
+    "score": 28.69,
+    "reasons": [
+     "bm25:20.76",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+1.33",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 1499,
+    "score": 27.64,
+    "reasons": [
+     "bm25:18.24",
+     "title_cover:+1.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10108,
+    "score": 27.58,
+    "reasons": [
+     "bm25:18.18",
+     "title_cover:+1.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10335,
+    "score": 25.87,
+    "reasons": [
+     "bm25:19.4",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.67",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10091,
+    "score": 25.85,
+    "reasons": [
+     "bm25:16.45",
+     "title_cover:+1.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 109,
+    "score": 25.64,
+    "reasons": [
+     "bm25:16.71",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+1.33",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10281,
+    "suppressed": [
+     10274
+    ],
+    "rule": "title+snippet_jaccard"
+   },
+   {
+    "winner": 943,
+    "suppressed": [
+     3242
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   114,
+   6,
+   10281,
+   1499,
+   10108,
+   10335
+  ],
+  "selected_evidence": [
+   {
+    "id": 114,
+    "title": "HARZ Super App",
+    "fetched": true,
+    "textLen": 217,
+    "text": "HARZ Super App 76 services • Updated Sep 9, 2026 PWA • Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Cloud • 76 Workers Powered by Cloudflare Workers + D1 Install Super App"
+   },
+   {
+    "id": 6,
+    "title": "HARZ Super App v5.0",
+    "fetched": true,
+    "textLen": 480,
+    "text": "SDT Payment Methods Recent Transactions No transactions yet Harz Store ( 0 ) 📈 Analytics Dashboard ₦0 Revenue 0 Products 0 Transactions 0 Platforms Revenue by Platform Platform Categories Transaction History 🔐 Login to"
+   },
+   {
+    "id": 10281,
+    "title": "HARZ CLOUD — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu E"
+   },
+   {
+    "id": 1499,
+    "title": "HARZ Magic — Instant Deploy & Build Automation",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Magic Instant deployment & build automation — One click to HARZ Cloud Deploy with Magic Push to HARZ Cloud, DeployForge, HarzGit, and Super App — all at once 88 Pages 6 Repos 4 Workers 100% Uptime Quick Deploy Actio"
+   },
+   {
+    "id": 10108,
+    "title": "HARZ Faucet — Claim Free Tokens",
+    "fetched": true,
+    "textLen": 480,
+    "text": "🚰 HARZ Faucet FREE Part of HARZ Ecosystem Super App Wallet Chain Explorer Exchange Super Cloud — Block Height — Circulating — Wallets 100 HARZ Free claim — one per wallet, 24h cooldown Claim Your Free HARZ Your Wallet A"
+   },
+   {
+    "id": 10335,
+    "title": "HARZ Root — .harz",
+    "fetched": false,
+    "textLen": 171,
+    "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "6ab46f2ce39b0aa06ab46f2c",
+  "goldInRawUnion": [
+   6
+  ],
+  "goldInCandidate_ids": [
+   6
+  ],
+  "goldInSelected": [
+   6
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 9,
+  "q": "What did NCC announce about SIM type approval compliance?",
+  "gold_ids": [
+   115
+  ],
+  "variants": [
+   "ncc sim",
+   "ncc sim announce about type approval",
+   "announce about type approval compliance",
+   "announce about",
+   "about approval type compliance"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   115,
+   119,
+   11
+  ],
+  "goldInRawQuestion": [
+   115
+  ],
+  "variantCalls": [
+   {
+    "variant": "ncc sim",
+    "ids": [
+     115,
+     119,
+     11
+    ]
+   },
+   {
+    "variant": "ncc sim announce about type approval",
+    "ids": [
+     115,
+     119,
+     11
+    ]
+   },
+   {
+    "variant": "announce about type approval compliance",
+    "ids": [
+     7703,
+     6342,
+     704
+    ]
+   },
+   {
+    "variant": "announce about",
+    "ids": [
+     1515,
+     8429,
+     2252,
+     817,
+     1517,
+     8372,
+     3819,
+     283,
+     927,
+     4989,
+     6342,
+     5021
+    ]
+   },
+   {
+    "variant": "about approval type compliance",
+    "ids": [
+     115,
+     119,
+     11,
+     1754
+    ]
+   }
+  ],
+  "rawUnionCount": 18,
+  "candidate_ids": [
+   115,
+   119,
+   11,
+   7703,
+   6342,
+   704,
+   1754,
+   1515,
+   8429,
+   2252,
+   817,
+   1517
+  ],
+  "ranking": [
+   {
+    "id": 115,
+    "score": 46.49,
+    "reasons": [
+     "bm25:38.06",
+     "title_cover:+3.57",
+     "snippet_cover:+2.86",
+     "entity_ground:+2.00"
+    ]
+   },
+   {
+    "id": 119,
+    "score": 27.92,
+    "reasons": [
+     "bm25:25.63",
+     "title_cover:+0.71",
+     "snippet_cover:+0.57",
+     "entity_ground:+1.00"
+    ]
+   },
+   {
+    "id": 7703,
+    "score": 11.67,
+    "reasons": [
+     "bm25:11.1",
+     "title_cover:+0.00",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 6342,
+    "score": 10.3,
+    "reasons": [
+     "bm25:9.01",
+     "title_cover:+0.71",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 704,
+    "score": 8.17,
+    "reasons": [
+     "bm25:7.6",
+     "title_cover:+0.00",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 1754,
+    "score": 8.11,
+    "reasons": [
+     "bm25:7.54",
+     "title_cover:+0.00",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 1515,
+    "score": 6.2,
+    "reasons": [
+     "bm25:5.63",
+     "title_cover:+0.00",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 8429,
+    "score": 6.04,
+    "reasons": [
+     "bm25:5.47",
+     "title_cover:+0.00",
+     "snippet_cover:+0.57",
+     "entity_ground:+0.00"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   115,
+   119,
+   7703,
+   6342,
+   704,
+   1754
+  ],
+  "selected_evidence": [
+   {
+    "id": 115,
+    "title": "NCC Strengthens Type Approval Compliance for SIM-Enabled Devices in Nigeria | NCC",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to main content NCC Strengthens Type Approval Compliance for SIM-Enabled Devices in Nigeria In furtherance of its mandate to ensure that communications devices imported, sold and used in Nigeria meet applicable tech"
+   },
+   {
+    "id": 119,
+    "title": "Press Releases | NCC",
+    "fetched": true,
+    "textLen": 480,
+    "text": "es of the Nigerian Communications Commission Hide Standalone View Off NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative The Nigerian Communications Commission"
+   },
+   {
+    "id": 7703,
+    "title": "PHP: todo:php86",
+    "fetched": true,
+    "textLen": 480,
+    "text": "todo:php86 PHP 8.6 Preparation Tasks Elect managers Triage GitHub issues for PHP 8.6 Triage GitHub pull requests Push appropriate RFC at appropriate time Timetable Based upon a target GA in late November. Individual rele"
+   },
+   {
+    "id": 6342,
+    "title": "Trump Announces Deal With Denmark For ‘Permanent’ US Control Of Greenland, Orders Military Presence | Sahara Reporters",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to main content Trump Announces Deal With Denmark For ‘Permanent’ US Control Of Greenland, Orders Military Presence September 19, 2026 News According to Trump, the agreement gives the United States the ability to ta"
+   },
+   {
+    "id": 704,
+    "title": "NAFDAC Newsroom – NAFDAC",
+    "fetched": true,
+    "textLen": 480,
+    "text": "2) ** Customer Service Lines: For Enquiries call 0700-1-NAFDAC (0700-1-623322), For Complaints call 0800-1-NAFDAC (0800-1-623322) NAFDAC Newsroom The list below provides information gathered from press releases and other"
+   },
+   {
+    "id": 1754,
+    "title": "Vercel Knowledge Base: Guides, Videos, and Tutorials",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…tool calls in eve, allow routine actions, and request human approval when needed. Configure the policy and test its failure paths. Product Security Vercel Connect AI Gate…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "3f252cd0a196695c3f252cd0",
+  "goldInRawUnion": [
+   115
+  ],
+  "goldInCandidate_ids": [
+   115
+  ],
+  "goldInSelected": [
+   115
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 10,
+  "q": "What digital learning pathways did NCC open?",
+  "gold_ids": [
+   116
+  ],
+  "variants": [
+   "ncc",
+   "ncc digital learning pathways open",
+   "digital learning pathways open",
+   "digital learning",
+   "learning open digital"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   116,
+   119,
+   11
+  ],
+  "goldInRawQuestion": [
+   116
+  ],
+  "variantCalls": [
+   {
+    "variant": "ncc",
+    "ids": [
+     744,
+     752,
+     754,
+     736,
+     759,
+     737,
+     116,
+     115,
+     117,
+     119,
+     753,
+     11
+    ]
+   },
+   {
+    "variant": "ncc digital learning pathways open",
+    "ids": [
+     116,
+     119,
+     11
+    ]
+   },
+   {
+    "variant": "digital learning pathways open",
+    "ids": [
+     4847
+    ]
+   },
+   {
+    "variant": "digital learning",
+    "ids": [
+     10425,
+     116,
+     2220,
+     744,
+     5960,
+     5294,
+     2650,
+     579,
+     4847,
+     2973,
+     2341,
+     3851
+    ]
+   },
+   {
+    "variant": "learning open digital",
+    "ids": [
+     4847,
+     4838,
+     4873,
+     4968,
+     8052,
+     4875,
+     4872,
+     4972,
+     4877,
+     5960,
+     4912,
+     4920
+    ]
+   }
+  ],
+  "rawUnionCount": 32,
+  "candidate_ids": [
+   116,
+   119,
+   11,
+   4847,
+   744,
+   736,
+   759,
+   10425,
+   752,
+   754,
+   737,
+   115
+  ],
+  "ranking": [
+   {
+    "id": 116,
+    "score": 47.58,
+    "reasons": [
+     "bm25:36.58",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00"
+    ]
+   },
+   {
+    "id": 119,
+    "score": 33.44,
+    "reasons": [
+     "bm25:26.44",
+     "title_cover:+1.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00"
+    ]
+   },
+   {
+    "id": 4847,
+    "score": 25.36,
+    "reasons": [
+     "bm25:20.96",
+     "title_cover:+2.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 10425,
+    "score": 20.59,
+    "reasons": [
+     "bm25:12.99",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 4873,
+    "score": 18.19,
+    "reasons": [
+     "bm25:13.79",
+     "title_cover:+2.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 4968,
+    "score": 18.11,
+    "reasons": [
+     "bm25:13.71",
+     "title_cover:+2.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 4838,
+    "score": 17.74,
+    "reasons": [
+     "bm25:14.14",
+     "title_cover:+2.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 5960,
+    "score": 14.83,
+    "reasons": [
+     "bm25:10.43",
+     "title_cover:+2.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 4875,
+    "suppressed": [
+     4972
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   116,
+   119,
+   4847,
+   10425,
+   4873,
+   4968
+  ],
+  "selected_evidence": [
+   {
+    "id": 116,
+    "title": "NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative | NCC",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to main content NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative The Nigerian Communications Commission (NCC) has launched the Zero-Rated Data Access to"
+   },
+   {
+    "id": 119,
+    "title": "Press Releases | NCC",
+    "fetched": true,
+    "textLen": 480,
+    "text": " of what's going on in the Nigerian telecommunications industry and the activities of the Nigerian Communications Commission Hide Standalone View Off NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Edu"
+   },
+   {
+    "id": 4847,
+    "title": "Learn More About MIT's Open Online Courses | Open Learning",
+    "fetched": true,
+    "textLen": 480,
+    "text": " visit: https://learn-mitxonline.mit.edu/celebrating-10-years-of-mitx . Our Global Learning Community To date, more than 5 million people from nearly every country around the world have registered for our courses. Learn "
+   },
+   {
+    "id": 10425,
+    "title": "Harz Digital Store — HARZ Digital Learning Series",
+    "fetched": true,
+    "textLen": 480,
+    "text": "12-BOOK COMPLETE SERIES HARZ Digital Learning Practical Computer Skills Series. From beginner to job-ready professional. 12 books, 108+ chapters, hands-on exercises. Author: Rabiu Hamza Mohammed | CAC RC: 321424 📚 Compl"
+   },
+   {
+    "id": 4873,
+    "title": "Open Learning – Open Matters | MIT OpenCourseWare News",
+    "fetched": true,
+    "textLen": 480,
+    "text": "onferences Contest Courses Current events edX Entrepreneurship Events Faculty Profile Featured Featured Content Flipped classroom HarvardX Higher education Highlights for High School Intellectual property J-WEL Media cov"
+   },
+   {
+    "id": 4968,
+    "title": "MIT Open Learning – Open Matters | MIT OpenCourseWare News",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…tor OCW Scholar OCW Use & Impact OEGlobal Office of Digital Learning Open Access Open data Open Education Open Educational Resources Open Learning Library Open licensing …"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "2b5f06801ed5c1842b5f0680",
+  "goldInRawUnion": [
+   116
+  ],
+  "goldInCandidate_ids": [
+   116
+  ],
+  "goldInSelected": [
+   116
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 11,
+  "q": "How many properties does Abuja Estate City serve?",
+  "gold_ids": [
+   10
+  ],
+  "variants": [
+   "abuja estate city",
+   "abuja estate city many properties serve",
+   "many properties serve",
+   "many properties"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10,
+   10082,
+   1561
+  ],
+  "goldInRawQuestion": [
+   10
+  ],
+  "variantCalls": [
+   {
+    "variant": "abuja estate city",
+    "ids": [
+     10,
+     10450,
+     6387,
+     10173,
+     10423,
+     9120,
+     10119
+    ]
+   },
+   {
+    "variant": "abuja estate city many properties serve",
+    "ids": [
+     10,
+     10082,
+     1561
+    ]
+   },
+   {
+    "variant": "many properties serve",
+    "ids": [
+     4552,
+     5735,
+     9866,
+     4553,
+     1839
+    ]
+   },
+   {
+    "variant": "many properties",
+    "ids": [
+     8901,
+     9036,
+     2519,
+     4897,
+     10067,
+     8567,
+     4901,
+     1534,
+     4552,
+     8529,
+     8766,
+     6348
+    ]
+   }
+  ],
+  "rawUnionCount": 25,
+  "candidate_ids": [
+   10,
+   10082,
+   10450,
+   1561,
+   10423,
+   10173,
+   10119,
+   6387,
+   8901,
+   9120,
+   9036,
+   10067
+  ],
+  "ranking": [
+   {
+    "id": 10,
+    "score": 40.59,
+    "reasons": [
+     "bm25:27.09",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10082,
+    "score": 26.14,
+    "reasons": [
+     "bm25:19.47",
+     "title_cover:+0.00",
+     "snippet_cover:+1.33",
+     "entity_ground:+1.33",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10450,
+    "score": 24.34,
+    "reasons": [
+     "bm25:13.84",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 1561,
+    "score": 21.26,
+    "reasons": [
+     "bm25:17.76",
+     "title_cover:+0.83",
+     "snippet_cover:+1.33",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 10423,
+    "score": 16.41,
+    "reasons": [
+     "bm25:8.41",
+     "title_cover:+0.00",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10173,
+    "score": 15.13,
+    "reasons": [
+     "bm25:9.8",
+     "title_cover:+0.00",
+     "snippet_cover:+0.67",
+     "entity_ground:+0.67",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10119,
+    "score": 14.24,
+    "reasons": [
+     "bm25:6.24",
+     "title_cover:+0.00",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 6387,
+    "score": 13.51,
+    "reasons": [
+     "bm25:10.84",
+     "title_cover:+0.00",
+     "snippet_cover:+1.33",
+     "entity_ground:+1.33"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   10,
+   10082,
+   10450,
+   1561,
+   10423,
+   10173
+  ],
+  "selected_evidence": [
+   {
+    "id": 10,
+    "title": "Abuja Estate City — Real Estate & Construction Marketplace",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ABUJA ESTATE CITY Real Estate &amp; Construction Marketplace — Abuja, Nigeria 🏠 Verified Property 👷 Rated Professionals &amp; Artisans 🧱 Building Materials 👤 Account ♡ My Favorites All Types Land Residential Office C"
+   },
+   {
+    "id": 10082,
+    "title": "/manifest.json",
+    "fetched": true,
+    "textLen": 410,
+    "text": "{\"name\":\"Abuja EstateHub\",\"short_name\":\"EstateHub\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"description\":\"Real Estate & Construction Marketplace — properties, professio"
+   },
+   {
+    "id": 10450,
+    "title": "abuja-estate-city Pricing",
+    "fetched": true,
+    "textLen": 280,
+    "text": "abuja-estate-city Choose your plan Email for receipt Property Listing 30 days exposure N2,000 Pay with Paystack Featured Property 90 days + top placement N5,000 Pay with Paystack Agent Account Unlimited listings N10,000 "
+   },
+   {
+    "id": 1561,
+    "title": "Real Estate and Construction Archives - Nairametrics",
+    "fetched": true,
+    "textLen": 480,
+    "text": "erty Development, REITS, and General Construction of Properties. Soludo promises compensation for residents affected by Nnobi demolition Real Estate and Construction 1 min Nigeria’s five REITs worth $230 million market c"
+   },
+   {
+    "id": 10423,
+    "title": "HARZ Products & Pricing",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Products 24 platforms | 77 products harz-crm 2 plans from N2,000 &rarr; eduwealth 4 plans from N5,000 &rarr; harzajo 2 plans from N1,000 &rarr; abuja-estate-city 3 plans from N2,000 &rarr; harz-buildbot 3 plans from"
+   },
+   {
+    "id": 10173,
+    "title": "HarzID — Your National ID",
+    "fetched": false,
+    "textLen": 172,
+    "text": "… Citizens Become a citizen Full name Phone number State FCT Abuja Abia Adamawa Akwa Ibom Anambra Bauchi Bayelsa Benue Borno Cross River Delta Ebonyi Edo Ekiti Enugu Gombe…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "7d4f6d9700d54e147d4f6d97",
+  "goldInRawUnion": [
+   10
+  ],
+  "goldInCandidate_ids": [
+   10
+  ],
+  "goldInSelected": [
+   10
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 12,
+  "q": "What does HARZSwap do?",
+  "gold_ids": [
+   2
+  ],
+  "variants": [
+   "harzswap"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   2,
+   10141,
+   10350,
+   4,
+   114,
+   10286,
+   10325,
+   10348,
+   10281,
+   10407,
+   10228,
+   10370
+  ],
+  "goldInRawQuestion": [
+   2
+  ],
+  "variantCalls": [
+   {
+    "variant": "harzswap",
+    "ids": [
+     2,
+     10141,
+     10350,
+     4,
+     114,
+     10286,
+     10325,
+     10348,
+     10281,
+     10407,
+     10228,
+     10370
+    ]
+   }
+  ],
+  "rawUnionCount": 12,
+  "candidate_ids": [
+   2,
+   10141,
+   10350,
+   4,
+   114,
+   10286,
+   10325,
+   10348,
+   10281,
+   10407,
+   10228,
+   10370
+  ],
+  "ranking": [
+   {
+    "id": 2,
+    "score": 31.84,
+    "reasons": [
+     "bm25:16.84",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10141,
+    "score": 21.12,
+    "reasons": [
+     "bm25:11.12",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10350,
+    "score": 20.32,
+    "reasons": [
+     "bm25:10.32",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 4,
+    "score": 20.08,
+    "reasons": [
+     "bm25:10.08",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 114,
+    "score": 19.26,
+    "reasons": [
+     "bm25:9.26",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10286,
+    "score": 18.06,
+    "reasons": [
+     "bm25:8.06",
+     "title_cover:+0.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   2,
+   10141,
+   10350,
+   4,
+   114,
+   10286
+  ],
+  "selected_evidence": [
+   {
+    "id": 2,
+    "title": "HARZSwap — Sovereign DEX on HARZ Chain",
+    "fetched": true,
+    "textLen": 480,
+    "text": "₿ HARZSwap Sovereign DEX on HARZ Chain — everything trades on our public chain · constant-product x·y=k, 0.3% fee v6.0.8 world-dex Market prices (no policy) HARZcoin set by the HARZ/WPOL market (pool-implied) GDEG set by"
+   },
+   {
+    "id": 10141,
+    "title": "/manifest.json",
+    "fetched": true,
+    "textLen": 207,
+    "text": "{\"name\":\"HARZSwap\",\"short_name\":\"HARZSwap\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"description\":\"HARZ honest exchange data — real pools, fixed NGN book.\"}"
+   },
+   {
+    "id": 10350,
+    "title": "N-DEX — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "N-DEX Real AMM on HARZ Chain — swaps settle on the L1 ledger Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu"
+   },
+   {
+    "id": 4,
+    "title": "HARZ Exchange — OTC Buy & Sell Desk",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Exchange OTC Buy/Sell Desk | Live market prices NGN/USD loading... Markets Chart Trade Wallet Portfolio P2P Loading live prices from HARZSwap... All prices are live market rates from the HARZSwap oracle — pool-deriv"
+   },
+   {
+    "id": 114,
+    "title": "HARZ Super App",
+    "fetched": true,
+    "textLen": 217,
+    "text": "HARZ Super App 76 services • Updated Sep 9, 2026 PWA • Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Cloud • 76 Workers Powered by Cloudflare Workers + D1 Install Super App"
+   },
+   {
+    "id": 10286,
+    "title": "HNI — HARZ Cloud",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull HNI S…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "b0dc74407f305a30b0dc7440",
+  "goldInRawUnion": [
+   2
+  ],
+  "goldInCandidate_ids": [
+   2
+  ],
+  "goldInSelected": [
+   2
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 13,
+  "q": "What does the HARZ FX service provide?",
+  "gold_ids": [
+   103
+  ],
+  "variants": [
+   "harz",
+   "harz fx service provide",
+   "fx service provide",
+   "fx service",
+   "service",
+   "provide"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   103,
+   10281,
+   102,
+   4,
+   5,
+   10397
+  ],
+  "goldInRawQuestion": [
+   103
+  ],
+  "variantCalls": [
+   {
+    "variant": "harz",
+    "ids": [
+     10335,
+     10047,
+     10281,
+     10274,
+     10292,
+     10425,
+     10423,
+     1499,
+     10108,
+     10030,
+     2,
+     10036
+    ]
+   },
+   {
+    "variant": "harz fx service provide",
+    "ids": [
+     103,
+     10281,
+     102,
+     4,
+     5,
+     10397
+    ]
+   },
+   {
+    "variant": "fx service provide",
+    "ids": [
+     7934
+    ]
+   },
+   {
+    "variant": "fx service",
+    "ids": [
+     5188,
+     2000,
+     4214,
+     42
+    ]
+   },
+   {
+    "variant": "service",
+    "ids": [
+     3879,
+     4565,
+     2063,
+     3868,
+     3865,
+     9852,
+     6123,
+     3213,
+     4194,
+     6585,
+     3899,
+     8088
+    ]
+   },
+   {
+    "variant": "provide",
+    "ids": [
+     2863,
+     7944,
+     645,
+     6265,
+     8517,
+     1186,
+     4198,
+     984,
+     9081,
+     3741,
+     3862,
+     4811
+    ]
+   }
+  ],
+  "rawUnionCount": 46,
+  "candidate_ids": [
+   103,
+   10281,
+   5,
+   102,
+   4,
+   10335,
+   10047,
+   10274,
+   10292,
+   10425,
+   10397,
+   10423
+  ],
+  "ranking": [
+   {
+    "id": 103,
+    "score": 35.04,
+    "reasons": [
+     "bm25:24.54",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10281,
+    "score": 30.41,
+    "reasons": [
+     "bm25:22.16",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 5,
+    "score": 24.98,
+    "reasons": [
+     "bm25:15.73",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 102,
+    "score": 24.38,
+    "reasons": [
+     "bm25:16.13",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 4,
+    "score": 24,
+    "reasons": [
+     "bm25:15.75",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10335,
+    "score": 22.13,
+    "reasons": [
+     "bm25:13.88",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10047,
+    "score": 21.91,
+    "reasons": [
+     "bm25:13.66",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10292,
+    "score": 21,
+    "reasons": [
+     "bm25:12.75",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10281,
+    "suppressed": [
+     10274
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   103,
+   10281,
+   5,
+   102,
+   4,
+   10335
+  ],
+  "selected_evidence": [
+   {
+    "id": 103,
+    "title": "HARZ FX — Live Exchange Rates",
+    "fetched": true,
+    "textLen": 480,
+    "text": "NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF → 🇺🇸 USD 🇳🇬 NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CA"
+   },
+   {
+    "id": 10281,
+    "title": "HARZ CLOUD — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu E"
+   },
+   {
+    "id": 5,
+    "title": "HARZ Wallet v3 — Honest Registry",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Wallet v3 — Honest Registry 8 Chains · Naira-First · Browser-Only · Keys Never Leave This Device Total Portfolio Value ₦ — Prices: HARZ Swap Oracle · NGN: live FX Portfolio Send Receive HARZ L1 History Unlock first…"
+   },
+   {
+    "id": 102,
+    "title": "HARZ Apex Bank",
+    "fetched": true,
+    "textLen": 480,
+    "text": "tio 15% Loading reserve composition... My Account Phone Number View My Account Treasury Overview Total Reserves ₦0 Circulating HARZ 10.6B of 21B cap Active Loans 0 Total Deposits 0 Bank Accounts 0 active customers Moneta"
+   },
+   {
+    "id": 4,
+    "title": "HARZ Exchange — OTC Buy & Sell Desk",
+    "fetched": true,
+    "textLen": 480,
+    "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Ph"
+   },
+   {
+    "id": 10335,
+    "title": "HARZ Root — .harz",
+    "fetched": false,
+    "textLen": 171,
+    "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "a3313d58dcfcf5e8a3313d58",
+  "goldInRawUnion": [
+   103
+  ],
+  "goldInCandidate_ids": [
+   103
+  ],
+  "goldInSelected": [
+   103
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 14,
+  "q": "What is HARZ Wallet?",
+  "gold_ids": [
+   5
+  ],
+  "variants": [
+   "harz wallet",
+   "harzwallet"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   5,
+   10281,
+   10274,
+   10108,
+   10335,
+   10091,
+   10441,
+   10034,
+   10036,
+   2,
+   6,
+   10350
+  ],
+  "goldInRawQuestion": [
+   5
+  ],
+  "variantCalls": [
+   {
+    "variant": "harz wallet",
+    "ids": [
+     5,
+     10281,
+     10274,
+     10108,
+     10335,
+     10091,
+     10441,
+     10034,
+     10036,
+     2,
+     6,
+     10350
+    ]
+   },
+   {
+    "variant": "harzwallet",
+    "ids": []
+   }
+  ],
+  "rawUnionCount": 12,
+  "candidate_ids": [
+   5,
+   10108,
+   10091,
+   10441,
+   10034,
+   6,
+   10281,
+   10274,
+   10335,
+   10036,
+   2,
+   10350
+  ],
+  "ranking": [
+   {
+    "id": 5,
+    "score": 42.08,
+    "reasons": [
+     "bm25:24.08",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10108,
+    "score": 32.35,
+    "reasons": [
+     "bm25:19.85",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10091,
+    "score": 31.76,
+    "reasons": [
+     "bm25:19.26",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10441,
+    "score": 31.56,
+    "reasons": [
+     "bm25:19.06",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 31.29,
+    "reasons": [
+     "bm25:18.79",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 6,
+    "score": 30.62,
+    "reasons": [
+     "bm25:18.12",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10281,
+    "score": 30.17,
+    "reasons": [
+     "bm25:20.67",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10335,
+    "score": 28.84,
+    "reasons": [
+     "bm25:19.34",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 10281,
+    "suppressed": [
+     10274
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   5,
+   10108,
+   10091,
+   10441,
+   10034,
+   6
+  ],
+  "selected_evidence": [
+   {
+    "id": 5,
+    "title": "HARZ Wallet v3 — Honest Registry",
+    "fetched": true,
+    "textLen": 480,
+    "text": "HARZ Wallet v3 — Honest Registry 8 Chains · Naira-First · Browser-Only · Keys Never Leave This Device Total Portfolio Value ₦ — Prices: HARZ Swap Oracle · NGN: live FX Portfolio Send Receive HARZ L1 History Unlock first…"
+   },
+   {
+    "id": 10108,
+    "title": "HARZ Faucet — Claim Free Tokens",
+    "fetched": true,
+    "textLen": 480,
+    "text": "🚰 HARZ Faucet FREE Part of HARZ Ecosystem Super App Wallet Chain Explorer Exchange Super Cloud — Block Height — Circulating — Wallets 100 HARZ Free claim — one per wallet, 24h cooldown Claim Your Free HARZ Your Wallet A"
+   },
+   {
+    "id": 10091,
+    "title": "HARZ Contract Address Generator",
+    "fetched": true,
+    "textLen": 480,
+    "text": " bytecode of the contract Computed CREATE2 Address Copy Address Contract Address The deployed contract address to look up Blockchain Polygon Ethereum BSC Arbitrum Base Find Deployer Searching blockchain... Deployer Infor"
+   },
+   {
+    "id": 10441,
+    "title": "HARZ Quidax Bridge",
+    "fetched": true,
+    "textLen": 322,
+    "text": "Quidax Bridge Real On-Chain BTC/ETH Wallet Integration Connection Status Checking... BTC Wallet Loading... 0 BTC ETH Wallet Loading... 0 ETH USDT Wallet Loading... 0 USDT Actions Sync Balances to HARZ Wallet Generate New"
+   },
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": true,
+    "textLen": 480,
+    "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain w"
+   },
+   {
+    "id": 6,
+    "title": "HARZ Super App v5.0",
+    "fetched": false,
+    "textLen": 171,
+    "text": "⚡ HARZ 🌙 Login Connecting to HARZ Cloud... 📊 Ecosystem Overview Quick Actions 🔍 Search 💳 Wallet 🤖 Agents 📈 Analytics 📱 Platforms ⚙️ Settings 🎛️ Admin 🔐 Security …"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "fe4e5a509c7b1dd0fe4e5a50",
+  "goldInRawUnion": [
+   5
+  ],
+  "goldInCandidate_ids": [
+   5
+  ],
+  "goldInSelected": [
+   5
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 15,
+  "q": "What is Koya Trading and Digital Marketing?",
+  "gold_ids": [
+   7,
+   10427
+  ],
+  "variants": [
+   "koya trading digital marketing",
+   "koya trading",
+   "digital marketing"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   7,
+   10427
+  ],
+  "goldInRawQuestion": [
+   7,
+   10427
+  ],
+  "variantCalls": [
+   {
+    "variant": "koya trading digital marketing",
+    "ids": [
+     7,
+     10427
+    ]
+   },
+   {
+    "variant": "koya trading",
+    "ids": [
+     7,
+     10427
+    ]
+   },
+   {
+    "variant": "digital marketing",
+    "ids": [
+     7,
+     10427,
+     9355,
+     1001,
+     10215,
+     8726,
+     10425,
+     2629,
+     4844,
+     8787,
+     8928,
+     8894
+    ]
+   }
+  ],
+  "rawUnionCount": 12,
+  "candidate_ids": [
+   7,
+   10427,
+   9355,
+   1001,
+   10215,
+   10425,
+   8726,
+   2629,
+   4844,
+   8787,
+   8928,
+   8894
+  ],
+  "ranking": [
+   {
+    "id": 7,
+    "score": 60.48,
+    "reasons": [
+     "bm25:42.48",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 9355,
+    "score": 23.63,
+    "reasons": [
+     "bm25:15.13",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 1001,
+    "score": 21.89,
+    "reasons": [
+     "bm25:13.39",
+     "title_cover:+2.50",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10215,
+    "score": 18.78,
+    "reasons": [
+     "bm25:12.03",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.50",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10425,
+    "score": 18.5,
+    "reasons": [
+     "bm25:11.75",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.50",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 8726,
+    "score": 16.05,
+    "reasons": [
+     "bm25:11.8",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00"
+    ]
+   },
+   {
+    "id": 2629,
+    "score": 14.55,
+    "reasons": [
+     "bm25:10.3",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00"
+    ]
+   },
+   {
+    "id": 4844,
+    "score": 13.28,
+    "reasons": [
+     "bm25:9.03",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.00"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   7,
+   9355,
+   1001,
+   10215,
+   10425,
+   8726
+  ],
+  "selected_evidence": [
+   {
+    "id": 7,
+    "title": "HARZ Digital - Koya Trading & Digital Marketing",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ge Live ecosystem monitoring 🚀 Onboarding Get started with HarzPay Kayayyakin Mu Digital Marketing Course Koyi yadda za ka sayar da kayayka a intanet — social media marketing, content creation, da sales funnels. Cikakke"
+   },
+   {
+    "id": 9355,
+    "title": "Digital Marketing Tools - Email & Website Marketing — Squarespace",
+    "fetched": true,
+    "textLen": 480,
+    "text": " → Analytics → Business Services → Online Stores → Invoicing → Scheduling → Limited Releases → Content & Memberships → Donations → Financial Solutions → Marketing Marketing Tools → Email Campaigns → SMS Campaigns → SEO T"
+   },
+   {
+    "id": 1001,
+    "title": "Digital Marketing Officer at Amara Medicare | Jobbermangoogle-icon",
+    "fetched": true,
+    "textLen": 480,
+    "text": "mmunications Yesterday Easy apply New Featured Additional Questions Rest of Nigeria (Anambra) Full Time Healthcare NGN 150,000 - 250,000 Share link Share on WhatsApp Share on LinkedIn Share on Facebook Share on Twitter S"
+   },
+   {
+    "id": 10215,
+    "title": "HARZ Digital Services — Infrastructure for Africa's Digital Economy",
+    "fetched": true,
+    "textLen": 480,
+    "text": "the ecosystem. GDEG and NRL tokens power the economic layer. HARZ Chain — 38M+ blocks mined GDEG V2 — 10M supply on Polygon NRL V2 — 11M supply on Polygon HARZSwap DEX — token swaps HARZ Exchange — trading platform 🤖 AI"
+   },
+   {
+    "id": 10425,
+    "title": "Harz Digital Store — HARZ Digital Learning Series",
+    "fetched": true,
+    "textLen": 480,
+    "text": "OP, pandas, requests, real-world automation. 9 chapters. ₦2,500 Order on WhatsApp 🚀 BOOK 8 Web Development Fundamentals HTML, CSS, Flexbox, Grid, responsive design, JavaScript, DOM, forms. Capstone: landing page. 9 chap"
+   },
+   {
+    "id": 8726,
+    "title": "Leading Marketing & Advertising Magazine | Marketing Edge",
+    "fetched": false,
+    "textLen": 134,
+    "text": "…th frontiers 1 day ago | 6 minutes read Global programmatic digital out of home advertising has crossed the $1 billion mark,... City "
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "9000b2b80536ecfb9000b2b8",
+  "goldInRawUnion": [
+   7,
+   10427
+  ],
+  "goldInCandidate_ids": [
+   7,
+   10427
+  ],
+  "goldInSelected": [
+   7
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 16,
+  "q": "How does the HARZ Exchange OTC desk work?",
+  "gold_ids": [
+   4
+  ],
+  "variants": [
+   "harz exchange otc",
+   "harz exchange otc desk work",
+   "desk work",
+   "harzexchange otc"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   4
+  ],
+  "goldInRawQuestion": [
+   4
+  ],
+  "variantCalls": [
+   {
+    "variant": "harz exchange otc",
+    "ids": [
+     4
+    ]
+   },
+   {
+    "variant": "harz exchange otc desk work",
+    "ids": [
+     4
+    ]
+   },
+   {
+    "variant": "desk work",
+    "ids": [
+     5417,
+     537,
+     5448,
+     5398,
+     5408,
+     2036,
+     2014,
+     2007,
+     1226,
+     5297,
+     3899,
+     1001
+    ]
+   },
+   {
+    "variant": "harzexchange otc",
+    "ids": [
+     4,
+     3349,
+     3676,
+     9588
+    ]
+   }
+  ],
+  "rawUnionCount": 16,
+  "candidate_ids": [
+   4,
+   5417,
+   3349,
+   3676,
+   537,
+   2036,
+   5297,
+   1226,
+   5448,
+   9588,
+   5398,
+   5408
+  ],
+  "ranking": [
+   {
+    "id": 4,
+    "score": 58.25,
+    "reasons": [
+     "bm25:42.05",
+     "title_cover:+4.00",
+     "snippet_cover:+3.20",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 5417,
+    "score": 11.47,
+    "reasons": [
+     "bm25:9.67",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 3349,
+    "score": 10.41,
+    "reasons": [
+     "bm25:6.48",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 3676,
+    "score": 7.57,
+    "reasons": [
+     "bm25:6.1",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 537,
+    "score": 7.17,
+    "reasons": [
+     "bm25:5.57",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 2036,
+    "score": 6.77,
+    "reasons": [
+     "bm25:5.17",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 5297,
+    "score": 6.39,
+    "reasons": [
+     "bm25:4.59",
+     "title_cover:+1.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 1226,
+    "score": 6.23,
+    "reasons": [
+     "bm25:4.63",
+     "title_cover:+0.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   4,
+   5417,
+   3349,
+   3676,
+   537,
+   2036
+  ],
+  "selected_evidence": [
+   {
+    "id": 4,
+    "title": "HARZ Exchange — OTC Buy & Sell Desk",
+    "fetched": true,
+    "textLen": 480,
+    "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Ph"
+   },
+   {
+    "id": 5417,
+    "title": "Commons:Help desk - Wikimedia Commons",
+    "fetched": true,
+    "textLen": 480,
+    "text": "دو Oʻzbekcha / ўзбекча Vèneto Tiếng Việt ייִדיש 粵語 中文 Edit links Add topic From Wikimedia Commons, the free media repository Latest comment: 4 hours ago by Katy1ove in topic I don't think any of these work Community port"
+   },
+   {
+    "id": 3349,
+    "title": "Registered FinTech Operators - Securities and Exchange Commission, Nigeria",
+    "fetched": true,
+    "textLen": 480,
+    "text": " Financial Technology Ltd PropCrowdy Ltd Bamboo System Technology Pennytree Business Ltd Treager Integrated Services Ltd Magnacap Ltd Regulatory Incubation (RI) Participants Below is the table of firms admitted into the "
+   },
+   {
+    "id": 3676,
+    "title": "‎Best Magazines & Newspapers Apps for iPhone",
+    "fetched": true,
+    "textLen": 480,
+    "text": "uctivity Reference Shopping Social Networking Sports Travel Utilities Weather Free Paid 1 Yacine : Match Football TV View 2 MoviesBox - Reels & TV Shows Watch on MoviesBox Daily Movie View 3 Movies Box & TV Show Watch Vi"
+   },
+   {
+    "id": 537,
+    "title": "Compare Business Software: September 2026 Reviews & Comparison",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ter, and easier while IT teams modernize and improve efficiency. NinjaOne is a Leader in the Gartner Magic Quadrant for Endpoint Management Tools. The company is obsessed with customer success and has retained a 98% cust"
+   },
+   {
+    "id": 2036,
+    "title": "Freshservice Reviews in 2026",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…ises About Freshservice If you're looking for an IT service desk solution that's actually simple, turn to Freshservice. A plug-and-play ITIL service desk by Freshworks, F…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "7087af9f9f513a107087af9f",
+  "goldInRawUnion": [
+   4
+  ],
+  "goldInCandidate_ids": [
+   4
+  ],
+  "goldInSelected": [
+   4
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 17,
+  "q": "What is the HARZ Ecosystem?",
+  "gold_ids": [
+   10034
+  ],
+  "variants": [
+   "harz ecosystem",
+   "harzecosystem"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10047,
+   10034,
+   10241,
+   10281,
+   10097,
+   10164,
+   10053,
+   10000,
+   6,
+   10165,
+   10094,
+   10084
+  ],
+  "goldInRawQuestion": [
+   10034
+  ],
+  "variantCalls": [
+   {
+    "variant": "harz ecosystem",
+    "ids": [
+     10047,
+     10034,
+     10241,
+     10281,
+     10097,
+     10164,
+     10053,
+     10000,
+     6,
+     10165,
+     10094,
+     10084
+    ]
+   },
+   {
+    "variant": "harzecosystem",
+    "ids": [
+     10469
+    ]
+   }
+  ],
+  "rawUnionCount": 13,
+  "candidate_ids": [
+   10034,
+   10241,
+   10047,
+   10097,
+   10164,
+   10000,
+   10053,
+   6,
+   10281,
+   10094,
+   10084,
+   10165
+  ],
+  "ranking": [
+   {
+    "id": 10034,
+    "score": 38.17,
+    "reasons": [
+     "bm25:20.17",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10241,
+    "score": 34.8,
+    "reasons": [
+     "bm25:19.8",
+     "title_cover:+5.00",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10047,
+    "score": 33.32,
+    "reasons": [
+     "bm25:20.82",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10097,
+    "score": 29.56,
+    "reasons": [
+     "bm25:17.06",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10164,
+    "score": 29.49,
+    "reasons": [
+     "bm25:16.99",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10000,
+    "score": 29.07,
+    "reasons": [
+     "bm25:16.57",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 10053,
+    "score": 29.07,
+    "reasons": [
+     "bm25:16.57",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   },
+   {
+    "id": 6,
+    "score": 28.83,
+    "reasons": [
+     "bm25:16.33",
+     "title_cover:+2.50",
+     "snippet_cover:+4.00",
+     "entity_ground:+2.00",
+     "harz_owned:+4"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   10034,
+   10241,
+   10047,
+   10097,
+   10164,
+   10000
+  ],
+  "selected_evidence": [
+   {
+    "id": 10034,
+    "title": "HARZ Ecosystem — Everything in One Place",
+    "fetched": true,
+    "textLen": 480,
+    "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain w"
+   },
+   {
+    "id": 10241,
+    "title": "HARZ GENESIS — Ecosystem Generator",
+    "fetched": true,
+    "textLen": 224,
+    "text": "HARZ GENESIS Autonomous Infrastructure Organism -- Ecosystems 66 Services v3.1 Version Generated Ecosystems Loading... API GET /api/ecosystems — List all ecosystems GET /api/status — Service status GET /health — Health c"
+   },
+   {
+    "id": 10047,
+    "title": "HARZ Mail — @mail.harz",
+    "fetched": true,
+    "textLen": 480,
+    "text": "M HARZ Mail @mail.harz — your address, your ecosystem Sign up Accounts Log out Log in to @mail.harz Log in New here? Create an address → Forgot password? → Reset your password A one-time code is mailed to your account's "
+   },
+   {
+    "id": 10097,
+    "title": "HARZ Governance — Community Pilot",
+    "fetched": true,
+    "textLen": 480,
+    "text": "⚖️ GOVERNANCE PILOT HARZ Governance The community voice of the HARZ ecosystem — Chain 7701 Honest disclosure: Community governance pilot — votes are advisory. Chain admin retains execution authority. Results guide ecosys"
+   },
+   {
+    "id": 10164,
+    "title": "HARZ Sentinel",
+    "fetched": true,
+    "textLen": 321,
+    "text": "🛡️ HARZ Sentinel Security scanner — immune system for HARZ ecosystem Scan a Service Run Security Scan Ecosystem Security ✓ HTTPS enforced on all workers ✓ Cloudflare DDoS protection ✓ Edge token authentication ⚠ CORS he"
+   },
+   {
+    "id": 10000,
+    "title": "HARZ Forge",
+    "fetched": false,
+    "textLen": 171,
+    "text": "⚒️ HARZ Forge Build and deploy apps from the HARZ ecosystem 0 Apps Forged 5 Templates ∞ Possibilities Forge a New App Forge App Templates 📦 Store — E-commerce 📊 Dashboa…"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "b4970b6c3c92d9c4b4970b6c",
+  "goldInRawUnion": [
+   10034
+  ],
+  "goldInCandidate_ids": [
+   10034
+  ],
+  "goldInSelected": [
+   10034
+  ],
+  "classification": "PRESERVED (gold in selected evidence)"
+ },
+ {
+  "id": 18,
+  "q": "What is the airspeed velocity of an unladen qwizzleblatt?",
+  "gold_ids": [],
+  "variants": [
+   "airspeed velocity unladen qwizzleblatt",
+   "airspeed velocity",
+   "airspeed",
+   "unladen"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   6922,
+   1746,
+   2604,
+   4053,
+   4064,
+   1199,
+   142,
+   4779,
+   451,
+   1765,
+   2977,
+   3760
+  ],
+  "goldInRawQuestion": [],
+  "variantCalls": [
+   {
+    "variant": "airspeed velocity unladen qwizzleblatt",
+    "ids": [
+     6922,
+     1746,
+     2604,
+     4053,
+     4064,
+     1199,
+     142,
+     4779,
+     451,
+     1765,
+     2977,
+     3760
+    ]
+   },
+   {
+    "variant": "airspeed velocity",
+    "ids": [
+     6922,
+     1746,
+     2604,
+     4053,
+     4064,
+     1199,
+     142,
+     4779,
+     451,
+     1765,
+     2977,
+     3760
+    ]
+   },
+   {
+    "variant": "airspeed",
+    "ids": []
+   },
+   {
+    "variant": "unladen",
+    "ids": []
+   }
+  ],
+  "rawUnionCount": 12,
+  "candidate_ids": [
+   6922,
+   1746,
+   2604,
+   4053,
+   1199,
+   4779,
+   4064,
+   142,
+   451,
+   1765,
+   2977,
+   3760
+  ],
+  "ranking": [
+   {
+    "id": 6922,
+    "score": 10.16,
+    "reasons": [
+     "bm25:8.49",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 1746,
+    "score": 9.79,
+    "reasons": [
+     "bm25:8.12",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 2604,
+    "score": 9.41,
+    "reasons": [
+     "bm25:7.74",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 4053,
+    "score": 9.32,
+    "reasons": [
+     "bm25:7.65",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 1199,
+    "score": 9.19,
+    "reasons": [
+     "bm25:7.52",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 4779,
+    "score": 9.11,
+    "reasons": [
+     "bm25:6.11",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+2.00"
+    ]
+   },
+   {
+    "id": 4064,
+    "score": 8.53,
+    "reasons": [
+     "bm25:7.53",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 142,
+    "score": 8.48,
+    "reasons": [
+     "bm25:6.15",
+     "title_cover:+0.00",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   6922,
+   1746,
+   2604,
+   4053,
+   1199,
+   4779
+  ],
+  "selected_evidence": [
+   {
+    "id": 6922,
+    "title": "Meta's AI Storage Blueprint at Scale - Engineering at Meta",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ed of iteration in AI research; with GPUs increasingly becoming geo-distributed and dataset sizes increasingly becoming massive, researchers spend a significant amount of time ingesting and moving data across regions, th"
+   },
+   {
+    "id": 1746,
+    "title": "Microfrontends",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ntends may add additional complexity to your development process. To improve developer velocity, consider alternatives like: Monorepos with Turborepo Feature flags Faster compilation with Turbopack Repository layout Micr"
+   },
+   {
+    "id": 2604,
+    "title": "Optimus - The AI platform to build and ship - Landing Pages Templates - v0 by Vercel",
+    "fetched": true,
+    "textLen": 480,
+    "text": "New Chat Log In Sign Up Community Community Templates Your Templates About Tags Share Optimus - The AI platform to build and ship kerroudj 9.1K 1.4K Open Original About Optimus empowers teams to build, deploy, and scale "
+   },
+   {
+    "id": 4053,
+    "title": "Infrastructure - Dropbox",
+    "fetched": true,
+    "textLen": 480,
+    "text": "data caching solution // Jul 25, 2024 From AI to sustainability, why our latest data centers use 400G networking // Nov 14, 2023 How the data center site selection process works at Dropbox // Jun 13, 2023 After four year"
+   },
+   {
+    "id": 1199,
+    "title": "Resources | Classical Mechanics | Physics | MIT OpenCourseWare",
+    "fetched": true,
+    "textLen": 480,
+    "text": "r Dourmashkin Dr. Michelle Tomasik Prof. Anna Frebel Prof. Vladan Vuletic Departments Physics As Taught In Fall 2016 Level Undergraduate Topics Science Physics Classical Mechanics Learning Resource Types theaters Lecture"
+   },
+   {
+    "id": 4779,
+    "title": "Calculus 1A: Differentiation | MIT Open Learning Library",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…ilable on MITx Online. About this course How does the final velocity on a zip line change when the starting point is raised or lowered by a matter of centimeters? What is…"
+   }
+  ],
+  "coverage": 0,
+  "status": "insufficient_evidence",
+  "subject_absent": [
+   "airspeed",
+   "unladen"
+  ],
+  "evidence_digest": "0925ddb4cee103c40925ddb4",
+  "classification": "NEGATIVE_CONTROL"
+ },
+ {
+  "id": 19,
+  "q": "Who won the 2026 Bloboland national elections?",
+  "gold_ids": [],
+  "variants": [
+   "bloboland",
+   "bloboland won 2026 national elections",
+   "won 2026 national elections",
+   "won 2026",
+   "bloboland"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   6398
+  ],
+  "goldInRawQuestion": [],
+  "variantCalls": [
+   {
+    "variant": "bloboland",
+    "ids": []
+   },
+   {
+    "variant": "bloboland won 2026 national elections",
+    "ids": [
+     6398
+    ]
+   },
+   {
+    "variant": "won 2026 national elections",
+    "ids": [
+     6398
+    ]
+   },
+   {
+    "variant": "won 2026",
+    "ids": [
+     4679,
+     8054,
+     6002,
+     5102,
+     773,
+     7913,
+     7272,
+     6852,
+     6239,
+     8093,
+     7500,
+     7530
+    ]
+   },
+   {
+    "variant": "bloboland",
+    "ids": []
+   }
+  ],
+  "rawUnionCount": 13,
+  "candidate_ids": [
+   4679,
+   8054,
+   6002,
+   6398,
+   5102,
+   773,
+   7913,
+   7272,
+   6852,
+   6239,
+   7500,
+   8093
+  ],
+  "ranking": [
+   {
+    "id": 4679,
+    "score": 9.63,
+    "reasons": [
+     "bm25:7.03",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 8054,
+    "score": 9.54,
+    "reasons": [
+     "bm25:6.94",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 6002,
+    "score": 9.34,
+    "reasons": [
+     "bm25:6.74",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 6398,
+    "score": 9.17,
+    "reasons": [
+     "bm25:8.37",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 5102,
+    "score": 9.12,
+    "reasons": [
+     "bm25:6.52",
+     "title_cover:+1.00",
+     "snippet_cover:+1.60",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 773,
+    "score": 8.47,
+    "reasons": [
+     "bm25:5.07",
+     "title_cover:+1.00",
+     "snippet_cover:+2.40",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 7913,
+    "score": 5.37,
+    "reasons": [
+     "bm25:4.57",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 7272,
+    "score": 5.25,
+    "reasons": [
+     "bm25:4.45",
+     "title_cover:+0.00",
+     "snippet_cover:+0.80",
+     "entity_ground:+0.00"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   4679,
+   8054,
+   6002,
+   6398,
+   5102,
+   773
+  ],
+  "selected_evidence": [
+   {
+    "id": 4679,
+    "title": "UI/UX Designer Engineering in 2026: Skills, Trends & Careers",
+    "fetched": true,
+    "textLen": 480,
+    "text": "k in and excel (with insights from Refonte Learning ’s industry-aligned programs). By the end, you’ll see why UI/UX Designer engineering in 2026 is a future-proof career at the intersection of creativity, technology, and"
+   },
+   {
+    "id": 8054,
+    "title": "UNILAG Students Sweep Bode Osunkoya Prize, Win all Three Positions at 2026 PSRG-Richardson HSSE Forum - University Of Lagos",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Skip to content communicationunit@unilag.edu.ng Staff Students Alumni Parents UNILAG Statistics Give to UNILAG Search Menu communicationunit@unilag.edu.ng Staff Students Alumni Parents UNILAG Statistics Afretec Give to U"
+   },
+   {
+    "id": 6002,
+    "title": "Maingear Zero (2026) Review: PC Gaming Bliss With a Price Tag to Make You Cry",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ooks the absolute best—the most personal of the bunch and the easiest to use. It’s meaningful that I can say the Maingear Zero is my favorite pre-config that the company has put out over the last two years. It has the el"
+   },
+   {
+    "id": 6398,
+    "title": "NIGERIA DAILY: When Godfathers Turn Rivals—Can Governors Survive 2027? – Daily Trust",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ans? NIGERIA DAILY: Young, Working, But Still Broke—What&#8217;s Going Wrong? As the campaigns gather momentum, the key question is whether performance or political strategy will determine their chances of winning withou"
+   },
+   {
+    "id": 5102,
+    "title": "What is a Circular Economy — updated 2026 | IxDF",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ources for generations. This model seeks to reduce or eliminate unsustainable practices like deforestation or strip mines. These systems can better avoid shortages and societal collapses when resources run out. However, "
+   },
+   {
+    "id": 773,
+    "title": "Queen Temi-T bags international media award",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…al, Temitope Chikezie, popularly known as Queen Temi-T, has won the Outstanding International Radio Presenter of the Year Award at the 2026 GX Awards in Birmingham, Unite…"
+   }
+  ],
+  "coverage": 0,
+  "status": "insufficient_evidence",
+  "subject_absent": [
+   "bloboland"
+  ],
+  "evidence_digest": "729e0a10ad559b5c729e0a10",
+  "classification": "NEGATIVE_CONTROL"
+ },
+ {
+  "id": 20,
+  "q": "What is the zorbite concentration in the qlanari river?",
+  "gold_ids": [],
+  "variants": [
+   "zorbite concentration qlanari river",
+   "zorbite concentration",
+   "zorbite",
+   "concentration",
+   "qlanari"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   1632,
+   6001,
+   9435,
+   7920,
+   6214,
+   6763,
+   2959,
+   7555,
+   9334,
+   7900,
+   5520,
+   7859
+  ],
+  "goldInRawQuestion": [],
+  "variantCalls": [
+   {
+    "variant": "zorbite concentration qlanari river",
+    "ids": [
+     1632,
+     6001,
+     9435,
+     7920,
+     6214,
+     6763,
+     2959,
+     7555,
+     9334,
+     7900,
+     5520,
+     7859
+    ]
+   },
+   {
+    "variant": "zorbite concentration",
+    "ids": [
+     8826,
+     8997,
+     688,
+     3498,
+     10294,
+     1807,
+     1814,
+     9685,
+     8819,
+     6932,
+     5352,
+     1255
+    ]
+   },
+   {
+    "variant": "zorbite",
+    "ids": []
+   },
+   {
+    "variant": "concentration",
+    "ids": [
+     8826,
+     8997,
+     688,
+     3498,
+     10294,
+     1807,
+     1814,
+     9685,
+     8819,
+     6932,
+     5352,
+     1255
+    ]
+   },
+   {
+    "variant": "qlanari",
+    "ids": []
+   }
+  ],
+  "rawUnionCount": 24,
+  "candidate_ids": [
+   6001,
+   1632,
+   9435,
+   6214,
+   6763,
+   2959,
+   7920,
+   8826,
+   7555,
+   9334,
+   7900,
+   5520
+  ],
+  "ranking": [
+   {
+    "id": 6001,
+    "score": 22.91,
+    "reasons": [
+     "bm25:19.33",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 1632,
+    "score": 22.63,
+    "reasons": [
+     "bm25:19.71",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67"
+    ]
+   },
+   {
+    "id": 9435,
+    "score": 22.29,
+    "reasons": [
+     "bm25:18.71",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 6214,
+    "score": 21.36,
+    "reasons": [
+     "bm25:17.78",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 6763,
+    "score": 21.23,
+    "reasons": [
+     "bm25:17.65",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 2959,
+    "score": 20.72,
+    "reasons": [
+     "bm25:17.14",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   },
+   {
+    "id": 7920,
+    "score": 20.2,
+    "reasons": [
+     "bm25:17.95",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.00"
+    ]
+   },
+   {
+    "id": 8826,
+    "score": 14.72,
+    "reasons": [
+     "bm25:11.14",
+     "title_cover:+1.25",
+     "snippet_cover:+1.00",
+     "entity_ground:+1.33"
+    ]
+   }
+  ],
+  "mirror_groups": [],
+  "selected_ids": [
+   6001,
+   1632,
+   9435,
+   6214,
+   6763,
+   2959
+  ],
+  "selected_evidence": [
+   {
+    "id": 6001,
+    "title": "50 Years of Bronx River Clean-Up Efforts Lead to the First Otter Sighting in a Century",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ent released by the organization Tuesday. A chance sighting The otter was actually documented earlier this June by scientist R.J. Hawkins, via a motion-activated camera. Hawkins was conducting long-term camera trap monit"
+   },
+   {
+    "id": 1632,
+    "title": "River Tame, Greater Manchester - Wikipedia",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Jump to content Search River Tame, Greater Manchester 10 languages مصرى Boarisch Cymraeg Deutsch فارسی Français Norsk nynorsk Norsk bokmål Srpskohrvatski / српскохрватски Simple English Edit links Route map : From Wikipe"
+   },
+   {
+    "id": 9435,
+    "title": "River Reverse Proxy - Prossimo",
+    "fetched": true,
+    "textLen": 480,
+    "text": "x due to a multithreading model, which greatly improves performance. WASM-based scriptability means scripting will be performant and River will be scriptable in any language that can compile to WASM. Simple configuration"
+   },
+   {
+    "id": 6214,
+    "title": "Our party cohesion due to Wike, presidential candidate, Onor's effort - PDP Cross River - Daily Post Nigeria",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Connect with us Politics Our party cohesion due to Wike, presidential candidate, Onor’s effort – PDP Cross River Published on September 19, 2026 By Asare Asare The Peoples Democratic Party, PDP, in Cross River State has "
+   },
+   {
+    "id": 6763,
+    "title": "2027: C’River ‘Evidence Group’ Mobilises Mammoth Crowd for Civic Engagement – THISDAYLIVE",
+    "fetched": true,
+    "textLen": 480,
+    "text": "Headlines Tinubu Forecloses Return of Fuel Subsidy, Tasks States To Deliver Cheaper Transport By October The Renewed Move for Peace in Warri DHQ: Troops Rescue 50 Kidnap Victims, Apprehend Scores of Terrorists, Collabora"
+   },
+   {
+    "id": 2959,
+    "title": "Careers | Hudson River Trading",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…ommunity See Open Roles Build the future of trading. Hudson River Trading is always on the lookout for the best and brightest. Think you might be an awesome candidate? Ap…"
+   }
+  ],
+  "coverage": 0,
+  "status": "insufficient_evidence",
+  "subject_absent": [
+   "zorbite",
+   "qlanari"
+  ],
+  "evidence_digest": "88567c38e9ba07b888567c38",
+  "classification": "NEGATIVE_CONTROL"
+ },
+ {
+  "id": 21,
+  "q": "Give the UBA account number used for HARZ Pay bank transfers, the canonical URL of the HARZ Estate Network, and compute the Naira value of 2,000 GDEG at the documented rate. Cite your sources.",
+  "gold_ids": [
+   10470,
+   10062,
+   10066
+  ],
+  "variants": [
+   "uba harz pay estate network naira",
+   "uba harz pay estate network naira account number used bank",
+   "account number used bank transfers canonical",
+   "account number",
+   "canonical transfers compute value",
+   "uba harz pay",
+   "uba harz pay account number used",
+   "harz estate network",
+   "harz estate network canonical",
+   "naira value",
+   "gdeg 000 documented rate",
+   "uba harzpay estate network naira",
+   "harz bank transfer account number",
+   "canonical",
+   "compute",
+   "documented",
+   "sources"
+  ],
+  "rawUnion": {},
+  "stageLog": [],
+  "rawQuestionTop12": [
+   10035,
+   10066,
+   10332,
+   10407,
+   10418,
+   10215,
+   10034,
+   10470,
+   7,
+   10427
+  ],
+  "goldInRawQuestion": [
+   10470,
+   10066
+  ],
+  "variantCalls": [
+   {
+    "variant": "uba harz pay estate network naira",
+    "ids": [
+     10470,
+     938
+    ]
+   },
+   {
+    "variant": "uba harz pay estate network naira account number used bank",
+    "ids": [
+     10470,
+     938
+    ]
+   },
+   {
+    "variant": "account number used bank transfers canonical",
+    "ids": [
+     8392,
+     8437,
+     8405,
+     8418,
+     8435,
+     8398,
+     8402,
+     8403,
+     8383,
+     8404,
+     8407,
+     8400
+    ]
+   },
+   {
+    "variant": "account number",
+    "ids": [
+     2818,
+     2833,
+     9531,
+     5440,
+     2835,
+     2851,
+     2820,
+     2828,
+     2831,
+     2845,
+     2815,
+     2822
+    ]
+   },
+   {
+    "variant": "canonical transfers compute value",
+    "ids": [
+     8392,
+     8437,
+     8405,
+     8418,
+     8435,
+     8398,
+     8402,
+     8403,
+     8383,
+     8404,
+     8407,
+     8400
+    ]
+   },
+   {
+    "variant": "uba harz pay",
+    "ids": [
+     10332,
+     10066,
+     10418,
+     10407,
+     7,
+     10427,
+     10470,
+     10034,
+     10035
+    ]
+   },
+   {
+    "variant": "uba harz pay account number used",
+    "ids": [
+     10470
+    ]
+   },
+   {
+    "variant": "harz estate network",
+    "ids": [
+     10062,
+     10148,
+     10286,
+     10320,
+     10034,
+     10173
+    ]
+   },
+   {
+    "variant": "harz estate network canonical",
+    "ids": [
+     10335
+    ]
+   },
+   {
+    "variant": "naira value",
+    "ids": [
+     5,
+     10102,
+     7986,
+     1493,
+     10130
+    ]
+   },
+   {
+    "variant": "gdeg 000 documented rate",
+    "ids": [
+     10035,
+     10436,
+     10227,
+     10348,
+     10066,
+     10274,
+     10460,
+     10185,
+     10332,
+     10046,
+     10034,
+     10215
+    ]
+   },
+   {
+    "variant": "uba harzpay estate network naira",
+    "ids": [
+     10470
+    ]
+   },
+   {
+    "variant": "harz bank transfer account number",
+    "ids": [
+     4,
+     10470
+    ]
+   },
+   {
+    "variant": "canonical",
+    "ids": [
+     8392,
+     8437,
+     8405,
+     8418,
+     8435,
+     8398,
+     8402,
+     8403,
+     8383,
+     8404,
+     8407,
+     8400
+    ]
+   },
+   {
+    "variant": "compute",
+    "ids": [
+     4400,
+     10252,
+     2753,
+     9412,
+     1065,
+     6908,
+     10029,
+     4257,
+     10278,
+     329,
+     9431,
+     7205
+    ]
+   },
+   {
+    "variant": "documented",
+    "ids": [
+     6204,
+     8926,
+     6001,
+     7410,
+     2926,
+     6321,
+     5149,
+     2333,
+     6635,
+     7585,
+     2753,
+     7607
+    ]
+   },
+   {
+    "variant": "sources",
+    "ids": [
+     5562,
+     877,
+     6547,
+     2339,
+     1471,
+     6318,
+     7316,
+     224,
+     7683,
+     7684,
+     7689,
+     7690
+    ]
+   }
+  ],
+  "rawUnionCount": 89,
+  "candidate_ids": [
+   10470,
+   10062,
+   10332,
+   7,
+   10427,
+   10418,
+   10066,
+   10034,
+   4,
+   10148,
+   10335,
+   10407
+  ],
+  "ranking": [
+   {
+    "id": 10470,
+    "score": 41.29,
+    "reasons": [
+     "bm25:20.71",
+     "title_cover:+1.25",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.33",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "entity_phrase:+3",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 10062,
+    "score": 29.39,
+    "reasons": [
+     "bm25:16.01",
+     "title_cover:+1.88",
+     "snippet_cover:+1.50",
+     "entity_ground:+1.00",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10332,
+    "score": 28.97,
+    "reasons": [
+     "bm25:16.22",
+     "title_cover:+1.25",
+     "snippet_cover:+1.50",
+     "entity_ground:+1.00",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 7,
+    "score": 27.95,
+    "reasons": [
+     "bm25:10.99",
+     "title_cover:+0.63",
+     "snippet_cover:+2.00",
+     "entity_ground:+1.33",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 10418,
+    "score": 27.82,
+    "reasons": [
+     "bm25:12.53",
+     "title_cover:+0.63",
+     "snippet_cover:+1.00",
+     "entity_ground:+0.67",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 10066,
+    "score": 27.7,
+    "reasons": [
+     "bm25:14.95",
+     "title_cover:+1.25",
+     "snippet_cover:+1.50",
+     "entity_ground:+1.00",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "entity_phrase:+3"
+    ]
+   },
+   {
+    "id": 10034,
+    "score": 26.55,
+    "reasons": [
+     "bm25:10.42",
+     "title_cover:+0.63",
+     "snippet_cover:+1.50",
+     "entity_ground:+1.00",
+     "harz_owned:+4",
+     "url_entity:+2",
+     "value_bearing_harz:+7"
+    ]
+   },
+   {
+    "id": 4,
+    "score": 23.55,
+    "reasons": [
+     "bm25:16.09",
+     "title_cover:+0.63",
+     "snippet_cover:+0.50",
+     "entity_ground:+0.33",
+     "harz_owned:+4",
+     "url_entity:+2"
+    ]
+   }
+  ],
+  "mirror_groups": [
+   {
+    "winner": 7,
+    "suppressed": [
+     10427
+    ],
+    "rule": "title+snippet_jaccard"
+   }
+  ],
+  "selected_ids": [
+   10470,
+   10062,
+   10332,
+   7,
+   10418,
+   10066
+  ],
+  "selected_evidence": [
+   {
+    "id": 10470,
+    "title": "HarzPay Onboarding — Get Started",
+    "fetched": true,
+    "textLen": 480,
+    "text": "ntinue Use phone instead 🔐 Enter verification code We sent a 4-digit code to your phone. Enter it below. Verify Use demo code (1234) Skip verification 💰 Choose your main currency You can always add more currencies late"
+   },
+   {
+    "id": 10062,
+    "title": "HARZ Estate Network",
+    "fetched": true,
+    "textLen": 258,
+    "text": "🏡 HARZ Estate Property & Land Network Loading... — Listings — Agents — Sold — Revenue Properties Land Agents List Property Loading... Loading... Loading... Type For Sale For Rent Land Title Location Price (₦) Details Li"
+   },
+   {
+    "id": 10332,
+    "title": "HARZ Pay — Payment Gateway",
+    "fetched": true,
+    "textLen": 335,
+    "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Pro"
+   },
+   {
+    "id": 7,
+    "title": "HARZ Digital - Koya Trading & Digital Marketing",
+    "fetched": true,
+    "textLen": 480,
+    "text": "$10 USD Sayi Yanzu Trading Basics eBook Littafi kan asalin trading — yadda za ka fara ciniki a kasuwar kudi da crypto. Sauƙi fahimta. ₦8,000 ~$5 USD Sayi Yanzu Premium Mentorship Program Koyarwa ta musamman daga Rabiu — "
+   },
+   {
+    "id": 10418,
+    "title": "Buy NRL — HARZ Cloud",
+    "fetched": true,
+    "textLen": 480,
+    "text": "I Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull NRL Token (V2) 0xE8423c0595E6b2caD4E6f19B6F51666699be303a Supply: 11,022"
+   },
+   {
+    "id": 10066,
+    "title": "HARZ Pay",
+    "fetched": false,
+    "textLen": 172,
+    "text": "…(NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE 🌍 Gumroad …"
+   }
+  ],
+  "coverage": 1,
+  "status": "ok",
+  "subject_absent": null,
+  "evidence_digest": "8df65d170b4048f88df65d17",
+  "goldInRawUnion": [
+   10470,
+   10062,
+   10066
+  ],
+  "goldInCandidate_ids": [
+   10470,
+   10062,
+   10066
+  ],
+  "goldInSelected": [
+   10470,
+   10062,
+   10066
+  ],
+  "classification": "PRESERVED (value in evidence text)"
+ }
+]
