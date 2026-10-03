@@ -8970,6 +8970,7 @@ if (path === '/api/intake/v1/testm2') {
       // frozen fixture record (sha256 in the G15 contract), never corpus evidence.
       const G15_FIXTURES = {
         'G15-FIX-A': { answer: '**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
+        'G16-FIX-C': { answer: '**Answer**\n\nThe GDEG test widget price registry states the authoritative price is 800 HARZ \u3010S1\u3011\n\nSources: [s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)' },
         'G15-FIX-B': { answer: '**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' }
       };
       // G15 RESOLUTION LAW (frozen 13e383a): verification establishes each claim
@@ -8986,7 +8987,7 @@ if (path === '/api/intake/v1/testm2') {
       ];
       let plan;
       if (Array.isArray(body.tasks) && body.tasks.length) {
-        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : (t.type === 'fixture' ? 'fixture' : 'orchestrate'), instruction: String(t.instruction || t).slice(0, 2000), fixture_id: t.type === 'fixture' ? String(t.fixture_id || '').slice(0, 64) : undefined, evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
+        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : (t.type === 'fixture' ? 'fixture' : 'orchestrate'), instruction: String(t.instruction || t).slice(0, 2000), fixture_id: t.type === 'fixture' ? String(t.fixture_id || '').slice(0, 64) : undefined, evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10), resolution_from: (Array.isArray(t.resolution_from) ? t.resolution_from : (t.resolution_from !== undefined ? [t.resolution_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
         if (!plan.tasks.length) return json({ error: 'tasks[] must contain at least one instruction' }, 400);
       } else {
         plan = planMission(goal);
@@ -9032,6 +9033,7 @@ if (path === '/api/intake/v1/testm2') {
             let handoffPrompt = t.instruction;
             let evidenceUsed = null;
             let handoffRefusal = null;
+            let conflictObj = null; // G16 structured conflict state (frozen 6810d24)
             if (Array.isArray(t.evidence_from) && t.evidence_from.length) {
               // G13 EVIDENCE PACKAGE CONTRACT AMENDMENT (frozen 79ab577, Dad's ruling —
               // Option 3, adapter-only). Typed package, section-addressed on the
@@ -9059,9 +9061,40 @@ if (path === '/api/intake/v1/testm2') {
                 const claimsSha = await sha256(claims);
                 packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, source_receipt: src.receipt, answer_sha256: ansSha, claims: claims, claims_sha256: claimsSha, confidence: confidence, provenance: provenance !== null ? provenance : 'none — this answer type carries no Sources section (disclosed, never guessed)', extraction_law: 'byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) — zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain' });
               }
-              if (!handoffRefusal && packages.length > 1 && G15_RESOLUTION_PATTERNS.some(rx => rx.test(t.instruction))) {
-                handoffRefusal = 'resolution refused: the mission carries ' + packages.length + ' independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task — resolution belongs to research; composition never adjudicates';
+              // G16 RESOLUTION_FROM LAW (frozen 6810d24): a resolution-requesting
+              // compose over 2+ sources proceeds ONLY with an explicit caller
+              // designation of a verified resolution act. The adapter verifies
+              // ELIGIBILITY, never semantic correctness.
+              let resolutionDisclosure = null;
+              const resFrom = Array.isArray(t.resolution_from) ? t.resolution_from : [];
+              // G16: if eligibility already refused AND a designated resolution act failed,
+              // the conflict stays disclosed (contract T5: inconclusive research cannot
+              // authorize resolution; the unresolved claims and provenance remain visible).
+              if (handoffRefusal && resFrom.length && !conflictObj) {
+                const failedRes = resFrom.some(rid => { const src = mission.tasks.find(x => x.id === rid); return !src || src.state !== 'verified' || !src.receipt; });
+                if (failedRes) conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
               }
+              if (!handoffRefusal && resFrom.length) {
+                const mkConflict = () => ({ state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' });
+                if (resFrom.some(rid => !t.evidence_from.includes(rid))) {
+                  handoffRefusal = 'resolution refused: every resolution_from task must also be cited in evidence_from — the resolution claim must reach the creator as carried material, not merely authorize; no improvisation';
+                } else {
+                  const resPkgs = resFrom.map(rid => packages.find(p => p.source_task === rid));
+                  if (resPkgs.some(p => !p)) { handoffRefusal = 'resolution refused: a designated resolution task is not an eligible evidence source — resolution requires an explicit verified act; no improvisation'; conflictObj = mkConflict(); }
+                  else { resolutionDisclosure = { requested_by_instruction: null, resolution_from: resFrom.slice(), resolution_sources: resPkgs.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims_sha256: p.claims_sha256, answer_sha256: p.answer_sha256 })), acceptance_law: 'resolution act verified (state verified + receipt + frozen format) and explicitly designated by the caller; the adapter carries its claims as material, it does not adjudicate correctness — that judgment belongs to the reader of the artifact and the provenance chain' }; }
+                }
+              }
+              if (!handoffRefusal && packages.length > 1 && G15_RESOLUTION_PATTERNS.some(rx => rx.test(t.instruction))) {
+                if (!resFrom.length) {
+                  handoffRefusal = 'resolution refused: the mission carries ' + packages.length + ' independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task — resolution belongs to research; composition never adjudicates';
+                  conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
+                } else if (resolutionDisclosure) {
+                  resolutionDisclosure.requested_by_instruction = true;
+                }
+              } else if (resolutionDisclosure) {
+                resolutionDisclosure.requested_by_instruction = false;
+              }
+              if (!handoffRefusal && resolutionDisclosure) task.resolution = resolutionDisclosure;
               if (!handoffRefusal) {
                 handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — claims carried byte-exact from a cited verified task; use but never certify or alter]\n' + packages.map(p => p.claims).join('\n\n');
                 evidenceUsed = packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, answer_sha256: p.answer_sha256, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance, extraction_law: p.extraction_law }));
@@ -9071,6 +9104,7 @@ if (path === '/api/intake/v1/testm2') {
             if (handoffRefusal) {
               task.state = 'refused'; task.refusal = handoffRefusal; task.receipt = await mSha('refused:' + handoffRefusal);
               task.answer = { evidence_refs_requested: t.evidence_from };
+              if (conflictObj) { task.conflict = conflictObj; mission.conflict_detected = true; }
             } else if (!parsed.valid) {
               task.state = 'refused'; task.refusal = 'studio parser refusal: ' + (parsed.reason || 'prompt refused, never improvised');
               task.receipt = await mSha('refused:' + task.refusal);
