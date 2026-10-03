@@ -21,7 +21,7 @@ import { reasoner1Call } from './reasoner1-runtime.js';
 //             Agent runtime | Verification (evidence + receipts) | HARZ Root identities | PWA interface
 // Standing order honored: NVIDIA Nemotron via OpenRouter (default model, gateway-abstracted).
 
-const VERSION = '0.7';
+const VERSION = '0.8'; // v0.8: + MISSIONS v0.1 layer + Console PWA (contracts/MISSIONS-V1.md)
 let ENV = {}; // module workers receive bindings via env — stored here at request start
 const SEARCH_URL = 'https://harz-search.harz.workers.dev/search?q=';
 const CHAIN_STATUS_URL = 'https://harz-chain-v2.harz.workers.dev/api/status';
@@ -8931,6 +8931,156 @@ if (path === '/api/intake/v1/testm2') {
         } catch (e) { probes[name] = { error: String(e).slice(0, 150) }; }
       }
       return json({ probes });
+    }
+
+
+    // ==================== MISSIONS v0.1 (contract: contracts/MISSIONS-V1.md, frozen before build) ====================
+    async function mSha(str) {
+      const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(str)));
+      return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    async function kvGetMission(mid) { return (await ENV.MEMORY.get('mission:' + mid, 'json')) || null; }
+    async function kvPutMission(m) {
+      await ENV.MEMORY.put('mission:' + m.id, JSON.stringify(m));
+      const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
+      const entry = { id: m.id, goal: m.goal, pattern: m.pattern, status: m.status, created: m.created, tasks: m.tasks.length, task_states: m.tasks.map(t => t.state), receipt: m.receipt };
+      const i = idx.missions.findIndex(x => x.id === m.id);
+      if (i >= 0) idx.missions[i] = entry; else idx.missions.unshift(entry);
+      if (idx.missions.length > 200) idx.missions.length = 200;
+      await ENV.MEMORY.put('missions:index', JSON.stringify(idx));
+    }
+    function planMission(goal) {
+      const g = (goal || '').toLowerCase();
+      const modalityWords = ['image', 'voice', 'music', 'video', 'film', 'story', 'artwork', 'song', 'picture', 'narration'];
+      const wantsCompose = ['compose', 'produce', 'create', 'make me', 'generate'].some(w => g.includes(w));
+      const wantsModality = modalityWords.some(w => g.includes(w));
+      if (wantsCompose && wantsModality) return { pattern: 'COMPOSE', reason: 'creative composition goal -> frozen V3 Studio', tasks: [{ id: 1, type: 'compose', instruction: goal }] };
+      const researchy = /^(research|find|quote|list|what|how|which|how many|compute|calculate|how much)/.test(g) || ['what', 'how', 'which', 'quote', 'find', 'list', 'compute', 'calculate'].some(w => g.trim().split(/\s+/).slice(0, 3).includes(w));
+      if (researchy) return { pattern: 'RESEARCH', reason: 'evidence question -> orchestrate() evidence->reason->verify chain', tasks: [{ id: 1, type: 'orchestrate', instruction: goal }] };
+      return { pattern: 'REFUSED', reason: 'the deterministic planner has no plan for this goal pattern. Supported: RESEARCH (evidence question), COMPOSE (creative composition), or explicit tasks[] (each {instruction}). No plan is guessed.', tasks: [] };
+    }
+    if (path === '/api/missions/v1' && request.method === 'POST') {
+      const body = await request.json().catch(() => ({}));
+      const goal = String(body.goal || '').slice(0, 2000);
+      if (!goal) return json({ error: 'goal required' }, 400);
+      let plan;
+      if (Array.isArray(body.tasks) && body.tasks.length) {
+        plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : 'orchestrate', instruction: String(t.instruction || t).slice(0, 2000) })).filter(t => t.instruction) };
+        if (!plan.tasks.length) return json({ error: 'tasks[] must contain at least one instruction' }, 400);
+      } else {
+        plan = planMission(goal);
+      }
+      const mid = 'm-' + id('mission');
+      const mission = { id: mid, goal, pattern: plan.pattern, plan_reason: plan.reason, status: 'planning', created: new Date().toISOString(), tasks: [], receipt: null, law: 'every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)' };
+      if (plan.pattern === 'REFUSED') {
+        mission.status = 'refused';
+        mission.refusal = plan.reason;
+        mission.tasks = [];
+        mission.receipt = await mSha('HARZ-MISSION-1|' + mid + '|planner-refused|' + plan.reason);
+        await kvPutMission(mission);
+        return json({ ...mission, honest_note: 'refusal is a first-class result — the planner did not guess a plan' }, 200);
+      }
+      mission.status = 'executing';
+      await kvPutMission(mission);
+      let prev = [];
+      for (const t of plan.tasks) {
+        const task = { id: t.id, type: t.type, instruction: t.instruction, state: 'executing', agent_id: null, backend: null, latency_ms: null, external_calls: 0, internal_calls: 0, answer: null, receipt: null, refusal: null, error: null };
+        const t0 = Date.now();
+        try {
+          if (t.type === 'compose') {
+            // direct in-worker composition through the UNCHANGED frozen V3 Studio path
+            // (createParse -> stResolveModes -> stBuildBundle -> stTest -> stDeliver).
+            // Zero HTTP hops: Cloudflare error 1042 forbids a worker fetching its own
+            // workers.dev URL, and a direct call is the more sovereign form anyway.
+            const parsed = await createParse({ prompt: t.instruction });
+            if (!parsed.valid) {
+              task.state = 'refused'; task.refusal = 'studio parser refusal: ' + (parsed.reason || 'prompt refused, never improvised');
+              task.receipt = await mSha('refused:' + task.refusal);
+            } else {
+              const resolution = stResolveModes(parsed, undefined);
+              if (!resolution.ok) {
+                task.state = 'refused'; task.refusal = 'mode resolution refusal: ' + (resolution.honest_note || 'no deterministic routing for this prompt');
+                task.receipt = await mSha('refused:' + task.refusal);
+              } else {
+                const built = await stBuildBundle(parsed, 1, resolution, undefined);
+                const test = stTest(built.record, built.children);
+                if (!built.children.length) {
+                  task.state = 'refused'; task.refusal = 'bundle contained zero children (disclosed, never fabricated)';
+                  task.receipt = await mSha('refused:' + task.refusal);
+                } else if (!test.passed) {
+                  task.state = 'refused'; task.refusal = 'bundle test did not pass: ' + (test.checks || []).filter(c => !c.passed).map(c => c.check).join(', ');
+                  task.receipt = await mSha('refused:' + task.refusal);
+                } else {
+                  const del = await stDeliver(built.bundle_id);
+                  if (del.delivered && del.receipt && del.receipt.receipt_emitted) {
+                    task.state = 'verified'; task.agent_id = 'harz-studio-refsyn'; task.backend = 'harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)';
+                    task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
+                    task.receipt = del.receipt.studio_receipt_sha256;
+                  } else {
+                    task.state = 'refused';
+                    task.refusal = 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown'));
+                    task.answer = { bundle_id: built.bundle_id, delivered: false };
+                    task.receipt = await mSha('refused:' + task.refusal);
+                  }
+                }
+              }
+            }
+          } else {
+            const message = prev.length ? t.instruction + '\n\nVerified results from earlier mission tasks (context, not new evidence):\n' + prev.map((p, i) => (i + 1) + '. ' + p).join('\n') : t.instruction;
+            const r = await orchestrate({ message, agent: 'supreme-engine' });
+            task.agent_id = (r.agent && r.agent.name) || 'supreme-engine';
+            task.backend = (r.meta && r.meta.engine && r.meta.engine.backend) || null;
+            task.external_calls = (r.meta && r.meta.external_calls) || 0;
+            task.latency_ms = (r.meta && r.meta.total_latency_ms) || (Date.now() - t0);
+            task.answer = r.answer;
+            const v = r.verification || {};
+            const claimOk = !v.claim_check || v.claim_check.verdict === 'supported';
+            const grounded = v.status === 'grounded-in-evidence' || v.status === 'no-external-evidence' || (v.claim_check && v.claim_check.verdict === 'supported');
+            if (typeof r.answer === 'string' && /I (will not|cannot|do not have)/i.test(r.answer) && v.evidence_count === 0) {
+              task.state = 'refused'; task.refusal = 'orchestrator honest refusal (no grounded evidence)'; task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
+            } else if (v.receipt_sha256 && grounded && claimOk) {
+              task.state = 'verified'; task.receipt = v.receipt_sha256; prev.push(String(r.answer).slice(0, 4000));
+            } else {
+              task.state = 'refused'; task.refusal = 'verification did not establish grounded support (claim_check: ' + JSON.stringify(v.claim_check ? v.claim_check.verdict : null) + ', evidence: ' + (v.evidence_count || 0) + ')';
+              task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
+            }
+          }
+        } catch (e) {
+          task.state = 'error'; task.error = String(e && e.message || e).slice(0, 300); task.receipt = await mSha('error:' + task.error);
+        }
+        mission.tasks.push(task);
+        await kvPutMission(mission);
+      }
+      const anyVerified = mission.tasks.some(t => t.state === 'verified');
+      const anyRefused = mission.tasks.some(t => t.state === 'refused' || t.state === 'error');
+      mission.status = anyVerified && !anyRefused ? 'verified' : (!anyVerified && anyRefused ? (mission.tasks.some(t => t.state === 'refused') ? 'refused' : 'error') : 'mixed');
+      let h = await mSha('HARZ-MISSION-1|' + mid);
+      for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));
+      mission.receipt = h;
+      mission.sovereign = mission.tasks.every(t => (t.external_calls || 0) === 0);
+      await kvPutMission(mission);
+      return json(mission);
+    }
+    if (path === '/api/missions/v1' && request.method === 'GET') {
+      const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
+      return json({ count: idx.missions.length, missions: idx.missions, contract: 'contracts/MISSIONS-V1.md (frozen in harz-git)' });
+    }
+    if (path.startsWith('/api/missions/v1/') && request.method === 'GET') {
+      const mid = path.split('/')[4];
+      const m = await kvGetMission(mid);
+      if (!m) return json({ error: 'mission not found', mission_id: mid }, 404);
+      return json(m);
+    }
+    // ==================== CONSOLE PWA v0.1 (light theme, mobile-first, over the frozen core) ====================
+    if (path === '/console' || path === '/console/manifest.json' || path === '/console/sw.js' || path === '/console/icon.svg') {
+      if (path === '/console/manifest.json') return json({ name: 'HARZ Intelligence Console', short_name: 'HARZ Console', description: 'Sovereign console over the HARZ intelligence core — chat, agent registry, missions, receipts', start_url: '/console', display: 'standalone', background_color: '#f0f2f5', theme_color: '#f0f2f5', icons: [{ src: '/console/icon.svg', sizes: 'any', type: 'image/svg+xml' }] });
+      if (path === '/console/sw.js') {
+        const sw = "const CACHE='harz-console-v1';const SHELL=['/console','/console/manifest.json','/console/icon.svg'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim())});self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.pathname==='/console'||u.pathname.startsWith('/console/')){e.respondWith(fetch(e.request).then(r=>{const cp=r.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return r}).catch(()=>caches.match(e.request)))}});";
+        return new Response(sw, { headers: { 'Content-Type': 'application/javascript', 'Service-Worker-Allowed': '/console/' } });
+      }
+      if (path === '/console/icon.svg') return new Response('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f2f5"/><circle cx="32" cy="32" r="21" fill="none" stroke="#0a7d32" stroke-width="4"/><circle cx="32" cy="32" r="9" fill="#0a7d32"/><path d="M32 11v7M32 46v7M11 32h7M46 32h7" stroke="#0a7d32" stroke-width="4" stroke-linecap="round"/></svg>', { headers: { 'Content-Type': 'image/svg+xml' } });
+      const html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f0f2f5"><link rel="manifest" href="/console/manifest.json"><link rel="icon" href="/console/icon.svg"><title>HARZ Intelligence Console</title><style>body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#111;margin:0;padding:12px;max-width:760px;margin:0 auto}h1{font-size:19px;margin:8px 0 2px;color:#0a7d32}.sub{font-size:12px;color:#555;margin-bottom:10px}button{background:#0a7d32;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:15px;cursor:pointer}button:disabled{background:#aaa}input,textarea{width:96%;border:1px solid #ccc;border-radius:8px;padding:10px;font-family:inherit;font-size:15px}textarea{height:70px}.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.08)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tab{background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}.tab.on{background:#0a7d32;color:#fff;border-color:#0a7d32}.out{font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}.mono{font-family:monospace;font-size:12px;color:#333}.ok{color:#0a7d32;font-weight:bold}.rf{color:#b45309;font-weight:bold}.er{color:#b91c1c;font-weight:bold}.stat{font-size:12px;color:#666;margin-top:6px}a{color:#0a7d32}</style></head><body><h1>HARZ INTELLIGENCE</h1><div class="sub">Sovereign console v0.1 — chat, agent registry, missions with chained receipts. Zero external calls.</div><div class="tabs"><div class="tab on" onclick="tab(this,\'health\')">Health</div><div class="tab" onclick="tab(this,\'chat\')">Chat</div><div class="tab" onclick="tab(this,\'agents\')">Agents</div><div class="tab" onclick="tab(this,\'missions\')">Missions</div><div class="tab" onclick="tab(this,\'studio\')">Studio</div></div><div id="p-health" class="card"><div class="out" id="health">Loading…</div></div><div id="p-chat" class="card" style="display:none"><input id="msg" placeholder="Ask the intelligence core…"><button onclick="chat()">Ask</button><div class="out" id="chatout"></div></div><div id="p-agents" class="card" style="display:none"><div class="out" id="agents">Loading…</div></div><div id="p-missions" class="card" style="display:none"><textarea id="goal" placeholder="Mission goal… e.g. Research: what is the GDEG payment rate? or Compose: create an image about kasuwa"></textarea><button onclick="mission()">Run mission</button> <button onclick="listMissions()">List missions</button><div class="out" id="mout"></div></div><div id="p-studio" class="card" style="display:none"><div class="out">The frozen V3 Creative Studio handles composition:<br><a href="/api/creation/v1/studio">Open HARZ Creative Studio</a></div></div><script>function tab(el,p){document.querySelectorAll(\'.tab\').forEach(x=>x.classList.remove(\'on\'));el.classList.add(\'on\');[\'health\',\'chat\',\'agents\',\'missions\',\'studio\'].forEach(x=>document.getElementById(\'p-\'+x).style.display=x===p?\'block\':\'none\')}async function loadHealth(){const r=await fetch(\'/api/health\');const j=await r.json();document.getElementById(\'health\').textContent=JSON.stringify(j,null,2)}async function chat(){const m=document.getElementById(\'msg\').value;if(!m)return;const o=document.getElementById(\'chatout\');o.textContent=\'Thinking (sovereign pipeline)…\';const r=await fetch(\'/api/chat\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({message:m})});const j=await r.json();o.textContent=(j.answer||j.error||JSON.stringify(j))+\'\\n\\nRECEIPT: \'+(j.verification&&j.verification.receipt_sha256||\'none\')+\' | EXTERNAL CALLS: \'+(j.meta&&j.meta.external_calls)}async function loadAgents(){const r=await fetch(\'/api/agents/v1/registry\');const j=await r.json();const el=document.getElementById(\'agents\');let s=\'Registry: \'+Object.keys(j.agents||{}).length+\' agents.\\n\\n\';for(const[a,info]of Object.entries(j.agents||{})){s+=a+\' [\'+info.role+\' v\'+info.version+\']\\n  caps: \'+(info.capabilities||[]).join(\', \')+\'\\n\\n\'}el.textContent=s}async function mission(){const g=document.getElementById(\'goal\').value;if(!g)return;const o=document.getElementById(\'mout\');o.textContent=\'Executing mission…\';const r=await fetch(\'/api/missions/v1\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({goal:g})});const j=await r.json();renderMission(j,o)}async function listMissions(){const o=document.getElementById(\'mout\');const r=await fetch(\'/api/missions/v1\');const j=await r.json();let s=j.missions.length+\' mission(s)\\n\\n\';j.missions.forEach(m=>{s+=m.id+\' [\'+m.status+\'] \'+m.goal.slice(0,60)+\'\\n  receipt: \'+(m.receipt||\'-\')+\'\\n\\n\'});o.textContent=s}function renderMission(j,o){let s=\'MISSION \'+j.id+\'\\nSTATUS: \'+j.status+\' | PATTERN: \'+j.pattern+\' | SOVEREIGN: \'+j.sovereign+\'\\n\\n\';(j.tasks||[]).forEach(t=>{s+=\'TASK \'+t.id+\' [\'+t.type+\'] -> \'+t.state+\'\\n  agent: \'+(t.agent_id||\'-\')+\' | ext_calls: \'+t.external_calls+\' | receipt: \'+(t.receipt||\'-\')+\'\\n  \'+(t.state===\'verified\'?(typeof t.answer===\'object\'?JSON.stringify(t.answer):String(t.answer)).slice(0,600):(t.refusal||t.error||\'\'))+\'\\n\\n\'});s+=\'MISSION RECEIPT: \'+(j.receipt||\'-\');o.textContent=s}loadHealth();loadAgents();if(\'serviceWorker\' in navigator)navigator.serviceWorker.register(\'/console/sw.js\').catch(function(){});</script></body></html>';
+      return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     return json({ error: 'not found', path }, 404);
