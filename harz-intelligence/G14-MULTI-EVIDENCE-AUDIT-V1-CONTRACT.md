@@ -63,3 +63,33 @@ G5 creator cannot invent relationships (bytes only, nothing added): M5 + proofs
 G6 reader still judges independently: M1, M10
 G7 regressions unchanged: M7
 G8 sovereignty + determinism + browser + trace + receipt: M8, M9, M10
+
+## DEFECT D2 — FOUND DURING G14, FROZEN BEFORE FIX (recorded 2026-10-03)
+MEASURED: in any explicit multi-research mission, EVERY second-position
+orchestrate task returns the same generic canonical-URL fallback answer
+(claims len 264, question-independent: 'I do not have a canonical URL matching
+this request... I will not quote an unrelated URL from the evidence...').
+Probed live: Pay, Faucet, Oracle, Health as second tasks — all identical.
+ROOT CAUSE (missions executor, this layer): the executor appends prior task
+answers to the research message as 'context' (line: message = t.instruction +
+'\n\nVerified results from earlier mission tasks (context, not new
+evidence):\n' + prev...). The FROZEN reasoner's question decomposition
+(taskPlanSteps) splits the combined message into fragments and routes
+per-fragment; with the appended answer text the route collapses to
+canonical_url fallback. The frozen reasoner is ANSWERING HONESTLY what it was
+given — the defect is the executor's message construction, not the reasoner.
+CONSEQUENCE: multi-research missions cannot produce independent verified
+sources; second answers also mention 'evidence' and lawfully refuse at the
+frozen creation intake — multi-evidence composition is blocked.
+DESIGN CONFLICT: silent context injection contradicts the explicitness law Dad
+set for evidence handoff (no auto-consumption of mission memory). Independence
+of sources (Dad's G14 framing: 'multiple independently verified tasks') is
+violated by construction — task 2's answer depends on task 1's text.
+MINIMAL FIX (owning layer only — missions executor): research tasks receive
+exactly their own instruction. prev[] context injection removed for
+orchestrate tasks. No frozen layer touched. Consequence disclosed: deliberate
+chained-context research is no longer silently available; if Dad wants context
+chaining later, it must be an EXPLICIT reference design (its own contract),
+never silent injection. Nothing in MISSIONS-V1's frozen law (every task ends
+verified or refused; nothing disappears) depends on context injection, and no
+audit ever positively verified chained-context answer quality.
