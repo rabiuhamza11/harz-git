@@ -9004,18 +9004,35 @@ if (path === '/api/intake/v1/testm2') {
             let evidenceUsed = null;
             let handoffRefusal = null;
             if (Array.isArray(t.evidence_from) && t.evidence_from.length) {
+              // G13 EVIDENCE PACKAGE CONTRACT AMENDMENT (frozen 79ab577, Dad's ruling —
+              // Option 3, adapter-only). Typed package, section-addressed on the
+              // reasoner's own frozen format. ZERO semantic rewriting: no prose cleaning,
+              // no selective sentence removal. Creation receives CLAIMS + instruction only;
+              // receipt/confidence/provenance stay metadata on the mission chain.
               const packages = [];
               for (const refId of t.evidence_from) {
                 const src = mission.tasks.find(x => x.id === refId);
                 if (!src) { handoffRefusal = 'evidence handoff refused: referenced task ' + refId + ' does not exist in this mission — missing evidence is an honest failure, never improvised'; break; }
                 if (src.state !== 'verified' || !src.receipt) { handoffRefusal = 'evidence handoff refused: task ' + refId + ' is not verified (state: ' + src.state + ') — unverified evidence may not enter creation'; break; }
                 const answerText = typeof src.answer === 'string' ? src.answer : JSON.stringify(src.answer);
+                // deterministic section addressing of the frozen reasoner format
+                const AM = '**Answer**\n\n';
+                if (!answerText.startsWith(AM)) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output does not carry the frozen **Answer** section — the adapter addresses the frozen structure, it never improvises a claim'; break; }
+                const rest = answerText.slice(AM.length);
+                const si = rest.indexOf('\n\nSources: ');
+                const ci = rest.indexOf('\n\nCONFIDENCE: ');
+                const claimsEnd = (si >= 0 && (ci < 0 || si < ci)) ? si : ci;
+                if (claimsEnd < 0) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output has no frozen Sources/CONFIDENCE boundary — claims cannot be separated from the answer; no improvisation'; break; }
+                const claims = rest.slice(0, claimsEnd);
+                const provenance = (claimsEnd === si) ? rest.slice(si + '\n\nSources: '.length, ci >= 0 ? ci : rest.length) : null;
+                const confidence = ci >= 0 ? rest.slice(ci + '\n\nCONFIDENCE: '.length) : null;
                 const ansSha = await sha256(answerText);
-                packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, answer_sha256: ansSha, answer_text: answerText, task_receipt: src.receipt, carry_law: 'verified mission findings carried byte-exact; creation may use them, never certify them, never alter them' });
+                const claimsSha = await sha256(claims);
+                packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, source_receipt: src.receipt, answer_sha256: ansSha, claims: claims, claims_sha256: claimsSha, confidence: confidence, provenance: provenance !== null ? provenance : 'none — this answer type carries no Sources section (disclosed, never guessed)', extraction_law: 'byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) — zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain' });
               }
               if (!handoffRefusal) {
-                handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — byte-exact from the cited task receipt; use but never certify or alter]\n' + JSON.stringify({ finding_packages: packages });
-                evidenceUsed = packages.map(p => ({ source_task: p.source_task, answer_sha256: p.answer_sha256, task_receipt: p.task_receipt }));
+                handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — claims carried byte-exact from a cited verified task; use but never certify or alter]\n' + packages.map(p => p.claims).join('\n\n');
+                evidenceUsed = packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, answer_sha256: p.answer_sha256, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance, extraction_law: p.extraction_law }));
               }
             }
             const parsed = handoffRefusal ? null : await createParse({ prompt: handoffPrompt });
