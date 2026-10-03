@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/api/root" },
+    { "source": "/boundary", "destination": "/api/boundaryx" },
+    { "source": "/api/boundary", "destination": "/api/apiboundaryx" },
+    { "source": "/app.css", "destination": "/api/appcss" },
+    { "source": "/app.js", "destination": "/api/appjs" },
+    { "source": "/icon.svg", "destination": "/api/iconx" },
+    { "source": "/manifest.json", "destination": "/api/manifestx" },
+    { "source": "/sw.js", "destination": "/api/swx" }
+  ]
+}
