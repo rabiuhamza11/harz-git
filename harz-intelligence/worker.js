@@ -9012,13 +9012,22 @@ if (path === '/api/intake/v1/testm2') {
                   task.receipt = await mSha('refused:' + task.refusal);
                 } else {
                   const del = await stDeliver(built.bundle_id);
-                  if (del.delivered && del.receipt && del.receipt.receipt_emitted) {
+                  // G11 CREATION-MISSION-AUDIT (defect D1, contract 1e27ad1): V3 lawfully
+                  // emits a bundle receipt when every child was delivered OR boundary-refused
+                  // (disclosed, never masked) — so receipt_emitted alone cannot mean success.
+                  // A mission task is 'verified' only when at least one artifact was actually
+                  // delivered; zero delivered children (all boundary-refused) is an honest
+                  // mission refusal chaining the children's own refusal notes verbatim.
+                  if (del.delivered && (del.delivered_children || []).length > 0 && del.receipt && del.receipt.receipt_emitted) {
                     task.state = 'verified'; task.agent_id = 'harz-studio-refsyn'; task.backend = 'harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)';
                     task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
                     task.receipt = del.receipt.studio_receipt_sha256;
                   } else {
                     task.state = 'refused';
-                    task.refusal = 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown'));
+                    const zeroDelivery = (del.delivered_children || []).length === 0 && ((del.refused_children && del.refused_children.length) || (built.record.children || []).length) > 0;
+                    task.refusal = (zeroDelivery
+                      ? 'zero artifacts delivered — every child boundary-refused: ' + ((del.refused_children || []).map(c => c.mode + ': ' + String(c.refusal_note || c.outcome).slice(0, 100)).join(' | ') || 'no children')
+                      : 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown')));
                     task.answer = { bundle_id: built.bundle_id, delivered: false };
                     task.receipt = await mSha('refused:' + task.refusal);
                   }
