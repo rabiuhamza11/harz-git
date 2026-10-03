@@ -9034,8 +9034,17 @@ if (path === '/api/intake/v1/testm2') {
             task.latency_ms = (r.meta && r.meta.total_latency_ms) || (Date.now() - t0);
             task.answer = r.answer;
             const v = r.verification || {};
-            const claimOk = !v.claim_check || v.claim_check.verdict === 'supported';
-            const grounded = v.status === 'grounded-in-evidence' || v.status === 'no-external-evidence' || (v.claim_check && v.claim_check.verdict === 'supported');
+            // MISSIONS-AUDIT-V1 (contract 0415679): vocabulary normalization at the
+            // contract boundary. The frozen verifier (verify1Check) emits aggregate
+            // verdicts ONLY from {no-claims, all-supported, N-unsupported}; the bare
+            // string 'supported' is a per-claim verdict and is NEVER emitted as the
+            // aggregate. The old predicate string-matched a string the verifier cannot
+            // produce, so every answered mission with evidence units refused. The fix
+            // accepts exactly ONE aggregate verdict — 'all-supported' (zero unsupported
+            // claims). No truthy acceptance, no substring guessing, refusals preserved:
+            // 'no-claims' and any 'N-unsupported' still refuse, exactly as before.
+            const claimOk = !v.claim_check || v.claim_check.verdict === 'all-supported';
+            const grounded = v.status === 'grounded-in-evidence' || v.status === 'no-external-evidence' || (v.claim_check && v.claim_check.verdict === 'all-supported');
             if (typeof r.answer === 'string' && /I (will not|cannot|do not have)/i.test(r.answer) && v.evidence_count === 0) {
               task.state = 'refused'; task.refusal = 'orchestrator honest refusal (no grounded evidence)'; task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
             } else if (v.receipt_sha256 && grounded && claimOk) {
