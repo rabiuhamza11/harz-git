@@ -1,0 +1,26 @@
+{
+  "contract": "SEARCH-AUDIT-V1",
+  "frozen": "2026-10-03",
+  "questions": [
+    {"id": 1, "q": "What is the UBA account number used for HARZ Pay bank transfers?", "gold_ids": [10470, 10066, 7], "flagship": true},
+    {"id": 2, "q": "Which crypto network is used for USDT payments in HARZ Pay?", "gold_ids": [10470, 10066, 7]},
+    {"id": 3, "q": "What fee does HarzPay charge per transaction?", "gold_ids": [10470, 10066]},
+    {"id": 4, "q": "How do I add money to my HarzPay wallet?", "gold_ids": [10470]},
+    {"id": 5, "q": "What is the consensus mechanism of HARZ Chain?", "gold_ids": [5, 10044, 10203, 10416]},
+    {"id": 6, "q": "What is the GDEG token?", "gold_ids": [10035, 2, 4]},
+    {"id": 7, "q": "What payment methods does HARZ Exchange accept?", "gold_ids": [4]},
+    {"id": 8, "q": "What services does the HARZ Super App include?", "gold_ids": [6]},
+    {"id": 9, "q": "What did NCC announce about SIM type approval compliance?", "gold_ids": [115]},
+    {"id": 10, "q": "What digital learning pathways did NCC open?", "gold_ids": [116]},
+    {"id": 11, "q": "How many properties does Abuja Estate City serve?", "gold_ids": [10]},
+    {"id": 12, "q": "What does HARZSwap do?", "gold_ids": [2]},
+    {"id": 13, "q": "What does the HARZ FX service provide?", "gold_ids": [103]},
+    {"id": 14, "q": "What is HARZ Wallet?", "gold_ids": [5]},
+    {"id": 15, "q": "What is Koya Trading and Digital Marketing?", "gold_ids": [7, 10427]},
+    {"id": 16, "q": "How does the HARZ Exchange OTC desk work?", "gold_ids": [4]},
+    {"id": 17, "q": "What is the HARZ Ecosystem?", "gold_ids": [10034]},
+    {"id": 18, "q": "What is the airspeed velocity of an unladen qwizzleblatt?", "gold_ids": []},
+    {"id": 19, "q": "Who won the 2026 Bloboland national elections?", "gold_ids": []},
+    {"id": 20, "q": "What is the zorbite concentration in the qlanari river?", "gold_ids": []}
+  ]
+}

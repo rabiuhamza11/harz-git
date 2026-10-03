@@ -1,0 +1,365 @@
+{
+  "run": "live-v04",
+  "results": [
+    {
+      "id": 1,
+      "match": "and",
+      "strict": 1,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10470,
+          "rabiuhamza11.github.io"
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "match": "and",
+      "strict": 2,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10470,
+          "rabiuhamza11.github.io"
+        ],
+        [
+          10034,
+          "harz-ecosystem-ad.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 3,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10470,
+          "rabiuhamza11.github.io"
+        ],
+        [
+          10446,
+          "rabiuhamza11.github.io"
+        ],
+        [
+          10107,
+          "harz-payments.hamzarabiu390.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 4,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10470,
+          "rabiuhamza11.github.io"
+        ]
+      ]
+    },
+    {
+      "id": 5,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": null,
+      "top3": [
+        [
+          951,
+          "ietf.org"
+        ],
+        [
+          3029,
+          "iana.org"
+        ],
+        [
+          3021,
+          "iana.org"
+        ]
+      ]
+    },
+    {
+      "id": 6,
+      "match": "and",
+      "strict": 23,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10035,
+          "gdeg-web.hamzarabiu390.workers.dev"
+        ],
+        [
+          10348,
+          "harz-rate-updater.harz.workers.dev"
+        ],
+        [
+          10436,
+          "gdeg-images.hamzarabiu390.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 7,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": null,
+      "top3": [
+        [
+          2482,
+          "man7.org"
+        ],
+        [
+          3064,
+          "github.com"
+        ],
+        [
+          5010,
+          "ecma-international.org"
+        ]
+      ]
+    },
+    {
+      "id": 8,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 3,
+      "top3": [
+        [
+          114,
+          "harz-super-app.harz.workers.dev"
+        ],
+        [
+          10281,
+          "harz-rate-updater.harz.workers.dev"
+        ],
+        [
+          6,
+          "rabiuhamza11.github.io"
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          115,
+          "ncc.gov.ng"
+        ],
+        [
+          119,
+          "ncc.gov.ng"
+        ],
+        [
+          11,
+          "ncc.gov.ng"
+        ]
+      ]
+    },
+    {
+      "id": 10,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          116,
+          "ncc.gov.ng"
+        ],
+        [
+          119,
+          "ncc.gov.ng"
+        ],
+        [
+          11,
+          "ncc.gov.ng"
+        ]
+      ]
+    },
+    {
+      "id": 11,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          10,
+          "abuja-estate-city.hamzarabiu390.workers.dev"
+        ],
+        [
+          10082,
+          "abuja-estate-city.hamzarabiu390.workers.dev"
+        ],
+        [
+          1561,
+          "nairametrics.com"
+        ]
+      ]
+    },
+    {
+      "id": 12,
+      "match": "and",
+      "strict": 22,
+      "gold_rank": 1,
+      "top3": [
+        [
+          2,
+          "harz-swap.harz.workers.dev"
+        ],
+        [
+          10141,
+          "harz-swap.harz.workers.dev"
+        ],
+        [
+          10350,
+          "harz-rate-updater.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 13,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          103,
+          "harz-fx.harz.workers.dev"
+        ],
+        [
+          10281,
+          "harz-rate-updater.harz.workers.dev"
+        ],
+        [
+          102,
+          "harz-apex-bank.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 14,
+      "match": "and",
+      "strict": 54,
+      "gold_rank": 1,
+      "top3": [
+        [
+          5,
+          "harz-crypto-wallet.harz.workers.dev"
+        ],
+        [
+          10281,
+          "harz-rate-updater.harz.workers.dev"
+        ],
+        [
+          10274,
+          "harz-rate-updater.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 15,
+      "match": "and",
+      "strict": 2,
+      "gold_rank": 1,
+      "top3": [
+        [
+          7,
+          "rabiuhamza11.github.io"
+        ],
+        [
+          10427,
+          "rabiuhamza11.github.io"
+        ]
+      ]
+    },
+    {
+      "id": 16,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": 1,
+      "top3": [
+        [
+          4,
+          "harz-exchange.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 17,
+      "match": "and",
+      "strict": 79,
+      "gold_rank": 2,
+      "top3": [
+        [
+          10047,
+          "harz-mail.hamzarabiu390.workers.dev"
+        ],
+        [
+          10034,
+          "harz-ecosystem-ad.harz.workers.dev"
+        ],
+        [
+          10241,
+          "harz-genesis.harz.workers.dev"
+        ]
+      ]
+    },
+    {
+      "id": 18,
+      "match": "and",
+      "strict": 27,
+      "gold_rank": null,
+      "top3": [
+        [
+          6922,
+          "fb.com"
+        ],
+        [
+          1746,
+          "vercel.com"
+        ],
+        [
+          2604,
+          "v0.app"
+        ]
+      ]
+    },
+    {
+      "id": 19,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": null,
+      "top3": [
+        [
+          6398,
+          "dailytrust.com"
+        ]
+      ]
+    },
+    {
+      "id": 20,
+      "match": "relaxed",
+      "strict": 0,
+      "gold_rank": null,
+      "top3": [
+        [
+          1632,
+          "wikipedia.org"
+        ],
+        [
+          6001,
+          "gizmodo.com"
+        ],
+        [
+          9435,
+          "memorysafety.org"
+        ]
+      ]
+    }
+  ]
+}
