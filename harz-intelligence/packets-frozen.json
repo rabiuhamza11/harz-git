@@ -1,0 +1,1109 @@
+[
+ {
+  "id": 1,
+  "question": "What is the UBA account number used for HARZ Pay bank transfers?",
+  "gold_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "flagship": true,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "11d48e502127631811d48e50",
+   "evidence": [
+    {
+     "doc_id": 10470,
+     "title": "HarzPay Onboarding — Get Started",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+     "text": "nage your wallet in Naira, Dollars, and Crypto — all in one app. 💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍 Multi-Currency NGN, USD, USDT ⚡ Instant Real-time transfers Get Started I already have an account 📱 What's your phone number? We'll send you a verification code to confirm it's you. Phone Number 🇳🇬 +234 Send Verification Code Use email instead 📧 What's your email? We'll use this to send you receipts and account updates. Email Address Full Name Co"
+    },
+    {
+     "doc_id": 10332,
+     "title": "HARZ Pay — Payment Gateway",
+     "url": "https://harz-payment.harz.workers.dev/",
+     "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Product/Description Create Payment Loading... Live Exchange Rates Loading... HARZ Pay v3.0 · Unified Gateway · #f0f2f5"
+    },
+    {
+     "doc_id": 10066,
+     "title": "HARZ Pay",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/",
+     "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE 🌍 Gumroad (Global) GDEG Token Payment Send GDEG to: 0x776C31126387c6f0089765A2df2FD82488DCADfe (Polygon Mainnet) Rate: 1 GDEG = ₦15 ($0.01) 10% ecosystem discount applies Send GDEG to the wallet address above on Polygon, then send tx hash to 08028687857 Crea"
+    },
+    {
+     "doc_id": 10418,
+     "title": "Buy NRL — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/buy-nrl",
+     "text": "I Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull NRL Token (V2) 0xE8423c0595E6b2caD4E6f19B6F51666699be303a Supply: 11,022,500 | Rate: ₦100/NRL ₦100 per NRL How to Buy 1. Send NGN to UBA 2034326424 (Rabiu Hamza Mohammed, code 033) 2. Tell us how many NRL you want 3. Provide your Polygon wallet address 4. We send NRL to your wallet Payment Methods Paystack UBA Transfer USDT TRC20 "
+    },
+    {
+     "doc_id": 7,
+     "title": "HARZ Digital - Koya Trading & Digital Marketing",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio",
+     "text": "arketing mataimatai zuwa gaba. Kujeru kaɗan. ₦64,000 ~$40 USD Sayi Yanzu Hanyoyin Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Token Polygon Network USDT TRC20 Crypto Gumroad Global Card Paddle Global Checkout Shiga Affiliate Program Raba lambar tallata mu, ka sami kwamishin akan kowane sayarwa. Babu kuɗi a gaba! RABIU10 10% kwamishin HAUWA15 15% kwamishin PARTNER20 20% kwamishin Rajista Yanzu Rabiu Hamza Mohammed HARZ Digital WhatsApp: 08"
+    },
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "… 🎬 HarzFilm LIVE ☁️ Super Cloud LIVE 💳 Payment Methods 🏦 UBA Bank Transfer 2034326424 — Rabiu Hamza Mohammed (code 033) 💎 GDEG Token (Polygon) 1 GDEG = ₦15 • 10% cash…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 2,
+  "question": "Which crypto network is used for USDT payments in HARZ Pay?",
+  "gold_ids": [
+   10470,
+   10066,
+   7
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "17a229a075aeb14017a229a0",
+   "evidence": [
+    {
+     "doc_id": 10470,
+     "title": "HarzPay Onboarding — Get Started",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+     "text": "ur phone. Enter it below. Verify Use demo code (1234) Skip verification 💰 Choose your main currency You can always add more currencies later. 🇳🇬 Naira NGN 🇺🇸 Dollar USD ₮ Tether USDT ⚡ GDEG Energy Token Continue 💳 Add a payment method Add a card or bank account to fund your wallet. 💳 Debit/Credit Card Via Paystack — instant ✓ 🏦 Bank Transfer UBA — 2034326424 ✓ ₮ Crypto (USDT) TRC20 network ✓ ⏭️ Skip for now Add later in settings ✓ Continue 💵 Add money to your wallet "
+    },
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain wallet. Create from seed phrase, import existing wallet, send & receive real on-chain transactions. PWA installable. ⚡ Token swaps coming soon — liquidity pools being seeded on HARZSwap DEX Open Wallet → Polygon BSC Ethereum HARZ Edge 💎 HARZ Tokens (V2 — Polyg"
+    },
+    {
+     "doc_id": 7,
+     "title": "HARZ Digital - Koya Trading & Digital Marketing",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio",
+     "text": "n Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Token Polygon Network USDT TRC20 Crypto Gumroad Global Card Paddle Global Checkout Shiga Affiliate Program Raba lambar tallata mu, ka sami kwamishin akan kowane sayarwa. Babu kuɗi a gaba! RABIU10 10% kwamishin HAUWA15 15% kwamishin PARTNER20 20% kwamishin Rajista Yanzu Rabiu Hamza Mohammed HARZ Digital WhatsApp: 0802 868 7857 © 2026 HARZ Digital. All rights reserved. New Platforms HARZ Cloud H"
+    },
+    {
+     "doc_id": 10332,
+     "title": "HARZ Pay — Payment Gateway",
+     "url": "https://harz-payment.harz.workers.dev/",
+     "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Product/Description Create Payment Loading... Live Exchange Rates Loading... HARZ Pay v3.0 · Unified Gateway · #f0f2f5"
+    },
+    {
+     "doc_id": 10066,
+     "title": "HARZ Pay",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/",
+     "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE 🌍 Gumroad (Global) GDEG Token Payment Send GDEG to: 0x776C31126387c6f0089765A2df2FD82488DCADfe (Polygon Mainnet) Rate: 1 GDEG = ₦15 ($0.01) 10% ecosystem discount applies Send GDEG to the wallet address above on Polygon, then send tx hash to 08028687857 Crea"
+    },
+    {
+     "doc_id": 10407,
+     "title": "Neural Protocol — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/neural",
+     "text": "…s payments across 6 channels: Paystack, UBA Transfer, GDEG, USDT, Gumroad, Paddle Smart Routing AI Verified HARZ Cloud v17.0 — One Worker, One D1, Zero Dependencies Syste…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 3,
+  "question": "What fee does HarzPay charge per transaction?",
+  "gold_ids": [
+   10470,
+   10066
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "a0e173b8a736b3d0a0e173b8",
+   "evidence": [
+    {
+     "doc_id": 10470,
+     "title": "HarzPay Onboarding — Get Started",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+     "text": "💳 Harz Pay 🚀 Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto — all in one app. 💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍 Multi-Currency NGN, USD, USDT ⚡ Instant Real-time transfers Get Started I already have an account 📱 What's your phone number? We'll send you a verification code to confirm it's you. Phone Number 🇳🇬 +234 Send Verification Code Use email instead 📧 What's your email? We'"
+    },
+    {
+     "doc_id": 10446,
+     "title": "HarzPay — Payments for Africa",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay.html",
+     "text": "💳 Harz Pay 🔔 AH Total Balance ₦0 Nigerian Naira (NGN) 0 Transactions ₦0 Total Revenue 0 Platforms ➕ Add Money 📤 Send 🛍️ Pay 🔄 Convert My Balances Payment Methods Recent Transactions 🏠 Home 🛍️ Pay 📊 History ⚙️ Settings Add Money ✕"
+    },
+    {
+     "doc_id": 10107,
+     "title": "/manifest.json",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/manifest.json",
+     "text": "{\"name\":\"HARZ Pay\",\"short_name\":\"HARZPay\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}"
+    },
+    {
+     "doc_id": 1897,
+     "title": "Pay a biller",
+     "url": "https://login.remita.net/remita/onepage/NCC/biller.spa",
+     "text": "Loading data, Please wait ... Pay a biller Ã Warning! NIGERIAN COMMUNICATIONS COMMISSION By clicking Submit you agree to our Terms and Conditions and Privacy Policy Reset processing... Submit Guides PAYMENT SUMMARY ₦ 0.00 Amount( ₦ ) ₦ 0.00 PART PAYMENT ( ₦ ) ₦ 0.00 Service Charge ( ₦ ) ₦ 0.00 SERVICE VAT FEE ( ₦ ) ₦ 0.00 CONVENIENCE FEE ( ₦ ) ₦ 0.00 TOTAL AMOUNT ( ₦ ) zero AMOUNT IN WORDS ( ₦ ) Service Charge ( ) * .00 Total Amount To Pay ( ) * .00 × is currently unavailabl"
+    },
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "rify NEW 💬 SMS Marketing LIVE 📢 Broadcast LIVE 🛠️ SaaS Tools (6 Live) 📝 HARZ Forms NEW 🔗 ShortLink NEW 💳 PayLink NEW 🧾 Invoice NEW 👤 BioLink NEW 💰 Pricing Hub LIVE 🚀 Ecosystem Platforms (25+ Live) 👛 Crypto Wallet NEW ⚡ HARZSwap DEX SOON 📊 Exchange NEW ⛓️ Chain Explorer LIVE 🏦 Treasury LIVE 🛒 HARZ Store LIVE 💳 HarzPay LIVE 🏠 Estate City LIVE 🧠 HARZ AI LIVE 📚 EduWealth LIVE 🛡️ CyberShield LIVE 🏗️ BuildBot AI LIVE 🎵 HarzMusic LIVE 🎬 HarzFilm LIVE ☁️ Super C"
+    },
+    {
+     "doc_id": 5332,
+     "title": "Homepage | Yale Graduate School of Arts and Sciences",
+     "url": "https://gsas.yale.edu/",
+     "text": "… entire fall-term tuition charge or continuous registration fee (CRF) will be cancelled for students who withdraw from the graduate school on or before this date, or who …"
+    }
+   ]
+  }
+ },
+ {
+  "id": 4,
+  "question": "How do I add money to my HarzPay wallet?",
+  "gold_ids": [
+   10470
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "f566a62804a68da0f566a628",
+   "evidence": [
+    {
+     "doc_id": 10470,
+     "title": "HarzPay Onboarding — Get Started",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+     "text": " Add a card or bank account to fund your wallet. 💳 Debit/Credit Card Via Paystack — instant ✓ 🏦 Bank Transfer UBA — 2034326424 ✓ ₮ Crypto (USDT) TRC20 network ✓ ⏭️ Skip for now Add later in settings ✓ Continue 💵 Add money to your wallet Start with a small amount to test your wallet. You can add more anytime. Amount to Add ₦ ₦1K ₦5K ₦10K ₦50K Add Money via Paystack Skip — I'll add later ✓ You're all set! 🎉 Your HarzPay wallet is ready. Start sending money, paying merchants"
+    },
+    {
+     "doc_id": 2829,
+     "title": "Add Money | Kuda. - Help Center",
+     "url": "https://help.kuda.com/en/collections/7931651-add-money",
+     "text": "Skip to main content Search ⌘ K Add Money Before You Add Money To Your Account By Card Add Money By Card Add Money By Transfer Add Money By Cash Deposit Add Money By USSD Accounts How To Open A Kuda Account How To Create Your Kuda Profile How To Verify Your Identity How To Secure Your Account Upgrade Your Account to Tier 2 Upgrade Your Account To Tier 3 - Address Verification How To Check Your Kuda Account Number How To Verify Your Address New Account Tiers, Rules And Limits "
+    },
+    {
+     "doc_id": 2811,
+     "title": "Add Money By Card | Kuda. - Help Center",
+     "url": "https://help.kuda.com/en/articles/8948464-add-money-by-card",
+     "text": "Skip to main content Search ⌘ K Add Money Before You Add Money To Your Account By Card Add Money By Card Add Money By Transfer Add Money By Cash Deposit Add Money By USSD Accounts How To Open A Kuda Account How To Create Your Kuda Profile How To Verify Your Identity How To Secure Your Account Upgrade Your Account to Tier 2 Upgrade Your Account To Tier 3 - Address Verification How To Check Your Kuda Account Number How To Verify Your Address New Account Tiers, Rules And Limits "
+    },
+    {
+     "doc_id": 10446,
+     "title": "HarzPay — Payments for Africa",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay.html",
+     "text": "💳 Harz Pay 🔔 AH Total Balance ₦0 Nigerian Naira (NGN) 0 Transactions ₦0 Total Revenue 0 Platforms ➕ Add Money 📤 Send 🛍️ Pay 🔄 Convert My Balances Payment Methods Recent Transactions 🏠 Home 🛍️ Pay 📊 History ⚙️ Settings Add Money ✕"
+    },
+    {
+     "doc_id": 10107,
+     "title": "/manifest.json",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/manifest.json",
+     "text": "{\"name\":\"HARZ Pay\",\"short_name\":\"HARZPay\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"icons\":[{\"src\":\"/icon.svg\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}"
+    },
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "… Chain Explorer LIVE 🏦 Treasury LIVE 🛒 HARZ Store LIVE 💳 HarzPay LIVE 🏠 Estate City LIVE 🧠 HARZ AI LIVE 📚 EduWealth LIVE 🛡️ CyberShield LIVE 🏗️ BuildBot AI LIVE \ud83c…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 5,
+  "question": "What is the consensus mechanism of HARZ Chain?",
+  "gold_ids": [
+   5,
+   10044,
+   10203,
+   10416
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "d86cc7407d0c8004d86cc740",
+   "evidence": [
+    {
+     "doc_id": 2,
+     "title": "HARZSwap — Sovereign DEX on HARZ Chain",
+     "url": "https://harz-swap.harz.workers.dev/",
+     "text": "pen a SYM/HARZ pool for any registered token by seeding both sides — it goes live on the DEX instantly and appears in every pool list. Token Initial HARZ Initial tokens Sign &amp; Create Pool Add Liquidity Pool HARZ amount Token amount Sign & Add Liquidity Remove Liquidity Pool LP tokens to burn Sign & Withdraw Your LP Positions Enter wallet above Sovereignty — everything on HARZ Chain Executor: HARZ Router v1 — on-chain engine contract 0x13681aa174fb8feba5282baa54a39e549e995"
+    },
+    {
+     "doc_id": 3,
+     "title": "HARZ Chain Explorer — Proof of Edge",
+     "url": "https://harz-chain-v2.harz.workers.dev/",
+     "text": "⛓️ HARZ Chain Explorer Proof of Edge • EVM Compatible • SHA-256 • Chain ID 7701 Chain Overview Blocks Transactions Validators Contracts Add to MetaMask"
+    },
+    {
+     "doc_id": 10030,
+     "title": "HARZ Bridge",
+     "url": "https://harz-bridge.harz.workers.dev/",
+     "text": "HARZ Bridge Cross-chain bridge • HARZ Chain ↔ Polygon ⛓️ HARZ Chain Chain ID 7701 ⇄ 🟣 Polygon Chain ID 137 Bridge Status Operational API Key Required 10 req/min Bridge Tokens HARZ → Polygon Polygon → HARZ Lock HARZ on L1, mint HARZcoin on Polygon. Min 100, fee 0.1%. Record Bridge Intent Reverse flow (Polygon to HARZ): 1. Record your intent above (source = your Polygon address, destination = your L1 wallet). 2. Send the same amount of HARZcoin to the bridge signer: loading..."
+    },
+    {
+     "doc_id": 10108,
+     "title": "HARZ Faucet — Claim Free Tokens",
+     "url": "https://harz-faucet.hamzarabiu390.workers.dev/",
+     "text": " per wallet, 24h cooldown Claim Your Free HARZ Your Wallet Address Claim 100 HARZ Create New Wallet Generate Wallet Address Faucet Stats — Total Claims — Today — HARZ Given How It Works 1. Create a wallet or use your existing HARZ Chain wallet 2. Paste your wallet address above 3. Click Claim — 100 HARZ sent instantly 4. One claim per wallet, 24h cooldown enforced 5. Check your balance at the Chain Explorer 6. Trade HARZ on the Exchange HARZ Faucet v3.0 · D1-Backed · Free Tok"
+    },
+    {
+     "doc_id": 10038,
+     "title": "HARZ RPC Proxy",
+     "url": "https://harz-rpc-proxy.hamzarabiu390.workers.dev/",
+     "text": "ts 50.6% Mined RPC Endpoints POST / — JSON-RPC 2.0 (eth_* methods) GET /api/health — Service status GET /api/status — Chain status Supported Methods eth_blockNumber — Current block height eth_getBalance — Wallet balance eth_chainId — Chain ID (0x1A4) eth_getBlockByNumber — Block details eth_getTransactionByHash — Transaction lookup net_version — Network version web3_clientVersion — Client version Chain Info Chain ID 420 Network HARZ L1 Consensus PoA Block Time 10 min Explorer"
+    },
+    {
+     "doc_id": 10335,
+     "title": "HARZ Root — .harz",
+     "url": "https://harz-root.harz.workers.dev/",
+     "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6,
+  "question": "What is the GDEG token?",
+  "gold_ids": [
+   10035,
+   2,
+   4
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "8304f5a78c7264088304f5a7",
+   "evidence": [
+    {
+     "doc_id": 10035,
+     "title": "GDEG Token — Africa's Digital Payment Layer",
+     "url": "https://gdeg-web.hamzarabiu390.workers.dev/",
+     "text": "ve, stack, or redeem for discounts. ⚡ Polygon Speed Fast transactions, low fees. Bridge to global DeFi through QuickSwap. 🔒 Contract Verified Standard ERC-20, audited, on-chain. Owner-controlled, supply locked. 🗺️ Roadmap Token Launch — Done GDEG V2 deployed on Polygon. 10M supply, 99% burned. QuickSwap Liquidity — Done GDEG/POL pool live. Trading available 24/7. Exchange Listings — In Progress Submitted to BitMart, XT.com, BingX, LATOKEN, Poloniex, WhiteBit, HTX. Loyalty R"
+    },
+    {
+     "doc_id": 10348,
+     "title": "GDEG Token — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/gdeg",
+     "text": "GDEG Token GLOBAL DIGITAL ENERGY GRID Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Contract (V2) 0x222a10CE822188c680a04A283E45F9c11D79665e Token Stats 0 Holders 0 Payments 100M Supply ₦15 Rate Energy Rates Solar ₦25/kWh Wind ₦30/kWh Hydro ₦20/kWh Biomass ₦35/kWh HARZ Cloud v17.0 — One Worker, One D1, Zero Dependencies System"
+    },
+    {
+     "doc_id": 10436,
+     "title": "GDEG Images",
+     "url": "https://gdeg-images.hamzarabiu390.workers.dev/",
+     "text": "🖼️ GDEG Images Token image service for GDEG ecosystem Token Images 🪙 GDEG 💎 NRL ⚡ HARZ API Endpoints GET /api/token/:symbol — Token image GET /api/health — Service health GET /icon/:symbol — SVG icon GDEG Images v3.0.0 — HARZ Ecosystem"
+    },
+    {
+     "doc_id": 10066,
+     "title": "HARZ Pay",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/",
+     "text": "HARZ Pay Secure multi-currency payments Create Payment Amount (NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE 🌍 Gumroad (Global) GDEG Token Payment Send GDEG to: 0x776C31126387c6f0089765A2df2FD82488DCADfe (Polygon Mainnet) Rate: 1 GDEG = ₦15 ($0.01) 10% ecosystem discount applies Send GDEG to the wallet address above on Polygon, then send tx hash to 08028687857 Crea"
+    },
+    {
+     "doc_id": 10185,
+     "title": "HARZ ETERNITY — On-Chain Digital Inheritance",
+     "url": "https://harz-eternity.hamzarabiu390.workers.dev/",
+     "text": "ce Works 1. Connect MetaMask wallet 2. Create will — specify GDEG/NRL amounts 3. Add heirs with their Polygon wallet addresses 4. Add 3 guardians (trusted people with phone numbers) 5. Deposit GDEG tokens to heirs (on-chain transfer via MetaMask) 6. When 2-of-3 guardians confirm, inheritance executes 7. All transactions recorded on Polygon Mainnet 8. Zero lawyers. Zero gas (Polygon fees only). Real on-chain. Token Contracts GDEG (Polygon): 0x222a10CE822188c680a04A283E45F9c11D"
+    },
+    {
+     "doc_id": 10215,
+     "title": "HARZ Digital Services — Infrastructure for Africa's Digital Economy",
+     "url": "https://harz-website.hamzarabiu390.workers.dev/",
+     "text": "…atforms 300+ Digital Products 45 Categories 5 AI Agents 10M GDEG Token Supply What We Build Four layers of infrastructure, one integrated stack 💳 Payment Infrastructure …"
+    }
+   ]
+  }
+ },
+ {
+  "id": 7,
+  "question": "What payment methods does HARZ Exchange accept?",
+  "gold_ids": [
+   4
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "20b432ba844df95320b432ba",
+   "evidence": [
+    {
+     "doc_id": 4,
+     "title": "HARZ Exchange — OTC Buy & Sell Desk",
+     "url": "https://harz-exchange.harz.workers.dev/",
+     "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Phone (buyers contact you) Post Offer My Offers & Orders Phone Load My Offers Your Portfolio Phone Number View Portfolio HARZ Exchange v6.1 | OTC Desk + Paystack checkout + P2P market | NGN rate: ₦1,335.695 WhatsApp: 08028687857 | CAC RC: 321424 💱 Exchange 🏨 A"
+    },
+    {
+     "doc_id": 10088,
+     "title": "HARZ Telecom Exchange",
+     "url": "https://harz-telecom-exchange.harz.workers.dev/",
+     "text": "d Sep 10, 2026) phone dials *4279# → [network: MTN/Airtel/Glo/9mobile] → SMPP deliver_sm → HARZ Exchange (TCP) → session router → DialWeb engine (Cloudflare) → deliver_sm_resp ← reply + seal ← phone screen: LAND RECEIPT … Seal DW-00004 Recent Sessions (CDR) 08028687857 1 DIALWEB SITES CONT · &nbsp; 08028687857 39*3*90765*5 LAND RECEIPT END · &nbsp; 08028687857 *4279# HARZ DIALWEB CONT · &nbsp; Deploy The Gateway Node 18+ Linux / VPS Raw TCP unzip telecom-exchange.zip node rou"
+    },
+    {
+     "doc_id": 10014,
+     "title": "HARZ SMS Exchange",
+     "url": "https://harz-sms-exchange.hamzarabiu390.workers.dev/",
+     "text": "HARZ SMS Exchange Aggregator control plane — customers connect once, routing picks the best network Live routes ranked by ROUTE SCORE (quality + availability + speed + cost + capacity). Test routes are labeled TEST — carrier delivery goes live when provider contracts/keys are added. Try the customer API API key To (any format — normalized to +234…) From Text Send via exchange Routes (live scores) Loading… Recent messages Loading…"
+    },
+    {
+     "doc_id": 103,
+     "title": "HARZ FX — Live Exchange Rates",
+     "url": "https://harz-fx.harz.workers.dev/",
+     "text": "NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF → 🇺🇸 USD 🇳🇬 NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF Rate Alerts Get notified on WhatsApp when a rate crosses your target. USD NGN EUR GBP GHS KES ZAR EGP JPY CNY INR CAD AUD CHF Above Below Set Alert HARZ FX v2.0 &nbsp;|&nbsp; Live: ER-API + CoinGecko + HARZ Rate Updater WhatsApp: 0802868785"
+    },
+    {
+     "doc_id": 10047,
+     "title": "HARZ Mail — @mail.harz",
+     "url": "https://harz-mail.hamzarabiu390.workers.dev/",
+     "text": "M HARZ Mail @mail.harz — your address, your ecosystem Sign up Accounts Log out Log in to @mail.harz Log in New here? Create an address → Forgot password? → Reset your password A one-time code is mailed to your account's recovery address (set in Settings). Send code Reset password Back v1.1 · multi-account switch · password recovery · ecosystem delivery — mail any @mail.harz user. Internet exchange ships with the harz.ng domain. Sandbox — no real data. New mail Send Save draft"
+    },
+    {
+     "doc_id": 10332,
+     "title": "HARZ Pay — Payment Gateway",
+     "url": "https://harz-payment.harz.workers.dev/",
+     "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG To…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 8,
+  "question": "What services does the HARZ Super App include?",
+  "gold_ids": [
+   6
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "6ab46f2ce39b0aa06ab46f2c",
+   "evidence": [
+    {
+     "doc_id": 114,
+     "title": "HARZ Super App",
+     "url": "https://harz-super-app.harz.workers.dev/",
+     "text": "HARZ Super App 76 services • Updated Sep 9, 2026 PWA • Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Cloud • 76 Workers Powered by Cloudflare Workers + D1 Install Super App"
+    },
+    {
+     "doc_id": 6,
+     "title": "HARZ Super App v5.0",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-super-app.html",
+     "text": "SDT Payment Methods Recent Transactions No transactions yet Harz Store ( 0 ) 📈 Analytics Dashboard ₦0 Revenue 0 Products 0 Transactions 0 Platforms Revenue by Platform Platform Categories Transaction History 🔐 Login to HARZ Login Create Account 📝 Create Account Register Back to Login 👤 Profile Name — Email — Role user Security 2FA Disabled Reset Password → Data Export Data (JSON) ↓ Logout ⚙️ Settings Theme Dark Backend HARZ Cloud API URL harz-cloud-backend.onrender.com Ve"
+    },
+    {
+     "doc_id": 10281,
+     "title": "HARZ CLOUD — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/",
+     "text": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull HNI Score 730 Health Index Healthy Status Ecosystem Overview 12 Dashboards 0 Products 116 D1 Tables v17.0 Version Live FX Rates Currency Rate (USD) No rate data yet Quick Navigation ⚡ GDEG Energy Token 🧠 Neural AI Protocol"
+    },
+    {
+     "doc_id": 1499,
+     "title": "HARZ Magic — Instant Deploy & Build Automation",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-magic.html",
+     "text": "HARZ Magic Instant deployment & build automation — One click to HARZ Cloud Deploy with Magic Push to HARZ Cloud, DeployForge, HarzGit, and Super App — all at once 88 Pages 6 Repos 4 Workers 100% Uptime Quick Deploy Actions 🚀 Deploy All Push everything to HARZ Cloud 📦 Sync HarzGit Update code repository 🔧 DeployForge Multi-cloud deploy engine 🏠 Super App Update main dashboard 📡 Status Check Verify all services ⏰ Freeze Status Production countdown Deploy Target Status HARZ"
+    },
+    {
+     "doc_id": 10108,
+     "title": "HARZ Faucet — Claim Free Tokens",
+     "url": "https://harz-faucet.hamzarabiu390.workers.dev/",
+     "text": "🚰 HARZ Faucet FREE Part of HARZ Ecosystem Super App Wallet Chain Explorer Exchange Super Cloud — Block Height — Circulating — Wallets 100 HARZ Free claim — one per wallet, 24h cooldown Claim Your Free HARZ Your Wallet Address Claim 100 HARZ Create New Wallet Generate Wallet Address Faucet Stats — Total Claims — Today — HARZ Given How It Works 1. Create a wallet or use your existing HARZ Chain wallet 2. Paste your wallet address above 3. Click Claim — 100 HARZ sent instantly "
+    },
+    {
+     "doc_id": 10335,
+     "title": "HARZ Root — .harz",
+     "url": "https://harz-root.harz.workers.dev/",
+     "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 9,
+  "question": "What did NCC announce about SIM type approval compliance?",
+  "gold_ids": [
+   115
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "3f252cd0a196695c3f252cd0",
+   "evidence": [
+    {
+     "doc_id": 115,
+     "title": "NCC Strengthens Type Approval Compliance for SIM-Enabled Devices in Nigeria | NCC",
+     "url": "https://ncc.gov.ng/media-centre/press-releases/ncc-strengthens-type-approval-compliance-sim-enabled-devices-nigeria",
+     "text": "Skip to main content NCC Strengthens Type Approval Compliance for SIM-Enabled Devices in Nigeria In furtherance of its mandate to ensure that communications devices imported, sold and used in Nigeria meet applicable technical and regulatory standards, the Nigerian Communications Commission (NCC) is strengthening the monitoring and enforcement of its Type Approval requirements through a technology-enabled framework. The initiative is intended to make Type Approval compliance m"
+    },
+    {
+     "doc_id": 119,
+     "title": "Press Releases | NCC",
+     "url": "https://ncc.gov.ng/media-centre/press-releases",
+     "text": "es of the Nigerian Communications Commission Hide Standalone View Off NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative The Nigerian Communications Commission (NCC) has launched the Zero-Rated Data Access to Educational Platforms and Content initiative to expand access to learning resources, bridge educational inequ Read more NCC Strengthens Type Approval Compliance for SIM-Enabled Devices in Nigeria In furtherance"
+    },
+    {
+     "doc_id": 7703,
+     "title": "PHP: todo:php86",
+     "url": "https://wiki.php.net/todo/php86",
+     "text": "todo:php86 PHP 8.6 Preparation Tasks Elect managers Triage GitHub issues for PHP 8.6 Triage GitHub pull requests Push appropriate RFC at appropriate time Timetable Based upon a target GA in late November. Individual releases may be added or removed to accommodate development progress. Tag on Tuesday, release on Thursday 5 months pre-release phase Date Release Jul 02 2026 Alpha 1 Announce Files Jul 16 2026 Alpha 2 Announce Files Jul 30 2026 Alpha 3 Announce Files Aug 11 2026 A"
+    },
+    {
+     "doc_id": 6342,
+     "title": "Trump Announces Deal With Denmark For ‘Permanent’ US Control Of Greenland, Orders Military Presence | Sahara Reporters",
+     "url": "https://saharareporters.com/2026/09/19/trump-announces-deal-denmark-permanent-us-control-greenland-orders-military-presence",
+     "text": "Skip to main content Trump Announces Deal With Denmark For ‘Permanent’ US Control Of Greenland, Orders Military Presence September 19, 2026 News According to Trump, the agreement gives the United States the ability to take whatever measures it considers necessary to secure and defend Greenland and the US. The United States president, Donald Trump, has announced an agreement with Denmark and Greenland that he says gives the United States permanent control over the security and"
+    },
+    {
+     "doc_id": 704,
+     "title": "NAFDAC Newsroom – NAFDAC",
+     "url": "https://nafdac.gov.ng/nafdac-newsroom",
+     "text": "2) ** Customer Service Lines: For Enquiries call 0700-1-NAFDAC (0700-1-623322), For Complaints call 0800-1-NAFDAC (0800-1-623322) NAFDAC Newsroom The list below provides information gathered from press releases and other public notices of The Agency Highlights Address by Prof. Mojisola Christianah Adeyeye at the 49th Annual International Conference of the Chemical Society of Nigeria Inauguration Ceremony of the NAFDAC Pharmacist Reserve Group NAFDAC and NHREC Announce New Dat"
+    },
+    {
+     "doc_id": 1754,
+     "title": "Vercel Knowledge Base: Guides, Videos, and Tutorials",
+     "url": "https://vercel.com/kb",
+     "text": "…tool calls in eve, allow routine actions, and request human approval when needed. Configure the policy and test its failure paths. Product Security Vercel Connect AI Gate…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 10,
+  "question": "What digital learning pathways did NCC open?",
+  "gold_ids": [
+   116
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "2b5f06801ed5c1842b5f0680",
+   "evidence": [
+    {
+     "doc_id": 116,
+     "title": "NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative | NCC",
+     "url": "https://ncc.gov.ng/media-centre/press-releases/ncc-opens-free-digital-learning-pathways-zero-rated-access-educational",
+     "text": "Skip to main content NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative The Nigerian Communications Commission (NCC) has launched the Zero-Rated Data Access to Educational Platforms and Content initiative to expand access to learning resources, bridge educational inequalities and support the country’s long term economic growth by investing in human capital. The Zero-Rated Data Access to Educational Platforms and Con"
+    },
+    {
+     "doc_id": 119,
+     "title": "Press Releases | NCC",
+     "url": "https://ncc.gov.ng/media-centre/press-releases",
+     "text": " of what's going on in the Nigerian telecommunications industry and the activities of the Nigerian Communications Commission Hide Standalone View Off NCC Opens Free Digital Learning Pathways with Zero-Rated Access to Educational Platforms and Content Initiative The Nigerian Communications Commission (NCC) has launched the Zero-Rated Data Access to Educational Platforms and Content initiative to expand access to learning resources, bridge educational inequ Read more NCC Streng"
+    },
+    {
+     "doc_id": 4847,
+     "title": "Learn More About MIT's Open Online Courses | Open Learning",
+     "url": "https://openlearning.mit.edu/about-mitx",
+     "text": " visit: https://learn-mitxonline.mit.edu/celebrating-10-years-of-mitx . Our Global Learning Community To date, more than 5 million people from nearly every country around the world have registered for our courses. Learn more Research and Innovation The MITx team engages in innovative digital learning projects with the goal of furthering the field of online learning. Learn more New Educational Pathways MITx courses are part of two new education pathways to support learners’ ac"
+    },
+    {
+     "doc_id": 10425,
+     "title": "Harz Digital Store — HARZ Digital Learning Series",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-store.html",
+     "text": "12-BOOK COMPLETE SERIES HARZ Digital Learning Practical Computer Skills Series. From beginner to job-ready professional. 12 books, 108+ chapters, hands-on exercises. Author: Rabiu Hamza Mohammed | CAC RC: 321424 📚 Complete 12-Book Bundle All 12 books in one package. Instant PDF delivery. ₦30,000 ₦6,000 You save ₦24,000! Order on WhatsApp — Instant Delivery 💻 BOOK 1 Computer Fundamentals & Windows Productivity Hardware, Windows shortcuts, file management, troubleshooting, ne"
+    },
+    {
+     "doc_id": 4873,
+     "title": "Open Learning – Open Matters | MIT OpenCourseWare News",
+     "url": "https://ocw-openmatters.org/category/open-educational-resources/uncategorized",
+     "text": "onferences Contest Courses Current events edX Entrepreneurship Events Faculty Profile Featured Featured Content Flipped classroom HarvardX Higher education Highlights for High School Intellectual property J-WEL Media coverage MIT Community MITx MOOC New Courses News Next Decade Alliance OCW Consortium OCW Crew OCW Educator OCW Scholar OCW Use & Impact OEGlobal Office of Digital Learning Open Access Open data Open Education Open Educational Resources Open Learning Library Open"
+    },
+    {
+     "doc_id": 4968,
+     "title": "MIT Open Learning – Open Matters | MIT OpenCourseWare News",
+     "url": "https://ocw-openmatters.org/tag/mit-open-learning",
+     "text": "…tor OCW Scholar OCW Use & Impact OEGlobal Office of Digital Learning Open Access Open data Open Education Open Educational Resources Open Learning Library Open licensing …"
+    }
+   ]
+  }
+ },
+ {
+  "id": 11,
+  "question": "How many properties does Abuja Estate City serve?",
+  "gold_ids": [
+   10
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "7d4f6d9700d54e147d4f6d97",
+   "evidence": [
+    {
+     "doc_id": 10,
+     "title": "Abuja Estate City — Real Estate & Construction Marketplace",
+     "url": "https://abuja-estate-city.hamzarabiu390.workers.dev/",
+     "text": "ABUJA ESTATE CITY Real Estate &amp; Construction Marketplace — Abuja, Nigeria 🏠 Verified Property 👷 Rated Professionals &amp; Artisans 🧱 Building Materials 👤 Account ♡ My Favorites All Types Land Residential Office Commercial Luxury Home Warehouse Sale &amp; Rent For Sale For Rent Search — Listings — Professionals — Materials 🏠 Properties 👷 Professionals &amp; Artisans All Professionals Artisans Agents 🧱 Building Materials 📍 District Map tap a district to filter Simpl"
+    },
+    {
+     "doc_id": 10082,
+     "title": "/manifest.json",
+     "url": "https://abuja-estate-city.hamzarabiu390.workers.dev/manifest.json",
+     "text": "{\"name\":\"Abuja EstateHub\",\"short_name\":\"EstateHub\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"description\":\"Real Estate & Construction Marketplace — properties, professionals, artisans and building materials in Abuja, Nigeria.\",\"icons\":[{\"src\":\"/icon-192.png\",\"sizes\":\"192x192\",\"type\":\"image/png\"},{\"src\":\"/icon-512.png\",\"sizes\":\"512x512\",\"type\":\"image/png\"}]}"
+    },
+    {
+     "doc_id": 10450,
+     "title": "abuja-estate-city Pricing",
+     "url": "https://harz-pricing.harz.workers.dev/pricing/abuja-estate-city",
+     "text": "abuja-estate-city Choose your plan Email for receipt Property Listing 30 days exposure N2,000 Pay with Paystack Featured Property 90 days + top placement N5,000 Pay with Paystack Agent Account Unlimited listings N10,000 /month Pay with Paystack Secured by Paystack | HARZ Monetize"
+    },
+    {
+     "doc_id": 1561,
+     "title": "Real Estate and Construction Archives - Nairametrics",
+     "url": "https://nairametrics.com/category/industries/real-estate-and-construction",
+     "text": "erty Development, REITS, and General Construction of Properties. Soludo promises compensation for residents affected by Nnobi demolition Real Estate and Construction 1 min Nigeria’s five REITs worth $230 million market cap in Africa’s $30 billion market By Caleb Obiowo · Sep 17 Exclusives 1 min Why Lagos’ reclaimed land boom may not solve its housing problem By Caleb Obiowo · Sep 14 Real Estate and Construction 1 min Why cheap land won’t make Lagos, Abuja homes affordable—Dev"
+    },
+    {
+     "doc_id": 10423,
+     "title": "HARZ Products & Pricing",
+     "url": "https://harz-pricing.harz.workers.dev/",
+     "text": "HARZ Products 24 platforms | 77 products harz-crm 2 plans from N2,000 &rarr; eduwealth 4 plans from N5,000 &rarr; harzajo 2 plans from N1,000 &rarr; abuja-estate-city 3 plans from N2,000 &rarr; harz-buildbot 3 plans from N5,000 &rarr; harz-film 2 plans from N500 &rarr; harz-trust-fabric 3 plans from N2,000 &rarr; harz-paylink 1 plans from N3,000 &rarr; harz-invoice 1 plans from N3,000 &rarr; harz-biolink 1 plans from N2,000 &rarr; harz-health 2 plans from N2,000 &rarr; harz-g"
+    },
+    {
+     "doc_id": 10173,
+     "title": "HarzID — Your National ID",
+     "url": "https://harzid.harz.workers.dev/",
+     "text": "… Citizens Become a citizen Full name Phone number State FCT Abuja Abia Adamawa Akwa Ibom Anambra Bauchi Bayelsa Benue Borno Cross River Delta Ebonyi Edo Ekiti Enugu Gombe…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 12,
+  "question": "What does HARZSwap do?",
+  "gold_ids": [
+   2
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "b0dc74407f305a30b0dc7440",
+   "evidence": [
+    {
+     "doc_id": 2,
+     "title": "HARZSwap — Sovereign DEX on HARZ Chain",
+     "url": "https://harz-swap.harz.workers.dev/",
+     "text": "₿ HARZSwap Sovereign DEX on HARZ Chain — everything trades on our public chain · constant-product x·y=k, 0.3% fee v6.0.8 world-dex Market prices (no policy) HARZcoin set by the HARZ/WPOL market (pool-implied) GDEG set by the GDEG/HARZ pool NRL set by the NRL/HARZ pool No fixed book anywhere — all prices are made by trading in the pools, like the globe (owner law Sep 18, 2026). Liquidity Pools (live on HARZ Chain) Loading pools… Your Wallet & Keys Wallet address (phone or 0x…)"
+    },
+    {
+     "doc_id": 10141,
+     "title": "/manifest.json",
+     "url": "https://harz-swap.harz.workers.dev/manifest.json",
+     "text": "{\"name\":\"HARZSwap\",\"short_name\":\"HARZSwap\",\"start_url\":\"/\",\"display\":\"standalone\",\"background_color\":\"#f0f2f5\",\"theme_color\":\"#f0f2f5\",\"description\":\"HARZ honest exchange data — real pools, fixed NGN book.\"}"
+    },
+    {
+     "doc_id": 10350,
+     "title": "N-DEX — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/ndex",
+     "text": "N-DEX Real AMM on HARZ Chain — swaps settle on the L1 ledger Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull Liquidity Pools (live) Loading pools from HARZ Chain L1... Swap Swaps execute on the HARZSwap L1 AMM with signature verification. Loading... HARZ → Token Token → HARZ Checking device key... Create New Wallet Export Secret"
+    },
+    {
+     "doc_id": 4,
+     "title": "HARZ Exchange — OTC Buy & Sell Desk",
+     "url": "https://harz-exchange.harz.workers.dev/",
+     "text": "HARZ Exchange OTC Buy/Sell Desk | Live market prices NGN/USD loading... Markets Chart Trade Wallet Portfolio P2P Loading live prices from HARZSwap... All prices are live market rates from the HARZSwap oracle — pool-derived for HARZ/GDEG/NRL, global market for the rest. No fixed pricing. Bitcoin (BTC) $0 Powered by TradingView | Tap chart for RSI, MACD, Bollinger Bands & more indicators Buy Crypto with NGN Secure checkout by Paystack — card, bank, or USSD. Coins credit automat"
+    },
+    {
+     "doc_id": 114,
+     "title": "HARZ Super App",
+     "url": "https://harz-super-app.harz.workers.dev/",
+     "text": "HARZ Super App 76 services • Updated Sep 9, 2026 PWA • Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Cloud • 76 Workers Powered by Cloudflare Workers + D1 Install Super App"
+    },
+    {
+     "doc_id": 10286,
+     "title": "HNI — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/hni",
+     "text": "…ure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull HNI S…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 13,
+  "question": "What does the HARZ FX service provide?",
+  "gold_ids": [
+   103
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "a3313d58dcfcf5e8a3313d58",
+   "evidence": [
+    {
+     "doc_id": 103,
+     "title": "HARZ FX — Live Exchange Rates",
+     "url": "https://harz-fx.harz.workers.dev/",
+     "text": "NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF → 🇺🇸 USD 🇳🇬 NGN 🇪🇺 EUR 🇬🇧 GBP 🇬🇭 GHS 🇰🇪 KES 🇿🇦 ZAR 🇪🇬 EGP 🇯🇵 JPY 🇨🇳 CNY 🇮🇳 INR 🇨🇦 CAD 🇦🇺 AUD 🇨🇭 CHF Rate Alerts Get notified on WhatsApp when a rate crosses your target. USD NGN EUR GBP GHS KES ZAR EGP JPY CNY INR CAD AUD CHF Above Below Set Alert HARZ FX v2.0 &nbsp;|&nbsp; Live: ER-API + CoinGecko + HARZ Rate Updater WhatsApp: 0802868785"
+    },
+    {
+     "doc_id": 10281,
+     "title": "HARZ CLOUD — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/",
+     "text": "HARZ CLOUD World's First Consolidated Infrastructure Cloud Home GDEG Neural N-DEX NeFi N-Insure N-Gov HAEG HNI Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull HNI Score 730 Health Index Healthy Status Ecosystem Overview 12 Dashboards 0 Products 116 D1 Tables v17.0 Version Live FX Rates Currency Rate (USD) No rate data yet Quick Navigation ⚡ GDEG Energy Token 🧠 Neural AI Protocol"
+    },
+    {
+     "doc_id": 5,
+     "title": "HARZ Wallet v3 — Honest Registry",
+     "url": "https://harz-crypto-wallet.harz.workers.dev/",
+     "text": "HARZ Wallet v3 — Honest Registry 8 Chains · Naira-First · Browser-Only · Keys Never Leave This Device Total Portfolio Value ₦ — Prices: HARZ Swap Oracle · NGN: live FX Portfolio Send Receive HARZ L1 History Unlock first… + Wallet Remove Loading balances from the chain… Refresh Native + token balances are read live from each chain over public RPC. Naira values come from your own HARZ Swap oracle — not CoinGecko, not Binance. Asset Recipient address (0x…) Amount in token Amount"
+    },
+    {
+     "doc_id": 102,
+     "title": "HARZ Apex Bank",
+     "url": "https://harz-apex-bank.harz.workers.dev/",
+     "text": "tio 15% Loading reserve composition... My Account Phone Number View My Account Treasury Overview Total Reserves ₦0 Circulating HARZ 10.6B of 21B cap Active Loans 0 Total Deposits 0 Bank Accounts 0 active customers Monetary Policy Base Interest Rate 7.5% Reserve Ratio 15% Inflation Target 2% HARZ Supply Cap 21,000,000,000 Max LTV 50% Liquidation Threshold 75% HARZ Apex Bank &nbsp;|&nbsp; CAC RC: 321424 &nbsp;|&nbsp; WhatsApp: 08028687857 Licensed financial infrastructure for t"
+    },
+    {
+     "doc_id": 4,
+     "title": "HARZ Exchange — OTC Buy & Sell Desk",
+     "url": "https://harz-exchange.harz.workers.dev/",
+     "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Phone (buyers contact you) Post Offer My Offers & Orders Phone Load My Offers Your Portfolio Phone Number View Portfolio HARZ Exchange v6.1 | OTC Desk + Paystack checkout + P2P market | NGN rate: ₦1,335.695 WhatsApp: 08028687857 | CAC RC: 321424 💱 Exchange 🏨 A"
+    },
+    {
+     "doc_id": 10335,
+     "title": "HARZ Root — .harz",
+     "url": "https://harz-root.harz.workers.dev/",
+     "text": "HARZ Root Our own root nameserver — the .harz namespace, one law, one zone Canonical zone 77 names · height 1 Zone hash e94b9693e94a229065f7… Signature Ed25519 VALID Sign…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 14,
+  "question": "What is HARZ Wallet?",
+  "gold_ids": [
+   5
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "fe4e5a509c7b1dd0fe4e5a50",
+   "evidence": [
+    {
+     "doc_id": 5,
+     "title": "HARZ Wallet v3 — Honest Registry",
+     "url": "https://harz-crypto-wallet.harz.workers.dev/",
+     "text": "HARZ Wallet v3 — Honest Registry 8 Chains · Naira-First · Browser-Only · Keys Never Leave This Device Total Portfolio Value ₦ — Prices: HARZ Swap Oracle · NGN: live FX Portfolio Send Receive HARZ L1 History Unlock first… + Wallet Remove Loading balances from the chain… Refresh Native + token balances are read live from each chain over public RPC. Naira values come from your own HARZ Swap oracle — not CoinGecko, not Binance. Asset Recipient address (0x…) Amount in token Amount"
+    },
+    {
+     "doc_id": 10108,
+     "title": "HARZ Faucet — Claim Free Tokens",
+     "url": "https://harz-faucet.hamzarabiu390.workers.dev/",
+     "text": "🚰 HARZ Faucet FREE Part of HARZ Ecosystem Super App Wallet Chain Explorer Exchange Super Cloud — Block Height — Circulating — Wallets 100 HARZ Free claim — one per wallet, 24h cooldown Claim Your Free HARZ Your Wallet Address Claim 100 HARZ Create New Wallet Generate Wallet Address Faucet Stats — Total Claims — Today — HARZ Given How It Works 1. Create a wallet or use your existing HARZ Chain wallet 2. Paste your wallet address above 3. Click Claim — 100 HARZ sent instantly "
+    },
+    {
+     "doc_id": 10091,
+     "title": "HARZ Contract Address Generator",
+     "url": "https://harz-contract-gen.hamzarabiu390.workers.dev/",
+     "text": " bytecode of the contract Computed CREATE2 Address Copy Address Contract Address The deployed contract address to look up Blockchain Polygon Ethereum BSC Arbitrum Base Find Deployer Searching blockchain... Deployer Information Deployer Wallet Deployment Nonce Block Number Transaction Hash Timestamp Method Copy Wallet Address How it works Wallet → Contract: Every time a wallet deploys a contract, the address is deterministic: keccak256(rlp([sender, nonce]))[12:] . Same wallet "
+    },
+    {
+     "doc_id": 10441,
+     "title": "HARZ Quidax Bridge",
+     "url": "https://harz-quidax-bridge.harz.workers.dev/",
+     "text": "Quidax Bridge Real On-Chain BTC/ETH Wallet Integration Connection Status Checking... BTC Wallet Loading... 0 BTC ETH Wallet Loading... 0 ETH USDT Wallet Loading... 0 USDT Actions Sync Balances to HARZ Wallet Generate New BTC Address Generate New ETH Address HARZ Digital Services | Quidax Bridge v1.0 Powered by Quidax API"
+    },
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain wallet. Create from seed phrase, import existing wallet, send & receive real on-chain transactions. PWA installable. ⚡ Token swaps coming soon — liquidity pools being seeded on HARZSwap DEX Open Wallet → Polygon BSC Ethereum HARZ Edge 💎 HARZ Tokens (V2 — Polyg"
+    },
+    {
+     "doc_id": 6,
+     "title": "HARZ Super App v5.0",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-super-app.html",
+     "text": "⚡ HARZ 🌙 Login Connecting to HARZ Cloud... 📊 Ecosystem Overview Quick Actions 🔍 Search 💳 Wallet 🤖 Agents 📈 Analytics 📱 Platforms ⚙️ Settings 🎛️ Admin 🔐 Security …"
+    }
+   ]
+  }
+ },
+ {
+  "id": 15,
+  "question": "What is Koya Trading and Digital Marketing?",
+  "gold_ids": [
+   7,
+   10427
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "9000b2b80536ecfb9000b2b8",
+   "evidence": [
+    {
+     "doc_id": 7,
+     "title": "HARZ Digital - Koya Trading & Digital Marketing",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio",
+     "text": "ge Live ecosystem monitoring 🚀 Onboarding Get started with HarzPay Kayayyakin Mu Digital Marketing Course Koyi yadda za ka sayar da kayayka a intanet — social media marketing, content creation, da sales funnels. Cikakken koyarwa. ₦16,000 ~$10 USD Sayi Yanzu Trading Basics eBook Littafi kan asalin trading — yadda za ka fara ciniki a kasuwar kudi da crypto. Sauƙi fahimta. ₦8,000 ~$5 USD Sayi Yanzu Premium Mentorship Program Koyarwa ta musamman daga Rabiu — trading da digital m"
+    },
+    {
+     "doc_id": 9355,
+     "title": "Digital Marketing Tools - Email & Website Marketing — Squarespace",
+     "url": "https://squarespace.com/website-marketing",
+     "text": " → Analytics → Business Services → Online Stores → Invoicing → Scheduling → Limited Releases → Content & Memberships → Donations → Financial Solutions → Marketing Marketing Tools → Email Campaigns → SMS Campaigns → SEO Tools → AI Visibility → Free Tools → Business Tools Domain Search → Domain Transfer → Business Email → View All Features → For scaling businesses Squarespace Premium Our most advanced features, lowest processing rates, and priority support For Freelancers and A"
+    },
+    {
+     "doc_id": 1001,
+     "title": "Digital Marketing Officer at Amara Medicare | Jobbermangoogle-icon",
+     "url": "https://jobberman.com/listings/digital-marketing-officer-n9jnwg",
+     "text": "mmunications Yesterday Easy apply New Featured Additional Questions Rest of Nigeria (Anambra) Full Time Healthcare NGN 150,000 - 250,000 Share link Share on WhatsApp Share on LinkedIn Share on Facebook Share on Twitter Share via SMS Job summary The Digital Marketing Officer will be responsible for planning, executing and monitoring Amara Medicare's digital marketing activities across social media, search engines, websites, online advertising and other digital channels. This i"
+    },
+    {
+     "doc_id": 10215,
+     "title": "HARZ Digital Services — Infrastructure for Africa's Digital Economy",
+     "url": "https://harz-website.hamzarabiu390.workers.dev/",
+     "text": "the ecosystem. GDEG and NRL tokens power the economic layer. HARZ Chain — 38M+ blocks mined GDEG V2 — 10M supply on Polygon NRL V2 — 11M supply on Polygon HARZSwap DEX — token swaps HARZ Exchange — trading platform 🤖 AI Workforce Five autonomous AI agents handling customer support, marketing, finance, platform health, and orchestration — running 24/7 across WhatsApp and Telegram. Aisha — Customer Support & CRM Hauwa — Marketing & Content Rabi — Finance & Orders Nuruddeen — P"
+    },
+    {
+     "doc_id": 10425,
+     "title": "Harz Digital Store — HARZ Digital Learning Series",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harz-store.html",
+     "text": "OP, pandas, requests, real-world automation. 9 chapters. ₦2,500 Order on WhatsApp 🚀 BOOK 8 Web Development Fundamentals HTML, CSS, Flexbox, Grid, responsive design, JavaScript, DOM, forms. Capstone: landing page. 9 chapters. ₦2,500 Order on WhatsApp 🔒 BOOK 9 Cybersecurity Essentials Threats, passwords, MFA, phishing, device security, network safety, data backup, incident response. 9 chapters. ₦2,500 Order on WhatsApp 📱 BOOK 10 Digital Marketing — Strategy to Analytics Mark"
+    },
+    {
+     "doc_id": 8726,
+     "title": "Leading Marketing & Advertising Magazine | Marketing Edge",
+     "url": "https://marketingedge.com.ng/",
+     "text": "…th frontiers 1 day ago | 6 minutes read Global programmatic digital out of home advertising has crossed the $1 billion mark,... City "
+    }
+   ]
+  }
+ },
+ {
+  "id": 16,
+  "question": "How does the HARZ Exchange OTC desk work?",
+  "gold_ids": [
+   4
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "7087af9f9f513a107087af9f",
+   "evidence": [
+    {
+     "doc_id": 4,
+     "title": "HARZ Exchange — OTC Buy & Sell Desk",
+     "url": "https://harz-exchange.harz.workers.dev/",
+     "text": "(NGN) Submit P2P Market Trade directly with other users. Pay via Paystack checkout; seller releases coins once payment confirms. Every order is recorded. Post a Sell Offer Coin Amount to Sell Price per coin (NGN) Your Phone (buyers contact you) Post Offer My Offers & Orders Phone Load My Offers Your Portfolio Phone Number View Portfolio HARZ Exchange v6.1 | OTC Desk + Paystack checkout + P2P market | NGN rate: ₦1,335.695 WhatsApp: 08028687857 | CAC RC: 321424 💱 Exchange 🏨 A"
+    },
+    {
+     "doc_id": 5417,
+     "title": "Commons:Help desk - Wikimedia Commons",
+     "url": "https://commons.wikimedia.org/wiki/Commons:Help_desk",
+     "text": "دو Oʻzbekcha / ўзбекча Vèneto Tiếng Việt ייִדיש 粵語 中文 Edit links Add topic From Wikimedia Commons, the free media repository Latest comment: 4 hours ago by Katy1ove in topic I don't think any of these work Community portal introduction Help desk Village pump copyright proposals technical Administrators' noticeboard vandalism user problems blocks and protections Shortcut : COM:HD Skip to table of contents | Skip to bottom | 🌐 Help desks for other languages This help desk is a"
+    },
+    {
+     "doc_id": 3349,
+     "title": "Registered FinTech Operators - Securities and Exchange Commission, Nigeria",
+     "url": "https://sec.gov.ng/fintech-and-innovation-hub-finport/registered-fintech-operators",
+     "text": " Financial Technology Ltd PropCrowdy Ltd Bamboo System Technology Pennytree Business Ltd Treager Integrated Services Ltd Magnacap Ltd Regulatory Incubation (RI) Participants Below is the table of firms admitted into the year-long RI sandbox Regulatory Incubation (RI) Participants S/N Company Proposed Solution Test Period Institution Type Contact Details Remarks 1 NASD OTC Securities Exchange Trading Name: NASD OTC Securities Exchange NASD Digital Securities Exchange 4th Septe"
+    },
+    {
+     "doc_id": 3676,
+     "title": "‎Best Magazines & Newspapers Apps for iPhone",
+     "url": "https://apps.apple.com/ng/iphone/charts/6021?chart=top-free",
+     "text": "uctivity Reference Shopping Social Networking Sports Travel Utilities Weather Free Paid 1 Yacine : Match Football TV View 2 MoviesBox - Reels & TV Shows Watch on MoviesBox Daily Movie View 3 Movies Box & TV Show Watch Videos & Watchlist View 4 FreeFlix - Movies & TV Shows FreeFlix : Movies & Showtime View 5 WebNovel - Read Novels & Manga Fantasy books, romance stories View 6 GALATEA: Novels & Audiobooks Escape into addictive stories View 7 Aboxotc Market News & OTC Msg Market"
+    },
+    {
+     "doc_id": 537,
+     "title": "Compare Business Software: September 2026 Reviews & Comparison",
+     "url": "https://sourceforge.net/software",
+     "text": "ter, and easier while IT teams modernize and improve efficiency. NinjaOne is a Leader in the Gartner Magic Quadrant for Endpoint Management Tools. The company is obsessed with customer success and has retained a 98% customer satisfaction score for more than 5 years. 6,033 Ratings View Software Visit Website 2 Freshservice Freshworks If you're looking for an IT service desk solution that's actually simple, turn to Freshservice. A plug-and-play ITIL service desk by Freshworks, "
+    },
+    {
+     "doc_id": 2036,
+     "title": "Freshservice Reviews in 2026",
+     "url": "https://sourceforge.net/software/product/Freshservice",
+     "text": "…ises About Freshservice If you're looking for an IT service desk solution that's actually simple, turn to Freshservice. A plug-and-play ITIL service desk by Freshworks, F…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 17,
+  "question": "What is the HARZ Ecosystem?",
+  "gold_ids": [
+   10034
+  ],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "b4970b6c3c92d9c4b4970b6c",
+   "evidence": [
+    {
+     "doc_id": 10034,
+     "title": "HARZ Ecosystem — Everything in One Place",
+     "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+     "text": "⚡ HARZ Ecosystem 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. 🇳🇬 Built in Nigeria • Powered by Cloudflare Edge 👛 HARZ Crypto Wallet Real multi-chain blockchain wallet. Create from seed phrase, import existing wallet, send & receive real on-chain transactions. PWA installable. ⚡ Token swaps coming soon — liquidity pools being seeded on HARZSwap DEX Open Wallet → Polygon BSC Ethereum HARZ Edge 💎 HARZ Tokens (V2 — Polyg"
+    },
+    {
+     "doc_id": 10241,
+     "title": "HARZ GENESIS — Ecosystem Generator",
+     "url": "https://harz-genesis.harz.workers.dev/",
+     "text": "HARZ GENESIS Autonomous Infrastructure Organism -- Ecosystems 66 Services v3.1 Version Generated Ecosystems Loading... API GET /api/ecosystems — List all ecosystems GET /api/status — Service status GET /health — Health check"
+    },
+    {
+     "doc_id": 10047,
+     "title": "HARZ Mail — @mail.harz",
+     "url": "https://harz-mail.hamzarabiu390.workers.dev/",
+     "text": "M HARZ Mail @mail.harz — your address, your ecosystem Sign up Accounts Log out Log in to @mail.harz Log in New here? Create an address → Forgot password? → Reset your password A one-time code is mailed to your account's recovery address (set in Settings). Send code Reset password Back v1.1 · multi-account switch · password recovery · ecosystem delivery — mail any @mail.harz user. Internet exchange ships with the harz.ng domain. Sandbox — no real data. New mail Send Save draft"
+    },
+    {
+     "doc_id": 10097,
+     "title": "HARZ Governance — Community Pilot",
+     "url": "https://harz-governance.harz.workers.dev/",
+     "text": "⚖️ GOVERNANCE PILOT HARZ Governance The community voice of the HARZ ecosystem — Chain 7701 Honest disclosure: Community governance pilot — votes are advisory. Chain admin retains execution authority. Results guide ecosystem decisions; they do not self-execute. Create a proposal Faucet policy Exchange pair listing Feature priority Ecosystem (other) Submit proposal Proposals Loading… HARZ Governance v1.0.1 · advisory pilot · 1-wallet-1-vote · 5-day voting window Part of the HAR"
+    },
+    {
+     "doc_id": 10164,
+     "title": "HARZ Sentinel",
+     "url": "https://harz-sentinel.hamzarabiu390.workers.dev/",
+     "text": "🛡️ HARZ Sentinel Security scanner — immune system for HARZ ecosystem Scan a Service Run Security Scan Ecosystem Security ✓ HTTPS enforced on all workers ✓ Cloudflare DDoS protection ✓ Edge token authentication ⚠ CORS headers not set on most workers ⚠ No rate limiting on public APIs HARZ Sentinel v3.0.0 — HARZ Ecosystem"
+    },
+    {
+     "doc_id": 10000,
+     "title": "HARZ Forge",
+     "url": "https://harz-forge.hamzarabiu390.workers.dev/",
+     "text": "⚒️ HARZ Forge Build and deploy apps from the HARZ ecosystem 0 Apps Forged 5 Templates ∞ Possibilities Forge a New App Forge App Templates 📦 Store — E-commerce 📊 Dashboa…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 18,
+  "question": "What is the airspeed velocity of an unladen qwizzleblatt?",
+  "gold_ids": [],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "insufficient_evidence",
+   "subject_absent": [
+    "airspeed",
+    "unladen"
+   ],
+   "evidence_digest": "0925ddb4cee103c40925ddb4",
+   "evidence": [
+    {
+     "doc_id": 6922,
+     "title": "Meta's AI Storage Blueprint at Scale - Engineering at Meta",
+     "url": "https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale",
+     "text": "ed of iteration in AI research; with GPUs increasingly becoming geo-distributed and dataset sizes increasingly becoming massive, researchers spend a significant amount of time ingesting and moving data across regions, thus impacting research velocity. In this blog post, we discuss how Meta’s BLOB-storage architecture evolved to address two primary challenges: maximizing GPU utilization and maximizing research velocity. Storage Architecture Overview Meta operates hundreds of e"
+    },
+    {
+     "doc_id": 1746,
+     "title": "Microfrontends",
+     "url": "https://vercel.com/docs/microfrontends",
+     "text": "ntends may add additional complexity to your development process. To improve developer velocity, consider alternatives like: Monorepos with Turborepo Feature flags Faster compilation with Turbopack Repository layout Microfrontends work the same whether you keep your applications in one repository (a monorepo) or spread them across several (a polyrepo). The microfrontends group, path routing, and production routing behave identically in both cases. Each application is its own "
+    },
+    {
+     "doc_id": 2604,
+     "title": "Optimus - The AI platform to build and ship - Landing Pages Templates - v0 by Vercel",
+     "url": "https://v0.app/templates/LHv4frpA7Us",
+     "text": "New Chat Log In Sign Up Community Community Templates Your Templates About Tags Share Optimus - The AI platform to build and ship kerroudj 9.1K 1.4K Open Original About Optimus empowers teams to build, deploy, and scale applications with unprecedented velocity on a global infrastructure. Streamline your workflow from connecting tools to shipping production-ready code, leveraging AI-native capabilities and enterprise-grade security. This platform offers a seamless developer ex"
+    },
+    {
+     "doc_id": 4053,
+     "title": "Infrastructure - Dropbox",
+     "url": "https://dropbox.tech/infrastructure",
+     "text": "data caching solution // Jul 25, 2024 From AI to sustainability, why our latest data centers use 400G networking // Nov 14, 2023 How the data center site selection process works at Dropbox // Jun 13, 2023 After four years of SMR storage, here's what we love—and what comes next // Mar 08, 2023 Balancing quality and coverage with our data validation framework // Feb 07, 2023 Increasing Magic Pocket write throughput by removing our SSD cache disks // Dec 08, 2022 Future-proofing"
+    },
+    {
+     "doc_id": 1199,
+     "title": "Resources | Classical Mechanics | Physics | MIT OpenCourseWare",
+     "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/download",
+     "text": "r Dourmashkin Dr. Michelle Tomasik Prof. Anna Frebel Prof. Vladan Vuletic Departments Physics As Taught In Fall 2016 Level Undergraduate Topics Science Physics Classical Mechanics Learning Resource Types theaters Lecture Videos assignment Problem Sets Download Course search GIVE NOW about ocw help & faqs contact us 8.01SC | Fall 2016 | Undergraduate Classical Mechanics Menu More Info Download file_download Download course This package contains the same content as the online v"
+    },
+    {
+     "doc_id": 4779,
+     "title": "Calculus 1A: Differentiation | MIT Open Learning Library",
+     "url": "https://openlearninglibrary.mit.edu/courses/course-v1:MITx+18.01.1x+2T2019/about",
+     "text": "…ilable on MITx Online. About this course How does the final velocity on a zip line change when the starting point is raised or lowered by a matter of centimeters? What is…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 19,
+  "question": "Who won the 2026 Bloboland national elections?",
+  "gold_ids": [],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "insufficient_evidence",
+   "subject_absent": [
+    "bloboland"
+   ],
+   "evidence_digest": "729e0a10ad559b5c729e0a10",
+   "evidence": [
+    {
+     "doc_id": 4679,
+     "title": "UI/UX Designer Engineering in 2026: Skills, Trends & Careers",
+     "url": "https://refontelearning.com/blog/ui-ux-designer-engineering-in-2026-crafting-future-ready-user-experiences",
+     "text": "k in and excel (with insights from Refonte Learning ’s industry-aligned programs). By the end, you’ll see why UI/UX Designer engineering in 2026 is a future-proof career at the intersection of creativity, technology, and human-centric problem solving. Why UI/UX Design Matters More Than Ever in 2026 In an age of abundant digital choices, user experience can make or break a product’s success . No matter how powerful an app or website’s features, it won’t thrive unless users fin"
+    },
+    {
+     "doc_id": 8054,
+     "title": "UNILAG Students Sweep Bode Osunkoya Prize, Win all Three Positions at 2026 PSRG-Richardson HSSE Forum - University Of Lagos",
+     "url": "https://unilag.edu.ng/unilag-students-sweep-bode-osunkoya-prize-win-all-three-positions-at-2026-psrg-richardson-hsse-forum",
+     "text": "Skip to content communicationunit@unilag.edu.ng Staff Students Alumni Parents UNILAG Statistics Give to UNILAG Search Menu communicationunit@unilag.edu.ng Staff Students Alumni Parents UNILAG Statistics Afretec Give to UNILAG TETFUND Teras TETFUND Impact FTIGTP-UNILAG Search Menu UNILAG Students Sweep Bode Osunkoya Prize, Win all Three Positions at 2026 PSRG-Richardson HSSE Forum oluwatoyin September 17, 2026 Students of the University of Lagos (UNILAG) have won the three top"
+    },
+    {
+     "doc_id": 6002,
+     "title": "Maingear Zero (2026) Review: PC Gaming Bliss With a Price Tag to Make You Cry",
+     "url": "https://gizmodo.com/maingear-zero-2026-review-pc-gaming-bliss-with-a-price-tag-to-make-you-cry-2000810060",
+     "text": "ooks the absolute best—the most personal of the bunch and the easiest to use. It’s meaningful that I can say the Maingear Zero is my favorite pre-config that the company has put out over the last two years. It has the elegance of a mid-sized desktop tower that won’t dominate your desk. It performs well, runs quietly, and damn me if it isn’t so easy to get in there to root around all the wire-free components. 4.5 Maingear Zero (2026) The Maingear Zero with its curved desktop c"
+    },
+    {
+     "doc_id": 6398,
+     "title": "NIGERIA DAILY: When Godfathers Turn Rivals—Can Governors Survive 2027? – Daily Trust",
+     "url": "https://dailytrust.com/nigeria-daily-when-godfathers-turn-rivals-can-governors-survive-2027",
+     "text": "ans? NIGERIA DAILY: Young, Working, But Still Broke—What&#8217;s Going Wrong? As the campaigns gather momentum, the key question is whether performance or political strategy will determine their chances of winning without the godfathers who helped bring them to power. Join us in this episode of Nigeria Daily to find out. UPDATE NEWS: Nigerians can now invest ₦2.5 million on premium domains and profit about ₦17-₦25 million . All earnings paid in US Dollars . Rather than wonder"
+    },
+    {
+     "doc_id": 5102,
+     "title": "What is a Circular Economy — updated 2026 | IxDF",
+     "url": "https://interaction-design.org/literature/topics/circular-economy",
+     "text": "ources for generations. This model seeks to reduce or eliminate unsustainable practices like deforestation or strip mines. These systems can better avoid shortages and societal collapses when resources run out. However, the goal in the short term is to create economies that can become more circular, even if a perfectly circular economy isn’t able to be implemented. How Do We Make a Circular Economy? Many elements go into the transition to a circular economy, and it won't happ"
+    },
+    {
+     "doc_id": 773,
+     "title": "Queen Temi-T bags international media award",
+     "url": "https://punchng.com/queen-temi-t-bags-international-media-award",
+     "text": "…al, Temitope Chikezie, popularly known as Queen Temi-T, has won the Outstanding International Radio Presenter of the Year Award at the 2026 GX Awards in Birmingham, Unite…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 20,
+  "question": "What is the zorbite concentration in the qlanari river?",
+  "gold_ids": [],
+  "flagship": false,
+  "multiparts": false,
+  "packet": {
+   "status": "insufficient_evidence",
+   "subject_absent": [
+    "zorbite",
+    "qlanari"
+   ],
+   "evidence_digest": "88567c38e9ba07b888567c38",
+   "evidence": [
+    {
+     "doc_id": 6001,
+     "title": "50 Years of Bronx River Clean-Up Efforts Lead to the First Otter Sighting in a Century",
+     "url": "https://gizmodo.com/50-years-of-bronx-river-clean-up-efforts-lead-to-the-first-otter-sighting-in-a-century-2000801512",
+     "text": "ent released by the organization Tuesday. A chance sighting The otter was actually documented earlier this June by scientist R.J. Hawkins, via a motion-activated camera. Hawkins was conducting long-term camera trap monitoring for wildlife along the river overseen by the WCS’s Education Department based at the Bronx Zoo. The WSC manages four accredited zoos and one aquarium in New York City. “When I first reviewed the images, I could hardly believe what I was seeing,” said Haw"
+    },
+    {
+     "doc_id": 1632,
+     "title": "River Tame, Greater Manchester - Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/River_Tame,_Greater_Manchester",
+     "text": "Jump to content Search River Tame, Greater Manchester 10 languages مصرى Boarisch Cymraeg Deutsch فارسی Français Norsk nynorsk Norsk bokmål Srpskohrvatski / српскохрватски Simple English Edit links Route map : From Wikipedia, the free encyclopedia River in Greater Manchester, England For other uses, see River Tame . Tame River Tame in the Reddish Vale The River Tame is highlighted in red Coordinates: 53°24′51″N 2°09′25″W / 53.4142°N 2.15689°W / 53.4142; -2.15689 Location Count"
+    },
+    {
+     "doc_id": 9435,
+     "title": "River Reverse Proxy - Prossimo",
+     "url": "https://memorysafety.org/initiative/reverse-proxy",
+     "text": "x due to a multithreading model, which greatly improves performance. WASM-based scriptability means scripting will be performant and River will be scriptable in any language that can compile to WASM. Simple configuration, as we’ve learned some lessons from configuring other software for the past couple of decades. It’s written in Rust so you can deploy without worrying about memory safety issues. What We've Done Prior to Pingora becoming open source, and in cooperation with C"
+    },
+    {
+     "doc_id": 6214,
+     "title": "Our party cohesion due to Wike, presidential candidate, Onor's effort - PDP Cross River - Daily Post Nigeria",
+     "url": "https://dailypost.ng/2026/09/19/our-party-cohesion-due-to-wike-presidential-candidate-onors-effort-pdp-cross-river",
+     "text": "Connect with us Politics Our party cohesion due to Wike, presidential candidate, Onor’s effort – PDP Cross River Published on September 19, 2026 By Asare Asare The Peoples Democratic Party, PDP, in Cross River State has attributed the cohesion and success they currently enjoy to the continued supports and leadership of its national leader and minister of FCT Abuja, Nyesom Wike, and that their presidential candidate, Prof Sandy Onor. Chairman of the party in the state, Venatiu"
+    },
+    {
+     "doc_id": 6763,
+     "title": "2027: C’River ‘Evidence Group’ Mobilises Mammoth Crowd for Civic Engagement – THISDAYLIVE",
+     "url": "https://thisdaylive.com/2026/09/19/2027-criver-evidence-group-mobilises-mammoth-crowd-for-civic-engagement",
+     "text": "Headlines Tinubu Forecloses Return of Fuel Subsidy, Tasks States To Deliver Cheaper Transport By October The Renewed Move for Peace in Warri DHQ: Troops Rescue 50 Kidnap Victims, Apprehend Scores of Terrorists, Collaborators in One Week FATF Raises Global Alarm on Money Laundering, Fraud Risks in Gaming, Gambling 2027: C’River ‘Evidence Group’ Mobilises Mammoth Crowd for Civic Engagement Life & Style | 5 hours ago The streets of Calabar came alive on Saturday as a mammoth cro"
+    },
+    {
+     "doc_id": 2959,
+     "title": "Careers | Hudson River Trading",
+     "url": "https://hudsonrivertrading.com/careers",
+     "text": "…ommunity See Open Roles Build the future of trading. Hudson River Trading is always on the lookout for the best and brightest. Think you might be an awesome candidate? Ap…"
+    }
+   ]
+  }
+ },
+ {
+  "id": 21,
+  "question": "Give the UBA account number used for HARZ Pay bank transfers, the canonical URL of the HARZ Estate Network, and compute the Naira value of 2,000 GDEG at the documented rate. Cite your sources.",
+  "gold_ids": [
+   10470,
+   10062,
+   10066
+  ],
+  "flagship": false,
+  "multiparts": true,
+  "packet": {
+   "status": "ok",
+   "subject_absent": null,
+   "evidence_digest": "8df65d170b4048f88df65d17",
+   "evidence": [
+    {
+     "doc_id": 10470,
+     "title": "HarzPay Onboarding — Get Started",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+     "text": "ntinue Use phone instead 🔐 Enter verification code We sent a 4-digit code to your phone. Enter it below. Verify Use demo code (1234) Skip verification 💰 Choose your main currency You can always add more currencies later. 🇳🇬 Naira NGN 🇺🇸 Dollar USD ₮ Tether USDT ⚡ GDEG Energy Token Continue 💳 Add a payment method Add a card or bank account to fund your wallet. 💳 Debit/Credit Card Via Paystack — instant ✓ 🏦 Bank Transfer UBA — 2034326424 ✓ ₮ Crypto (USDT) TRC20 network"
+    },
+    {
+     "doc_id": 10062,
+     "title": "HARZ Estate Network",
+     "url": "https://harz-realestate.harz.workers.dev/",
+     "text": "🏡 HARZ Estate Property & Land Network Loading... — Listings — Agents — Sold — Revenue Properties Land Agents List Property Loading... Loading... Loading... Type For Sale For Rent Land Title Location Price (₦) Details List Property HARZ Estate Network v1.0.0"
+    },
+    {
+     "doc_id": 10332,
+     "title": "HARZ Pay — Payment Gateway",
+     "url": "https://harz-payment.harz.workers.dev/",
+     "text": "💳 HARZ Pay Unified payment gateway · Paystack · UBA · GDEG · USDT Methods New Payment History Rates Amount (NGN) Payment method Paystack (Card) UBA Bank Transfer GDEG Token (Polygon) USDT (TRC20) Email (for receipt) Product/Description Create Payment Loading... Live Exchange Rates Loading... HARZ Pay v3.0 · Unified Gateway · #f0f2f5"
+    },
+    {
+     "doc_id": 7,
+     "title": "HARZ Digital - Koya Trading & Digital Marketing",
+     "url": "https://rabiuhamza11.github.io/harz-portfolio",
+     "text": "$10 USD Sayi Yanzu Trading Basics eBook Littafi kan asalin trading — yadda za ka fara ciniki a kasuwar kudi da crypto. Sauƙi fahimta. ₦8,000 ~$5 USD Sayi Yanzu Premium Mentorship Program Koyarwa ta musamman daga Rabiu — trading da digital marketing mataimatai zuwa gaba. Kujeru kaɗan. ₦64,000 ~$40 USD Sayi Yanzu Hanyoyin Biya UBA Bank Transfer 2034326424 Rabiu Hamza Mohammed Paystack Card Payment GDEG Token Polygon Network USDT TRC20 Crypto Gumroad Global Card Paddle Global Ch"
+    },
+    {
+     "doc_id": 10418,
+     "title": "Buy NRL — HARZ Cloud",
+     "url": "https://harz-rate-updater.harz.workers.dev/buy-nrl",
+     "text": "I Contracts Energy Inventory Buy NRL Cloud HARZSwap Super Cloud Dashboard Store EVOLVE NEXUS FORGE DNA Maganu Estate Chain Pay Symphony Wallet Bull NRL Token (V2) 0xE8423c0595E6b2caD4E6f19B6F51666699be303a Supply: 11,022,500 | Rate: ₦100/NRL ₦100 per NRL How to Buy 1. Send NGN to UBA 2034326424 (Rabiu Hamza Mohammed, code 033) 2. Tell us how many NRL you want 3. Provide your Polygon wallet address 4. We send NRL to your wallet Payment Methods Paystack UBA Transfer USDT TRC20 "
+    },
+    {
+     "doc_id": 10066,
+     "title": "HARZ Pay",
+     "url": "https://harz-payments.hamzarabiu390.workers.dev/",
+     "text": "…(NGN) Product/Service Name Customer Email Payment Method 🏦 UBA Bank Transfer LIVE 💳 Paystack (Card) LIVE 🪙 GDEG Token (Polygon) LIVE 💵 USDT (Polygon) LIVE 🌍 Gumroad …"
+    }
+   ]
+  }
+ }
+]
