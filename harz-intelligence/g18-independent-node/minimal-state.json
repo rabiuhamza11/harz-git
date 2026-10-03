@@ -1,0 +1,111 @@
+{
+  "origin": "https://harz-intelligence.harz.workers.dev",
+  "records": {
+    "conflict_mission": {
+      "id": "m-mission-dc85e3ef-baa",
+      "receipt": "a0ea9d0b5286803911d5ff99247ddac15bee04a5ed96eefc84a0af8ce94e04fd",
+      "tasks": [
+        {
+          "id": 1,
+          "type": "fixture",
+          "state": "verified",
+          "fixture_id": "G15-FIX-A",
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)"
+        },
+        {
+          "id": 2,
+          "type": "fixture",
+          "state": "verified",
+          "fixture_id": "G15-FIX-B",
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)"
+        },
+        {
+          "id": 3,
+          "type": "compose",
+          "state": "refused",
+          "refusal": "resolution refused: the mission carries 2 independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task \u2014 resolution belongs to research; composition never adjudicates",
+          "conflict": {
+            "unresolved_claims": [
+              {
+                "source_task": 1
+              },
+              {
+                "source_task": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "resolution_mission": {
+      "id": "m-mission-2faae8db-6f3",
+      "receipt": "daed9c56060576d7bd245a665d030f625232b439dfc7e195ed8413853b2a6aa6",
+      "tasks": [
+        {
+          "id": 1,
+          "type": "fixture",
+          "state": "verified",
+          "fixture_id": "G15-FIX-A",
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)"
+        },
+        {
+          "id": 2,
+          "type": "fixture",
+          "state": "verified",
+          "fixture_id": "G15-FIX-B",
+          "answer": "**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)"
+        },
+        {
+          "id": 3,
+          "type": "fixture",
+          "state": "verified",
+          "fixture_id": "G16-FIX-C",
+          "answer": "**Answer**\n\nThe GDEG test widget price registry states the authoritative price is 800 HARZ \u3010S1\u3011\n\nSources: [s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)"
+        },
+        {
+          "id": 4,
+          "type": "compose",
+          "state": "verified",
+          "instruction": "Create a report stating which of these conflicting claims is true",
+          "answer": {
+            "evidence": [
+              {
+                "source_task": 1
+              },
+              {
+                "source_task": 2
+              },
+              {
+                "source_task": 3
+              }
+            ],
+            "delivered_children": [
+              {
+                "mode": "image",
+                "player_url": "/api/creation/v1/image?request_id=76a345d84be739242e6ef787.image.bdd6448a"
+              }
+            ]
+          },
+          "resolution": {
+            "resolution_from": [
+              3
+            ],
+            "resolution_sources": [
+              {
+                "source_task": 3
+              }
+            ],
+            "resolves_conflict": [
+              {
+                "source_task": 1
+              },
+              {
+                "source_task": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
