@@ -78,3 +78,18 @@ honest refusal. The designation seal is derived state to the verifier
 boundary (a ref substitution now requires FORGING an origin seal —
 the escalation from G20's passive substitution). Browser (standing
 order) before reporting. Determinism: byte-identical repeat.
+
+## AMENDMENT A1 (recorded BEFORE build — design infeasibility in the
+## frozen conflict_root clause)
+The resolution record is composed in a live mission that cannot know
+record-1's id or mission receipt at emission time (separate records,
+origin emits each independently). conflict_root in the resolution
+designation bytes is therefore bound AS CARRIED: the resolved
+references WITH their content hashes (receipts + claims/answer shas).
+Record-1's own designation seal covers the same membership from its
+side, and the verifier enforces the cross-record designation edge:
+record-1's sealed conflict refs (by content hashes) must equal
+record-2's sealed resolved refs. A membership tamper must then break
+one seal or the other; a consistent two-record tamper requires
+forging two origin seals (out of the substitution model, as with
+mission.receipt).
