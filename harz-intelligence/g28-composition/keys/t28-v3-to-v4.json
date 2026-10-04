@@ -1,0 +1,9 @@
+{
+  "law": "HARZ-KEY-TRANSITION-V2",
+  "transition_id": "t28-v3-to-v4",
+  "from_fingerprint": "de2a86867d6d447f854dde7c500a357bb61bc32131993ea6f33c6a979e74b7bb",
+  "to_fingerprint": "74311b8961708a13f90948b69eb46fadc303a47414ccbbf86322d4e22a733090",
+  "to_public_key_spki_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAnjmr+WmT0+087bXSfwPNOtE5DAhXuUZz2qUB9wwO2b8=\n-----END PUBLIC KEY-----\n",
+  "effective_at": "2026-10-04T03:19:11.000Z",
+  "signature_b64": "53TcCFFmy8yWd91LqYYH8s8mwzytFkMPlfGe3CgmcaxyuVLKYcpOiyMG2xgXuyAJeFQjZhuAIBvaTqQ4JvpICg=="
+}

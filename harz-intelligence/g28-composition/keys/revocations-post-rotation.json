@@ -1,0 +1,30 @@
+{
+  "law": "HARZ-KEY-REVOCATION-V1",
+  "revoked": [
+    {
+      "fingerprint": "74270fd52cc9d9656744284b31f9b49ceecaa4bf54eb8ce0574ec929bb704dfb",
+      "role": "production origin key 1 (pre-rotation)",
+      "reason": "private PEM exposed to the remote at commit 2db1897 for ~3 minutes; rotated out via signed transition harz-production-key-1-to-2; PERMANENTLY REVOKED as an origin signer"
+    },
+    {
+      "fingerprint": "771fdb0a43020e4b129f7267707a5f994b4cb4e6d90f832e0f9157205f13e386",
+      "role": "kit origin key 1 (test)",
+      "reason": "same exposure event; revoked"
+    },
+    {
+      "fingerprint": "4ceff73d1101678dc65984c4334c85969fba94481c55f50058f256f7e2747662",
+      "role": "kit origin key 2 (test)",
+      "reason": "same exposure event; revoked"
+    },
+    {
+      "fingerprint": "9eea8110dacbc9e4695bffcac0068fe35ce991d00cb431e6b0d8a66aa06c9031",
+      "role": "attacker key (test fixture)",
+      "reason": "never an authorized origin; listed for completeness"
+    },
+    {
+      "fingerprint": "de2a86867d6d447f854dde7c500a357bb61bc32131993ea6f33c6a979e74b7bb",
+      "reason": "G26 rotation: superseded by transition t-v3-to-v4; permanently revoked",
+      "revoked_at": "2026-10-04T04:00:18.000Z"
+    }
+  ]
+}
