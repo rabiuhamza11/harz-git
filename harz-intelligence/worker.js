@@ -126,63 +126,83 @@ const ADAPTERS = {
   openrouter: {
     async call({ messages, temperature, profile }) {
       const t0 = Date.now();
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + (ENV.OPENROUTER_API_KEY || ''),
-          'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://harz-intelligence.harz.workers.dev',
-          'X-Title': 'HARZ Intelligence Core',
-        },
-        body: JSON.stringify({ model: profile, messages, temperature }),
-      });
-      const latency = Date.now() - t0;
-      if (!res.ok) {
-        const errText = (await res.text()).slice(0, 300);
-        return { ok: false, error: 'backend_' + res.status, detail: errText, latency };
+      let res;
+      try {
+        res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + (ENV.OPENROUTER_API_KEY || ''),
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://harz-intelligence.harz.workers.dev',
+            'X-Title': 'HARZ Intelligence Core',
+          },
+          body: JSON.stringify({ model: profile, messages, temperature }),
+          signal: AbortSignal.timeout(8000), // v0.8.1: an external stall must become declared incapability, never a hang (Dad's mirror law)
+        });
+      } catch (e) {
+        return { ok: false, error: 'backend_timeout', detail: String(e && e.name || e).slice(0, 120), latency: Date.now() - t0 }; // same shape as a refused backend -> the frozen chain law decides
       }
-      const data = await res.json();
-      const usage = data.usage || {};
-      return { ok: true, content: data.choices?.[0]?.message?.content || '', latency, tokens_in: usage.prompt_tokens || 0, tokens_out: usage.completion_tokens || 0 };
+      try {
+        const latency = Date.now() - t0;
+        if (!res.ok) {
+          const errText = (await res.text()).slice(0, 300);
+          return { ok: false, error: 'backend_' + res.status, detail: errText, latency };
+        }
+        const data = await res.json();
+        const usage = data.usage || {};
+        return { ok: true, content: data.choices?.[0]?.message?.content || '', latency, tokens_in: usage.prompt_tokens || 0, tokens_out: usage.completion_tokens || 0 };
+      } catch (e) {
+        return { ok: false, error: 'backend_timeout', detail: 'body_abort: ' + String(e && e.name || e).slice(0, 100), latency: Date.now() - t0 }; // v0.8.1: a mid-body stall is also declared incapability, never a 500
+      }
     },
     async callStream({ messages, temperature, profile, onDelta }) {
       const t0 = Date.now();
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + (ENV.OPENROUTER_API_KEY || ''),
-          'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://harz-intelligence.harz.workers.dev',
-          'X-Title': 'HARZ Intelligence Core',
-        },
-        body: JSON.stringify({ model: profile, messages, temperature, stream: true }),
-      });
-      if (!res.ok) {
-        const errText = (await res.text()).slice(0, 200);
-        return { ok: false, error: 'backend_' + res.status, detail: errText, latency: Date.now() - t0, content: '' };
+      let res;
+      try {
+        res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + (ENV.OPENROUTER_API_KEY || ''),
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://harz-intelligence.harz.workers.dev',
+            'X-Title': 'HARZ Intelligence Core',
+          },
+          body: JSON.stringify({ model: profile, messages, temperature, stream: true }),
+          signal: AbortSignal.timeout(8000), // v0.8.1: an external stall must become declared incapability, never a hang (Dad's mirror law)
+        });
+      } catch (e) {
+        return { ok: false, error: 'backend_timeout', detail: String(e && e.name || e).slice(0, 120), latency: Date.now() - t0, content: '' }; // same shape as a refused backend -> the frozen chain law decides
       }
-      const reader = res.body.getReader();
-      const dec = new TextDecoder();
-      let buf = '', content = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += dec.decode(value, { stream: true });
-        const lines = buf.split('\n');
-        buf = lines.pop() || '';
-        for (const line of lines) {
-          const t = line.trim();
-          if (!t.startsWith('data:')) continue;
-          const payload = t.slice(5).trim();
-          if (payload === '[DONE]') continue;
-          try {
-            const j = JSON.parse(payload);
-            const delta = j.choices?.[0]?.delta?.content || '';
-            if (delta) { content += delta; if (onDelta) onDelta(delta); }
-          } catch {}
+      try {
+        if (!res.ok) {
+          const errText = (await res.text()).slice(0, 200);
+          return { ok: false, error: 'backend_' + res.status, detail: errText, latency: Date.now() - t0, content: '' };
         }
+        const reader = res.body.getReader();
+        const dec = new TextDecoder();
+        let buf = '', content = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\n');
+          buf = lines.pop() || '';
+          for (const line of lines) {
+            const t = line.trim();
+            if (!t.startsWith('data:')) continue;
+            const payload = t.slice(5).trim();
+            if (payload === '[DONE]') continue;
+            try {
+              const j = JSON.parse(payload);
+              const delta = j.choices?.[0]?.delta?.content || '';
+              if (delta) { content += delta; if (onDelta) onDelta(delta); }
+            } catch {}
+          }
+        }
+        return { ok: true, content, latency: Date.now() - t0, tokens_in: null, tokens_out: null };
+      } catch (e) {
+        return { ok: false, error: 'backend_timeout', detail: 'body_abort: ' + String(e && e.name || e).slice(0, 100), latency: Date.now() - t0, content: '' }; // v0.8.1: a mid-stream stall is also declared incapability, never a 500
       }
-      return { ok: true, content, latency: Date.now() - t0, tokens_in: null, tokens_out: null };
     },
   },
   // HARZ-OWNED adapter: HARZ-Reasoner-1 inference runtime. No external provider, no network.
