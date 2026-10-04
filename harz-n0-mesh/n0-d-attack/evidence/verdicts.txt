@@ -1,0 +1,10 @@
+--- d1_at_c ---
+G24 CONTINUITY-VERIFIER: FORK DISCLOSED — CURRENCY UNDETERMINED | anchor: NO LOCAL CURRENT to anchor (G24 verdict governs); checkpoint observes height 4, age 1.7h (window 24h, FRESH)
+--- d5_at_d ---
+G24 CONTINUITY-VERIFIER: FORK DISCLOSED — CURRENCY UNDETERMINED | anchor: NO LOCAL CURRENT to anchor (G24 verdict governs); checkpoint observes height 4, age 1.7h (window 24h, FRESH)
+--- d6_at_e ---
+G24 CONTINUITY-VERIFIER: CHAIN VERIFIED | current: NONE per public anchor | anchor: CONFLICT
+--- d8_at_f ---
+G24 CONTINUITY-VERIFIER: CHAIN VERIFIED | current: s3 (height 3) | anchor: ANCHORED
+--- d10_final ---
+G24 CONTINUITY-VERIFIER: FORK DISCLOSED — CURRENCY UNDETERMINED | anchor: NO LOCAL CURRENT to anchor (G24 verdict governs); checkpoint observes height 4, age 1.7h (window 24h, FRESH)

@@ -1,0 +1,1 @@
+G24 CONTINUITY-VERIFIER: FORK DISCLOSED — CURRENCY UNDETERMINED | anchor: NO LOCAL CURRENT to anchor (G24 verdict governs); checkpoint observes height 4, age 1.7h (window 24h, FRESH)
