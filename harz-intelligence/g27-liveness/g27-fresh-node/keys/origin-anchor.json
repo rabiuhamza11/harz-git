@@ -1,0 +1,6 @@
+{
+  "name": "origin-v3",
+  "alg": "Ed25519",
+  "fingerprint": "de2a86867d6d447f854dde7c500a357bb61bc32131993ea6f33c6a979e74b7bb",
+  "public_key_spki_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAOs0Em0Pa3Ia6Rbg4w39jcO9Kl9UgVwZFvdW5B7xd9+I=\n-----END PUBLIC KEY-----\n"
+}
