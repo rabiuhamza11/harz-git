@@ -315,7 +315,13 @@ async function main() {
       if (byHeight.has(k) && byHeight.get(k).state_hash !== cp.state_hash) competing = true;
       byHeight.set(k, cp);
     }
-    const latestCp = validCps.slice().sort((a, b) => Date.parse(b.notarized_at) - Date.parse(a.notarized_at))[0];
+    // G28 COMPOSITION FIX (authority repair, demonstrated by G28-2): the HIGHEST valid
+    // sovereign observation governs; notarized_at only breaks same-height ties (disclosed);
+    // every additional valid anchor is disclosed, never silently discarded. A fresher LOWER
+    // anchor can never mask an older HIGHER anchor's demotion — selection by timestamp
+    // across different heights was a silent choice (G24 law 7 violation in composition).
+    const latestCp = validCps.slice().sort((a, b) => (b.chain_height - a.chain_height) || (Date.parse(b.notarized_at) - Date.parse(a.notarized_at)))[0];
+    if (validCps.length > 1) print('ANCHORS: ' + (validCps.length - 1) + ' additional valid checkpoint(s) at height(s) ' + [...new Set(validCps.filter(c => c !== latestCp).map(c => c.chain_height))].join(', ') + ' — disclosed, never silently discarded; the HIGHEST valid anchor governs, timestamp only breaks same-height ties');
     const ageNote = 'age ' + latestCp.ageH.toFixed(1) + 'h (window ' + windowH + 'h, ' + (latestCp.fresh ? 'FRESH' : 'STALE OBSERVATION — disclosed') + ')';
     if (competing) {
       anchorVerdict = 'CHECKPOINT CONFLICT — competing valid checkpoints from the sovereign origin are surfaced; NEVER silently chosen (no timestamp, arrival order, or chain-position preference)';
