@@ -1,0 +1,42 @@
+{
+  "v": 2,
+  "zone": "gembu",
+  "height": 1,
+  "prev": "",
+  "records": [
+    {
+      "name": "coop.gembu",
+      "service": "cooperative-ledger",
+      "identity": "PENDING",
+      "routing": {
+        "nodes": []
+      },
+      "state": {
+        "height": 0,
+        "digest": ""
+      },
+      "txt": [
+        "v0.2 field-run candidate ledger",
+        "TEST record — protocol proof only"
+      ]
+    },
+    {
+      "name": "market.gembu",
+      "service": "market",
+      "identity": "PENDING",
+      "routing": {
+        "nodes": []
+      },
+      "state": {
+        "height": 0,
+        "digest": ""
+      },
+      "txt": [
+        "TEST record — protocol proof only"
+      ]
+    }
+  ],
+  "signed_at": "2026-10-04T20:31:34.807Z",
+  "signed_by": "ed25519:17e81378fe1f2886327e60dacaca534ae70250d9ad38c154a28ecc90e43f24b3",
+  "sig": "ed25519:c202f82441f4f3e2d59d0458d661dcc241ecd1245c221c4c4d809e464cedcae87ff62b032ecc492786769fc64fe02ed1d22f4d25b72e2ab9c04eb1683ef42f0a"
+}
