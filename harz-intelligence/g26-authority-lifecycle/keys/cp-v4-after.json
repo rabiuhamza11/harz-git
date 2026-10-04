@@ -1,0 +1,25 @@
+{
+  "law": "HARZ-CHECKPOINT-V1",
+  "origin_id": "74311b8961708a13f90948b69eb46fadc303a47414ccbbf86322d4e22a733090",
+  "chain_height": 3,
+  "state_hash": "fcece6dc5cfcccb93463ddfae00a0c580f6439de5f55f68496200a738c133fe2",
+  "notarized_at": "2026-10-04T04:40:49.000Z",
+  "origin_signature": {
+    "alg": "Ed25519",
+    "fingerprint": "74311b8961708a13f90948b69eb46fadc303a47414ccbbf86322d4e22a733090",
+    "signature": "w2SXP09Q6jumS9UIKCZ9jnQ2f+8+p1emD3BaYHely6LUwaaz0BrDlsXZh+EaTE/hxZ+xEDG07KXI9ir2mgKTBg=="
+  },
+  "anchor": {
+    "tx_id": "ckpt-568e2689785d52c49f639d3c97ffb9f9c777f820",
+    "block_index": 3000003,
+    "block": {
+      "id": 3000003,
+      "prev_hash": "E404D4ED17CF2187955414FCD9D8240FBC17C17DAB481015BA1BE61DEA6F445B",
+      "timestamp": "2026-10-04T04:40:49.000Z",
+      "miner": "08028687857",
+      "nonce": 526934,
+      "difficulty": 1,
+      "hash": "9533EEF9657CB0BAA0F99A1B03D1D8F787BC79D4306ACAC9C1227016F0CCAFD8"
+    }
+  }
+}
