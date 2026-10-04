@@ -28,3 +28,12 @@ steps 3-4 are the owner and Magani working; step 6-7 are the seats.
 ## What I still need from the owner
 Isiyaka's phone/WhatsApp number (so the run can be guided), and a window when he and the
 owner can sit together for step 1.
+
+## UPDATE Oct 4, 22:27 WAT — seat kit COMPLETE
+Owner provided Isiyaka's number: +234 802 135 6257. Everything needed to run is now in hand.
+Namespace default: isiyaka (his own name — owner can change with one word before deploy).
+The run commences when the owner sits with Isiyaka for steps 1-2 (phone sitting, ~15 min):
+- Isiyaka: CF signup at dash.cloudflare.com/sign-up (email + password, no card)
+- Isiyaka: API token via My Profile -> API Tokens -> Create Token -> "Edit Cloudflare Workers" template
+- Token to owner -> owner to Magani -> deploy within the hour -> Isiyaka revokes the token
+- Desk cuts h7 on the owner's word -> both seats verify -> the Root of Roots is two real hands.
