@@ -1,0 +1,677 @@
+{
+  "account": {
+    "id": "c0bea6cfc6c0c69fc0adeba4c8b85f3e",
+    "name": "Hamzarabiu390@gmail.com's Account",
+    "reachable": true
+  },
+  "counts": {
+    "d1": 36,
+    "kv": 89,
+    "workers": 147
+  },
+  "d1": [
+    {
+      "name": "aee10-node-a",
+      "uuid": "ad1bbcec-7fc3-4dd3-86e5-5dcc812f45ab"
+    },
+    {
+      "name": "aee10-node-b",
+      "uuid": "87443cca-1314-4396-b6b9-52b0860b881b"
+    },
+    {
+      "name": "commons-anchor",
+      "uuid": "6a10aa66-9e16-44f8-9489-af18e93f7387"
+    },
+    {
+      "name": "concord-anchor",
+      "uuid": "7ff02843-e1aa-48e8-9d66-c5adabbc8854"
+    },
+    {
+      "name": "estatehub-db",
+      "uuid": "49069a64-b044-47cf-9fd3-0d35588f8503"
+    },
+    {
+      "name": "harz-atomic-swap-db",
+      "uuid": "69984d88-dbd5-4e01-938a-2f8c18f714b3"
+    },
+    {
+      "name": "harz-coin-machine-db",
+      "uuid": "1892e7a0-f759-4ec3-9a61-ebf02818c520"
+    },
+    {
+      "name": "harz-contract-token-db",
+      "uuid": "a584e7fc-553b-44c6-9064-07e1d370803b"
+    },
+    {
+      "name": "harz-db",
+      "uuid": "d55db6da-3e1e-41bb-82cf-3beca7065647"
+    },
+    {
+      "name": "harz-evolve-db",
+      "uuid": "8c80a915-ab8a-4376-9aad-94d7b4f0e5ff"
+    },
+    {
+      "name": "harz-forge-db",
+      "uuid": "494c7ae6-15fc-426e-8395-4b09cd0b948e"
+    },
+    {
+      "name": "harz-gate-db",
+      "uuid": "9718e567-a585-4a09-9a51-4baf38c10127"
+    },
+    {
+      "name": "harz-genesis-db",
+      "uuid": "39eb35b6-e29c-4d64-82a6-ab8ad6cb8dc2"
+    },
+    {
+      "name": "harz-hms-db",
+      "uuid": "583f980e-5ccb-4d73-8d3b-a4984c154a08"
+    },
+    {
+      "name": "harz-nexus-db",
+      "uuid": "72ced2b5-684c-4152-82b4-ad87eabc8912"
+    },
+    {
+      "name": "harz-oracle-db",
+      "uuid": "1c440f7d-901d-4573-a3ec-d18c5a0f4772"
+    },
+    {
+      "name": "harz-packet-db",
+      "uuid": "f8a4c327-3e57-41da-a36e-0fdffd7b0b7b"
+    },
+    {
+      "name": "harz-prism-db",
+      "uuid": "90125b5e-14a5-4b96-a581-5391c0551c74"
+    },
+    {
+      "name": "harz-recovery-db",
+      "uuid": "83f0c341-901c-4a17-9620-df01f6e0fc6f"
+    },
+    {
+      "name": "harz-root-alpha-db",
+      "uuid": "5b46310c-b0c7-404c-b013-ef9f4bd45e71"
+    },
+    {
+      "name": "harz-root-beta-db",
+      "uuid": "fee05884-0f8f-4a50-867e-b112f28c1748"
+    },
+    {
+      "name": "harz-sms-exchange-db",
+      "uuid": "58b8a2a0-bd4f-42f5-972b-0595ca9a8c83"
+    },
+    {
+      "name": "harz-sovereign-db",
+      "uuid": "49f57dc2-f518-409f-b690-67e54cb52415"
+    },
+    {
+      "name": "harz-token-factory-db",
+      "uuid": "05e3a95e-beee-42fa-aaee-f8ea7566185b"
+    },
+    {
+      "name": "harz_search",
+      "uuid": "4e51c5e7-7691-457e-b3c6-3034cdb7daf4"
+    },
+    {
+      "name": "harz_search_v011",
+      "uuid": "4fe7756e-ac77-4143-b769-b45e092f814f"
+    },
+    {
+      "name": "harz_search_v02",
+      "uuid": "6ec47ea7-d216-4667-835d-e470c22ec72b"
+    },
+    {
+      "name": "mama",
+      "uuid": "be76356e-6901-4a06-aab2-1db75e509e55"
+    },
+    {
+      "name": "mesh-anchor",
+      "uuid": "69220426-34bc-4798-871f-64fba7ceba15"
+    },
+    {
+      "name": "nation-stg",
+      "uuid": "8b2d5cf0-04b0-44c2-9789-bc5dec6f949b"
+    },
+    {
+      "name": "payntalk-db",
+      "uuid": "4f22ba6a-72c2-4e9a-a97d-538ae330e363"
+    },
+    {
+      "name": "portable-target",
+      "uuid": "942e61db-fd06-4987-8bc7-f904653286d7"
+    },
+    {
+      "name": "socrates",
+      "uuid": "2acff3c7-f873-4b8c-9f1e-226fba8f451f"
+    },
+    {
+      "name": "sovereign",
+      "uuid": "ecbfddc9-e323-4260-a498-e55698f7d2eb"
+    },
+    {
+      "name": "trust-anchor",
+      "uuid": "f0787e31-3cb8-427d-95f1-43dac9574509"
+    },
+    {
+      "name": "walkout-target",
+      "uuid": "26e71dbb-d9da-4b08-b1ff-19b4510e78fd"
+    }
+  ],
+  "frozen_at": "2026-10-04T21:01:26Z",
+  "kv": [
+    {
+      "id": "04b6b197d7394786b94b094f89d996fb",
+      "title": "harz-store-bridge"
+    },
+    {
+      "id": "07af4a7af74746a8a8eadcfd77890448",
+      "title": "HARZ_LBL_KV"
+    },
+    {
+      "id": "0c9d4aab7b064b9d80e211c99be451e1",
+      "title": "HARZ_LOGISTICS"
+    },
+    {
+      "id": "0e3ed81ce039430f886898b615f77962",
+      "title": "HARZ_NOTIFY_KV"
+    },
+    {
+      "id": "132aeb690f8c49c6b468765fa5130e45",
+      "title": "MARKETS_KV"
+    },
+    {
+      "id": "18ca75daf19648c6997ced91a9023432",
+      "title": "HARZ_SRCH_KV"
+    },
+    {
+      "id": "24bf5a1a25bf486db2b9fb4ab71f017d",
+      "title": "HARZ_SCHED_KV"
+    },
+    {
+      "id": "25893b56cfd24fa992befce7f1baf9f0",
+      "title": "HARZ_SMS_KV"
+    },
+    {
+      "id": "364bf06bef0a4bc897bdb55a32175843",
+      "title": "harz-edge-net"
+    },
+    {
+      "id": "3a0b45b1768d494ca9a45703e21c26c5",
+      "title": "HARZ_POLL_KV"
+    },
+    {
+      "id": "3eec9fd9c1774a3689ff1bd962be5058",
+      "title": "NEURAL_KV"
+    },
+    {
+      "id": "3fbd9e2f962d4a03bb0d5875e7d5c0ef",
+      "title": "HARZ_RED_KV"
+    },
+    {
+      "id": "40c42436575b44b7bfa48113fbb8bbad",
+      "title": "HARZ_PLANE_KV"
+    },
+    {
+      "id": "4304db18bc3a4458a14ad7d9730b9d73",
+      "title": "aee10-controller"
+    },
+    {
+      "id": "473991b9c73c4c6ab33826375566c1f3",
+      "title": "HARZ_BRAIN_CONFIG"
+    },
+    {
+      "id": "48bc0a5315a8430aa0bf595b6373d2ba",
+      "title": "HARZ_CHT_KV"
+    },
+    {
+      "id": "4dddc6ee029c4c90a9019c79cd67806e",
+      "title": "HARZ_BACKUP_KV"
+    },
+    {
+      "id": "50233828b3ea46d2bfef6632eaa559fd",
+      "title": "HARZ_CD_KV"
+    },
+    {
+      "id": "515032d3c1ad420ca919fe9e4817028b",
+      "title": "QUANTUM_KV"
+    },
+    {
+      "id": "51f156f1857440c98702fec6f8498c72",
+      "title": "HARZ-PROPERTY-SERVICE_KV"
+    },
+    {
+      "id": "52550eaced394c3d96721be4e2f63b0d",
+      "title": "HARZ_HOOK_KV"
+    },
+    {
+      "id": "53f0912aa7364ed4ac12bc3ba0306e26",
+      "title": "ECP1_KV"
+    },
+    {
+      "id": "60eb9d7108fb4a16848a17f718e0ec2f",
+      "title": "HARZ Mock Payments (adversarial)"
+    },
+    {
+      "id": "6359af0059474f04845d71bb82555004",
+      "title": "ioc-pool"
+    },
+    {
+      "id": "65f6402221104b6089b460ebfb865330",
+      "title": "HARZ-PHARMACY-SERVICE_KV"
+    },
+    {
+      "id": "67f2067b690d40bdaa2e623105438cbd",
+      "title": "HARZ-STUDENT-SERVICE_KV"
+    },
+    {
+      "id": "6acb6c492a9c443f9b6ed6fd62dcc83e",
+      "title": "HARZ_RECORDS_ARCHIVE"
+    },
+    {
+      "id": "6c8f742af9dc463693f55418ad0ae8e0",
+      "title": "EVOLVE_KV"
+    },
+    {
+      "id": "6f0301ebd9f049d3ab1179bc84f39ba5",
+      "title": "SENTINEL_KV"
+    },
+    {
+      "id": "70502aa302424d14b100607d54d0d44e",
+      "title": "HARZ_RCP_KV"
+    },
+    {
+      "id": "707a1c91216846cabd28336302e7dd88",
+      "title": "HARZ_APK"
+    },
+    {
+      "id": "71bde949f1ea488784ab9ea4859e29b2",
+      "title": "DPB_KV"
+    },
+    {
+      "id": "7241f488e0284bc2a196c17c91c1d0aa",
+      "title": "HARZ_FT_KV"
+    },
+    {
+      "id": "740827d6294048a8bc770b8fa9b7ea1e",
+      "title": "HARZ Settlement Rail (Stage 6)"
+    },
+    {
+      "id": "74895d6bdb5941209ece2199a961f3e6",
+      "title": "HARZ-PAYMENT-SERVICE_KV"
+    },
+    {
+      "id": "757fcdd39b94494aaebecc1c95b39e5b",
+      "title": "HARZ_RES_KV"
+    },
+    {
+      "id": "7ecae757f078458da422f597fe780a0d",
+      "title": "HARZ_AUTH_KV"
+    },
+    {
+      "id": "80001b5b4dfb4a538cd192f7bb851edf",
+      "title": "harz-network-registry"
+    },
+    {
+      "id": "88d9159be4914cc590948e69f80c6b86",
+      "title": "HARZPAY_KV"
+    },
+    {
+      "id": "9323563b24b44c449bf8add9c9b19ed3",
+      "title": "HARZ_FORM_KV"
+    },
+    {
+      "id": "943fee16bc224320a6f9906a07b173b1",
+      "title": "HARZ_NOTE_KV"
+    },
+    {
+      "id": "947f122f17bf4f61bd314650a0ccab45",
+      "title": "EXCHANGE_KV"
+    },
+    {
+      "id": "95b0103a13d8403c8dc4d089705a4d2e",
+      "title": "HARZ_BOT_KV"
+    },
+    {
+      "id": "95f1803a8e024d6cb96bef7b92036682",
+      "title": "FED_KV"
+    },
+    {
+      "id": "97d69cd7fc224e68b74e7d78a04866bd",
+      "title": "HARZ_CRM_KV"
+    },
+    {
+      "id": "9ab0e98ff9f04ab2a6cb6b23c7c9dd21",
+      "title": "HARZ_EXP_KV"
+    },
+    {
+      "id": "9ade64873e074d40a76a8391c8dd0a2d",
+      "title": "HARZ-ONLINE-SERVICE_KV"
+    },
+    {
+      "id": "9b80a28d1eb6462d9ddf1d7a3166f6e7",
+      "title": "HARZ_ANALYTICS_KV"
+    },
+    {
+      "id": "a5896e72c7a64e7283d460ab822a91af",
+      "title": "DNA_KV"
+    },
+    {
+      "id": "a9e08a9451934def880cebe1253a41ee",
+      "title": "HARZ_TRK_KV"
+    },
+    {
+      "id": "abffb29a987b4336a3675a8ea45b1c9c",
+      "title": "HARZ_CAL_KV"
+    },
+    {
+      "id": "af219b583b074cd68fc6e8a3fd3cf9f0",
+      "title": "IMMORTAL_CORE_KV"
+    },
+    {
+      "id": "afb04ec27fd94e9fb9e043e1af90c8c9",
+      "title": "HARZ Network B (sovereign corridor peer)"
+    },
+    {
+      "id": "b253c273b20e4d58ab05eafa400cc9de",
+      "title": "hostmaster-orders"
+    },
+    {
+      "id": "b2646abc242348eb908c4d9a2db019e2",
+      "title": "HARZ_OTP_KV"
+    },
+    {
+      "id": "b5b4b82fde114bbfb317850ea961e2d9",
+      "title": "PRISM_KV"
+    },
+    {
+      "id": "b7bb484190fe4d1083555e54e086ddcd",
+      "title": "HARZ_MET_KV"
+    },
+    {
+      "id": "b7dfdf96f5974db9ba9e643dd2e97b47",
+      "title": "HARZ-FOOD-SERVICE_KV"
+    },
+    {
+      "id": "b8be364dfbb3434eb56b49c77c1db533",
+      "title": "island-kv"
+    },
+    {
+      "id": "ba833e10e3e347a4b7acd1784dc37b9a",
+      "title": "TREASURY_KV"
+    },
+    {
+      "id": "bdc06c8787fb495fb8d1b3ca681b9aeb",
+      "title": "HARZ_SUB_KV"
+    },
+    {
+      "id": "c15618d75f0940eab86fa425cf1ce6e6",
+      "title": "HARZ_STORE_KV"
+    },
+    {
+      "id": "c587750cdcb541b685f8ad5c2c3e78b0",
+      "title": "omninet_intents"
+    },
+    {
+      "id": "c781c70aca0d488698c11d4a210d0c24",
+      "title": "HARZ_WHOLESALE_KV"
+    },
+    {
+      "id": "c9d2a6979bcd4d75975905f6cd041f13",
+      "title": "harz-mesh-bridge"
+    },
+    {
+      "id": "cefae586e4754ab9a82c3ed06cf2c881",
+      "title": "HARZ_SEARCH"
+    },
+    {
+      "id": "d14556503eed4d2b86482e9b0aa1e5ac",
+      "title": "HARZ_EMAIL_KV"
+    },
+    {
+      "id": "d17caf7e50a34ebe8fcea072e00ff12b",
+      "title": "EDGE_NET_KV_R3"
+    },
+    {
+      "id": "d24698b296bf4649828a124e644f27f5",
+      "title": "HARZ_KV"
+    },
+    {
+      "id": "d499e5f5f3964ddd89ff7ea3e4cdd191",
+      "title": "HARZ_HAB_KV"
+    },
+    {
+      "id": "d578d803aa7245d49994f14d88be2e11",
+      "title": "HARZ-HOSPITAL-SERVICE_KV"
+    },
+    {
+      "id": "dd1054cc1ad647b6a1ec4e5e154d77db",
+      "title": "HARZ-CLINIC-SERVICE_KV"
+    },
+    {
+      "id": "e07b9c1f9aca41f6bc2171c9266a3132",
+      "title": "HARZ-GLOBAL-SERVICE_KV"
+    },
+    {
+      "id": "e168c08b83d646e08b9b68291caa0dc9",
+      "title": "HARZ_QUIZ_KV"
+    },
+    {
+      "id": "e438856986974a0698b053307e101f00",
+      "title": "HARZ_DS_KV"
+    },
+    {
+      "id": "e6dea9946e9047d3a5c9cf2266d606cc",
+      "title": "HARZ_URL_KV"
+    },
+    {
+      "id": "e9209df6d1af4b519a8d9e04ed03af70",
+      "title": "HARZ_FC_KV"
+    },
+    {
+      "id": "eae89bc811d04d23bdf6329d7404dab3",
+      "title": "HARZ_INV_KV"
+    },
+    {
+      "id": "ee4a3e2761994a0fbdd1ee984b8776a9",
+      "title": "HARZ_WIKI_KV"
+    },
+    {
+      "id": "ef4c601a92444ce1b0f057c00f0e6618",
+      "title": "HARZ_MAIL"
+    },
+    {
+      "id": "ef6695f699444fc2bb374791e3f59f4c",
+      "title": "HARZ Mock Payments KV"
+    },
+    {
+      "id": "f03c751a701b42f1bcae97288e5b41b2",
+      "title": "HARZ_SL_KV"
+    },
+    {
+      "id": "f0d28d6ad88d45999de689ca7804bc0c",
+      "title": "hostmaster-kv"
+    },
+    {
+      "id": "f1e6620358bd4054a84df742da528bf0",
+      "title": "ALCHEMY_KV"
+    },
+    {
+      "id": "f5e0c4a9923f4423acbdf52fad9c595a",
+      "title": "HARZ_MOOD_KV"
+    },
+    {
+      "id": "f97d659cad6b45f195ab32531349fc36",
+      "title": "EDGE_NET_KV_R2"
+    },
+    {
+      "id": "fa03a0ae6a2b4d3faa9496a2e41fd191",
+      "title": "HARZ_GAL_KV"
+    },
+    {
+      "id": "fb06bf3bbe28476f82d3ab86d849cd4d",
+      "title": "HARZ-DIGITAL-SERVICE_KV"
+    },
+    {
+      "id": "fbf20d7dd3564539a21fbc2a388c7cfb",
+      "title": "HARZ_TASK_KV"
+    }
+  ],
+  "manifest_version": "v1",
+  "notes": [
+    "Counts from this seat Oct 4 late evening: 147 workers / 36 D1 / 89 KV (continuity-vault audit saw 144/33/89 \u2014 drift = Root of Roots builds tonight: harz-root-alpha, harz-root-beta + their two D1s, plus one more script since the audit ran)",
+    "KV 40-vs-89 design note: the vault-builder's '40 KV stores' likely counted only HARZ platform namespaces; ALL 89 are listed here by title so the manifest answers which and why",
+    "Sep 14 law applied: manifest sealed in HarzGit AT FREEZE TIME, independently auditable, sha256 below"
+  ],
+  "old_harz_account": {
+    "coverage": "NOT in this manifest \u2014 honest limit; owner-authorized audit needed for that half",
+    "id": "5ab9477c (harz)",
+    "reachable_from_this_seat": false
+  },
+  "workers": [
+    "abuja-estate-city",
+    "aee10-controller",
+    "aee10-node-a",
+    "aee10-node-b",
+    "gdeg-images",
+    "gdeg-web",
+    "harz-acquisition",
+    "harz-agent-mkt",
+    "harz-agriculture",
+    "harz-ai-cloud",
+    "harz-ai-gateway",
+    "harz-apk-server",
+    "harz-arch-suite",
+    "harz-architecture",
+    "harz-atomic-swap",
+    "harz-b2b-kit",
+    "harz-baraka",
+    "harz-buildbot",
+    "harz-bull-control",
+    "harz-business-os",
+    "harz-capital",
+    "harz-carrynet",
+    "harz-catalog",
+    "harz-cloud-api",
+    "harz-coin-machine",
+    "harz-commerce-network",
+    "harz-commons-anchor",
+    "harz-concord-anchor",
+    "harz-contacts",
+    "harz-contract-gen",
+    "harz-contract-token",
+    "harz-cron-relay",
+    "harz-daily",
+    "harz-delegation",
+    "harz-digital-services",
+    "harz-discovery",
+    "harz-distribution",
+    "harz-dna",
+    "harz-dpb1",
+    "harz-dua",
+    "harz-economic-sky",
+    "harz-ecp1",
+    "harz-edge-net",
+    "harz-energy",
+    "harz-enterprise",
+    "harz-eternity",
+    "harz-evolve",
+    "harz-explorer",
+    "harz-fashion-agent",
+    "harz-faucet",
+    "harz-federation",
+    "harz-forge",
+    "harz-gado",
+    "harz-genesis",
+    "harz-genesis-hospital",
+    "harz-hcr-battery",
+    "harz-hcr-vault",
+    "harz-health",
+    "harz-hms-appointments",
+    "harz-hms-billing",
+    "harz-hms-gateway",
+    "harz-hms-inventory",
+    "harz-hms-lab-results",
+    "harz-hms-metrics",
+    "harz-hms-patients",
+    "harz-hms-staff",
+    "harz-hotels",
+    "harz-immortal",
+    "harz-intel",
+    "harz-intelligence",
+    "harz-ioc",
+    "harz-kc1-kit",
+    "harz-legacy",
+    "harz-mail",
+    "harz-mama",
+    "harz-manager-bot",
+    "harz-market-target",
+    "harz-markets",
+    "harz-merchant-portal",
+    "harz-mesh-anchor",
+    "harz-mesh-lab",
+    "harz-mesh-sov",
+    "harz-miner-cron",
+    "harz-mock-markets",
+    "harz-mock-payments",
+    "harz-nation",
+    "harz-nation-stg",
+    "harz-network-b",
+    "harz-network-core",
+    "harz-neural",
+    "harz-nexus",
+    "harz-nexus-ai",
+    "harz-nlcl",
+    "harz-omega-producer",
+    "harz-omninet",
+    "harz-oracle",
+    "harz-packet",
+    "harz-payment",
+    "harz-payments",
+    "harz-payntalk",
+    "harz-poi",
+    "harz-portable-target",
+    "harz-prism",
+    "harz-proof-economy",
+    "harz-protocol",
+    "harz-records",
+    "harz-recovery",
+    "harz-recovery-gate",
+    "harz-reputation",
+    "harz-revenue-experiment",
+    "harz-root",
+    "harz-root-alpha",
+    "harz-root-beta",
+    "harz-rpc-proxy",
+    "harz-runner",
+    "harz-search",
+    "harz-sentinel",
+    "harz-settlement",
+    "harz-settlement-ledger",
+    "harz-sms-exchange",
+    "harz-socrates",
+    "harz-sovereignty",
+    "harz-spell",
+    "harz-store-bridge",
+    "harz-super-app",
+    "harz-symphony",
+    "harz-token-factory",
+    "harz-transaction",
+    "harz-travel",
+    "harz-trust",
+    "harz-trust-anchor",
+    "harz-venture",
+    "harz-venture-zero",
+    "harz-wa-sales-agent",
+    "harz-wakil-gate",
+    "harz-walkout-target",
+    "harz-website",
+    "harz-whatsapp-handler",
+    "harz-wholesale",
+    "harz-workforce",
+    "harzlend",
+    "hostmaster",
+    "ioc-pool",
+    "island",
+    "maganu-agent",
+    "mindcare-ai",
+    "omega-health"
+  ]
+}
