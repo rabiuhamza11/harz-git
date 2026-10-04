@@ -39,3 +39,29 @@ minute. No re-sign performed by this seat; the pen is desk custody.
 ## The sentence this height earns
 The production root now vouches for a root it does not own, pinned by math it cannot forge,
 labeled honestly on the record itself: TEST, real seat pending.
+
+## Desk receipt received + cross-checked (Oct 4, late evening — appended by Magani)
+The desk relayed RECEIPT-h6.json (chat paste) and reported its own storage rail (s3 origin,
+main 0b88f140, ceremony commit 8edfcf0 claimed ancestor). From this seat:
+- Their rail is UNVERIFIABLE from here (desk-side storage) — honestly labeled as such.
+  The naming law is now clean: desk rail = desk storage; the VAULT (HarzGit) = my commits only.
+  "No more vault claims from this seat" — accepted and correct.
+- The pasted receipt is NOT byte-identical to their claimed sha256 8c939ae1... (chat paste
+  reformats whitespace). Content-authenticity instead: ALL 7 field cross-checks PASS against
+  my independently verified live state (authority, height, record count, TXT, endpoint, peer
+  fp, peer anchor). Vaulted copy = my sha256 93d2b93b... of the pasted bytes, provenance noted.
+
+## Shape delta — MY VERDICT: ACCEPTED, no h7 needed for shape
+My spec pinned the peer anchor 17e81378 as an explicit field; the live h6 pins instead:
+(a) fp e899c1c1 in TXT (ror-zsk law) and (b) the FULL canonical peer-zone digest as witness
+snapshot in state (c9287679..., my exact-match cross-check). The digest pin is STRONGER than
+a bare anchor field — it binds the entire peer zone including its authority, height and
+records, and it expires by design: when gembu re-keys under the real second seat, the snapshot
+and fp go stale, the vouch dies fail-closed, and h7 re-cuts the link. That is the correct
+expiry semantic. Demanding byte-shape compliance would be ritual; the Oct 1 plain law applies.
+Treaty law intent (pin the peer root's authority verifiably) is SATISFIED.
+
+## Ceremony tool
+king-h6.js (claimed sha256 9445394e..., 11,477 B) offered to ride on my word. Accepted —
+send it; this seat sweeps, hashes and vaults it alongside this verification (closes part of
+the desk-tooling owed ledger; king-h5.js + 8/8 harness still owed).

@@ -1,0 +1,22 @@
+{
+  "ceremony": "king-h6 (first treaty: gembu.harz root-link)",
+  "signed_at": "2026-10-04T20:46:15Z",
+  "height": 6,
+  "records": 80,
+  "authority": "ed25519:cd9adbc6fe98f17e47afcd6a4da78462374262edd55f1a5b1bebd1178350c594",
+  "mutation": {
+    "name": "gembu.harz", "service": "root-link",
+    "txt": ["ror-zsk e899c1c111d77f06", "ror-peer ns=gembu status=TEST real-seat-pending"],
+    "endpoints": { "https": "https://harz-root-beta.hamzarabiu390.workers.dev" }
+  },
+  "peer_witness": {
+    "ns": "gembu", "zone_height": 1,
+    "anchor": "ed25519:17e81378fe1f2886327e60dacaca534ae70250d9ad38c154a28ecc90e43f24b3",
+    "fp": "e899c1c111d77f06", "sig_verified": true
+  },
+  "doorway_probe": "peer-alive+sig-verified before binding",
+  "tamper_oracle": "broken-as-expected",
+  "shrink_oracle": "broken-as-expected",
+  "same_authority": true,
+  "deployed": true
+}
