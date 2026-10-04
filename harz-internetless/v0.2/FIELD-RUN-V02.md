@@ -47,7 +47,20 @@ Kill B hard (force-stop + reopen), run inbox again: record still [VERIFIED] afte
 On A (kill/restart survivor + durability receipt):
   Both sides now carry receipts that the internet was never what made the record trustworthy.
 
-## PASS CONDITION
+## PASS CONDITION (owner ratification, Oct 4)
 Every step's receipt on camera, airplane mode visible in the pull-down in at least one frame,
-BROKEN verdict filmed unrepaired. The honest sentence this run earns, and ONLY this run:
-"The internet is no longer the thing that makes the record trustworthy — the record carries its own evidence."
+BROKEN verdict filmed unrepaired. Proof structure: create -> seal -> persist -> kill -> reboot ->
+independently verify -> tamper -> detect -> refuse.
+
+The honest sentence this run earns, and ONLY this run:
+"The record carries its own evidence; connectivity carries it, but does not make it trustworthy."
+
+## SCOPE OF THE CLAIM (owner ruling, Oct 4 — keeps the achievement honest and stronger)
+If this run passes exactly as frozen, HARZ Internetless v0.2 is FIELD-PROVEN as the
+integrity/durability primitive. This does NOT claim that every possible HARZ service is
+automatically internetless. Narrow scope, exact wording:
+  PROVEN: a sealed record survives power death, verifies independently with zero server and
+  zero connectivity, and corruption is detected and refused, never repaired or smoothed.
+  NOT CLAIMED: internetlessness of services that have not been built or tested against this battery.
+No server tells the phone the record is authentic. No internet is present. No cached [VERIFIED]
+label overrides the cryptographic evidence.
