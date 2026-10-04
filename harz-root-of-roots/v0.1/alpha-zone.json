@@ -1,0 +1,41 @@
+{
+  "v": 2,
+  "zone": "alpha",
+  "height": 1,
+  "prev": "",
+  "records": [
+    {
+      "name": "one.alpha",
+      "service": "sovereign-standin",
+      "identity": "PENDING",
+      "routing": {
+        "nodes": []
+      },
+      "state": {
+        "height": 0,
+        "digest": ""
+      },
+      "txt": [
+        "TEST record — protocol proof only"
+      ]
+    },
+    {
+      "name": "door.alpha",
+      "service": "door",
+      "identity": "PENDING",
+      "routing": {
+        "nodes": []
+      },
+      "state": {
+        "height": 0,
+        "digest": ""
+      },
+      "txt": [
+        "TEST record — protocol proof only"
+      ]
+    }
+  ],
+  "signed_at": "2026-10-04T20:31:34.219Z",
+  "signed_by": "ed25519:8717c7c309b44792288add4304ca0b0eadaacbe9c6552441cc17ac73be34ff28",
+  "sig": "ed25519:25ba8d83e5b05a02e7fdcee52549cb87ef8902f60ca77dd1187cd5dd5fcfe68991a9ed54e3c1cc1bef0c170fca5aea771491db9b355005f6ec2706a0c0307807"
+}

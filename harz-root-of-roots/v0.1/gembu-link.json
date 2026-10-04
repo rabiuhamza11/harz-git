@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "link": {
+    "v": 1,
+    "kind": "root-link",
+    "from_ns": "gembu",
+    "to_ns": "alpha",
+    "peer_endpoint": "https://harz-root-alpha.hamzarabiu390.workers.dev",
+    "peer_anchor": "8717c7c309b44792288add4304ca0b0eadaacbe9c6552441cc17ac73be34ff28",
+    "peer_fp": "d48d628ee5be23c7",
+    "status": "active",
+    "created_at": "2026-10-04T20:33:16.736Z",
+    "revoked_at": null,
+    "sig": "ed25519:82f49e90ce5764dce82070e3a648b46e0b8be462c64a67ff93497723d6b3a37390a512e48cd1753a4575408a975ac04f1ed3776423bc548dc13a93b0d3ed8a06"
+  }
+}
