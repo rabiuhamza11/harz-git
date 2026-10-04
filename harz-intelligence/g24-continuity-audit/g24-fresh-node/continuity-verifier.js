@@ -185,8 +185,100 @@ async function main() {
   else if (tips.length > 1) { forkAtTip = true; print('CURRENCY: UNDETERMINED — a fork sits at the tip (' + tips.map(t => t.name).join(' vs ') + '). No silent selection by timestamp, arrival order, URL, or replica preference (law 7). Resolution requires an explicit signed supersession act.'); }
   else print('CURRENCY: no current state among the linked candidates');
 
+
+  // ---- G25 CHECKPOINT LAYER (additive; contract 05bceff) ----
+  // HARZ-chain is a CHECKPOINT AUTHORITY, not a replacement for the sovereign
+  // origin. The checkpoint can only TELL a node its locally valid history is no
+  // longer the current publicly anchored history — it can never manufacture
+  // validity the sovereign chain does not possess. Freshness is MEASURED from the
+  // signed notarized_at against an explicit window, never asserted.
+  let cpList = bundle.checkpoints || [];
+  let cpSource = 'bundle';
+  if (!cpList.length && bundle.chain_url) {
+    cpSource = 'live HARZ-chain (' + bundle.chain_url + ')';
+    try {
+      const lib = bundle.chain_url.startsWith('https') ? require('https') : require('http');
+      const j = (p) => new Promise((res, rej) => lib.get(bundle.chain_url + p, { headers: { 'User-Agent': 'G25' } }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => { try { res(JSON.parse(d)); } catch (e) { rej(new Error('non-JSON reply from HARZ-chain')); } }); }).on('error', rej));
+      const latest = await j('/api/checkpoint/latest');
+      if (latest && latest.checkpoint) {
+        let block = null;
+        try {
+          const bl = await j('/api/blocks?limit=100');
+          block = (bl.blocks || []).find(b => Number(b.id) === Number(latest.anchor.block_index)) || null;
+        } catch (e) {}
+        cpList = [{ ...latest.checkpoint, anchor: { ...latest.anchor, block } }];
+      }
+    } catch (e) {
+      print('CHECKPOINT: HARZ-chain UNAVAILABLE (' + String(e.message || e) + ') — disclosed; G24 honest boundary retained (currency relative to known history)');
+      cpList = [];
+    }
+  }
+  const now = bundle.now ? Date.parse(bundle.now) : Date.now();
+  const windowH = bundle.freshness_hours || 24;
+  const validCps = [];
+  for (const cpRaw of cpList) {
+    // canonical signed bytes = the checkpoint WITHOUT origin_signature and WITHOUT anchor
+    // (the origin signs the act BEFORE notarization; the anchor is the chain's witness,
+    // added after — exactly as the production flow does)
+    const { origin_signature: sig, anchor: _anchor, ...body } = cpRaw;
+    const cpBytes = JSON.stringify(body);
+    if (cpRaw.law !== 'HARZ-CHECKPOINT-V1') { print('CHECKPOINT REFUSED — unknown law: ' + cpRaw.law); continue; }
+    if (!sig || !verifySignature(cpBytes, sig.signature, anchor) || revoked.includes(sig.fingerprint)) { print('CHECKPOINT REFUSED — not a valid act of the sovereign origin (signature invalid, revoked, or unsigned); a forged checkpoint can never be anchored'); continue; }
+    if (cpRaw.origin_id !== sig.fingerprint) { print('CHECKPOINT REFUSED — origin_id does not match the signing key'); continue; }
+    const blk = cpRaw.anchor && cpRaw.anchor.block;
+    if (cpRaw.anchor && cpRaw.anchor.block !== undefined && !blk) { print('CHECKPOINT REFUSED — the anchor block could not be confirmed on HARZ-chain (not in the public recent window) — disclosed, not anchored'); continue; }
+    if (blk) {
+      const recomputed = crypto.createHash('sha256').update(blk.id + '|' + blk.prev_hash + '|' + blk.timestamp + '|' + blk.miner + '|' + blk.nonce + '|' + blk.difficulty, 'utf8').digest('hex').toUpperCase();
+      if (recomputed !== String(blk.hash).toUpperCase()) { print('CHECKPOINT REFUSED — anchor block hash does not recompute under the public HARZ-chain formula (forged anchor)'); continue; }
+    }
+    const ageH = (now - Date.parse(cpRaw.notarized_at)) / 3600000;
+    const fresh = ageH <= windowH;
+    validCps.push({ ...body, ageH, fresh, sig, blk });
+  }
+  let anchorVerdict = null;
+  if (validCps.length) {
+    // competing checkpoints: two valid checkpoints claiming the same height with different states
+    const byHeight = new Map();
+    let competing = false;
+    for (const cp of validCps) {
+      const k = cp.chain_height;
+      if (byHeight.has(k) && byHeight.get(k).state_hash !== cp.state_hash) competing = true;
+      byHeight.set(k, cp);
+    }
+    const latestCp = validCps.slice().sort((a, b) => Date.parse(b.notarized_at) - Date.parse(a.notarized_at))[0];
+    const ageNote = 'age ' + latestCp.ageH.toFixed(1) + 'h (window ' + windowH + 'h, ' + (latestCp.fresh ? 'FRESH' : 'STALE OBSERVATION — disclosed') + ')';
+    if (competing) {
+      anchorVerdict = 'CHECKPOINT CONFLICT — competing valid checkpoints from the sovereign origin are surfaced; NEVER silently chosen (no timestamp, arrival order, or chain-position preference)';
+      print(anchorVerdict);
+    } else if (!current) {
+      anchorVerdict = 'NO LOCAL CURRENT to anchor (G24 verdict governs); checkpoint observes height ' + latestCp.chain_height + ', ' + ageNote;
+      print(anchorVerdict);
+    } else {
+      const lh = current.cell.height, lhash = current.stateHash;
+      if (latestCp.chain_height === lh && latestCp.state_hash === lhash) {
+        anchorVerdict = 'ANCHORED — local tip (height ' + lh + ') IS the publicly anchored current state; ' + ageNote;
+      } else if (lh < latestCp.chain_height) {
+        anchorVerdict = 'STALE — local tip (height ' + lh + ') is BEHIND the publicly anchored height ' + latestCp.chain_height + '; the locally valid history is NOT CURRENT; ' + ageNote;
+      } else if (latestCp.chain_height === lh) {
+        anchorVerdict = 'CONFLICT — local tip (height ' + lh + ') DIVERGES from the publicly anchored state; NOT CURRENT; ' + ageNote;
+      } else {
+        const onLocal = states.some(s => s.stateHash === latestCp.state_hash);
+        anchorVerdict = onLocal
+          ? 'LOCAL AHEAD — local tip (height ' + lh + ') is current; checkpoint (height ' + latestCp.chain_height + ') is BEHIND, disclosed; origin advanced after checkpoint; ' + ageNote
+          : 'CONFLICT — the anchored state (height ' + latestCp.chain_height + ') is not present in the local history; the local history DIVERGES from the public root; NOT CURRENT; ' + ageNote;
+      }
+      print('CHECKPOINT (' + cpSource + '): ' + anchorVerdict);
+    }
+  } else if (cpList.length) {
+    anchorVerdict = 'NO VALID CHECKPOINT — every provided checkpoint was refused; G24 honest boundary retained';
+    print(anchorVerdict);
+  } else {
+    print('NO CHECKPOINT — G24 honest boundary retained: currency is relative to the known chain (disclosed, never silently widened)');
+  }
+  const demoted = anchorVerdict && (anchorVerdict.startsWith('STALE') || anchorVerdict.startsWith('CONFLICT'));
+
   const verdict = allAuth && !forkAtTip && (current || era.length || linked.length) ? 'CHAIN VERIFIED' : (forkAtTip ? 'FORK DISCLOSED — CURRENCY UNDETERMINED' : (allAuth ? 'CHAIN VERIFIED (no linked states)' : 'CHAIN REFUSED — authenticity failures present'));
-  print('\nG24 CONTINUITY-VERIFIER: ' + verdict + (current ? ' | current: ' + current.name + ' (height ' + current.cell.height + ')' : '') + (era.length ? ' | unlinked-era records: ' + era.length + ' (law 10)' : ''));
-  process.exit(verdict === 'CHAIN VERIFIED' ? 0 : 1);
+  print('\nG24 CONTINUITY-VERIFIER: ' + verdict + (current && !demoted ? ' | current: ' + current.name + ' (height ' + current.cell.height + ')' : (demoted ? ' | current: NONE per public anchor' : '')) + (era.length ? ' | unlinked-era records: ' + era.length + ' (law 10)' : '') + (anchorVerdict ? ' | anchor: ' + anchorVerdict.split(' — ')[0] : ''));
+  process.exit(verdict !== 'CHAIN VERIFIED' || demoted ? 1 : 0);
 }
 main().catch(e => { console.error('REFUSED — ' + e.message); process.exit(1); });
