@@ -165,7 +165,15 @@ async function main() {
   const states = []; const era = [];
   for (const [name, M] of Object.entries(bundle.records)) {
     const auth = await checkAuthority(M, bundle.origin, anchor, revoked);
-    if (!auth.ok) { allAuth = false; M._fail = auth.reason; print(name + ': NOT AUTHENTIC — refused (' + (M._fail || 'authority fails before continuity is even considered') + ')'); continue; }
+    if (!auth.ok) {
+      allAuth = false; M._fail = auth.reason;
+      // G27-C2 (Dad's ruling, 4697f89): "I cannot verify this" is not "this is false."
+      // Availability-caused unverifiability is UNVERIFIABLE / AUTHORITY UNAVAILABLE, never NOT AUTHENTIC.
+      const availFail = /artifact fetch|ECONNREFUSED|ENOTFOUND|ETIMEDOUT|ECONNRESET|EAI_AGAIN|unreachable|EHOSTUNREACH|ENETUNREACH/i.test(M._fail || '');
+      if (availFail) print(name + ': AUTHORITY UNAVAILABLE / UNVERIFIABLE — origin unavailable; authenticity could not be established (reason preserved: ' + (M._fail || '') + '); never read as forged, never read as valid');
+      else print(name + ': NOT AUTHENTIC — refused (' + (M._fail || 'authority fails before continuity is even considered') + ')');
+      continue;
+    }
     const cell = M.continuity;
     if (!cell) { era.push(name); print(name + ': AUTHENTIC, UNLINKED-ERA record (law 10: valid history from before the chain; never current, never retro-linked)'); continue; }
     const { origin_signature: sig, ...cellBody } = cell;
@@ -225,23 +233,6 @@ async function main() {
     if (retiredByRestart) continue;
     candidate.push(s);
   }
-  const maxH = candidate.length ? Math.max(...candidate.map(s => s.cell.height)) : 0;
-  const tips = candidate.filter(s => s.cell.height === maxH);
-  for (const s of candidate) {
-    if (s.cell.height < maxH) print(s.name + ': currency HISTORICAL — valid at height ' + s.cell.height + ', superseded by the chain tip at height ' + maxH + ' (law 5: a valid old state is history, not current)');
-  }
-  let current = null;
-  if (tips.length === 1) { current = tips[0]; print(current.name + ': currency CURRENT — the tip of the standing valid chain (height ' + maxH + '), not superseded, not forked, not retired'); }
-  else if (tips.length > 1) { forkAtTip = true; print('CURRENCY: UNDETERMINED — a fork sits at the tip (' + tips.map(t => t.name).join(' vs ') + '). No silent selection by timestamp, arrival order, URL, or replica preference (law 7). Resolution requires an explicit signed supersession act.'); }
-  else print('CURRENCY: no current state among the linked candidates');
-
-
-  // ---- G25 CHECKPOINT LAYER (additive; contract 05bceff) ----
-  // HARZ-chain is a CHECKPOINT AUTHORITY, not a replacement for the sovereign
-  // origin. The checkpoint can only TELL a node its locally valid history is no
-  // longer the current publicly anchored history — it can never manufacture
-  // validity the sovereign chain does not possess. Freshness is MEASURED from the
-  // signed notarized_at against an explicit window, never asserted.
   let cpList = bundle.checkpoints || [];
   let cpSource = 'bundle';
   if (!cpList.length && bundle.chain_url) {
@@ -289,6 +280,31 @@ async function main() {
     const fresh = ageH <= windowH;
     validCps.push({ ...body, ageH, fresh, sig, blk });
   }
+
+  // G27-C1 (Dad's ruling, 4697f89): the primary label must never be stronger than the evidence.
+  // An anchorless state is UNKNOWN — no authoritative anchor known; the relative observation is disclosed separately.
+  const anchorKnown = validCps.length > 0;
+  const maxH = candidate.length ? Math.max(...candidate.map(s => s.cell.height)) : 0;
+  const tips = candidate.filter(s => s.cell.height === maxH);
+  for (const s of candidate) {
+    if (s.cell.height < maxH) print(s.name + ': currency HISTORICAL — valid at height ' + s.cell.height + ', superseded by the chain tip at height ' + maxH + ' (law 5: a valid old state is history, not current)');
+  }
+  let current = null;
+  if (tips.length === 1) {
+    current = tips[0];
+    if (anchorKnown) print(current.name + ': currency CURRENT — the tip of the standing valid chain (height ' + maxH + '), not superseded, not forked, not retired (classification below governs)');
+    else print(current.name + ': currency UNKNOWN — no authoritative anchor known; relative observation: tip of the standing valid chain (height ' + maxH + '), not superseded, not forked, not retired within known history; silence is evidence of absence of knowledge, not evidence of authority');
+  }
+  else if (tips.length > 1) { forkAtTip = true; print('CURRENCY: UNDETERMINED — a fork sits at the tip (' + tips.map(t => t.name).join(' vs ') + '). No silent selection by timestamp, arrival order, URL, or replica preference (law 7). Resolution requires an explicit signed supersession act.'); }
+  else print('CURRENCY: no current state among the linked candidates');
+
+
+  // ---- G25 CHECKPOINT LAYER (additive; contract 05bceff) ----
+  // HARZ-chain is a CHECKPOINT AUTHORITY, not a replacement for the sovereign
+  // origin. The checkpoint can only TELL a node its locally valid history is no
+  // longer the current publicly anchored history — it can never manufacture
+  // validity the sovereign chain does not possess. Freshness is MEASURED from the
+  // signed notarized_at against an explicit window, never asserted.
   let anchorVerdict = null;
   if (validCps.length) {
     // competing checkpoints: two valid checkpoints claiming the same height with different states
@@ -327,7 +343,7 @@ async function main() {
     anchorVerdict = 'NO VALID CHECKPOINT — every provided checkpoint was refused; G24 honest boundary retained';
     print(anchorVerdict);
   } else {
-    print('NO CHECKPOINT — G24 honest boundary retained: currency is relative to the known chain (disclosed, never silently widened)');
+    print('NO CHECKPOINT — G24 honest boundary retained: currency is relative to the known chain (disclosed, never silently widened); silence is evidence of absence of knowledge, not evidence of authority');
   }
   const demoted = anchorVerdict && (anchorVerdict.startsWith('STALE') || anchorVerdict.startsWith('CONFLICT'));
 
@@ -335,7 +351,7 @@ async function main() {
   print(discLine);
   const seenT = new Set();
   for (const r of tState.refused) { if (seenT.has(r.id)) continue; seenT.add(r.id); print('AUTHORITY: transition refused — ' + r.id + ': ' + r.reason); }
-  print('\nG24 CONTINUITY-VERIFIER: ' + verdict + (current && !demoted ? ' | current: ' + current.name + ' (height ' + current.cell.height + ')' : (demoted ? ' | current: NONE per public anchor' : '')) + (era.length ? ' | unlinked-era records: ' + era.length + ' (law 10)' : '') + (anchorVerdict ? ' | anchor: ' + anchorVerdict.split(' — ')[0] : ''));
+  print('\nG24 CONTINUITY-VERIFIER: ' + verdict + (current && !demoted ? ' | current: ' + current.name + ' (height ' + current.cell.height + (anchorKnown ? '' : ', UNKNOWN — no authoritative anchor known') + ')' : (demoted ? ' | current: NONE per public anchor' : '')) + (era.length ? ' | unlinked-era records: ' + era.length + ' (law 10)' : '') + (anchorVerdict ? ' | anchor: ' + anchorVerdict.split(' — ')[0] : ''));
   process.exit(verdict !== 'CHAIN VERIFIED' || demoted ? 1 : 0);
 }
 main().catch(e => { console.error('REFUSED — ' + e.message); process.exit(1); });
