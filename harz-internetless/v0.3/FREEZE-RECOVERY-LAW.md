@@ -9,7 +9,7 @@ law AND its implementation, promoted as the next earned primitive.
 
 ## THE FROZEN IMPLEMENTATION
 
-internetless-node-v03.js (sha256 98dcdd624a4901b0e35e42bd8b3f1695d644cbb44339a08260345252ac25a5c39)
+internetless-node-v03.js (sha256 98dcdd624a4901b4d0034310f22055768716079c8cdb6f6cbea0a1a7083c9a7f)
 — promoted from candidate internetless-node-v03rc.js (sha256
 0a3ae10ec0162a9efaf80a97cdea2986520d9ecdff248ec53703dfd31bf249b3, the exact file that
 survived the REC3 battery 29/29 twice) with a header-only diff; non-comment code verified

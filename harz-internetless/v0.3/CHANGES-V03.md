@@ -37,7 +37,7 @@ FREEZE-RECOVERY-LAW.md.
 - Frozen v0.2 (untouched, historical): d0dfbfb0e66e947199f3f04a60cee2c799ef2cebbdcfaecf1494f06ba6480c61
 - Attacked candidate (REC3 battery target): 0a3ae10ec0162a9efaf80a97cdea2986520d9ecdff248ec53703dfd31bf249b3
 - Promoted v0.3 (header-only diff from candidate, non-comment code verified identical,
-  smoke-verified after promotion): 98dcdd624a4901b0e35e42bd8b3f1695d644cbb44339a08260345252ac25a5c39
+  smoke-verified after promotion): 98dcdd624a4901b4d0034310f22055768716079c8cdb6f6cbea0a1a7083c9a7f
 
 ## Known, disclosed, NOT fixed here
 
