@@ -30,3 +30,14 @@ Known honest gap unaffected: Rung 3 mesh/two-phone exchange legs remain open
 sentence — now has TWO independent field legs closed on real hardware:
 (1) the .harz name-resolution door (Oct 3), (2) the search engine (Oct 6).
 Both ran on the SAME phone, same owner, same airplane-mode discipline.
+
+## Honest scope correction (owner tested same night, 8:17 PM)
+Owner clicked a search result offline and got Chrome's dino/ERR_INTERNET_DISCONNECTED
+page. This is EXPECTED, not a defect: the index stores title + snippet + source URL
+only, never a cached copy of the external page body. HARZ Search answers "what exists
+and where" offline; it does not mirror the destination page. Clicking through to
+businessday.ng (or any indexed source) still requires internet, same as any search
+engine's result links. The death test above remains valid for exactly what it proved:
+query -> ranked results -> snippet, served from zero bytes of internet. Reading the
+original source page was never part of that claim and must not be represented as such
+in any future report.
