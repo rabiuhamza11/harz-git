@@ -6143,6 +6143,471 @@ async function runV051Gate() {
   return { ok: passed === T.length, gate: 'v0.5.1-capability-routing-repair', passed, total: T.length, tests: T, at: new Date().toISOString() };
 }
 
+
+// ==================== MISSIONS EXECUTOR (module level since GAP-1; SAME CODE, NEW CALLER — contract harz-ai-completion/GAP1-FRONT-DOOR-CONTRACT.md) ====================
+// G15 CONFLICT AUDIT — frozen synthetic conflict fixture (contract 13e383a).
+// TEST DATA, completely outside the production corpus: never in the search
+// index, never reasoner evidence. Caller-explicit fixture tasks only; the
+// planner never invents them. Verification = the answer bytes match the
+// frozen fixture record (sha256 in the G15 contract), never corpus evidence.
+const G15_FIXTURES = {
+  'G15-FIX-A': { answer: '**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
+  'G16-FIX-C': { answer: '**Answer**\n\nThe GDEG test widget price registry states the authoritative price is 800 HARZ \u3010S1\u3011\n\nSources: [s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)' },
+  'G15-FIX-B': { answer: '**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
+  'G20-FIX-D': { answer: '**Answer**\n\nThe GDEG test widget registry audit note states the price record is correct and stable at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G20 SYNTHETIC DECOY FIXTURE D \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G20 fixture record only (synthetic test data, never corpus evidence)' }
+};
+// G15 RESOLUTION LAW (frozen 13e383a): verification establishes each claim
+// against its own source, NEVER their agreement. Multi-source resolution
+// requests refuse at the mission layer; resolution belongs to research.
+const G15_RESOLUTION_PATTERNS = [
+  /stating which/i,
+  /which (?:of (?:these|the) )?(?:conflicting )?claims? (?:is|are) (?:true|correct|right|real|valid)/i,
+  /which (?:of (?:these|the) )?(?:price|value|statement|source|one)s? (?:is|was|are|were) (?:true|correct|right|real|actual|valid)/i,
+  /(?:the|that) (?:true|correct|right|real|actual) (?:price|value|claim|answer|statement)/i,
+  /resolve (?:the |this )?(?:conflict|contradiction|dispute)/i,
+  /determin\w+ (?:the |this )?(?:correct|true|real|actual) (?:price|value|claim|answer|statement)/i,
+  /who (?:is|was) (?:right|correct)/i
+];
+// ==================== MISSIONS v0.1 (contract: contracts/MISSIONS-V1.md, frozen before build) ====================
+async function mSha(str) {
+  const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(str)));
+  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function kvGetMission(mid) { return (await ENV.MEMORY.get('mission:' + mid, 'json')) || null; }
+async function kvPutMission(m) {
+  await ENV.MEMORY.put('mission:' + m.id, JSON.stringify(m));
+  const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
+  const entry = { id: m.id, goal: m.goal, pattern: m.pattern, status: m.status, created: m.created, tasks: m.tasks.length, task_states: m.tasks.map(t => t.state), receipt: m.receipt };
+  const i = idx.missions.findIndex(x => x.id === m.id);
+  if (i >= 0) idx.missions[i] = entry; else idx.missions.unshift(entry);
+  if (idx.missions.length > 200) idx.missions.length = 200;
+  await ENV.MEMORY.put('missions:index', JSON.stringify(idx));
+}
+function planMission(goal) {
+  const g = (goal || '').toLowerCase();
+  const modalityWords = ['image', 'voice', 'music', 'video', 'film', 'story', 'artwork', 'song', 'picture', 'narration'];
+  const wantsCompose = ['compose', 'produce', 'create', 'make me', 'generate'].some(w => g.includes(w));
+  const wantsModality = modalityWords.some(w => g.includes(w));
+  if (wantsCompose && wantsModality) return { pattern: 'COMPOSE', reason: 'creative composition goal -> frozen V3 Studio', tasks: [{ id: 1, type: 'compose', instruction: goal }] };
+  const researchy = /^(research|find|quote|list|what|how|which|how many|compute|calculate|how much)/.test(g) || ['what', 'how', 'which', 'quote', 'find', 'list', 'compute', 'calculate'].some(w => g.trim().split(/\s+/).slice(0, 3).includes(w));
+  if (researchy) return { pattern: 'RESEARCH', reason: 'evidence question -> orchestrate() evidence->reason->verify chain', tasks: [{ id: 1, type: 'orchestrate', instruction: goal }] };
+  return { pattern: 'REFUSED', reason: 'the deterministic planner has no plan for this goal pattern. Supported: RESEARCH (evidence question), COMPOSE (creative composition), or explicit tasks[] (each {instruction}). No plan is guessed.', tasks: [] };
+}
+
+// ==================== TASKS v0.1 — THE FRONT DOOR (GAP-1; contracts harz-ai-completion/TASKRECORD-V1-CONTRACT.md + GAP1-FRONT-DOOR-CONTRACT.md, frozen in harz-git) ====================
+// One job: any task in -> ONE TaskRecord out -> lineage visible. This layer is the
+// orchestrator/UI boundary around the frozen capabilities — it CONSUMES the missions
+// executor (runMission), the G13 typed package, Search/Reasoner/Verify/Intake/Creation.
+// It never rewrites them. Lifecycle states are EARNED by real events, never asserted.
+// NO CLOSED WITHOUT A RECEIPT. Refusal closes as CLOSED + verdict='refused' + reason
+// + receipt (Dad's approved ruling — refusal is an outcome, not a lifecycle state).
+
+function planDoorTask(instruction) {
+  const g = String(instruction || '').slice(0, 2000).trim();
+  if (!g) return { pattern: 'REFUSED', reason: 'empty instruction — the door refuses to guess a task; no plan is invented', tasks: [] };
+  const RC = /^(?:please\s+)?(research|study|investigate|analyze|find out about|find out|learn about)\s+(.+?)[,;]?\s+(?:and\s+|then\s+)?(?:please\s+)?(write|create|compose|produce|draft|make|generate)\s+(.+)$/i;
+  const m = g.match(RC);
+  if (m) {
+    const researchClause = (m[1] + ' ' + m[2]).trim();
+    const composeClause = (m[3] + ' ' + m[4]).trim();
+    return { pattern: 'RESEARCH_AND_COMPOSE', reason: 'research clause -> orchestrate (evidence); composition clause -> compose with evidence_from [1] (G13 typed handoff, claims byte-exact)', tasks: [
+      { id: 1, type: 'orchestrate', instruction: researchClause },
+      { id: 2, type: 'compose', instruction: composeClause, evidence_from: [1] }
+    ] };
+  }
+  const low = g.toLowerCase();
+  const researchy = /^(research|find|quote|list|what|how|which|how many|compute|calculate|how much)/.test(low) || ['what', 'how', 'which', 'quote', 'find', 'list', 'compute', 'calculate'].some(w => low.trim().split(/\s+/).slice(0, 3).includes(w));
+  if (researchy) return { pattern: 'INFORMATIONAL', reason: 'evidence question -> single orchestrate task (verified informational path; artifacts lawfully empty per TASKRECORD V1 law 2)', tasks: [{ id: 1, type: 'orchestrate', instruction: g }] };
+  return { pattern: 'REFUSED', reason: 'the deterministic door planner has no plan for this instruction. Supported: evidence questions (RESEARCH), research+composition (RESEARCH X AND WRITE/CREATE ME A REPORT). No plan is guessed.', tasks: [] };
+}
+
+// evidence refs parsed from the frozen reasoner format ONLY — deterministic line
+// addressing of the evidence lines (document_id/digest), the same law G13 applies
+// to the answer sections. Zero semantic rewriting, zero improvisation.
+function taskEvidenceRefs(answerText) {
+  const t = String(answerText || '');
+  const refs = [];
+  // FORMAT 1 (entity-value answers): value lines with document_id + evidence_digest segments
+  for (const line of t.split('\n')) {
+    const m = line.match(/document_id:\s*(\d+)\s*\|\s*evidence_digest:\s*([0-9a-f]+)/);
+    if (!m) continue;
+    const src = (line.match(/source:\s*([^|]+)\|/) || [])[1];
+    const cit = (line.match(/\[s(\d+)\]/) || [])[1];
+    const e = { document_id: parseInt(m[1], 10), evidence_digest: m[2], source_title: src ? src.trim() : null, cited_as: cit ? 's' + cit : null };
+    if (!refs.some(r => r.document_id === e.document_id && r.evidence_digest === e.evidence_digest)) refs.push(e);
+  }
+  // FORMAT 2 (quoted-answers): the frozen Sources section — cited_as [sN] + title pairs, byte-exact addressing
+  const si = t.indexOf('Sources: ');
+  if (si >= 0) {
+    const rest = t.slice(si + 'Sources: '.length);
+    const ci = rest.indexOf('\n\nCONFIDENCE: ');
+    const srcSection = (ci >= 0 ? rest.slice(0, ci) : rest).trim();
+    for (const part of srcSection.split(';')) {
+      const pm = part.match(/\[s(\d+)\]\s*(.+)/);
+      if (!pm) continue;
+      const cited = 's' + pm[1];
+      const title = pm[2].trim();
+      if (!refs.some(r => r.cited_as === cited)) refs.push({ document_id: null, evidence_digest: null, source_title: title, cited_as: cited, disclosure: 'title + citation from the frozen Sources section; document_id/digest disclosed by the value-line format only when the answer carries them' });
+    }
+  }
+  return refs;
+}
+
+async function runTaskRecord(instruction) {
+  const taskId = 'TASK-' + id('task');
+  const now = () => new Date().toISOString();
+  const rec = { law: 'HARZ-TASKRECORD-V1', task_id: taskId, instruction: String(instruction || '').slice(0, 2000), input_refs: [], created: now(), lifecycle: [{ state: 'RECEIVED', at: now(), earned_by: 'instruction accepted at the front door' }], decomposition: null, evidence_refs: [], verified_claims: [], artifacts: [], verdict: null, refusal_reason: null, sovereignty: null, receipt: null, status: 'OPEN', mission_id: null, pattern: null };
+  const plan = planDoorTask(rec.instruction);
+  rec.pattern = plan.pattern;
+  rec.decomposition = plan.tasks.map(t => ({ step: t.id, type: t.type, instruction: t.instruction, evidence_from: t.evidence_from || undefined }));
+  rec.lifecycle.push({ state: 'DECOMPOSED', at: now(), earned_by: 'deterministic door planner: ' + plan.pattern + ' — ' + plan.reason });
+  const mission = await runMission(plan, rec.instruction);
+  rec.mission_id = mission.id;
+  const research = (mission.tasks || []).find(t => t.type === 'orchestrate') || null;
+  const compose = (mission.tasks || []).find(t => t.type === 'compose') || null;
+  // EVIDENCE_GATHERED / VERIFIED: earned by the research task's real recorded outcome
+  if (research && research.state === 'verified') {
+    rec.evidence_refs = taskEvidenceRefs(research.answer);
+    rec.lifecycle.push({ state: 'EVIDENCE_GATHERED', at: now(), earned_by: 'research task verified with ' + rec.evidence_refs.length + ' evidence ref(s) from the frozen reasoner format' });
+    rec.verified_claims.push({ kind: 'answer', source_task: research.id, source_task_type: research.type, text: String(research.answer || ''), answer_sha256: await sha256(String(research.answer || '')), source_receipt: research.receipt, binding: 'verification receipt ' + research.receipt + ' (frozen Verify-1 aggregate verdict)' });
+    rec.lifecycle.push({ state: 'VERIFIED', at: now(), earned_by: 'verification receipt ' + research.receipt });
+  }
+  // CREATED / ARTIFACT_VERIFIED: earned by the compose task's delivered, reader-judged children (G11 law)
+  if (compose && compose.state === 'verified' && compose.answer && Array.isArray(compose.answer.delivered_children) && compose.answer.delivered_children.length) {
+    rec.lifecycle.push({ state: 'CREATED', at: now(), earned_by: 'compose task created children through the frozen V3 Studio path' });
+    for (const c of compose.answer.delivered_children) {
+      // ACCEPTANCE-GATE DISCOVERY (Oct 6, GAP-1 test 3): the frozen creation formula records
+      // the artifact sha over the UTF-8 encoding of its byte-string (deterministic package
+      // hash, internally consistent through every frozen test) — while the raw download
+      // serves the true binary bytes. The frozen formula is NOT touched. This layer adds
+      // the DOWNLOADABLE-BYTES sha (additive disclosure, G18/G21 class) so any auditor can
+      // hash the delivered artifact and match a recorded value. Both shas are disclosed.
+      let bytes_sha256 = null;
+      const childReqId = String(c.request_id || decodeURIComponent(String(c.player_url || '').split('request_id=')[1] || ''));
+      try {
+        const child = await ENV.MEMORY.get('createimg:' + childReqId, 'json');
+        if (child && child.package && child.package.components && child.package.components[0]) {
+          const b = child.package.components[0].bytes;
+          const u8 = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u8[i] = b.charCodeAt(i) & 255;
+          bytes_sha256 = await sha256BytesHex(u8);
+        }
+      } catch (e) { bytes_sha256 = null; }
+      rec.artifacts.push({ mode: c.mode, artifact_sha256: c.artifact_sha256, downloaded_bytes_sha256: bytes_sha256, sha_disclosure: 'artifact_sha256 = frozen package hash (internal, receipt-bound); downloaded_bytes_sha256 = sha256 of the raw bytes a real download returns (verify any artifact by hashing the fetched file)', request_id: childReqId, player_url: c.player_url, judged_by: 'the frozen readers of its own modality (unchanged); delivered by real fetch (G11 law)' });
+    }
+    rec.lifecycle.push({ state: 'ARTIFACT_VERIFIED', at: now(), earned_by: compose.answer.delivered_children.length + ' artifact(s) delivered and judged by the frozen readers; studio receipt ' + compose.receipt });
+    for (const e of (compose.answer.evidence || [])) rec.verified_claims.push({ kind: 'g13-package', source_task: e.source_task, source_task_type: e.source_task_type, claims_sha256: e.claims_sha256, answer_sha256: e.answer_sha256, claims: e.claims, confidence: e.confidence, provenance: e.provenance, source_receipt: e.source_receipt, extraction_law: e.extraction_law });
+  } else if (compose) {
+    rec.lifecycle.push({ state: 'CREATED', at: now(), earned_by: 'compose task ended: ' + (compose.state) + (compose.refusal ? ' — ' + compose.refusal : '') });
+  } else if ((mission.tasks || []).length === 0) {
+    rec.lifecycle.push({ state: 'CREATED', at: now(), not_applicable: 'no execution — the plan was refused at the door; nothing was created' });
+    rec.lifecycle.push({ state: 'ARTIFACT_VERIFIED', at: now(), not_applicable: 'no execution — the plan was refused at the door; nothing was created' });
+  } else {
+    rec.lifecycle.push({ state: 'CREATED', at: now(), not_applicable: 'informational task — artifacts lawfully empty (TASKRECORD V1 law 2)' });
+    rec.lifecycle.push({ state: 'ARTIFACT_VERIFIED', at: now(), not_applicable: 'informational task — artifacts lawfully empty (TASKRECORD V1 law 2)' });
+  }
+  // verdict + CLOSED (refusal is an outcome of the task; CLOSED is the terminal state)
+  const allVerified = (mission.tasks || []).length > 0 && (mission.tasks || []).every(t => t.state === 'verified');
+  if (allVerified && (!compose || rec.artifacts.length)) {
+    rec.verdict = 'verified';
+    rec.status = 'CLOSED';
+  } else {
+    rec.verdict = 'refused';
+    rec.refusal_reason = (mission.refusal && String(mission.refusal).slice(0, 500)) || (mission.tasks || []).map(t => t.state === 'refused' ? 'task ' + t.id + ' [' + t.type + ']: ' + String(t.refusal || '').slice(0, 400) : null).filter(Boolean)[0] || ('mission ended ' + mission.status + ' without a verified deliverable');
+    rec.status = 'CLOSED';
+  }
+  rec.sovereignty = { external_calls: (mission.tasks || []).reduce((a, t) => a + (t.external_calls || 0), 0), sovereign: mission.sovereign === true, disclosure: 'external calls summed across the decomposition; sovereign means zero external calls' };
+  // backward provenance chain (Dad's GAP-1 acceptance shape) — only for creation tasks
+  if (rec.artifacts.length && rec.verified_claims.some(c => c.kind === 'g13-package')) {
+    rec.provenance_chain = [
+      { link: 'REPORT', detail: 'artifact mode ' + rec.artifacts[0].mode + ', package sha ' + String(rec.artifacts[0].artifact_sha256).slice(0, 16) + '…, downloadable-bytes sha ' + String(rec.artifacts[0].downloaded_bytes_sha256 || 'unknown').slice(0, 16) + '… (hash the fetched file to verify), player ' + rec.artifacts[0].player_url },
+      { link: 'artifact verification', detail: 'frozen readers judged the artifact; delivery by real fetch; studio receipt on the mission chain' },
+      { link: 'creation inputs', detail: 'prompt = compose instruction + [VERIFIED MISSION FINDINGS]; prompt bytes covered by the G13 handoff (claims byte-exact)' },
+      { link: 'verified claims', detail: rec.verified_claims.filter(c => c.kind === 'g13-package').map(c => 'claims_sha ' + String(c.claims_sha256).slice(0, 16) + '… from task ' + c.source_task).join('; ') },
+      { link: 'evidence refs', detail: rec.evidence_refs.map(e => (e.document_id !== null ? 'doc ' + e.document_id + ' digest ' + e.evidence_digest : e.source_title + ' [' + e.cited_as + '] (id/digest not carried by this answer format — disclosed)')).join('; ') || 'none parsed' },
+      { link: 'source material', detail: rec.evidence_refs.map(e => (e.document_id !== null ? 'doc ' + e.document_id + ' (digest ' + String(e.evidence_digest).slice(0, 8) + ')' : 'corpus source ' + e.source_title + ' [' + e.cited_as + ']')).join('; ') || 'none disclosed by the frozen answer format' }
+    ];
+  }
+  // NO CLOSED WITHOUT A RECEIPT — additive seal over the child chain (G19 style; no frozen formula touched)
+  rec.receipt = await mSha('HARZ-TASKRECORD-V1|' + taskId + '|' + (await sha256(rec.instruction)) + '|' + (mission.receipt || 'no-mission-receipt'));
+  rec.lifecycle.push({ state: 'CLOSED', at: now(), earned_by: 'receipt emitted: ' + rec.receipt + (rec.verdict === 'refused' ? ' (refused outcome — refusal is an output, not an error)' : '') });
+  await ENV.MEMORY.put('task:' + taskId, JSON.stringify(rec));
+  const idx = (await ENV.MEMORY.get('tasks:index', 'json')) || { tasks: [] };
+  idx.tasks.unshift({ task_id: taskId, instruction: rec.instruction.slice(0, 120), pattern: rec.pattern, status: rec.status, verdict: rec.verdict, artifacts: rec.artifacts.length, external_calls: rec.sovereignty.external_calls, receipt: rec.receipt, created: rec.created });
+  if (idx.tasks.length > 200) idx.tasks.length = 200;
+  await ENV.MEMORY.put('tasks:index', JSON.stringify(idx));
+  return rec;
+}
+
+async function runMission(plan, goal) {
+const mid = 'm-' + id('mission');
+const mission = { id: mid, goal, pattern: plan.pattern, plan_reason: plan.reason, status: 'planning', created: new Date().toISOString(), tasks: [], receipt: null, law: 'every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)' };
+if (plan.pattern === 'REFUSED') {
+  mission.status = 'refused';
+  mission.refusal = plan.reason;
+  mission.tasks = [];
+  mission.receipt = await mSha('HARZ-MISSION-1|' + mid + '|planner-refused|' + plan.reason);
+  await kvPutMission(mission);
+  mission.honest_note = 'refusal is a first-class result — the planner did not guess a plan';
+  return mission;
+}
+mission.status = 'executing';
+await kvPutMission(mission);
+let prev = [];
+for (const t of plan.tasks) {
+  const task = { id: t.id, type: t.type, instruction: t.instruction, state: 'executing', agent_id: null, backend: null, latency_ms: null, external_calls: 0, internal_calls: 0, answer: null, receipt: null, refusal: null, error: null };
+  const t0 = Date.now();
+  try {
+    if (t.type === 'fixture') {
+      const fx = G15_FIXTURES[t.fixture_id] || null;
+      if (!fx) {
+        task.state = 'refused'; task.refusal = 'fixture refused: unknown fixture id ' + (t.fixture_id || '(none)') + ' — the frozen G15 fixture table defines what exists; no improvisation'; task.receipt = await mSha('refused:' + task.refusal);
+      } else {
+        task.answer = fx.answer; task.state = 'verified'; task.backend = 'g15-frozen-fixture-record'; task.agent_id = null;
+        task.fixture_id = t.fixture_id; // G18: identity disclosure on the record so exported state is self-describing (frozen formula untouched)
+                      task.receipt = await mSha('verified:fixture:' + t.fixture_id + ':' + await sha256(fx.answer));
+      }
+    } else if (t.type === 'compose') {
+      // direct in-worker composition through the UNCHANGED frozen V3 Studio path
+      // (createParse -> stResolveModes -> stBuildBundle -> stTest -> stDeliver).
+      // Zero HTTP hops: Cloudflare error 1042 forbids a worker fetching its own
+      // workers.dev URL, and a direct call is the more sovereign form anyway.
+      // G12 EVIDENCE HANDOFF (EVIDENCE-CREATION-AUDIT-V1, frozen b9f88a9): a compose
+      // task may EXPLICITLY reference prior tasks via evidence_from. The executor
+      // builds the canonical evidence packages from its OWN stored task records
+      // ONLY — caller-supplied evidence fields are never read (injection is data,
+      // never input). Missing/unverified evidence = honest refusal, never
+      // improvisation. Evidence bytes enter the prompt byte-exactly; creation may
+      // use them, never certify them, never alter them. The chain
+      // answer_sha256 -> prompt_sha256 -> artifact_sha256 proves derivation.
+      let handoffPrompt = t.instruction;
+      let evidenceUsed = null;
+      let handoffRefusal = null;
+      let conflictObj = null; // G16 structured conflict state (frozen 6810d24)
+      if (Array.isArray(t.evidence_from) && t.evidence_from.length) {
+        // G13 EVIDENCE PACKAGE CONTRACT AMENDMENT (frozen 79ab577, Dad's ruling —
+        // Option 3, adapter-only). Typed package, section-addressed on the
+        // reasoner's own frozen format. ZERO semantic rewriting: no prose cleaning,
+        // no selective sentence removal. Creation receives CLAIMS + instruction only;
+        // receipt/confidence/provenance stay metadata on the mission chain.
+        const packages = [];
+        for (const refId of t.evidence_from) {
+          const src = mission.tasks.find(x => x.id === refId);
+          if (!src) { handoffRefusal = 'evidence handoff refused: referenced task ' + refId + ' does not exist in this mission — missing evidence is an honest failure, never improvised'; break; }
+          if (src.state !== 'verified' || !src.receipt) { handoffRefusal = 'evidence handoff refused: task ' + refId + ' is not verified (state: ' + src.state + ') — unverified evidence may not enter creation'; break; }
+          const answerText = typeof src.answer === 'string' ? src.answer : JSON.stringify(src.answer);
+          // deterministic section addressing of the frozen reasoner format
+          const AM = '**Answer**\n\n';
+          if (!answerText.startsWith(AM)) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output does not carry the frozen **Answer** section — the adapter addresses the frozen structure, it never improvises a claim'; break; }
+          const rest = answerText.slice(AM.length);
+          const si = rest.indexOf('\n\nSources: ');
+          const ci = rest.indexOf('\n\nCONFIDENCE: ');
+          const claimsEnd = (si >= 0 && (ci < 0 || si < ci)) ? si : ci;
+          if (claimsEnd < 0) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output has no frozen Sources/CONFIDENCE boundary — claims cannot be separated from the answer; no improvisation'; break; }
+          const claims = rest.slice(0, claimsEnd);
+          const provenance = (claimsEnd === si) ? rest.slice(si + '\n\nSources: '.length, ci >= 0 ? ci : rest.length) : null;
+          const confidence = ci >= 0 ? rest.slice(ci + '\n\nCONFIDENCE: '.length) : null;
+          const ansSha = await sha256(answerText);
+          const claimsSha = await sha256(claims);
+          packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, source_receipt: src.receipt, answer_sha256: ansSha, claims: claims, claims_sha256: claimsSha, confidence: confidence, provenance: provenance !== null ? provenance : 'none — this answer type carries no Sources section (disclosed, never guessed)', extraction_law: 'byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) — zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain' });
+        }
+        // G16 RESOLUTION_FROM LAW (frozen 6810d24): a resolution-requesting
+        // compose over 2+ sources proceeds ONLY with an explicit caller
+        // designation of a verified resolution act. The adapter verifies
+        // ELIGIBILITY, never semantic correctness.
+        let resolutionDisclosure = null;
+        const resFrom = Array.isArray(t.resolution_from) ? t.resolution_from : [];
+        // G16: if eligibility already refused AND a designated resolution act failed,
+        // the conflict stays disclosed (contract T5: inconclusive research cannot
+        // authorize resolution; the unresolved claims and provenance remain visible).
+        if (handoffRefusal && resFrom.length && !conflictObj) {
+          const failedRes = resFrom.some(rid => { const src = mission.tasks.find(x => x.id === rid); return !src || src.state !== 'verified' || !src.receipt; });
+          if (failedRes) conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
+        }
+        if (!handoffRefusal && resFrom.length) {
+          const mkConflict = () => ({ state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' });
+          if (resFrom.some(rid => !t.evidence_from.includes(rid))) {
+            handoffRefusal = 'resolution refused: every resolution_from task must also be cited in evidence_from — the resolution claim must reach the creator as carried material, not merely authorize; no improvisation';
+          } else {
+            const resPkgs = resFrom.map(rid => packages.find(p => p.source_task === rid));
+            if (resPkgs.some(p => !p)) { handoffRefusal = 'resolution refused: a designated resolution task is not an eligible evidence source — resolution requires an explicit verified act; no improvisation'; conflictObj = mkConflict(); }
+            else { resolutionDisclosure = { requested_by_instruction: null, resolution_from: resFrom.slice(), resolves_conflict: packages.filter(p => !resFrom.includes(p.source_task)).map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_receipt: p.source_receipt, claims_sha256: p.claims_sha256, answer_sha256: p.answer_sha256, provenance: p.provenance, resolves_law: 'the conflicting evidence remains cited and carried byte-exact; this resolution extends the history, it never replaces the evidence it resolves' })), resolution_sources: resPkgs.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims_sha256: p.claims_sha256, answer_sha256: p.answer_sha256 })), acceptance_law: 'resolution act verified (state verified + receipt + frozen format) and explicitly designated by the caller; the adapter carries its claims as material, it does not adjudicate correctness — that judgment belongs to the reader of the artifact and the provenance chain' }; }
+          }
+        }
+        if (!handoffRefusal && packages.length > 1 && G15_RESOLUTION_PATTERNS.some(rx => rx.test(t.instruction))) {
+          if (!resFrom.length) {
+            handoffRefusal = 'resolution refused: the mission carries ' + packages.length + ' independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task — resolution belongs to research; composition never adjudicates';
+            conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
+          } else if (resolutionDisclosure) {
+            resolutionDisclosure.requested_by_instruction = true;
+          }
+        } else if (resolutionDisclosure) {
+          resolutionDisclosure.requested_by_instruction = false;
+        }
+        if (!handoffRefusal && resolutionDisclosure) task.resolution = resolutionDisclosure;
+        if (!handoffRefusal) {
+          handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — claims carried byte-exact from a cited verified task; use but never certify or alter]\n' + packages.map(p => p.claims).join('\n\n');
+          evidenceUsed = packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, answer_sha256: p.answer_sha256, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance, extraction_law: p.extraction_law }));
+        }
+      }
+      const parsed = handoffRefusal ? null : await createParse({ prompt: handoffPrompt });
+      if (handoffRefusal) {
+        task.state = 'refused'; task.refusal = handoffRefusal; task.receipt = await mSha('refused:' + handoffRefusal);
+        task.answer = { evidence_refs_requested: t.evidence_from };
+        if (conflictObj) { task.conflict = conflictObj; mission.conflict_detected = true; }
+      } else if (!parsed.valid) {
+        task.state = 'refused'; task.refusal = 'studio parser refusal: ' + (parsed.reason || 'prompt refused, never improvised');
+        task.receipt = await mSha('refused:' + task.refusal);
+      } else {
+        const resolution = stResolveModes(parsed, undefined);
+        if (!resolution.ok) {
+          task.state = 'refused'; task.refusal = 'mode resolution refusal: ' + (resolution.honest_note || 'no deterministic routing for this prompt');
+          task.receipt = await mSha('refused:' + task.refusal);
+        } else {
+          const built = await stBuildBundle(parsed, 1, resolution, undefined);
+          const test = stTest(built.record, built.children);
+          if (!built.children.length) {
+            task.state = 'refused'; task.refusal = 'bundle contained zero children (disclosed, never fabricated)';
+            task.receipt = await mSha('refused:' + task.refusal);
+          } else if (!test.passed) {
+            task.state = 'refused'; task.refusal = 'bundle test did not pass: ' + (test.checks || []).filter(c => !c.passed).map(c => c.check).join(', ');
+            task.receipt = await mSha('refused:' + task.refusal);
+          } else {
+            const del = await stDeliver(built.bundle_id);
+            // G11 CREATION-MISSION-AUDIT (defect D1, contract 1e27ad1): V3 lawfully
+            // emits a bundle receipt when every child was delivered OR boundary-refused
+            // (disclosed, never masked) — so receipt_emitted alone cannot mean success.
+            // A mission task is 'verified' only when at least one artifact was actually
+            // delivered; zero delivered children (all boundary-refused) is an honest
+            // mission refusal chaining the children's own refusal notes verbatim.
+            if (del.delivered && (del.delivered_children || []).length > 0 && del.receipt && del.receipt.receipt_emitted) {
+              task.state = 'verified'; task.agent_id = 'harz-studio-refsyn'; task.backend = 'harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)';
+              task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, evidence: evidenceUsed, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
+              task.receipt = del.receipt.studio_receipt_sha256;
+            } else {
+              task.state = 'refused';
+              const zeroDelivery = (del.delivered_children || []).length === 0 && ((del.refused_children && del.refused_children.length) || (built.record.children || []).length) > 0;
+              task.refusal = (zeroDelivery
+                ? 'zero artifacts delivered — every child boundary-refused: ' + ((del.refused_children || []).map(c => c.mode + ': ' + String(c.refusal_note || c.outcome).slice(0, 100)).join(' | ') || 'no children')
+                : 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown')));
+              task.answer = { bundle_id: built.bundle_id, delivered: false, evidence: evidenceUsed };
+              task.receipt = await mSha('refused:' + task.refusal);
+            }
+          }
+        }
+      }
+    } else {
+      // G14 defect D2 fix (frozen e367582 before fix): research tasks receive
+      // exactly their own instruction — each source is INDEPENDENT (Dad's G14:
+      // 'multiple independently verified tasks'). Silent context injection
+      // corrupted the frozen reasoner's question decomposition (every
+      // second-position task routed to the canonical-URL fallback). Chained-
+      // context research, if ever wanted, must be an EXPLICIT reference design
+      // with its own contract — never silent injection.
+      const message = t.instruction;
+      const r = await orchestrate({ message, agent: 'supreme-engine' });
+      task.agent_id = (r.agent && r.agent.name) || 'supreme-engine';
+      task.backend = (r.meta && r.meta.engine && r.meta.engine.backend) || null;
+      task.external_calls = (r.meta && r.meta.external_calls) || 0;
+      task.latency_ms = (r.meta && r.meta.total_latency_ms) || (Date.now() - t0);
+      task.answer = r.answer;
+      const v = r.verification || {};
+      // MISSIONS-AUDIT-V1 (contract 0415679): vocabulary normalization at the
+      // contract boundary. The frozen verifier (verify1Check) emits aggregate
+      // verdicts ONLY from {no-claims, all-supported, N-unsupported}; the bare
+      // string 'supported' is a per-claim verdict and is NEVER emitted as the
+      // aggregate. The old predicate string-matched a string the verifier cannot
+      // produce, so every answered mission with evidence units refused. The fix
+      // accepts exactly ONE aggregate verdict — 'all-supported' (zero unsupported
+      // claims). No truthy acceptance, no substring guessing, refusals preserved:
+      // 'no-claims' and any 'N-unsupported' still refuse, exactly as before.
+      const claimOk = !v.claim_check || v.claim_check.verdict === 'all-supported';
+      const grounded = v.status === 'grounded-in-evidence' || v.status === 'no-external-evidence' || (v.claim_check && v.claim_check.verdict === 'all-supported');
+      if (typeof r.answer === 'string' && /I (will not|cannot|do not have)/i.test(r.answer) && v.evidence_count === 0) {
+        task.state = 'refused'; task.refusal = 'orchestrator honest refusal (no grounded evidence)'; task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
+      } else if (v.receipt_sha256 && grounded && claimOk) {
+        task.state = 'verified'; task.receipt = v.receipt_sha256; prev.push(String(r.answer).slice(0, 4000));
+      } else {
+        task.state = 'refused'; task.refusal = 'verification did not establish grounded support (claim_check: ' + JSON.stringify(v.claim_check ? v.claim_check.verdict : null) + ', evidence: ' + (v.evidence_count || 0) + ')';
+        task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
+      }
+    }
+  } catch (e) {
+    task.state = 'error'; task.error = String(e && e.message || e).slice(0, 300); task.receipt = await mSha('error:' + task.error);
+  }
+  mission.tasks.push(task);
+  await kvPutMission(mission);
+}
+const anyVerified = mission.tasks.some(t => t.state === 'verified');
+const anyRefused = mission.tasks.some(t => t.state === 'refused' || t.state === 'error');
+mission.status = anyVerified && !anyRefused ? 'verified' : (!anyVerified && anyRefused ? (mission.tasks.some(t => t.state === 'refused') ? 'refused' : 'error') : 'mixed');
+// G21 DESIGNATION-BINDING-V1 (additive; frozen a26e61e + A1): the origin emits a
+// designation seal binding MEANINGFUL IDENTITIES (receipts + claims/answer shas + act
+// bytes), never bare role integers. Zero frozen formulas touched; records predating
+// this field simply lack it. Tampering any bound identity invalidates the seal.
+const dConf = mission.tasks.find(t => t.conflict && t.conflict.unresolved_claims);
+const dRes = mission.tasks.find(t => t.resolution && t.resolution.resolution_sources);
+if (dConf) {
+  const dRefs = [];
+  for (const u of dConf.conflict.unresolved_claims) {
+    const src = mission.tasks.find(x => x.id === u.source_task) || {};
+    dRefs.push({ task: u.source_task, receipt: u.source_receipt, claims_sha256: u.claims_sha256, answer_sha256: await mSha(String(src.answer || '')) });
+  }
+  const dBytes = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs });
+  mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs, designation_bytes_sha256: await mSha(dBytes), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes)) };
+  const sigC = await originSign(dBytes); if (sigC) mission.designation.origin_signature = sigC;
+}
+if (dRes) {
+  const rs = [];
+  for (const s of dRes.resolution.resolution_sources) {
+    const src = mission.tasks.find(x => x.id === s.source_task) || {};
+    rs.push({ task: s.source_task, receipt: s.source_receipt, claims_sha256: s.claims_sha256, answer_sha256: s.answer_sha256, act: { type: src.type || '', instruction: s.source_instruction || src.instruction || '', fixture_id: src.fixture_id || '' } });
+  }
+  const resolved = [];
+  for (const c of dRes.resolution.resolves_conflict) {
+    resolved.push({ task: c.source_task, receipt: c.source_receipt, claims_sha256: c.claims_sha256, answer_sha256: c.answer_sha256 });
+  }
+  const evidence = [];
+  for (const e of (dRes.answer && dRes.answer.evidence) || []) {
+    evidence.push({ task: e.source_task, claims_sha256: e.claims_sha256, answer_sha256: e.answer_sha256 });
+  }
+  const dBytes2 = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence });
+  mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence, designation_bytes_sha256: await mSha(dBytes2), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes2)) };
+  const sigR = await originSign(dBytes2); if (sigR) mission.designation.origin_signature = sigR;
+}
+let h = await mSha('HARZ-MISSION-1|' + mid);
+for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));
+mission.receipt = h;
+mission.sovereign = mission.tasks.every(t => (t.external_calls || 0) === 0);
+// G24 STATE-CONTINUITY-V1 (additive; ruling B frozen 49df5ea): every state-carrying
+// record joins the sovereign state chain. The cell (height + prior_state_hash +
+// payload_hash) is SIGNED by the origin key — height is never independently
+// trustworthy. Genesis is explicit and discloses the unlinked era; pre-continuity
+// records are never retroactively rewritten. The signature proves the state was
+// authorized; the chain determines whether it is still current.
+if (ENV.ORIGIN_KEY) {
+  const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
+  const payloadHash = await mSha('state-payload:' + mid + ':' + mission.receipt + ':' + (mission.designation ? mission.designation.designation_receipt : 'no-designation'));
+  let cell;
+  if (tip) {
+    const restarted = await ENV.MEMORY.get('continuity:restarted');
+    cell = restarted
+      ? { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, restarts_after_act: restarted, payload_hash: payloadHash }
+      : { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, payload_hash: payloadHash };
+  } else {
+    const eraIdx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
+    cell = { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: 1, genesis: true, prior_state_hash: null, unlinked_era: { disclosed: true, records_before_genesis: Math.max(0, eraIdx.missions.length - 1) }, payload_hash: payloadHash };
+  }
+  const cellBytes = JSON.stringify(cell);
+  const cellSig = await originSign(cellBytes);
+  cell.origin_signature = cellSig;
+  mission.continuity = cell;
+  const stateHash = await mSha(cellBytes + ':' + (cellSig ? cellSig.signature : 'unsigned'));
+  await ENV.MEMORY.put('continuity:tip', JSON.stringify({ height: cell.height, state_hash: stateHash, record: mid }));
+}
+await kvPutMission(mission);
+return mission;
+}
+
 export default {
   async fetch(request, env, ctx) {
     ENV = env || {};
@@ -9004,58 +9469,10 @@ if (path === '/api/intake/v1/testm2') {
     }
 
 
-    // ==================== MISSIONS v0.1 (contract: contracts/MISSIONS-V1.md, frozen before build) ====================
-    async function mSha(str) {
-      const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(str)));
-      return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-    async function kvGetMission(mid) { return (await ENV.MEMORY.get('mission:' + mid, 'json')) || null; }
-    async function kvPutMission(m) {
-      await ENV.MEMORY.put('mission:' + m.id, JSON.stringify(m));
-      const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
-      const entry = { id: m.id, goal: m.goal, pattern: m.pattern, status: m.status, created: m.created, tasks: m.tasks.length, task_states: m.tasks.map(t => t.state), receipt: m.receipt };
-      const i = idx.missions.findIndex(x => x.id === m.id);
-      if (i >= 0) idx.missions[i] = entry; else idx.missions.unshift(entry);
-      if (idx.missions.length > 200) idx.missions.length = 200;
-      await ENV.MEMORY.put('missions:index', JSON.stringify(idx));
-    }
-    function planMission(goal) {
-      const g = (goal || '').toLowerCase();
-      const modalityWords = ['image', 'voice', 'music', 'video', 'film', 'story', 'artwork', 'song', 'picture', 'narration'];
-      const wantsCompose = ['compose', 'produce', 'create', 'make me', 'generate'].some(w => g.includes(w));
-      const wantsModality = modalityWords.some(w => g.includes(w));
-      if (wantsCompose && wantsModality) return { pattern: 'COMPOSE', reason: 'creative composition goal -> frozen V3 Studio', tasks: [{ id: 1, type: 'compose', instruction: goal }] };
-      const researchy = /^(research|find|quote|list|what|how|which|how many|compute|calculate|how much)/.test(g) || ['what', 'how', 'which', 'quote', 'find', 'list', 'compute', 'calculate'].some(w => g.trim().split(/\s+/).slice(0, 3).includes(w));
-      if (researchy) return { pattern: 'RESEARCH', reason: 'evidence question -> orchestrate() evidence->reason->verify chain', tasks: [{ id: 1, type: 'orchestrate', instruction: goal }] };
-      return { pattern: 'REFUSED', reason: 'the deterministic planner has no plan for this goal pattern. Supported: RESEARCH (evidence question), COMPOSE (creative composition), or explicit tasks[] (each {instruction}). No plan is guessed.', tasks: [] };
-    }
     if (path === '/api/missions/v1' && request.method === 'POST') {
       const body = await request.json().catch(() => ({}));
       const goal = String(body.goal || '').slice(0, 2000);
       if (!goal) return json({ error: 'goal required' }, 400);
-      // G15 CONFLICT AUDIT — frozen synthetic conflict fixture (contract 13e383a).
-      // TEST DATA, completely outside the production corpus: never in the search
-      // index, never reasoner evidence. Caller-explicit fixture tasks only; the
-      // planner never invents them. Verification = the answer bytes match the
-      // frozen fixture record (sha256 in the G15 contract), never corpus evidence.
-      const G15_FIXTURES = {
-        'G15-FIX-A': { answer: '**Answer**\n\nThe GDEG test widget is priced at 500 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE A \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
-        'G16-FIX-C': { answer: '**Answer**\n\nThe GDEG test widget price registry states the authoritative price is 800 HARZ \u3010S1\u3011\n\nSources: [s1] G16 SYNTHETIC RESOLUTION FIXTURE C \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined resolution, verified against the frozen G16 fixture record only (synthetic test data, never corpus evidence)' },
-        'G15-FIX-B': { answer: '**Answer**\n\nThe GDEG test widget is priced at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G15 SYNTHETIC TEST FIXTURE B \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G15 fixture record only (synthetic test data, never corpus evidence)' },
-        'G20-FIX-D': { answer: '**Answer**\n\nThe GDEG test widget registry audit note states the price record is correct and stable at 800 HARZ \u3010S1\u3011\n\nSources: [s1] G20 SYNTHETIC DECOY FIXTURE D \u2014 test data outside the production corpus\n\nCONFIDENCE: high \u2014 fixture-defined value, verified against the frozen G20 fixture record only (synthetic test data, never corpus evidence)' }
-      };
-      // G15 RESOLUTION LAW (frozen 13e383a): verification establishes each claim
-      // against its own source, NEVER their agreement. Multi-source resolution
-      // requests refuse at the mission layer; resolution belongs to research.
-      const G15_RESOLUTION_PATTERNS = [
-        /stating which/i,
-        /which (?:of (?:these|the) )?(?:conflicting )?claims? (?:is|are) (?:true|correct|right|real|valid)/i,
-        /which (?:of (?:these|the) )?(?:price|value|statement|source|one)s? (?:is|was|are|were) (?:true|correct|right|real|actual|valid)/i,
-        /(?:the|that) (?:true|correct|right|real|actual) (?:price|value|claim|answer|statement)/i,
-        /resolve (?:the |this )?(?:conflict|contradiction|dispute)/i,
-        /determin\w+ (?:the |this )?(?:correct|true|real|actual) (?:price|value|claim|answer|statement)/i,
-        /who (?:is|was) (?:right|correct)/i
-      ];
       let plan;
       if (Array.isArray(body.tasks) && body.tasks.length) {
         plan = { pattern: 'EXPLICIT', reason: 'explicit task chain from caller', tasks: body.tasks.slice(0, 10).map((t, i) => ({ id: i + 1, type: t.type === 'compose' ? 'compose' : (t.type === 'fixture' ? 'fixture' : 'orchestrate'), instruction: String(t.instruction || t).slice(0, 2000), fixture_id: t.type === 'fixture' ? String(t.fixture_id || '').slice(0, 64) : undefined, evidence_from: (Array.isArray(t.evidence_from) ? t.evidence_from : (t.evidence_from !== undefined ? [t.evidence_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10), resolution_from: (Array.isArray(t.resolution_from) ? t.resolution_from : (t.resolution_from !== undefined ? [t.resolution_from] : [])).map(x => parseInt(x, 10)).filter(x => Number.isInteger(x) && x > 0).slice(0, 10) })).filter(t => t.instruction) };
@@ -9063,272 +9480,8 @@ if (path === '/api/intake/v1/testm2') {
       } else {
         plan = planMission(goal);
       }
-      const mid = 'm-' + id('mission');
-      const mission = { id: mid, goal, pattern: plan.pattern, plan_reason: plan.reason, status: 'planning', created: new Date().toISOString(), tasks: [], receipt: null, law: 'every task ends verified or refused; nothing disappears (MISSIONS-V1 contract, frozen in harz-git before build)' };
-      if (plan.pattern === 'REFUSED') {
-        mission.status = 'refused';
-        mission.refusal = plan.reason;
-        mission.tasks = [];
-        mission.receipt = await mSha('HARZ-MISSION-1|' + mid + '|planner-refused|' + plan.reason);
-        await kvPutMission(mission);
-        return json({ ...mission, honest_note: 'refusal is a first-class result — the planner did not guess a plan' }, 200);
-      }
-      mission.status = 'executing';
-      await kvPutMission(mission);
-      let prev = [];
-      for (const t of plan.tasks) {
-        const task = { id: t.id, type: t.type, instruction: t.instruction, state: 'executing', agent_id: null, backend: null, latency_ms: null, external_calls: 0, internal_calls: 0, answer: null, receipt: null, refusal: null, error: null };
-        const t0 = Date.now();
-        try {
-          if (t.type === 'fixture') {
-            const fx = G15_FIXTURES[t.fixture_id] || null;
-            if (!fx) {
-              task.state = 'refused'; task.refusal = 'fixture refused: unknown fixture id ' + (t.fixture_id || '(none)') + ' — the frozen G15 fixture table defines what exists; no improvisation'; task.receipt = await mSha('refused:' + task.refusal);
-            } else {
-              task.answer = fx.answer; task.state = 'verified'; task.backend = 'g15-frozen-fixture-record'; task.agent_id = null;
-              task.fixture_id = t.fixture_id; // G18: identity disclosure on the record so exported state is self-describing (frozen formula untouched)
-                            task.receipt = await mSha('verified:fixture:' + t.fixture_id + ':' + await sha256(fx.answer));
-            }
-          } else if (t.type === 'compose') {
-            // direct in-worker composition through the UNCHANGED frozen V3 Studio path
-            // (createParse -> stResolveModes -> stBuildBundle -> stTest -> stDeliver).
-            // Zero HTTP hops: Cloudflare error 1042 forbids a worker fetching its own
-            // workers.dev URL, and a direct call is the more sovereign form anyway.
-            // G12 EVIDENCE HANDOFF (EVIDENCE-CREATION-AUDIT-V1, frozen b9f88a9): a compose
-            // task may EXPLICITLY reference prior tasks via evidence_from. The executor
-            // builds the canonical evidence packages from its OWN stored task records
-            // ONLY — caller-supplied evidence fields are never read (injection is data,
-            // never input). Missing/unverified evidence = honest refusal, never
-            // improvisation. Evidence bytes enter the prompt byte-exactly; creation may
-            // use them, never certify them, never alter them. The chain
-            // answer_sha256 -> prompt_sha256 -> artifact_sha256 proves derivation.
-            let handoffPrompt = t.instruction;
-            let evidenceUsed = null;
-            let handoffRefusal = null;
-            let conflictObj = null; // G16 structured conflict state (frozen 6810d24)
-            if (Array.isArray(t.evidence_from) && t.evidence_from.length) {
-              // G13 EVIDENCE PACKAGE CONTRACT AMENDMENT (frozen 79ab577, Dad's ruling —
-              // Option 3, adapter-only). Typed package, section-addressed on the
-              // reasoner's own frozen format. ZERO semantic rewriting: no prose cleaning,
-              // no selective sentence removal. Creation receives CLAIMS + instruction only;
-              // receipt/confidence/provenance stay metadata on the mission chain.
-              const packages = [];
-              for (const refId of t.evidence_from) {
-                const src = mission.tasks.find(x => x.id === refId);
-                if (!src) { handoffRefusal = 'evidence handoff refused: referenced task ' + refId + ' does not exist in this mission — missing evidence is an honest failure, never improvised'; break; }
-                if (src.state !== 'verified' || !src.receipt) { handoffRefusal = 'evidence handoff refused: task ' + refId + ' is not verified (state: ' + src.state + ') — unverified evidence may not enter creation'; break; }
-                const answerText = typeof src.answer === 'string' ? src.answer : JSON.stringify(src.answer);
-                // deterministic section addressing of the frozen reasoner format
-                const AM = '**Answer**\n\n';
-                if (!answerText.startsWith(AM)) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output does not carry the frozen **Answer** section — the adapter addresses the frozen structure, it never improvises a claim'; break; }
-                const rest = answerText.slice(AM.length);
-                const si = rest.indexOf('\n\nSources: ');
-                const ci = rest.indexOf('\n\nCONFIDENCE: ');
-                const claimsEnd = (si >= 0 && (ci < 0 || si < ci)) ? si : ci;
-                if (claimsEnd < 0) { handoffRefusal = 'claim extraction refused: task ' + refId + ' recorded output has no frozen Sources/CONFIDENCE boundary — claims cannot be separated from the answer; no improvisation'; break; }
-                const claims = rest.slice(0, claimsEnd);
-                const provenance = (claimsEnd === si) ? rest.slice(si + '\n\nSources: '.length, ci >= 0 ? ci : rest.length) : null;
-                const confidence = ci >= 0 ? rest.slice(ci + '\n\nCONFIDENCE: '.length) : null;
-                const ansSha = await sha256(answerText);
-                const claimsSha = await sha256(claims);
-                packages.push({ source_task: src.id, source_task_type: src.type, source_instruction: src.instruction, source_receipt: src.receipt, answer_sha256: ansSha, claims: claims, claims_sha256: claimsSha, confidence: confidence, provenance: provenance !== null ? provenance : 'none — this answer type carries no Sources section (disclosed, never guessed)', extraction_law: 'byte-exact section addressing of the frozen reasoner format (**Answer**, Sources:, CONFIDENCE:) — zero semantic rewriting; claims are carried to creation, receipt/confidence/provenance remain metadata on the mission chain' });
-              }
-              // G16 RESOLUTION_FROM LAW (frozen 6810d24): a resolution-requesting
-              // compose over 2+ sources proceeds ONLY with an explicit caller
-              // designation of a verified resolution act. The adapter verifies
-              // ELIGIBILITY, never semantic correctness.
-              let resolutionDisclosure = null;
-              const resFrom = Array.isArray(t.resolution_from) ? t.resolution_from : [];
-              // G16: if eligibility already refused AND a designated resolution act failed,
-              // the conflict stays disclosed (contract T5: inconclusive research cannot
-              // authorize resolution; the unresolved claims and provenance remain visible).
-              if (handoffRefusal && resFrom.length && !conflictObj) {
-                const failedRes = resFrom.some(rid => { const src = mission.tasks.find(x => x.id === rid); return !src || src.state !== 'verified' || !src.receipt; });
-                if (failedRes) conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
-              }
-              if (!handoffRefusal && resFrom.length) {
-                const mkConflict = () => ({ state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' });
-                if (resFrom.some(rid => !t.evidence_from.includes(rid))) {
-                  handoffRefusal = 'resolution refused: every resolution_from task must also be cited in evidence_from — the resolution claim must reach the creator as carried material, not merely authorize; no improvisation';
-                } else {
-                  const resPkgs = resFrom.map(rid => packages.find(p => p.source_task === rid));
-                  if (resPkgs.some(p => !p)) { handoffRefusal = 'resolution refused: a designated resolution task is not an eligible evidence source — resolution requires an explicit verified act; no improvisation'; conflictObj = mkConflict(); }
-                  else { resolutionDisclosure = { requested_by_instruction: null, resolution_from: resFrom.slice(), resolves_conflict: packages.filter(p => !resFrom.includes(p.source_task)).map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_receipt: p.source_receipt, claims_sha256: p.claims_sha256, answer_sha256: p.answer_sha256, provenance: p.provenance, resolves_law: 'the conflicting evidence remains cited and carried byte-exact; this resolution extends the history, it never replaces the evidence it resolves' })), resolution_sources: resPkgs.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims_sha256: p.claims_sha256, answer_sha256: p.answer_sha256 })), acceptance_law: 'resolution act verified (state verified + receipt + frozen format) and explicitly designated by the caller; the adapter carries its claims as material, it does not adjudicate correctness — that judgment belongs to the reader of the artifact and the provenance chain' }; }
-                }
-              }
-              if (!handoffRefusal && packages.length > 1 && G15_RESOLUTION_PATTERNS.some(rx => rx.test(t.instruction))) {
-                if (!resFrom.length) {
-                  handoffRefusal = 'resolution refused: the mission carries ' + packages.length + ' independently verified sources; verification establishes each claim against its own source and NEVER their agreement; selecting the true claim would be arbitration neither the adapter nor the creator has. Request a conflict-preserving composition (both claims carried byte-exact) or ask a research task — resolution belongs to research; composition never adjudicates';
-                  conflictObj = { state: 'unresolved', unresolved_claims: packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, claims: p.claims, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance })), resolution_law: 'resolution requires a separate research act — explicit, caller-designated; composition never adjudicates', next_lawful_step: 'create a follow-up mission with an explicit research or fixture task that seeks resolution evidence, then compose with resolution_from designating that task' };
-                } else if (resolutionDisclosure) {
-                  resolutionDisclosure.requested_by_instruction = true;
-                }
-              } else if (resolutionDisclosure) {
-                resolutionDisclosure.requested_by_instruction = false;
-              }
-              if (!handoffRefusal && resolutionDisclosure) task.resolution = resolutionDisclosure;
-              if (!handoffRefusal) {
-                handoffPrompt = t.instruction + '\n\n[VERIFIED MISSION FINDINGS — claims carried byte-exact from a cited verified task; use but never certify or alter]\n' + packages.map(p => p.claims).join('\n\n');
-                evidenceUsed = packages.map(p => ({ source_task: p.source_task, source_task_type: p.source_task_type, source_instruction: p.source_instruction, source_receipt: p.source_receipt, answer_sha256: p.answer_sha256, claims_sha256: p.claims_sha256, confidence: p.confidence, provenance: p.provenance, extraction_law: p.extraction_law }));
-              }
-            }
-            const parsed = handoffRefusal ? null : await createParse({ prompt: handoffPrompt });
-            if (handoffRefusal) {
-              task.state = 'refused'; task.refusal = handoffRefusal; task.receipt = await mSha('refused:' + handoffRefusal);
-              task.answer = { evidence_refs_requested: t.evidence_from };
-              if (conflictObj) { task.conflict = conflictObj; mission.conflict_detected = true; }
-            } else if (!parsed.valid) {
-              task.state = 'refused'; task.refusal = 'studio parser refusal: ' + (parsed.reason || 'prompt refused, never improvised');
-              task.receipt = await mSha('refused:' + task.refusal);
-            } else {
-              const resolution = stResolveModes(parsed, undefined);
-              if (!resolution.ok) {
-                task.state = 'refused'; task.refusal = 'mode resolution refusal: ' + (resolution.honest_note || 'no deterministic routing for this prompt');
-                task.receipt = await mSha('refused:' + task.refusal);
-              } else {
-                const built = await stBuildBundle(parsed, 1, resolution, undefined);
-                const test = stTest(built.record, built.children);
-                if (!built.children.length) {
-                  task.state = 'refused'; task.refusal = 'bundle contained zero children (disclosed, never fabricated)';
-                  task.receipt = await mSha('refused:' + task.refusal);
-                } else if (!test.passed) {
-                  task.state = 'refused'; task.refusal = 'bundle test did not pass: ' + (test.checks || []).filter(c => !c.passed).map(c => c.check).join(', ');
-                  task.receipt = await mSha('refused:' + task.refusal);
-                } else {
-                  const del = await stDeliver(built.bundle_id);
-                  // G11 CREATION-MISSION-AUDIT (defect D1, contract 1e27ad1): V3 lawfully
-                  // emits a bundle receipt when every child was delivered OR boundary-refused
-                  // (disclosed, never masked) — so receipt_emitted alone cannot mean success.
-                  // A mission task is 'verified' only when at least one artifact was actually
-                  // delivered; zero delivered children (all boundary-refused) is an honest
-                  // mission refusal chaining the children's own refusal notes verbatim.
-                  if (del.delivered && (del.delivered_children || []).length > 0 && del.receipt && del.receipt.receipt_emitted) {
-                    task.state = 'verified'; task.agent_id = 'harz-studio-refsyn'; task.backend = 'harz-studio-refsyn v0.1 (direct in-worker composition, zero HTTP hops)';
-                    task.answer = { bundle_id: built.bundle_id, delivered: true, modes: built.record.modes, evidence: evidenceUsed, delivered_children: (del.delivered_children || []).map(c => ({ mode: c.mode, artifact_sha256: c.artifact_sha256, player_url: c.player_url })), refused_children: del.refused_children || [] };
-                    task.receipt = del.receipt.studio_receipt_sha256;
-                  } else {
-                    task.state = 'refused';
-                    const zeroDelivery = (del.delivered_children || []).length === 0 && ((del.refused_children && del.refused_children.length) || (built.record.children || []).length) > 0;
-                    task.refusal = (zeroDelivery
-                      ? 'zero artifacts delivered — every child boundary-refused: ' + ((del.refused_children || []).map(c => c.mode + ': ' + String(c.refusal_note || c.outcome).slice(0, 100)).join(' | ') || 'no children')
-                      : 'delivery incomplete: ' + ((del.receipt && del.receipt.honest_note) || del.reason || (del.states ? JSON.stringify(del.states) : 'unknown')));
-                    task.answer = { bundle_id: built.bundle_id, delivered: false, evidence: evidenceUsed };
-                    task.receipt = await mSha('refused:' + task.refusal);
-                  }
-                }
-              }
-            }
-          } else {
-            // G14 defect D2 fix (frozen e367582 before fix): research tasks receive
-            // exactly their own instruction — each source is INDEPENDENT (Dad's G14:
-            // 'multiple independently verified tasks'). Silent context injection
-            // corrupted the frozen reasoner's question decomposition (every
-            // second-position task routed to the canonical-URL fallback). Chained-
-            // context research, if ever wanted, must be an EXPLICIT reference design
-            // with its own contract — never silent injection.
-            const message = t.instruction;
-            const r = await orchestrate({ message, agent: 'supreme-engine' });
-            task.agent_id = (r.agent && r.agent.name) || 'supreme-engine';
-            task.backend = (r.meta && r.meta.engine && r.meta.engine.backend) || null;
-            task.external_calls = (r.meta && r.meta.external_calls) || 0;
-            task.latency_ms = (r.meta && r.meta.total_latency_ms) || (Date.now() - t0);
-            task.answer = r.answer;
-            const v = r.verification || {};
-            // MISSIONS-AUDIT-V1 (contract 0415679): vocabulary normalization at the
-            // contract boundary. The frozen verifier (verify1Check) emits aggregate
-            // verdicts ONLY from {no-claims, all-supported, N-unsupported}; the bare
-            // string 'supported' is a per-claim verdict and is NEVER emitted as the
-            // aggregate. The old predicate string-matched a string the verifier cannot
-            // produce, so every answered mission with evidence units refused. The fix
-            // accepts exactly ONE aggregate verdict — 'all-supported' (zero unsupported
-            // claims). No truthy acceptance, no substring guessing, refusals preserved:
-            // 'no-claims' and any 'N-unsupported' still refuse, exactly as before.
-            const claimOk = !v.claim_check || v.claim_check.verdict === 'all-supported';
-            const grounded = v.status === 'grounded-in-evidence' || v.status === 'no-external-evidence' || (v.claim_check && v.claim_check.verdict === 'all-supported');
-            if (typeof r.answer === 'string' && /I (will not|cannot|do not have)/i.test(r.answer) && v.evidence_count === 0) {
-              task.state = 'refused'; task.refusal = 'orchestrator honest refusal (no grounded evidence)'; task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
-            } else if (v.receipt_sha256 && grounded && claimOk) {
-              task.state = 'verified'; task.receipt = v.receipt_sha256; prev.push(String(r.answer).slice(0, 4000));
-            } else {
-              task.state = 'refused'; task.refusal = 'verification did not establish grounded support (claim_check: ' + JSON.stringify(v.claim_check ? v.claim_check.verdict : null) + ', evidence: ' + (v.evidence_count || 0) + ')';
-              task.receipt = v.receipt_sha256 || await mSha('refused:' + task.refusal);
-            }
-          }
-        } catch (e) {
-          task.state = 'error'; task.error = String(e && e.message || e).slice(0, 300); task.receipt = await mSha('error:' + task.error);
-        }
-        mission.tasks.push(task);
-        await kvPutMission(mission);
-      }
-      const anyVerified = mission.tasks.some(t => t.state === 'verified');
-      const anyRefused = mission.tasks.some(t => t.state === 'refused' || t.state === 'error');
-      mission.status = anyVerified && !anyRefused ? 'verified' : (!anyVerified && anyRefused ? (mission.tasks.some(t => t.state === 'refused') ? 'refused' : 'error') : 'mixed');
-      // G21 DESIGNATION-BINDING-V1 (additive; frozen a26e61e + A1): the origin emits a
-      // designation seal binding MEANINGFUL IDENTITIES (receipts + claims/answer shas + act
-      // bytes), never bare role integers. Zero frozen formulas touched; records predating
-      // this field simply lack it. Tampering any bound identity invalidates the seal.
-      const dConf = mission.tasks.find(t => t.conflict && t.conflict.unresolved_claims);
-      const dRes = mission.tasks.find(t => t.resolution && t.resolution.resolution_sources);
-      if (dConf) {
-        const dRefs = [];
-        for (const u of dConf.conflict.unresolved_claims) {
-          const src = mission.tasks.find(x => x.id === u.source_task) || {};
-          dRefs.push({ task: u.source_task, receipt: u.source_receipt, claims_sha256: u.claims_sha256, answer_sha256: await mSha(String(src.answer || '')) });
-        }
-        const dBytes = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs });
-        mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'conflict', conflict_refs: dRefs, designation_bytes_sha256: await mSha(dBytes), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes)) };
-        const sigC = await originSign(dBytes); if (sigC) mission.designation.origin_signature = sigC;
-      }
-      if (dRes) {
-        const rs = [];
-        for (const s of dRes.resolution.resolution_sources) {
-          const src = mission.tasks.find(x => x.id === s.source_task) || {};
-          rs.push({ task: s.source_task, receipt: s.source_receipt, claims_sha256: s.claims_sha256, answer_sha256: s.answer_sha256, act: { type: src.type || '', instruction: s.source_instruction || src.instruction || '', fixture_id: src.fixture_id || '' } });
-        }
-        const resolved = [];
-        for (const c of dRes.resolution.resolves_conflict) {
-          resolved.push({ task: c.source_task, receipt: c.source_receipt, claims_sha256: c.claims_sha256, answer_sha256: c.answer_sha256 });
-        }
-        const evidence = [];
-        for (const e of (dRes.answer && dRes.answer.evidence) || []) {
-          evidence.push({ task: e.source_task, claims_sha256: e.claims_sha256, answer_sha256: e.answer_sha256 });
-        }
-        const dBytes2 = JSON.stringify({ law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence });
-        mission.designation = { law: 'DESIGNATION-BINDING-V1', record: mid, role: 'resolution', resolver: rs, resolved: resolved, evidence: evidence, designation_bytes_sha256: await mSha(dBytes2), designation_receipt: await mSha('designation:' + mid + ':' + await mSha(dBytes2)) };
-        const sigR = await originSign(dBytes2); if (sigR) mission.designation.origin_signature = sigR;
-      }
-      let h = await mSha('HARZ-MISSION-1|' + mid);
-      for (const t of mission.tasks) h = await mSha(h + ':' + (t.receipt || 'no-receipt'));
-      mission.receipt = h;
-      mission.sovereign = mission.tasks.every(t => (t.external_calls || 0) === 0);
-      // G24 STATE-CONTINUITY-V1 (additive; ruling B frozen 49df5ea): every state-carrying
-      // record joins the sovereign state chain. The cell (height + prior_state_hash +
-      // payload_hash) is SIGNED by the origin key — height is never independently
-      // trustworthy. Genesis is explicit and discloses the unlinked era; pre-continuity
-      // records are never retroactively rewritten. The signature proves the state was
-      // authorized; the chain determines whether it is still current.
-      if (ENV.ORIGIN_KEY) {
-        const tip = (await ENV.MEMORY.get('continuity:tip', 'json')) || null;
-        const payloadHash = await mSha('state-payload:' + mid + ':' + mission.receipt + ':' + (mission.designation ? mission.designation.designation_receipt : 'no-designation'));
-        let cell;
-        if (tip) {
-          const restarted = await ENV.MEMORY.get('continuity:restarted');
-          cell = restarted
-            ? { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, restarts_after_act: restarted, payload_hash: payloadHash }
-            : { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: tip.height + 1, prior_state_hash: tip.state_hash, payload_hash: payloadHash };
-        } else {
-          const eraIdx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
-          cell = { law: 'HARZ-STATE-CONTINUITY-V1', record: mid, height: 1, genesis: true, prior_state_hash: null, unlinked_era: { disclosed: true, records_before_genesis: Math.max(0, eraIdx.missions.length - 1) }, payload_hash: payloadHash };
-        }
-        const cellBytes = JSON.stringify(cell);
-        const cellSig = await originSign(cellBytes);
-        cell.origin_signature = cellSig;
-        mission.continuity = cell;
-        const stateHash = await mSha(cellBytes + ':' + (cellSig ? cellSig.signature : 'unsigned'));
-        await ENV.MEMORY.put('continuity:tip', JSON.stringify({ height: cell.height, state_hash: stateHash, record: mid }));
-      }
-      await kvPutMission(mission);
-      return json(mission);
+      const mission = await runMission(plan, goal);
+      return json(mission, 200);
     }
     // G24 CONTINUITY ACTS — explicit signed policy acts; history never changes silently.
     if (path === '/api/continuity/v1' && request.method === 'GET') {
@@ -9389,7 +9542,25 @@ if (path === '/api/intake/v1/testm2') {
       await ENV.MEMORY.put('continuity:acts', JSON.stringify(acts));
       return json(act);
     }
-    if (path === '/api/missions/v1' && request.method === 'GET') {
+    // ==================== TASKS v0.1 ROUTES — the front door (GAP-1; TaskRecord V1 frozen b19fd11) ====================
+    if (path === '/api/tasks/v1' && request.method === 'POST') {
+      const body = await request.json().catch(() => ({}));
+      const instruction = String(body.instruction || '').slice(0, 2000);
+      if (!instruction.trim()) return json({ error: 'instruction required — the front door takes one task at a time' }, 400);
+      const rec = await runTaskRecord(instruction);
+      return json(rec, 200);
+    }
+    if (path === '/api/tasks/v1' && request.method === 'GET') {
+      const idx = (await ENV.MEMORY.get('tasks:index', 'json')) || { tasks: [] };
+      return json({ count: idx.tasks.length, tasks: idx.tasks, contract: 'harz-ai-completion/TASKRECORD-V1-CONTRACT.md + GAP1-FRONT-DOOR-CONTRACT.md (frozen in harz-git)' });
+    }
+    if (path.startsWith('/api/tasks/v1/') && request.method === 'GET') {
+      const tid = path.split('/')[4];
+      const rec = (await ENV.MEMORY.get('task:' + tid, 'json')) || null;
+      if (!rec) return json({ error: 'task record not found', task_id: tid }, 404);
+      return json(rec);
+    }
+        if (path === '/api/missions/v1' && request.method === 'GET') {
       const idx = (await ENV.MEMORY.get('missions:index', 'json')) || { missions: [] };
       return json({ count: idx.missions.length, missions: idx.missions, contract: 'contracts/MISSIONS-V1.md (frozen in harz-git)' });
     }
@@ -9403,12 +9574,12 @@ if (path === '/api/intake/v1/testm2') {
     if (path === '/console' || path === '/console/manifest.json' || path === '/console/sw.js' || path === '/console/icon.svg') {
       if (path === '/console/manifest.json') return json({ name: 'HARZ Intelligence Console', short_name: 'HARZ Console', description: 'Sovereign console over the HARZ intelligence core — chat, agent registry, missions, receipts', start_url: '/console', display: 'standalone', background_color: '#f0f2f5', theme_color: '#f0f2f5', icons: [{ src: '/console/icon.svg', sizes: 'any', type: 'image/svg+xml' }] });
       if (path === '/console/sw.js') {
-        const sw = "const CACHE='harz-console-v1';const SHELL=['/console','/console/manifest.json','/console/icon.svg'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim())});self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.pathname==='/console'||u.pathname.startsWith('/console/')){e.respondWith(fetch(e.request).then(r=>{const cp=r.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return r}).catch(()=>caches.match(e.request)))}});";
-        return new Response(sw, { headers: { 'Content-Type': 'application/javascript', 'Service-Worker-Allowed': '/console/' } });
+        const sw = "const CACHE='harz-console-v3';const SHELL=['/console','/console/manifest.json','/console/icon.svg'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim())});self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.pathname==='/console'||u.pathname.startsWith('/console/')){e.respondWith(fetch(e.request).then(r=>{const cp=r.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return r}).catch(()=>caches.match(e.request)))}});";
+        return new Response(sw, { headers: { 'Content-Type': 'application/javascript', 'Service-Worker-Allowed': '/console/', 'Cache-Control': 'no-cache' } });
       }
       if (path === '/console/icon.svg') return new Response('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f2f5"/><circle cx="32" cy="32" r="21" fill="none" stroke="#0a7d32" stroke-width="4"/><circle cx="32" cy="32" r="9" fill="#0a7d32"/><path d="M32 11v7M32 46v7M11 32h7M46 32h7" stroke="#0a7d32" stroke-width="4" stroke-linecap="round"/></svg>', { headers: { 'Content-Type': 'image/svg+xml' } });
-      const html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f0f2f5"><link rel="manifest" href="/console/manifest.json"><link rel="icon" href="/console/icon.svg"><title>HARZ Intelligence Console</title><style>body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#111;margin:0;padding:12px;max-width:760px;margin:0 auto}h1{font-size:19px;margin:8px 0 2px;color:#0a7d32}.sub{font-size:12px;color:#555;margin-bottom:10px}button{background:#0a7d32;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:15px;cursor:pointer}button:disabled{background:#aaa}input,textarea{width:96%;border:1px solid #ccc;border-radius:8px;padding:10px;font-family:inherit;font-size:15px}textarea{height:70px}.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.08)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tab{background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}.tab.on{background:#0a7d32;color:#fff;border-color:#0a7d32}.out{font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}.mono{font-family:monospace;font-size:12px;color:#333}.ok{color:#0a7d32;font-weight:bold}.rf{color:#b45309;font-weight:bold}.er{color:#b91c1c;font-weight:bold}.stat{font-size:12px;color:#666;margin-top:6px}a{color:#0a7d32}</style></head><body><h1>HARZ INTELLIGENCE</h1><div class="sub">Sovereign console v0.1 — chat, agent registry, missions with chained receipts. Zero external calls.</div><div class="tabs"><div class="tab on" onclick="tab(this,\'health\')">Health</div><div class="tab" onclick="tab(this,\'chat\')">Chat</div><div class="tab" onclick="tab(this,\'agents\')">Agents</div><div class="tab" onclick="tab(this,\'missions\')">Missions</div><div class="tab" onclick="tab(this,\'studio\')">Studio</div></div><div id="p-health" class="card"><div class="out" id="health">Loading…</div></div><div id="p-chat" class="card" style="display:none"><input id="msg" placeholder="Ask the intelligence core…"><button onclick="chat()">Ask</button><div class="out" id="chatout"></div></div><div id="p-agents" class="card" style="display:none"><div class="out" id="agents">Loading…</div></div><div id="p-missions" class="card" style="display:none"><textarea id="goal" placeholder="Mission goal… e.g. Research: what is the GDEG payment rate? or Compose: create an image about kasuwa"></textarea><button onclick="mission()">Run mission</button> <button onclick="listMissions()">List missions</button><div class="out" id="mout"></div></div><div id="p-studio" class="card" style="display:none"><div class="out">The frozen V3 Creative Studio handles composition:<br><a href="/api/creation/v1/studio">Open HARZ Creative Studio</a></div></div><script>function tab(el,p){document.querySelectorAll(\'.tab\').forEach(x=>x.classList.remove(\'on\'));el.classList.add(\'on\');[\'health\',\'chat\',\'agents\',\'missions\',\'studio\'].forEach(x=>document.getElementById(\'p-\'+x).style.display=x===p?\'block\':\'none\')}async function loadHealth(){const r=await fetch(\'/api/health\');const j=await r.json();document.getElementById(\'health\').textContent=JSON.stringify(j,null,2)}async function chat(){const m=document.getElementById(\'msg\').value;if(!m)return;const o=document.getElementById(\'chatout\');o.textContent=\'Thinking (sovereign pipeline)…\';const r=await fetch(\'/api/chat\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({message:m})});const j=await r.json();o.textContent=(j.answer||j.error||JSON.stringify(j))+\'\\n\\nRECEIPT: \'+(j.verification&&j.verification.receipt_sha256||\'none\')+\' | EXTERNAL CALLS: \'+(j.meta&&j.meta.external_calls)}async function loadAgents(){const r=await fetch(\'/api/agents/v1/registry\');const j=await r.json();const el=document.getElementById(\'agents\');let s=\'Registry: \'+Object.keys(j.agents||{}).length+\' agents.\\n\\n\';for(const[a,info]of Object.entries(j.agents||{})){s+=a+\' [\'+info.role+\' v\'+info.version+\']\\n  caps: \'+(info.capabilities||[]).join(\', \')+\'\\n\\n\'}el.textContent=s}async function mission(){const g=document.getElementById(\'goal\').value;if(!g)return;const o=document.getElementById(\'mout\');o.textContent=\'Executing mission…\';const r=await fetch(\'/api/missions/v1\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({goal:g})});const j=await r.json();renderMission(j,o)}async function listMissions(){const o=document.getElementById(\'mout\');const r=await fetch(\'/api/missions/v1\');const j=await r.json();let s=j.missions.length+\' mission(s)\\n\\n\';j.missions.forEach(m=>{s+=m.id+\' [\'+m.status+\'] \'+m.goal.slice(0,60)+\'\\n  receipt: \'+(m.receipt||\'-\')+\'\\n\\n\'});o.textContent=s}function renderMission(j,o){let s=\'MISSION \'+j.id+\'\\nSTATUS: \'+j.status+\' | PATTERN: \'+j.pattern+\' | SOVEREIGN: \'+j.sovereign+\'\\n\\n\';(j.tasks||[]).forEach(t=>{s+=\'TASK \'+t.id+\' [\'+t.type+\'] -> \'+t.state+\'\\n  agent: \'+(t.agent_id||\'-\')+\' | ext_calls: \'+t.external_calls+\' | receipt: \'+(t.receipt||\'-\')+\'\\n  \'+(t.state===\'verified\'?(typeof t.answer===\'object\'?JSON.stringify(t.answer):String(t.answer)).slice(0,600):(t.refusal||t.error||\'\'))+\'\\n\\n\'});s+=\'MISSION RECEIPT: \'+(j.receipt||\'-\');o.textContent=s}loadHealth();loadAgents();if(\'serviceWorker\' in navigator)navigator.serviceWorker.register(\'/console/sw.js\').catch(function(){});</script></body></html>';
-      return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+            const html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f0f2f5"><link rel="manifest" href="/console/manifest.json"><link rel="icon" href="/console/icon.svg"><title>HARZ Intelligence — Front Door</title><style>body{font-family:system-ui,sans-serif;background:#f0f2f5;color:#111;margin:0;padding:12px;max-width:760px;margin:0 auto}h1{font-size:19px;margin:8px 0 2px;color:#0a7d32}.sub{font-size:12px;color:#555;margin-bottom:10px}button{background:#0a7d32;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:15px;cursor:pointer}button:disabled{background:#aaa}input,textarea{width:96%;border:1px solid #ccc;border-radius:8px;padding:10px;font-family:inherit;font-size:15px}textarea{height:70px}.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 1px 4px rgba(0,0,0,.08)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tab{background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}.tab.on{background:#0a7d32;color:#fff;border-color:#0a7d32}.out{font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}.mono{font-family:monospace;font-size:12px;color:#333}.ok{color:#0a7d32;font-weight:bold}.rf{color:#b45309;font-weight:bold}.er{color:#b91c1c;font-weight:bold}.stat{font-size:12px;color:#666;margin-top:6px}a{color:#0a7d32}</style></head><body><h1>HARZ INTELLIGENCE</h1><div class="sub">Sovereign front door v0.2 — one task in, one TaskRecord out, lineage visible. Give it a task.</div><div class="tabs"><div class="tab on" onclick="tab(this,\'task\')">Task</div><div class="tab" onclick="tab(this,\'health\')">Health</div><div class="tab" onclick="tab(this,\'chat\')">Chat</div><div class="tab" onclick="tab(this,\'agents\')">Agents</div><div class="tab" onclick="tab(this,\'missions\')">Missions</div><div class="tab" onclick="tab(this,\'studio\')">Studio</div></div><div id="p-task" class="card"><textarea id="taskin" placeholder="Give it a task… e.g. What is the UBA account number used for HARZ Pay bank transfers? — or — Research the GDEG payment rate and write me a report."></textarea><button onclick="runTask()">Run task</button> <button onclick="listTasks()">Recent tasks</button><div class="out" id="taskout">One task in, one TaskRecord out. The lineage is visible: decomposition, evidence, verified claims, artifacts, verdict, receipt.</div></div><div id="p-health" class="card" style="display:none"><div class="out" id="health">Loading…</div></div><div id="p-chat" class="card" style="display:none"><input id="msg" placeholder="Ask the intelligence core…"><button onclick="chat()">Ask</button><div class="out" id="chatout"></div></div><div id="p-agents" class="card" style="display:none"><div class="out" id="agents">Loading…</div></div><div id="p-missions" class="card" style="display:none"><textarea id="goal" placeholder="Mission goal… e.g. Research: what is the GDEG payment rate? or Compose: create an image about kasuwa"></textarea><button onclick="mission()">Run mission</button> <button onclick="listMissions()">List missions</button><div class="out" id="mout"></div></div><div id="p-studio" class="card" style="display:none"><div class="out">The frozen V3 Creative Studio handles composition:<br><a href="/api/creation/v1/studio">Open HARZ Creative Studio</a></div></div><script>function tab(el,p){document.querySelectorAll(\'.tab\').forEach(x=>x.classList.remove(\'on\'));el.classList.add(\'on\');[\'task\',\'health\',\'chat\',\'agents\',\'missions\',\'studio\'].forEach(x=>document.getElementById(\'p-\'+x).style.display=x===p?\'block\':\'none\')}async function runTask(){const v=document.getElementById(\'taskin\').value;if(!v.trim())return;const o=document.getElementById(\'taskout\');o.textContent=\'Task received — executing through the TaskRecord spine…\';const r=await fetch(\'/api/tasks/v1\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({instruction:v})});const j=await r.json();renderTask(j,o)}async function listTasks(){const o=document.getElementById(\'taskout\');o.textContent=\'Loading…\';const r=await fetch(\'/api/tasks/v1\');const j=await r.json();let s=j.count+\' task record(s)\\n\\n\';(j.tasks||[]).forEach(t=>{s+=t.task_id+\' [\'+t.status+\' | \'+t.verdict+\'] \'+String(t.instruction).slice(0,60)+\'\\n  pattern: \'+t.pattern+\' | artifacts: \'+t.artifacts+\' | ext calls: \'+t.external_calls+\'\\n  receipt: \'+t.receipt+\'\\n\\n\'});o.textContent=s}function renderTask(j,o){let s=\'TASKRECORD \'+j.task_id+\'\\nSTATUS: \'+j.status+\' | PATTERN: \'+(j.pattern||\'-\')+\'\\n\\nLIFECYCLE (states earned, never skipped):\\n\';(j.lifecycle||[]).forEach(l=>{s+=\'  \'+(l.not_applicable?\'~ \':\'> \')+l.state+(l.not_applicable?\'  (not applicable: \'+l.not_applicable+\')\':\'\')+\'\\n\'});s+=\'\\nINSTRUCTION:\\n  \'+j.instruction+\'\\n\\nDECOMPOSITION:\\n\';(j.decomposition||[]).forEach(d=>{s+=\'  \'+d.step+\'. [\'+d.type+\'] \'+d.instruction+(d.evidence_from?\'  (evidence from step \'+d.evidence_from.join(\',\')+\')\':\'\')+\'\\n\'});if((j.evidence_refs||[]).length){s+=\'\\nEVIDENCE REFS:\\n\';j.evidence_refs.forEach(e=>{s+=(e.document_id!==null&&e.document_id!==undefined?\'  doc \'+e.document_id+\' | digest \'+String(e.evidence_digest).slice(0,12)+\'…\':\'  corpus source (id/digest not carried by this answer format — disclosed)\')+\' | \'+e.source_title+\' | [\'+e.cited_as+\']\\n\'})}if((j.verified_claims||[]).length){s+=\'\\nVERIFIED CLAIMS:\\n\';j.verified_claims.forEach(c=>{s+=\'  [\'+c.kind+\'] \'+(c.claims_sha256?\'claims_sha \'+String(c.claims_sha256).slice(0,16)+\'… | src task \'+c.source_task+\' | src receipt \'+String(c.source_receipt||\'\').slice(0,16)+\'…\':String(c.text||\'\').split(\'\\n\')[0].slice(0,80)+\'… | src receipt \'+String(c.source_receipt||\'\').slice(0,16)+\'…\')+\'\\n\'})}if((j.artifacts||[]).length){s+=\'\\nARTIFACTS:\\n\';j.artifacts.forEach(a=>{s+=\'  [\'+a.mode+\'] sha \'+String(a.artifact_sha256).slice(0,16)+\'…\\n  view artifact: \'+location.origin+a.player_url+\'\\n\'})}if(j.provenance_chain){s+=\'\\nPROVENANCE (backward chain):\\n\';j.provenance_chain.forEach((p,i)=>{s+=\'  \'+(i+1)+\'. \'+p.link+\' — \'+p.detail+\'\\n\'})}s+=\'\\nVERDICT: \'+j.verdict+(j.refusal_reason?\'\\n  REASON: \'+j.refusal_reason:\'\')+\'\\nSOVEREIGNTY: sovereign=\'+(j.sovereignty&&j.sovereignty.sovereign)+\' | external calls: \'+(j.sovereignty?j.sovereignty.external_calls:\'-\')+\'\\nRECEIPT: \'+j.receipt;o.textContent=s}async function loadHealth(){const r=await fetch(\'/api/health\');const j=await r.json();document.getElementById(\'health\').textContent=JSON.stringify(j,null,2)}async function chat(){const m=document.getElementById(\'msg\').value;if(!m)return;const o=document.getElementById(\'chatout\');o.textContent=\'Thinking (sovereign pipeline)…\';const r=await fetch(\'/api/chat\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({message:m})});const j=await r.json();o.textContent=(j.answer||j.error||JSON.stringify(j))+\'\\n\\nRECEIPT: \'+(j.verification&&j.verification.receipt_sha256||\'none\')+\' | EXTERNAL CALLS: \'+(j.meta&&j.meta.external_calls)}async function loadAgents(){const r=await fetch(\'/api/agents/v1/registry\');const j=await r.json();const el=document.getElementById(\'agents\');let s=\'Registry: \'+Object.keys(j.agents||{}).length+\' agents.\\n\\n\';for(const[a,info]of Object.entries(j.agents||{})){s+=a+\' [\'+info.role+\' v\'+info.version+\']\\n  caps: \'+(info.capabilities||[]).join(\', \')+\'\\n\\n\'}el.textContent=s}async function mission(){const g=document.getElementById(\'goal\').value;if(!g)return;const o=document.getElementById(\'mout\');o.textContent=\'Executing mission…\';const r=await fetch(\'/api/missions/v1\',{method:\'POST\',headers:{\'Content-Type\':\'application/json\'},body:JSON.stringify({goal:g})});const j=await r.json();renderMission(j,o)}async function listMissions(){const o=document.getElementById(\'mout\');const r=await fetch(\'/api/missions/v1\');const j=await r.json();let s=j.missions.length+\' mission(s)\\n\\n\';j.missions.forEach(m=>{s+=m.id+\' [\'+m.status+\'] \'+m.goal.slice(0,60)+\'\\n  receipt: \'+(m.receipt||\'-\')+\'\\n\\n\'});o.textContent=s}function renderMission(j,o){let s=\'MISSION \'+j.id+\'\\nSTATUS: \'+j.status+\' | PATTERN: \'+j.pattern+\' | SOVEREIGN: \'+j.sovereign+\'\\n\\n\';(j.tasks||[]).forEach(t=>{s+=\'TASK \'+t.id+\' [\'+t.type+\'] -> \'+t.state+\'\\n  agent: \'+(t.agent_id||\'-\')+\' | ext_calls: \'+t.external_calls+\' | receipt: \'+(t.receipt||\'-\')+\'\\n  \'+(t.state===\'verified\'?(typeof t.answer===\'object\'?JSON.stringify(t.answer):String(t.answer)).slice(0,600):(t.refusal||t.error||\'\'))+\'\\n\\n\'});s+=\'MISSION RECEIPT: \'+(j.receipt||\'-\');o.textContent=s}loadHealth();loadAgents();if(\'serviceWorker\' in navigator)navigator.serviceWorker.register(\'/console/sw.js\').catch(function(){});</script></body></html>';
+      return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
     return json({ error: 'not found', path }, 404);
