@@ -454,6 +454,8 @@ const FEE_MARK = /(\d+(?:\.\d+)?\s*%|₦\s?\d[\d,]*|\bNGN\s?\d[\d,]*|\$\d[\d,.]*
 async function buildFeeAnswer(packet) {
   const Lq = packet.query.toLowerCase();
   const qTerms = [...new Set(Lq.split(/[^a-z0-9₦%]+/).filter(t => t.length > 2 && !['what','how','much','does','are','the','for','with','tell','fee','fees','price','pricing','cost','costs','charge','charges','charged','rate','rates','harz'].includes(t)))];
+  // v0.10.1-candidate F-T10-1: strong terms KEEP the fee-class words — the stoplist above discards the question's most discriminating word (e.g. 'charge'), which is exactly how a query-pricing page masked a transaction-fee page.
+  const strongTerms = [...new Set(Lq.split(/[^a-z0-9₦%]+/).filter(t => t.length > 2 && !['what','how','much','does','are','the','for','with','tell','harz'].includes(t)))];
   const scanUnit = (raw, docId, title, pos) => {
     // NOTE: '•' is NOT a split char here — 'Revenue split: Creator 70% • HARZ 30%' is one fee clause.
     const sents = String(raw).replace(/\s+/g, ' ').split(/(?<=[.!?|✓])\s+/).map(s => s.trim()).filter(s => s.length > 8 && s.length < 320);
@@ -469,7 +471,8 @@ async function buildFeeAnswer(packet) {
       const from = Math.max(0, at - 70), to = Math.min(s.length, at + 80);
       const win = (from > 0 ? '…' : '') + s.slice(from, to).trim() + (to < s.length ? '…' : '');
       const overlap = qTerms.filter(t => s.toLowerCase().includes(t)).length;
-      hits.push({ s: win, doc: docId, title, overlap, pos });
+      const strongOverlap = strongTerms.filter(t => s.toLowerCase().includes(t)).length;
+      hits.push({ s: win, doc: docId, title, overlap, pos, strongOverlap });
     }
   };
   const hits = [];
@@ -477,7 +480,8 @@ async function buildFeeAnswer(packet) {
     const docId = Number(e.document_id) || 0;
     if (docId >= 10000) scanUnit(e.fullText || e.text, docId, e.title, i);
   });
-  if (!hits.length) {
+  const anyStrong = hits.some(h => h.strongOverlap > 0);
+  if (!hits.length || !anyStrong) {
     // fee-targeted fallback retrieval: domain terms + 'harz' biases the HARZ corpus.
     // Reuses the SAME baseline/fetchPage functions the packet itself uses (service-binding aware).
     try {
@@ -492,7 +496,7 @@ async function buildFeeAnswer(packet) {
     } catch (_) { /* fallback unreachable -> answer with what the packet gave */ }
   }
   if (!hits.length) return null;
-  hits.sort((a, b) => (a.pos - b.pos) || (b.overlap - a.overlap));
+  hits.sort((a, b) => (b.strongOverlap - a.strongOverlap) || (a.pos - b.pos) || (b.overlap - a.overlap));
   const top = hits.slice(0, 3);
   return '**Answer**\n\nHARZ evidence declares these fees/prices, quoted verbatim:\n\n' +
     top.map((h, i) => (i + 1) + '. "' + h.s + '" — ' + h.title + ' (document_id: ' + h.doc + ')').join('\n') +
