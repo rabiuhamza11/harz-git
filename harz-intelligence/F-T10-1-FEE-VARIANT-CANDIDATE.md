@@ -59,3 +59,24 @@ v0.10.1 is now the frozen fee specialist. The candidate WAS the live worker (ver
 full frozen bar green at promotion time. The pre-candidate source remains in git history
 (commit b33e1b3) for any future revert ruling. This closes the fee_variant pre-existing red
 named in Dad's Oct 8 GAP-4 ruling. Separate workstream complete.
+
+---
+
+## ADDENDUM — the index moved under the promotion (Oct 8, ~00:45 WAT)
+
+Minutes after the promotion was sealed, test10 re-run: 4/5 + 4/5 — fee_variant red again.
+The promoted code is byte-identical (no deploy since 961272c2). The input changed:
+the search index was rewritten by the corpus workstream (harz-search /stats:
+documents 10,471 -> 11,365, new index_digest aa22a26e, contract v0.4). The independent
+workstreams collided on the shared live index.
+
+Evidence: for the fallback query "pay per transaction harz", doc 10470 scored 14.82
+(rank 3, inside the top-3 fallback scan) at gate time; it now scores 5.59 (rank 5,
+outside the scan window). BM25 idf shifted with ~894 added documents. 10470's content
+is intact — fee_paystack still cites its 1.5% via the packet path. The defect class:
+the fallback scan window (top-3 of a 6-candidate slice) is fragile against index churn.
+
+Candidate v0.10.2 direction (NOT BUILT, awaits Dad): widen the fallback scan from
+top-3 to the full 6-candidate slice. The list already slices 6; the loop caps at 3.
+Alternatively Dad may rule the fee battery re-baselined against the v0.4 index, or
+revert v0.10.1. No action taken on the promoted layer without a ruling.
