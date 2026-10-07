@@ -1,0 +1,38 @@
+{
+ "tiering": "newest-first, 8MB packs",
+ "total_pages": 2496,
+ "packs": [
+  {
+   "pack": "pack-01.jsonl",
+   "pages": 1272,
+   "bytes": 8354405,
+   "sha256": "c5ec233c5885ffb2f74c6cf128eb68a8fda08d53ca7b108d496d35f2f9ef36de",
+   "fetched_range": [
+    "2026-10-07T23:05:57Z",
+    "2026-09-20T04:48:55Z"
+   ]
+  },
+  {
+   "pack": "pack-02.jsonl",
+   "pages": 625,
+   "bytes": 8383004,
+   "sha256": "41805e1a173f3886d727de75efd8a9bf2f8981f34cd1f42764dfa3b39c57c302",
+   "fetched_range": [
+    "2026-09-20T04:48:54Z",
+    "2026-09-20T04:48:12Z"
+   ]
+  },
+  {
+   "pack": "pack-03.jsonl",
+   "pages": 599,
+   "bytes": 3682657,
+   "sha256": "6fe25d21b975daaf576266e1356b91a13cb6087300023b038fc6fe1ae0ef3602",
+   "fetched_range": [
+    "2026-09-20T04:48:12Z",
+    null
+   ]
+  }
+ ],
+ "generated": "2026-10-08T00:30:00Z",
+ "by": "Nuruddeen (search continuation)"
+}
