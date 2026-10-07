@@ -93,3 +93,31 @@ the pre-router build (git HEAD deployed, version 2acbf791, same 4/5 fee_variant 
 The door now takes the world as it arrives — PDF, voice, zip, image — and either it
 crosses provenance-bound into one receipted TaskRecord, or it refuses with the reason
 on the record. Nothing in between, nothing fabricated, zero external calls.
+
+---
+
+## DAD'S COUNTERSIGNATURE — Oct 8, 2026 (gate closes on this, not on the report)
+
+**GAP-4 gate: CLOSED.**
+The strength is the enforced boundary behavior, not merely 15/15 x2: frozen-lane
+crossings, provenance attached end-to-end, lying types refused, poisoned input
+preserved + disclosed, injection as data, gapped audio never manufactured,
+evidence-backed browser display including honest refusals, zero external calls.
+
+**F-GAP4-1: BOUNDED FINDING — NO PATCH.** Refusal where evidence doesn't meet the
+frozen threshold is correct behavior. Threshold not lowered; no cross-layer rescue.
+
+**F-GAP4-2: OPEN ARCHITECTURAL FOLLOW-UP.** Verbatim ruling: "OPEN / REQUIRED
+BEFORE CLAIMING UNIVERSAL PROVENANCE BINDING." One specialist class has an
+alternate evidence path (corpus retrieval bypassing the ingested packet) — the
+invariant is not yet universal across every specialist. The provenance bypass must
+eventually be eliminated or explicitly bounded.
+
+**Agents test10 fee_variant: PRE-EXISTING RED — SEPARATE WORKSTREAM.** Reproduced on
+the pre-router build; correctly not attributed to this gate.
+
+**Standing decision reaffirmed:** software/build gates before phone field work;
+GAP-4 sits on the completed-build side of that line.
+
+**The invariant, Dad's words:** every input either crosses provenance-bound into one
+receipted record, or refuses with the reason on the record. No silent third state.
