@@ -49,3 +49,13 @@ not by luck. Second attempt applied 4/4 single-hit edits.
 
 PROMOTE v0.10.1 (candidate -> frozen v0.10.1) or REVERT. The live worker currently runs the
 candidate; revert = redeploy the pre-candidate source (in git history, commit b33e1b3).
+
+---
+
+## PROMOTED — Dad's ruling, Oct 8, 2026: "Promote."
+
+v0.10.1 is now the frozen fee specialist. The candidate WAS the live worker (version
+961272c2) and stands promoted in place; no redeploy needed. Owner battery test10 5/5 + 5/5,
+full frozen bar green at promotion time. The pre-candidate source remains in git history
+(commit b33e1b3) for any future revert ruling. This closes the fee_variant pre-existing red
+named in Dad's Oct 8 GAP-4 ruling. Separate workstream complete.
