@@ -1,0 +1,1 @@
+{"name": "HARZ Cloud Directory", "short_name": "HARZ Cloud", "description": "Honest directory of the HARZ sovereign cloud.", "start_url": "/", "display": "standalone", "background_color": "#f0f2f5", "theme_color": "#f0f2f5", "icons": [{"src": "/icons/directory.svg", "sizes": "any", "type": "image/svg+xml"}]}

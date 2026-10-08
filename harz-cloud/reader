@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f8fa">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="HARZ Reader">
+<meta name="description" content="HARZ Reader — fetch any web page once, read it forever. Offline by construction.">
+<link rel="manifest" href="/manifests/reader.webmanifest">
+<link rel="apple-touch-icon" href="/icons/reader.svg">
+<link rel="icon" href="/icons/reader.svg">
+<title>HARZ Reader — Offline Library</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#f0f2f5;--card:#fff;--border:#dadde1;--text:#1c1e21;--dim:#65676b;--green:#0e9f6e;--blue:#1877f2;--gold:#FFD700;--radius:12px}
+body{font-family:-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;padding-bottom:40px}
+.wrap{max-width:720px;margin:0 auto;padding:14px 12px}
+.hd{display:flex;align-items:center;gap:8px;padding:6px 0 14px}
+.hd h1{font-size:19px}
+.hd .sub{font-size:11px;color:var(--dim)}
+.badge{display:inline-block;background:var(--green);color:#fff;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+label{font-size:12px;font-weight:600;display:block;margin-bottom:6px}
+input[type=text],input[type=url]{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:15px;background:var(--card);color:var(--text)}
+input:focus{outline:2px solid var(--blue)}
+.row{display:flex;gap:8px;margin-top:10px}
+button{border:none;border-radius:10px;padding:11px 14px;font-size:14px;font-weight:600;cursor:pointer}
+button:active{opacity:.7}
+.b-green{background:var(--green);color:#fff}
+.b-blue{background:var(--blue);color:#fff}
+.b-gray{background:#e4e6eb;color:var(--text)}
+.b-sm{padding:8px 12px;font-size:13px}
+.stat{font-size:11px;color:var(--dim);margin-top:8px;line-height:1.5}
+.qitem{display:flex;align-items:center;gap:8px;padding:8px 2px;border-bottom:1px solid #f0f2f5;font-size:13px}
+.qitem .u{flex:1;word-break:break-all}
+.chip{font-size:10px;border-radius:6px;padding:1px 7px;font-weight:700}
+.chip.p{background:#fff3cd;color:#8a6d00}
+.x{background:none;color:#e41e3f;font-size:17px;padding:0 6px}
+.tabbar{display:flex;gap:6px;margin-bottom:12px}
+.tab{flex:1;text-align:center;padding:9px 0;border-radius:10px;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--border)}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pitem{display:block;padding:11px 2px;border-bottom:1px solid #f0f2f5;cursor:pointer;text-decoration:none;color:var(--text)}
+.pt{font-size:14px;font-weight:600;line-height:1.35}
+.pm{font-size:11px;color:var(--dim);margin-top:3px}
+.prow{display:flex;align-items:center;gap:8px}
+.prow .g{flex:1}
+.empty{text-align:center;color:var(--dim);font-size:13px;padding:24px 10px;line-height:1.6}
+.hint{font-size:11px;color:var(--dim);line-height:1.5}
+.zone-lbl{font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.4px;text-transform:uppercase;margin:14px 0 2px}
+/* reader view */
+.rtop{display:flex;align-items:center;gap:8px;padding:8px 0}
+.back{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:13px;color:var(--text)}
+.art{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.art h2{font-size:18px;line-height:1.35;margin-bottom:4px}
+.meta{font-size:10px;color:var(--dim);margin-bottom:12px;line-height:1.6;word-break:break-all}
+.art .block{margin-bottom:11px;line-height:1.65;font-size:15px}
+.art .h{font-weight:700;margin-top:14px}
+.art .li{margin-left:14px;position:relative;padding-left:10px}
+.art .li:before{content:"•";position:absolute;left:0;color:var(--blue)}
+.find{display:flex;gap:6px;margin:10px 0}
+.find input{flex:1}
+.find button{flex:none;padding:8px 10px;font-size:13px}
+.fnd{font-size:11px;color:var(--dim);margin-bottom:8px}
+.srcbtn{background:none;color:var(--blue);font-size:12px;padding:6px 0;font-weight:600}
+.seal{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.seal span{font-size:10px;border:1px solid var(--border);border-radius:6px;padding:2px 7px;color:var(--dim);background:#fafbfc}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1c1e21;color:#fff;font-size:13px;border-radius:10px;padding:10px 16px;opacity:0;transition:opacity .3s;z-index:99;max-width:88%}
+.toast.show{opacity:1}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hd">
+  <img src="/icons/reader.svg" width="34" height="34" alt="">
+  <div>
+    <h1>HARZ Reader</h1>
+    <div class="sub">Fetch once · Read forever · <span class="badge">OFFLINE BY CONSTRUCTION</span></div>
+  </div>
+</div>
+
+<div class="tabbar">
+  <div class="tab on" data-tab="add">🔍 Search &amp; Add</div>
+  <div class="tab" data-tab="lib">📚 Library</div>
+</div>
+
+<div id="view-add">
+  <div class="card">
+    <input type="text" id="q" placeholder="Search your library, or paste a web address…" autocapitalize="off" autocomplete="off">
+    <div id="smart"></div>
+    <div class="stat" id="addStat"></div>
+  </div>
+
+  <div class="card" id="queueCard" style="display:none">
+    <label>Queued — fetched next time you press FETCH</label>
+    <div id="queueList"></div>
+    <div class="row">
+      <button class="b-green" id="flushBtn">⬇ FETCH ALL QUEUED</button>
+    </div>
+    <div class="stat" id="qStat"></div>
+  </div>
+
+  <div class="card">
+    <div class="hint">HOW IT WORKS: Type words to search the pages already on this phone — that works in airplane mode. Paste a web address to grab a new page: QUEUE works offline, FETCH happens the moment you have data. Every saved page is sealed with a content hash and reads forever after.</div>
+  </div>
+</div>
+
+<div id="view-lib" style="display:none">
+  <div class="card">
+    <input type="text" id="search" placeholder="🔍 Search your whole library…">
+    <div class="stat" id="libStat"></div>
+  </div>
+  <div class="card" id="libList" style="padding-top:4px"></div>
+</div>
+
+<div id="view-read" style="display:none">
+  <div class="rtop">
+    <button class="back" id="backBtn">← Library</button>
+    <button class="srcbtn" id="srcBtn">source ↗</button>
+  </div>
+  <div class="card" style="padding:10px">
+    <div class="find">
+      <input type="text" id="findIn" placeholder="Find in page…">
+      <button class="b-blue" id="findPrev">↑</button>
+      <button class="b-blue" id="findNext">↓</button>
+    </div>
+    <div class="fnd" id="findStat"></div>
+  </div>
+  <div class="art" id="article"></div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------------- HARZ Reader v1.1.1 — search-first, offline-first ----------------
+const ENGINE = 'https://harz-reader.harz.workers.dev';
+const LS_PAGES = 'harz_reader_pages_v1';
+const LS_QUEUE = 'harz_reader_queue_v1';
+const $ = (id) => document.getElementById(id);
+let current = null;
+let findHits = [], findIdx = -1;
+let lastWebResults = null;
+
+const store = {
+  pages() { try { return JSON.parse(localStorage.getItem(LS_PAGES) || '[]'); } catch { return []; } },
+  savePages(p) { localStorage.setItem(LS_PAGES, JSON.stringify(p)); },
+  queue() { try { return JSON.parse(localStorage.getItem(LS_QUEUE) || '[]'); } catch { return []; } },
+  saveQueue(q) { localStorage.setItem(LS_QUEUE, JSON.stringify(q)); },
+  savePage(pg) {
+    const p = this.pages().filter(x => x.content_hash !== pg.content_hash);
+    p.unshift(pg);
+    this.savePages(p.slice(0, 400));
+  },
+};
+
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// word-based library search: every word must appear (AND), hits = total occurrences
+function searchPages(term) {
+  const words = term.toLowerCase().split(/\s+/).filter(Boolean);
+  const pages = store.pages();
+  return pages.map(p => {
+    const hay = (p.title + ' ' + p.blocks.map(b => b.text).join(' ')).toLowerCase();
+    let total = 0;
+    for (const w of words) {
+      const c = hay.split(w).length - 1;
+      if (!c) return null;      // any word missing -> no match
+      total += c;
+    }
+    return { p, count: total };
+  }).filter(Boolean);
+}
+
+// ---- input classifier: is it a web address or search words? ----
+function classify(v) {
+  v = (v || '').trim();
+  if (!v) return { kind: 'empty' };
+  if (/^https?:\/\//i.test(v) && !/\s/.test(v)) return { kind: 'url', url: v };
+  // domain-like: word.word with no spaces, optional path
+  if (!/\s/.test(v) && /^[a-z0-9-]+(\.[a-z0-9-]+)+([\/?#]\S*)?$/i.test(v))
+    return { kind: 'url', url: 'https://' + v };
+  return { kind: 'term', term: v.replace(/\s+/g, ' ') };
+}
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+  t.classList.add('on');
+  ['add','lib','read'].forEach(v => $('view-'+v).style.display = (t.dataset.tab === v ? '' : 'none'));
+  if (t.dataset.tab === 'lib') renderLib($('search').value);
+}));
+
+// ---------- queue ----------
+function renderQueue() {
+  const q = store.queue();
+  $('queueCard').style.display = q.length ? '' : 'none';
+  $('queueList').innerHTML = q.map((u, i) =>
+    `<div class="qitem"><span class="chip p">WAITING</span><span class="u">${esc(u)}</span><button class="x" data-i="${i}">×</button></div>`).join('');
+  $('qStat').textContent = q.length + ' page(s) waiting. Fetch all when you have a connection.';
+  $('queueList').querySelectorAll('.x').forEach(b => b.addEventListener('click', () => {
+    const q = store.queue(); q.splice(+b.dataset.i, 1); store.saveQueue(q); renderQueue();
+  }));
+}
+
+// ---------- fetch ----------
+async function fetchOne(u) {
+  const r = await fetch(ENGINE + '/api/fetch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url: u }),
+  });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error);
+  store.savePage(d);
+  return d;
+}
+
+// ---------- SMART ZONE: search-first universal bar ----------
+function renderSmart() {
+  const c = classify($('q').value);
+  const smart = $('smart');
+  if (c.kind === 'empty') {
+    smart.innerHTML = '<div class="zone-lbl">Start typing…</div><div class="hint">Words search this phone. A web address (like premiumtimesng.com) fetches a new page.</div>';
+    $('addStat').textContent = navigator.onLine ? 'Engine online.' : 'You are OFFLINE — searching and queueing work, fetching waits for a connection.';
+    return;
+  }
+  if (c.kind === 'url') {
+    smart.innerHTML = `
+      <div class="zone-lbl">Web address</div>
+      <div class="row">
+        <button class="b-blue" id="queueBtn">＋ QUEUE (works offline)</button>
+        <button class="b-green" id="fetchNowBtn">⬇ FETCH NOW</button>
+      </div>`;
+    $('queueBtn').onclick = () => {
+      const q = store.queue();
+      if (q.includes(c.url)) return toast('Already in queue');
+      q.push(c.url); store.saveQueue(q); renderQueue();
+      toast('Queued ✓ — will fetch when you press FETCH');
+    };
+    $('fetchNowBtn').onclick = async (e) => {
+      const btn = e.currentTarget; btn.innerHTML = '<span class="spin"></span> fetching…';
+      try {
+        const d = await fetchOne(c.url);
+        const q = store.queue().filter(x => x !== c.url); store.saveQueue(q); renderQueue();
+        toast(`✓ Saved: ${d.title.slice(0,40)} (${d.chars.toLocaleString()} chars)`);
+        $('addStat').textContent = `Saved "${d.title}" — ${d.chars.toLocaleString()} chars, sealed ${d.content_hash.slice(0,12)}… ${d.truncated ? 'NOTE: page was longer than the 60,000-char cap, so it was cut.' : 'Full text, no truncation.'}`;
+        renderSmart(); renderLib($('search').value);
+      } catch (err) {
+        toast('✗ ' + err.message + ' — you may be offline. Use QUEUE instead.');
+      }
+      btn.textContent = '⬇ FETCH NOW';
+    };
+    $('addStat').textContent = '';
+    return;
+  }
+
+  // search words: library first
+  const hits = searchPages(c.term);
+
+  let html = '<div class="zone-lbl">Search — your phone (' + hits.length + ' match' + (hits.length === 1 ? '' : 'es') + ')</div>';
+  if (hits.length) {
+    html += hits.slice(0, 8).map(({ p, count }) =>
+      `<a class="pitem" data-h="${p.content_hash}"><div class="prow"><div class="g"><div class="pt">${esc(p.title)}</div><div class="pm">${p.chars.toLocaleString()} chars · ${count} hits</div></div></div></a>`).join('');
+  } else {
+    html += `<div class="empty">Nothing on this phone matches “${esc(c.term)}”.${navigator.onLine ? '' : '<br>You are offline — web search waits for a connection.'}</div>`;
+  }
+  if (navigator.onLine) {
+    html += `<div class="row"><button class="b-gray" id="webBtn">🌐 SEARCH THE WEB FOR “${esc(c.term.slice(0, 30))}”</button></div><div id="webResults"></div>`;
+  }
+  smart.innerHTML = html;
+
+  smart.querySelectorAll('.pitem').forEach(a => a.addEventListener('click', () => {
+    current = store.pages().find(p => p.content_hash === a.dataset.h);
+    openArticle();
+  }));
+
+  const wb = $('webBtn');
+  if (wb) wb.onclick = async () => {
+    wb.innerHTML = '<span class="spin"></span> searching the web…';
+    $('webResults').innerHTML = '';
+    try {
+      const r = await fetch(ENGINE + '/api/search?q=' + encodeURIComponent(c.term));
+      const d = await r.json();
+      if (d.error) throw new Error(d.error);
+      lastWebResults = d.results;
+      $('webResults').innerHTML = '<div class="zone-lbl">Web results — tap ⬇ to save into your library</div>' +
+        d.results.map((res, i) =>
+          `<div class="qitem"><span class="u"><b>${esc(res.title.slice(0, 70))}</b><br><span class="pm">${esc(res.url.length > 48 ? res.url.slice(0, 48) + '…' : res.url)}</span></span><button class="b-green b-sm" data-wi="${i}">⬇</button></div>`).join('');
+      $('webResults').querySelectorAll('button[data-wi]').forEach(b => b.addEventListener('click', async (e) => {
+        const res = lastWebResults[+b.dataset.wi];
+        b.innerHTML = '<span class="spin"></span>';
+        try {
+          const d = await fetchOne(res.url);
+          toast(`✓ Saved: ${d.title.slice(0,40)}`);
+          renderSmart(); renderLib($('search').value);
+        } catch (err) {
+          b.textContent = '⬇';
+          toast('✗ ' + err.message);
+        }
+      }));
+    } catch (err) {
+      $('webResults').innerHTML = `<div class="empty">Web search failed: ${esc(err.message)}</div>`;
+    }
+    wb.textContent = '🌐 SEARCH THE WEB AGAIN';
+  };
+  $('addStat').textContent = '';
+}
+
+$('q').addEventListener('input', renderSmart);
+
+$('flushBtn').addEventListener('click', async () => {
+  const q = store.queue().slice();
+  if (!q.length) return;
+  if (!navigator.onLine) return toast('You are OFFLINE — pages stay queued for your next connection');
+  $('flushBtn').textContent = '⏳ fetching ' + q.length + '…';
+  let ok = 0, fail = 0;
+  for (const u of q) {
+    try { await fetchOne(u); const nq = store.queue().filter(x => x !== u); store.saveQueue(nq); renderQueue(); ok++; }
+    catch { fail++; }
+  }
+  renderLib($('search').value); renderSmart();
+  toast(`Fetched ${ok} ✓ ${fail ? '· failed ' + fail + ' (stay queued)' : ''}`);
+  $('flushBtn').textContent = '⬇ FETCH ALL QUEUED';
+});
+
+// ---------- library ----------
+function renderLib(q) {
+  const pages = store.pages();
+  const term = (q || '').toLowerCase();
+  const t0 = performance.now();
+  let results;
+  if (term) {
+    results = searchPages(term);
+  } else results = pages.map(p => ({ p, count: 0 }));
+  const ms = Math.max(1, Math.round(performance.now() - t0));
+  const chars = pages.reduce((a, p) => a + p.chars, 0);
+  $('libStat').textContent = `${pages.length} page(s) · ${(chars/1000000).toFixed(2)}M characters · ${term ? results.length + ' match · ' + ms + ' ms' : 'all offline'}`;
+  if (!results.length) {
+    $('libList').innerHTML = `<div class="empty">No pages yet${term ? ' match that search' : ''}.<br>Use Search &amp; Add — one fetch, then it lives here offline.</div>`;
+    return;
+  }
+  $('libList').innerHTML = results.map(({ p, count }) =>
+    `<a class="pitem" data-h="${p.content_hash}">
+      <div class="pt">${esc(p.title)}</div>
+      <div class="pm">${esc(p.url.length > 60 ? p.url.slice(0, 60) + '…' : p.url)}</div>
+      <div class="pm">${p.chars.toLocaleString()} chars · ${p.fetched_at.slice(0, 10)}${count ? ' · ' + count + ' hits' : ''}</div>
+    </a>`).join('');
+  $('libList').querySelectorAll('.pitem').forEach(a => a.addEventListener('click', () => {
+    current = pages.find(p => p.content_hash === a.dataset.h);
+    openArticle();
+  }));
+}
+
+$('search').addEventListener('input', e => renderLib(e.target.value));
+
+// ---------- article view ----------
+function openArticle() {
+  document.querySelector('.tab').classList.remove('on');
+  ['add','lib','read'].forEach(v => $('view-'+v).style.display = (v === 'read' ? '' : 'none'));
+  const p = current;
+  $('article').innerHTML = `
+    <h2>${esc(p.title)}</h2>
+    <div class="meta">${esc(p.url)}<br>fetched ${esc(p.fetched_at.slice(0, 16).replace('T', ' '))} UTC · ${p.chars.toLocaleString()} chars · ${p.truncated ? 'TRUNCATED at cap' : 'full text, no truncation'}</div>
+    <div class="seal"><span>🔒 SEALED</span><span>hash ${esc(p.content_hash.slice(0, 16))}…</span><span>OFFLINE, LOCAL COPY</span></div>
+    ${p.blocks.map(b =>
+      b.tag === 'H' ? `<div class="block h">${esc(b.text)}</div>`
+      : b.tag === 'LI' ? `<div class="block li">${esc(b.text)}</div>`
+      : `<div class="block">${esc(b.text)}</div>`).join('')}
+  `;
+  $('srcBtn').onclick = () => window.open(p.url, '_blank');
+  findHits = []; findIdx = -1; $('findStat').textContent = '';
+}
+
+$('backBtn').addEventListener('click', () => {
+  document.querySelector('[data-tab="lib"]').click();
+  renderLib($('search').value);
+});
+
+// ---------- find in page ----------
+function doFind(dir) {
+  const term = $('findIn').value;
+  if (!term) return;
+  if (!findHits.length || term !== findHits.term) {
+    findHits = [...document.querySelectorAll('#article .block')]
+      .filter(el => el.textContent.toLowerCase().includes(term.toLowerCase()));
+    findHits.term = term;
+    findIdx = -1;
+  }
+  if (!findHits.length) { $('findStat').textContent = '0 results'; return; }
+  findIdx = (findIdx + dir + findHits.length) % findHits.length;
+  const el = findHits[findIdx];
+  el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  el.style.background = '#fff3cd';
+  setTimeout(() => el.style.background = '', 1400);
+  $('findStat').textContent = `block ${findIdx + 1} of ${findHits.length}`;
+}
+$('findNext').addEventListener('click', () => doFind(1));
+$('findPrev').addEventListener('click', () => doFind(-1));
+$('findIn').addEventListener('keydown', e => { if (e.key === 'Enter') doFind(1); });
+
+// ---------- auto-sync on reconnect (Universal App Contract clause 5) ----------
+window.addEventListener('online', () => {
+  const q = store.queue();
+  if (q.length) { toast('Back online — fetching ' + q.length + ' queued page(s)…'); $('flushBtn').click(); }
+});
+
+// ---------- boot ----------
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-reader.js');
+renderQueue();
+renderLib();
+renderSmart();
+</script>
+</body>
+</html>

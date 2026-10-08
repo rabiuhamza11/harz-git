@@ -1,0 +1,16 @@
+{
+  "name": "HARZ Reader",
+  "short_name": "Reader",
+  "description": "Fetch any web page once, read it forever - offline by construction.",
+  "start_url": "/reader",
+  "display": "standalone",
+  "background_color": "#f7f8fa",
+  "theme_color": "#f7f8fa",
+  "icons": [
+    {
+      "src": "/icons/reader.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
