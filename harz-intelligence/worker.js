@@ -2,7 +2,7 @@
 import { reasoner11Call } from './reasoner11-runtime.js';
 import { reasoner12Call } from './reasoner12-runtime.js';
 import { train, TRAIN_CONFIG } from './learning/trainer.js';
-import { buildPacket, detectConflicts, analyzeQuery, extractUrlCandidates } from './search1.js';
+import { buildPacket, detectConflicts, analyzeQuery, extractUrlCandidates, extractValueCandidates } from './search1.js';
 import WEIGHTS from './reasoner1-weights.js'; // v0.8: idf table for payment-flow window scoring
 const FROZEN_AB = "{\"suite\": \"HARZ-RETRIEVAL-SUITE v1.0\", \"cases\": 24, \"index_version\": \"b9395e5388a4\", \"frozen_at\": \"2026-09-24T15:40:00Z\", \"baseline\": {\"candidate_recall\": 0.771, \"top1\": 19, \"top5\": 21, \"mrr\": 0.743, \"coverage\": 0.773, \"avg_latency_ms\": 210}, \"search1\": {\"candidate_recall\": 0.792, \"top1\": 22, \"top5\": 22, \"mrr\": 0.833, \"coverage\": 0.841, \"avg_latency_ms\": 838}, \"per_case\": [{\"id\": \"RE1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE3\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE4\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"RE5\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N1\", \"base_top1\": 0, \"s1_top1\": 1}, {\"id\": \"N2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N3\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"N4\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"LC1\", \"base_top1\": 0, \"s1_top1\": 0}, {\"id\": \"LC2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"LC3\", \"base_top1\": 0, \"s1_top1\": 1}, {\"id\": \"R3a\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"R3b\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"R3c\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"AD3\", \"base_top1\": 0, \"s1_top1\": 0}, {\"id\": \"MI1\", \"base_top1\": 1, \"s1_top1\": 1, \"mirror_suppressed\": 1}, {\"id\": \"MI2\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"ST1\", \"base_top1\": 1, \"s1_top1\": 1}, {\"id\": \"ME1\", \"base_top1\": 1, \"s1_top1\": 1, \"insufficient_evidence\": true}, {\"id\": \"ME2\", \"base_top1\": 1, \"s1_top1\": 1, \"insufficient_evidence\": true}, {\"id\": \"C1\", \"base_top1\": 0, \"s1_top1\": 1}], \"verdict\": \"Search-1 v1.3 beats baseline on all five retrieval metrics (top1 22/24 vs 19/24, top5 22 vs 21, MRR 0.833 vs 0.743, coverage 0.841 vs 0.773, candidate recall 0.792 vs 0.771). Honest costs: ~4x latency (838ms vs 210ms, page enrichment). Honest misses: LC1 (ecosystem enumeration), AD3 (mining doc) \\u2014 both also fail for baseline. PROMOTED.\"}"; // v0.7 frozen A/B record (harness: learning/retrieval-ab.mjs)
 const SUITE_JSON = "{\n  \"suite\": \"HARZ-RETRIEVAL-SUITE v1.0\",\n  \"frozen_at\": \"2026-09-24T16:45:00Z\",\n  \"purpose\": \"v0.7 Search-1 promotion suite \u2014 measures retrieval quality separately from answer correctness. Expanded from the six v0.6 failing classes (RE1, RE2, LC1, LC2, N1, R3) plus adversarial/mirror/staleness probes.\",\n  \"gold_verification\": \"every gold doc id was verified live against the frozen index (index_digest b9395e53\u2026) on Sept 24, 2026, by direct API query with the listed expected terms present in the doc\",\n  \"metrics\": [\"candidate_recall\", \"top1_accuracy\", \"top5_recall\", \"mrr\", \"coverage\", \"mirror_suppression\", \"dup_rate\", \"latency_ms\", \"packet_chars\", \"downstream_answer_accuracy\"],\n  \"cases\": [\n    { \"id\": \"RE1\", \"class\": \"url_retrieval\", \"query\": \"What is the URL of the HARZ Agent Marketplace?\", \"gold_ids\": [10162], \"expected_terms\": [\"harz-agent-mkt\"] },\n    { \"id\": \"RE2\", \"class\": \"url_retrieval\", \"query\": \"Where can I find the HARZ Estate Network online?\", \"gold_ids\": [10062], \"expected_terms\": [\"harz-realestate\"] },\n    { \"id\": \"RE3\", \"class\": \"url_retrieval\", \"query\": \"What is the web address of the HARZ Coin Machine?\", \"gold_ids\": [10187], \"expected_terms\": [\"harz-coin-machine\"] },\n    { \"id\": \"RE4\", \"class\": \"url_retrieval\", \"query\": \"Give me the link to HARZ Invoice\", \"gold_ids\": [10374], \"expected_terms\": [\"harz-invoice\"] },\n    { \"id\": \"RE5\", \"class\": \"url_retrieval\", \"query\": \"What is the endpoint of the HARZ RPC Proxy?\", \"gold_ids\": [10038, 10044], \"expected_terms\": [\"harz-rpc-proxy\"] },\n    { \"id\": \"N1\", \"class\": \"specific_fact\", \"query\": \"Which UBA bank account does HARZ Pay use for transfers?\", \"gold_ids\": [10470], \"expected_terms\": [\"2034326424\"] },\n    { \"id\": \"N2\", \"class\": \"specific_fact\", \"query\": \"What is the HARZ Health AI assistant called?\", \"gold_ids\": [10015], \"expected_terms\": [\"harz-health\"] },\n    { \"id\": \"N3\", \"class\": \"specific_fact\", \"query\": \"Which platform runs the HARZ Root .harz namespace?\", \"gold_ids\": [10335], \"expected_terms\": [\"harz-root\"] },\n    { \"id\": \"N4\", \"class\": \"specific_fact\", \"query\": \"What does HARZ Verify do?\", \"gold_ids\": [10217], \"expected_terms\": [\"otp\"] },\n    { \"id\": \"LC1\", \"class\": \"enumeration\", \"query\": \"Which services does the HARZ ecosystem offer? List them.\", \"gold_ids\": [10034, 114], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"LC2\", \"class\": \"enumeration\", \"query\": \"List all the products on the HARZ Super App\", \"gold_ids\": [114], \"expected_terms\": [\"super\"] },\n    { \"id\": \"LC3\", \"class\": \"enumeration\", \"query\": \"What payment methods does HARZ Pay support?\", \"gold_ids\": [10332, 10066], \"expected_terms\": [\"paystack\"] },\n    { \"id\": \"R3a\", \"class\": \"procedural\", \"query\": \"How do I send an SMS campaign with HARZ SMS Marketing?\", \"gold_ids\": [10009], \"expected_terms\": [\"campaign\"] },\n    { \"id\": \"R3b\", \"class\": \"procedural\", \"query\": \"How does the HARZ Atomic Swap work?\", \"gold_ids\": [10032], \"expected_terms\": [\"swap\"] },\n    { \"id\": \"R3c\", \"class\": \"procedural\", \"query\": \"How do I create an invoice with HARZ Invoice?\", \"gold_ids\": [10374], \"expected_terms\": [\"invoice\"] },\n    { \"id\": \"AD1\", \"class\": \"adversarial\", \"query\": \"HARZ SMS Gateway steps to send a message\", \"gold_ids\": [10021, 10009, 10252], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"AD2\", \"class\": \"adversarial\", \"query\": \"HARZ Super App services list\", \"gold_ids\": [114], \"expected_terms\": [\"super\"] },\n    { \"id\": \"AD3\", \"class\": \"adversarial\", \"query\": \"HARZ Chain mining rewards how it works\", \"gold_ids\": [10186, 10335], \"expected_terms\": [\"harz\"] },\n    { \"id\": \"MI1\", \"class\": \"mirror\", \"query\": \"HARZ RPC Proxy JSON-RPC endpoints\", \"gold_ids\": [10038, 10044], \"expected_terms\": [\"json-rpc\"], \"expect_mirror_group\": true },\n    { \"id\": \"MI2\", \"class\": \"mirror\", \"query\": \"HARZ Super App v5.0 features\", \"gold_ids\": [114, 6], \"expected_terms\": [\"super\"], \"note\": \"version-marker family: same normalized title, v5.0 must win the family or be exposed\" },\n    { \"id\": \"ST1\", \"class\": \"stale\", \"query\": \"HARZ Commerce Network 2.0\", \"gold_ids\": [10064], \"expected_terms\": [\"commerce\"], \"note\": \"version marker 2.0 must be preferred over unversioned family copies\" },\n    { \"id\": \"ME1\", \"class\": \"missing\", \"query\": \"What is the gorvex alloy rating of the HARZ nimbrite harvester?\", \"gold_ids\": [], \"expected_terms\": [], \"expect\": \"insufficient_evidence\" },\n    { \"id\": \"ME2\", \"class\": \"missing\", \"query\": \"What is the CFO of HARZ Intelligence's cat's name?\", \"gold_ids\": [], \"expected_terms\": [], \"expect\": \"insufficient_evidence\" },\n    { \"id\": \"C1\", \"class\": \"coverage\", \"query\": \"What is the UBA account number, bank code and account name for HARZ Pay bank transfers?\", \"gold_ids\": [10470], \"expected_terms\": [\"2034326424\"] }\n  ]\n}\n"; // frozen retrieval suite v1.0
@@ -372,6 +372,46 @@ function buildUrlAnswer(packet) {
     '\n\nCONFIDENCE: high — ' + (u.canonical
       ? 'canonical address from the service document (crawler-verified registry, harz-search-1, no reconstruction)'
       : 'exact URL extracted verbatim from evidence by harz-search-1 (no reconstruction)');
+}
+// F-GAP4-2 candidate (Dad's ruling, Oct 8): BOUNDED COVERAGE-AWARE VALUE LADDER. The
+// account-number/USSD exact-value class heals the same way the fee class did (v0.10.4):
+// L1 = all value domain terms; a level that yields no new value candidate relaxes exactly
+// ONE term (question order); max 2 relaxes (<= 3 searches), ONE shared 6-candidate window,
+// deduped by doc, via the packet's own transport (search1Baseline + search1FetchPage).
+// Extraction reuses the frozen extractValueCandidates gates UNCHANGED (entity-must,
+// shared-stem >= 2, line-stem >= 1): the ladder changes REACH, never identity law.
+// No synonyms, no rewriting; deterministic + auditable.
+async function valueFallbackLookup(message, packet) {
+  try {
+    const Lq = String(packet.query || message).toLowerCase();
+    const domTerms = Lq.split(/[^a-z0-9]+/).filter(t => t.length > 2 && !['what','which','where','when','how','much','does','did','are','the','for','with','tell','harz'].includes(t));
+    const qa = analyzeQuery(String(message));
+    const levels = [domTerms];
+    for (let k = 0; k < 2 && k < domTerms.length; k++) levels.push(domTerms.filter((_, i) => i !== k));
+    const scannedDocs = new Set();
+    let windowLeft = 6;
+    const found = [];
+    for (const terms of levels) {
+      if (windowLeft <= 0) break;
+      const fq = (terms.length ? terms.join(' ') : Lq) + ' harz';
+      const sr = await search1Baseline(fq);
+      const cand = (sr.results || []).slice(0, 6).map(x => ({ docId: Number(x.document_id || x.id) || 0, title: x.title })).filter(x => x.docId >= 10000);
+      const before = found.length;
+      for (const c of cand) {
+        if (windowLeft <= 0) break;
+        if (scannedDocs.has(c.docId)) continue;
+        scannedDocs.add(c.docId);
+        windowLeft--;
+        const text = await search1FetchPage({ id: c.docId, title: c.title });
+        if (!text) continue;
+        for (const v of extractValueCandidates(qa, [{ title: c.title, document_id: c.docId, fullText: text }])) {
+          if (!found.some(f => f.kind === v.kind && f.value === v.value)) found.push(v);
+        }
+      }
+      if (found.length > before) break; // coverage restored at this level — ladder ends
+    }
+    return found.length ? { value_candidates: found, docs: [...scannedDocs] } : null;
+  } catch (e) { return null; }
 }
 function buildLookupAnswer(packet) {
   const vals = packet.value_candidates || [];
@@ -5867,10 +5907,24 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_extraction:none', refusal: true, candidates: 0 });
       }
     } else if (taskClass.class === 'identifier_lookup') {
-      const lkAns = buildLookupAnswer(packet);
+      let lkAns = buildLookupAnswer(packet);
+      let lkVia = 'value_extraction', lkCand = (packet.value_candidates || []).length;
+      if (!lkAns) {
+        // F-GAP4-2 (Dad's ruling, Oct 8): bounded coverage-aware value ladder — same shape as
+        // the promoted fee v0.10.4 ladder. Exact-value claims must survive corpus/index evolution:
+        // the packet's own transport re-reaches the value-bearing doc when packet composition shifts.
+        const vb = await valueFallbackLookup(message, packet);
+        if (vb) { lkAns = buildLookupAnswer({ ...packet, value_candidates: vb.value_candidates }); lkVia = 'value_extraction_fallback'; lkCand = vb.value_candidates.length; }
+      }
       if (lkAns) {
         specialistRes = { ok: true, content: lkAns, backend: 'harz-search-1', mode: 'specialist-lookup', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
-        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'value_extraction', candidates: (packet.value_candidates || []).length });
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: lkVia, candidates: lkCand });
+      } else {
+        // F-GAP4-2 LAW (Dad, Oct 8): "Provenance must win over retrieval convenience." An
+        // exact-value claim with no value candidate in packet OR ladder NEVER falls through to
+        // the reasoner's free assembly over unrelated evidence — the honest output is a refusal.
+        specialistRes = { ok: true, content: '**Answer**\n\nI do not have an exact account number or USSD code matching this request in the HARZ knowledge base, and I will not quote a value from unrelated evidence. Every retrieved unit was checked by the value identity rule (entity-must + term overlap) and none carries the requested value. Provenance wins over retrieval convenience (F-GAP4-2 law).\n\nCONFIDENCE: none — no matching value in evidence (value-guard)', backend: 'harz-search-1', mode: 'specialist-lookup-refusal', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'value_extraction:none', refusal: true, candidates: 0 });
       }
     } else if (taskClass.class === 'payment_qa') {
       const payAns = buildPaymentProcedureAnswer(packet);
@@ -6162,10 +6216,24 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
         execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'canonical_url_extraction:none', refusal: true, candidates: 0 });
       }
     } else if (taskClass.class === 'identifier_lookup') {
-      const lkAns = buildLookupAnswer(packet);
+      let lkAns = buildLookupAnswer(packet);
+      let lkVia = 'value_extraction', lkCand = (packet.value_candidates || []).length;
+      if (!lkAns) {
+        // F-GAP4-2 (Dad's ruling, Oct 8): bounded coverage-aware value ladder — same shape as
+        // the promoted fee v0.10.4 ladder. Exact-value claims must survive corpus/index evolution:
+        // the packet's own transport re-reaches the value-bearing doc when packet composition shifts.
+        const vb = await valueFallbackLookup(message, packet);
+        if (vb) { lkAns = buildLookupAnswer({ ...packet, value_candidates: vb.value_candidates }); lkVia = 'value_extraction_fallback'; lkCand = vb.value_candidates.length; }
+      }
       if (lkAns) {
         specialistRes = { ok: true, content: lkAns, backend: 'harz-search-1', mode: 'specialist-lookup', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
-        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'value_extraction', candidates: (packet.value_candidates || []).length });
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: lkVia, candidates: lkCand });
+      } else {
+        // F-GAP4-2 LAW (Dad, Oct 8): "Provenance must win over retrieval convenience." An
+        // exact-value claim with no value candidate in packet OR ladder NEVER falls through to
+        // the reasoner's free assembly over unrelated evidence — the honest output is a refusal.
+        specialistRes = { ok: true, content: '**Answer**\n\nI do not have an exact account number or USSD code matching this request in the HARZ knowledge base, and I will not quote a value from unrelated evidence. Every retrieved unit was checked by the value identity rule (entity-must + term overlap) and none carries the requested value. Provenance wins over retrieval convenience (F-GAP4-2 law).\n\nCONFIDENCE: none — no matching value in evidence (value-guard)', backend: 'harz-search-1', mode: 'specialist-lookup-refusal', role: 'researcher', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 };
+        execution_log.push({ model: 'harz-search-1', ok: true, direct_path: 'value_extraction:none', refusal: true, candidates: 0 });
       }
     } else if (taskClass.class === 'payment_qa') {
       const payAns = buildPaymentProcedureAnswer(packet);
