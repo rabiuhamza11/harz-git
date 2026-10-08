@@ -180,3 +180,48 @@ addendum).
 v0.10.2 — built as ordered (3->6), falsified, NOT promoted.
 v0.10.3 — built as ordered (unconditional bounded fallback), INSUFFICIENT: exposes the
 fq coverage defect. Live as candidate 023740bf; fee_variant still red.
+
+---
+
+## v0.10.4 BUILD + GATE (Dad's ruling "coverage-aware fq ladder", Oct 8 ~07:40) — FEE WORKSTREAM GREEN
+
+Built exactly as ordered: BOUNDED COVERAGE-AWARE FQ LADDER inside the fee fallback.
+L1 = all domain terms; a level that adds no new fee hit relaxes exactly ONE domain term
+(question order); max 2 relaxes (<= 3 searches); ONE shared 6-candidate window across
+levels, deduped by doc. No synonyms, no morphological invention, no rewriting, no engine
+change. Deployed 20278724.
+
+Dad's transition, proven live x3 (deterministic, 0 ext):
+"pay charge per transaction harz" -> coverage failure (2 sitemap roots, no fee hits)
+-> drop 'pay': "charge per transaction harz" -> same failure (ladder does not false-stop)
+-> drop 'charge': "pay per transaction harz" -> 10470 eligible, in-window on the last slot
+-> scan hit -> strongOverlap=2 outranks 10378's generic 'pay' hits (strongOverlap=1)
+-> answer quotes 10470's verbatim "💸 Low Fees 1.5% per transaction 🔒 Secure Paystack
+powered 🌍 Multi-Currency NGN, USD, USDT…" FIRST, 10378 second. Both cited.
+
+Gate: test10 part1 5/5 x3 (fee_variant HEALED), part2 4/5 x3 (see below). Full frozen bar
+green: agents 13/13, test8 5/5, testim1 24, testvs1 30, testcreation1 24, sem1 12/12,
+ter1 12/12, semvid1 16/16, router1 15/15 @ 0 ext.
+
+## HONEST CORRECTION of my v0.10.2/v0.10.3 gate reports
+
+In both reports I wrote "test10 4/5 + 4/5 — fee_variant red again." That was true for
+part 1 only. I never inspected part 2's failing case name: part 2's red was
+value_regression (the account-number value path), NOT fee_variant. It has been failing
+identically since the corpus merge — a second pre-existing red under the new index,
+same corpus-churn family, but in the VALUE specialist — the F-GAP4-2 bypass family
+Dad's GAP-4 ruling already carries as an open follow-up. My v0.10.2/v0.10.3 write-ups
+conflated the two reds. Unsmoothed.
+
+value_regression today: "Which Nigerian bank does HARZ use for NGN transfers?" must
+yield 2034326424 from doc 10470; it now returns OTC-desk junk (RZSwap / Access Bank
+news docs) — packet composition shifted under the merged index. Pre-dates v0.10.4,
+unrelated to the fee layer (fee builder is not on this path). It is NOT a v0.10.4
+regression: it fails identically at v0.10.2 and v0.10.3 gates, and passed at the
+v0.10.1 gate (00:33, pre-merge, p2 5/5).
+
+## State
+
+v0.10.4 — candidate BUILT + GATED. Fee workstream green (part1 5/5 x3). Awaits Dad's
+promotion ruling. value_regression = separate named red (value specialist / F-GAP4-2
+family), needs its own ruling when Dad chooses to open it.

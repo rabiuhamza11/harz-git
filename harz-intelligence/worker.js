@@ -491,13 +491,31 @@ async function buildFeeAnswer(packet) {
     // Reuses the SAME baseline/fetchPage functions the packet itself uses (service-binding aware).
     try {
       const domTerms = Lq.split(/[^a-z0-9₦%]+/).filter(t => t.length > 2 && !['what','how','much','does','are','the','for','with','tell','harz'].includes(t));
-      const fq = (domTerms.length ? domTerms.join(' ') : packet.query.toLowerCase()) + ' harz';
-      const sr = await search1Baseline(fq);
-      const cand = (sr.results || []).slice(0, 6).map(x => ({ docId: Number(x.document_id || x.id) || 0, title: x.title })).filter(x => x.docId >= 10000);
-      // v0.10.2-candidate (Dad's ruling Oct 8): scan ALL six candidates the path already slices — correct evidence must not become unreachable merely because corpus/index churn changes candidate ranking (10470 fell rank 3->5 under the corpus merge; the top-3 window hid it).
-      for (let i = 0; i < cand.length && i < 6; i++) {
-        const text = await search1FetchPage({ id: cand[i].docId, title: cand[i].title });
-        if (text) scanUnit(text, cand[i].docId, cand[i].title, 1000 + i);
+      // v0.10.4 (Dad's ruling, Oct 8): BOUNDED COVERAGE-AWARE FQ LADDER, replacing the single
+      // strict join. L1 = ALL domain terms. If a level's scan adds NO new fee hit, relax exactly
+      // ONE domain term (question order) and retry. Max 2 relaxes (<= 3 searches total), ONE
+      // shared 6-candidate window across levels, candidates deduped by doc. Deterministic and
+      // auditable: the same question always walks the same ladder. No synonyms, no morphological
+      // invention, no rewriting — a dropped term is dropped, never reworded.
+      const mkFq = terms => (terms.length ? terms.join(' ') : packet.query.toLowerCase()) + ' harz';
+      const levels = [domTerms];
+      for (let k = 0; k < 2 && k < domTerms.length; k++) levels.push(domTerms.filter((_, i) => i !== k));
+      const scannedDocs = new Set();
+      let windowLeft = 6;
+      for (const terms of levels) {
+        if (windowLeft <= 0) break;
+        const sr = await search1Baseline(mkFq(terms));
+        const cand = (sr.results || []).slice(0, 6).map(x => ({ docId: Number(x.document_id || x.id) || 0, title: x.title })).filter(x => x.docId >= 10000);
+        const hitsBefore = hits.length;
+        for (const c of cand) {
+          if (windowLeft <= 0) break;
+          if (scannedDocs.has(c.docId)) continue;
+          scannedDocs.add(c.docId);
+          const text = await search1FetchPage({ id: c.docId, title: c.title });
+          if (text) scanUnit(text, c.docId, c.title, 1000 + scannedDocs.size);
+          windowLeft--;
+        }
+        if (hits.length > hitsBefore) break; // coverage restored at this level — ladder ends
       }
     } catch (_) { /* fallback unreachable -> answer with what the packet gave */ }
   }
