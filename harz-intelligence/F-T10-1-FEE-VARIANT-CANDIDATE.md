@@ -124,3 +124,59 @@ against corpus/index evolution, not only against a frozen fixture. The corpus di
 HARZ; the corpus exposed a hidden assumption in the fallback. A live system's index is part
 of its input contract, and every gate that depends on ranking must be re-gated whenever
 the index digest changes.
+
+---
+
+## v0.10.3 BUILD + GATE (Dad's ruling "unconditional-but-bounded", Oct 8) — CANDIDATE INSUFFICIENT, THIRD HIDDEN ASSUMPTION EXPOSED
+
+Built exactly as ordered: old trigger FORMALLY RETIRED; the fee fallback now runs
+unconditionally for every fee answer, bounded to the six candidates the path already
+slices; strongOverlap ranking remains the sole selector; no other retrieval change.
+Deployed as 023740bf.
+
+Gate: test10 4/5 + 4/5, three runs each; the exposing case answers 10378 x3 — STILL RED.
+
+Proof the fallback executes yet 10470 stays unreachable: the fallback's own query is
+fq = domTerms + 'harz' = "pay charge per transaction harz" — a strict AND over ALL
+question terms. Under the merged index that AND returns n=2, both sitemap roots
+(10133, 10192). 10470 NEVER ENTERS THE CANDIDATE LIST. Verified directly: doc 10470's
+verbatim fee text is "💸 Low Fees 1.5% per transaction 🔒 Secure Paystack powered 🌍
+Multi-Currency NGN, USD, USDT…" — it contains no form of "charge" at all, so it fails
+the AND on the question's own word and is excluded at the query layer. The 6-window is
+irrelevant when the query itself excludes the gold doc. (Point 4 of Dad's 9-point proof:
+FALSE — 10470 does NOT enter through the window.)
+
+CORRECTION to my earlier attack record: it claimed 10470's sentence reads "HARZ Pay
+charges a 1.5% transaction fee." The verbatim corpus text (quoted above) contains no
+"charges." The paraphrase was mine, not the evidence's. Unsmoothed.
+
+The disease class is NOT new: the Oct 3 packet audit proved the SAME disease for packet
+queries ("coverage demanding words absent from gold pages") and fixed it there with
+clause variants + entity-anchor coverage. The fee fallback's fq predates that fix and
+inherited the disease: it joins every question domain term as a coverage demand the
+gold page cannot satisfy.
+
+Full bar at v0.10.3 (for the record, no promotion): agents 13/13, test8 5/5, testim1 24,
+testvs1 30, testcreation1 24, sem1 12/12, ter1 12/12, semvid1 16/16, router1 15/15 0ext.
+
+## Candidate directions for Dad's ruling (NOT BUILT)
+
+(A) Fee layer, coverage-aware fq ladder (same medicine the packet audit applied, at the
+    fee specialist): bounded deterministic ladder — fq1 = all domain terms + harz; if no
+    HARZ docs (id>=10000) in results, fq2 = fewer, higher-value terms; bounded at 2-3
+    searches, no engine change. For this case: fq1 fails -> fq2 "pay per transaction harz"
+    -> 10470 rank 5, inside the 6-window.
+(B) Search layer: the already-named harz-search v0.5 candidates (AND-vs-natural-language
+    gap, plural fold) — an engine change affecting all queries, larger blast radius.
+
+The disease is query construction; (A) fixes it at the fee layer where it manifests;
+(B) is the engine-level general fix. Awaiting ruling.
+
+## State ledger
+
+v0.10.1 — promoted, historically valid (packet then contained 10470; fallback protection
+never exercised — the write-up's claim was unproven, corrected above and in the v0.10.2
+addendum).
+v0.10.2 — built as ordered (3->6), falsified, NOT promoted.
+v0.10.3 — built as ordered (unconditional bounded fallback), INSUFFICIENT: exposes the
+fq coverage defect. Live as candidate 023740bf; fee_variant still red.

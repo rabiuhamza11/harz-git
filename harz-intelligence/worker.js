@@ -480,8 +480,13 @@ async function buildFeeAnswer(packet) {
     const docId = Number(e.document_id) || 0;
     if (docId >= 10000) scanUnit(e.fullText || e.text, docId, e.title, i);
   });
-  const anyStrong = hits.some(h => h.strongOverlap > 0);
-  if (!hits.length || !anyStrong) {
+  // v0.10.3 (Dad's ruling, Oct 8): the old trigger (zero hits / no-strong-hit) is FORMALLY RETIRED.
+  // It was incorrectly treated as a guarantee the fallback executes when needed — the corpus merge
+  // proved a generic 'pay' hit suppresses it exactly when the packet has lost the right doc.
+  // The fallback now runs UNCONDITIONALLY for every fee answer, bounded to the six candidates the
+  // path already slices. strongOverlap ranking remains the sole selector: packet hits are never
+  // overridden by the fallback merely because it ran — all hits compete in one ranked pool.
+  {
     // fee-targeted fallback retrieval: domain terms + 'harz' biases the HARZ corpus.
     // Reuses the SAME baseline/fetchPage functions the packet itself uses (service-binding aware).
     try {
