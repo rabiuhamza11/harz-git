@@ -489,7 +489,8 @@ async function buildFeeAnswer(packet) {
       const fq = (domTerms.length ? domTerms.join(' ') : packet.query.toLowerCase()) + ' harz';
       const sr = await search1Baseline(fq);
       const cand = (sr.results || []).slice(0, 6).map(x => ({ docId: Number(x.document_id || x.id) || 0, title: x.title })).filter(x => x.docId >= 10000);
-      for (let i = 0; i < cand.length && i < 3; i++) {
+      // v0.10.2-candidate (Dad's ruling Oct 8): scan ALL six candidates the path already slices — correct evidence must not become unreachable merely because corpus/index churn changes candidate ranking (10470 fell rank 3->5 under the corpus merge; the top-3 window hid it).
+      for (let i = 0; i < cand.length && i < 6; i++) {
         const text = await search1FetchPage({ id: cand[i].docId, title: cand[i].title });
         if (text) scanUnit(text, cand[i].docId, cand[i].title, 1000 + i);
       }
