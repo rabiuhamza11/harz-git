@@ -12,3 +12,5 @@ The next move is deliberately very small: no features, no refactors, no improvem
 
 ## Standing law for every frontier
 Neither creation branch (image, report, and video when built) is allowed to invent evidence. Evidence is provenance-bearing bound input to creation, never a self-certification mechanism (G12(c), G13).
+
+**ARCHITECTURAL LESSON (Dad's ruling, Oct 8, 2026):** HARZ code can be frozen while its corpus evolves. Retrieval gates must be tested against corpus/index evolution, not only against a frozen fixture. Every gate that depends on ranking must be re-gated whenever the index digest changes. The corpus did not break HARZ; it exposed a hidden assumption (T10 fallback trigger + window).
