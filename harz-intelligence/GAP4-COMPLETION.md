@@ -121,3 +121,6 @@ GAP-4 sits on the completed-build side of that line.
 
 **The invariant, Dad's words:** every input either crosses provenance-bound into one
 receipted record, or refuses with the reason on the record. No silent third state.
+
+## Oct 8, 2026 — VALUE_REGRESSION RED, SEPARATED (Dad's ruling)
+test10 part2 value_regression ("Which Nigerian bank does HARZ use for NGN transfers?" must yield 2034326424 from doc 10470) is RED under the merged index: the value specialist answers OTC-desk junk. Ruling: OPEN / NOT PROMOTED / separate ruling required. Provenance must win over retrieval convenience; no "good enough" patch. The merge did not create the F-GAP4-2 bypass weakness — pre-merge the right doc was reachable, so the test happened to pass; post-merge the bypass became visible. F-GAP4-2 remains the open architectural precondition for universal provenance binding. Next decision: the value-specialist provenance boundary, not another fee patch.

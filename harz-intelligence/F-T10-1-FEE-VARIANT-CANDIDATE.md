@@ -225,3 +225,34 @@ v0.10.1 gate (00:33, pre-merge, p2 5/5).
 v0.10.4 — candidate BUILT + GATED. Fee workstream green (part1 5/5 x3). Awaits Dad's
 promotion ruling. value_regression = separate named red (value specialist / F-GAP4-2
 family), needs its own ruling when Dad chooses to open it.
+
+---
+
+## PROMOTED — Dad's ruling, Oct 8 ~07:45: "I rule to promote v0.10.4 for the fee workstream."
+
+v0.10.4 (bounded coverage-aware fq ladder, deployed 20278724) is now the frozen fee
+specialist. Evidence at promotion: ladder exercised live x3, deterministic; fee_variant
+5/5 x3; full frozen bar green; 0 external calls; max 3 searches; one shared 6-document
+window; dedup preserved; no synonyms; no query rewriting; search engine untouched;
+correct evidence quoted verbatim and cited first. THE FEE WORKSTREAM IS DONE.
+fee_variant: CLOSED / GREEN.
+
+## value_regression — OPEN / NOT PROMOTED / SEPARATE RULING REQUIRED (Dad's ruling, verbatim law)
+
+"Absolutely do not patch it by making the OTC-desk answer 'good enough.' The account
+number is an exact-value claim. Provenance must win over retrieval convenience."
+
+Key interpretation on the permanent record: the corpus merge did NOT create the
+architectural weakness — it exposed it. Pre-merge, the test happened to pass because the
+right document was reachable; post-merge, retrieval changed, and the value specialist's
+provenance bypass (F-GAP4-2 family) became visible. The value/account-number specialist
+bypasses the provenance-bound ingested packet and retrieves an unrelated corpus answer
+(OTC desk / Access Bank news instead of 2034326424 from doc 10470).
+
+State ledger after this gate:
+v0.10.4 — PROMOTED (fee path).
+fee_variant — CLOSED / GREEN.
+value_regression — RED, explicitly separated.
+F-GAP4-2 — remains an open architectural precondition for universal provenance binding.
+The earlier-gate interpretation correction (v0.10.2/v0.10.3 conflated the two reds)
+stands permanently in this record.
