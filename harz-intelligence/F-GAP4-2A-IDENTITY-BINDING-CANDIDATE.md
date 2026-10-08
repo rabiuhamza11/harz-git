@@ -53,3 +53,29 @@ as documented limit.
 F-GAP4-2a candidate: built + gated. All frozen batteries green; negatives now refuse with
 provenance; positives unchanged. Awaits Dad: PROMOTE v1.2 / REVERT.
 F-GAP4-2: PROMOTED earlier this session (b49ac15). F-GAP4-2c: OPEN finding.
+
+---
+
+## PROMOTED + SEALED — Dad's ruling, Oct 8 08:09
+
+Verbatim basis: the defect is reproduced (v1.1 admitted a value merely because the entity
+appeared somewhere in the 3,000-char unit); v1.2 fixes it with the smallest architectural
+change (ownership requires the entity stem in the bearing line, its +/-250-char window, or
+the title); offline 7/7; negatives refuse instead of inventing/borrowing; live flagship
+2034326424/10470 with digest at 0 ext; N1-style provenance clean (value supported by the
+HARZ Pay document's own title); regression batteries green (5/5+5/5 x3, test8 both parts
+5/5); frozen unit-level gates not weakened; no new fetches.
+
+> F-GAP4-2a: PROMOTED -> SEALED. v1.2 becomes the frozen entity-value binding law.
+
+The backend timeout is NOT grounds for reversion: correctly isolated as F-GAP4-2c (failure
+downstream in reasoner orchestration; the extraction/binding layer is CPU-only and passes
+its gates). F-GAP4-2c stays OPEN; next work decides between:
+  1. clause-split orchestration
+  2. a bounded timeout adjustment
+  3. documented model-call limitation
+No blind timeout raise. Clean boundary: F-GAP4-2a CLOSED; F-GAP4-2c a separate unresolved
+capacity/orchestration finding.
+
+Seal smoke (post-ruling, live): flagship acct/digest/0ext true; test10 part2 5/5.
+Vault acceptance: candidate record at 8a44792 accepted and sealed.
