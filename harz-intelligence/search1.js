@@ -1,5 +1,10 @@
 import WEIGHTS from './reasoner1-weights.js'; // stopwords table (HARZ-owned)
-// HARZ Search-1 v1.1 — Retrieval & Evidence Engine (HARZ Intelligence v0.7)
+// HARZ Search-1 v1.2 — Retrieval & Evidence Engine (HARZ Intelligence v0.7)
+// v1.2 (F-GAP4-2a IDENTITY BINDING, Dad's ruling Oct 8 "Do both"): discriminating entity
+// stems of a value question must bind to the value's OWN context — the bearing line, its
+// ±250-char window, or the document title (compound-split per the v0.4 precedent) —
+// not merely to the unit's 3000 chars. Unit-level stem-granularity let the HARZ Pay account
+// number through for HARZ Verify and HARZ SMS Marketing questions. Provenance wins.
 // v1.1 (PACKET AUDIT v0.1, contract PACKET-AUDIT-V1, frozen 2026-10-03): FIX A
 // instruction-suffix immunity; FIX B subject-focused coverage (idf>=2.0 gate) +
 // subject-guard probe widened to 6-char terms; FIX C clause-level variants for
@@ -303,6 +308,20 @@ export function semanticOf(question) {
 
 const stemS9 = (t) => (t.length > 3 && /s$/.test(t) && !/(ss|us|is)$/.test(t)) ? t.slice(0, -1) : t;
 
+// F-GAP4-2a (v1.2): title stems with compound split (v0.4 additive-postings precedent):
+// 'HarzPay' -> {harzpay, harz, pay}. The title names the document's own subject, so a
+// product entity binding to the title is a provenance-bound answer to 'whose value is this'.
+const titleStemsS9 = (title) => {
+  const out = new Set();
+  for (const w of String(title || '').split(/[^A-Za-z0-9]+/)) {
+    if (!w) continue;
+    const lw = w.toLowerCase(); out.add(lw); out.add(stemS9(lw));
+    const parts = w.match(/[A-Z]+(?![a-z])|[A-Z][a-z0-9]*|[a-z0-9]+/g) || [];
+    if (parts.length > 1) for (const p of parts) { const lp = p.toLowerCase(); out.add(lp); out.add(stemS9(lp)); }
+  }
+  return out;
+};
+
 export function extractUrlCandidates(qa, evidence) {
   // v0.13 (Bench G4 finding): meaningful 2-char tokens like 'AI' were dropped by the old
   // length>2 filter, so 'HARZ AI Pay' matched every 'HARZ Pay' doc -> false 3-way conflict.
@@ -366,9 +385,10 @@ export function extractValueCandidates(qa, evidence) {
   const STOP2 = new Set(['of','to','in','on','is','it','at','by','or','an','as','we','do','be','my','so','us','up','if','no']);
   const qStems = new Set([...(qa.content || qa.tokens), ...qa.entities].map(t => stemS9(t.toLowerCase())).filter(t => t.length > 2 || (t.length === 2 && /^[a-z0-9]{2}$/.test(t) && !STOP2.has(t))));
   const out = [];
-  const addIf = (value, kind, e, line) => {
+  const addIf = (value, kind, e, line, winSt) => {
     const lineStems = new Set(line.toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
     const unitStems = new Set((String(e.title) + ' ' + String(e.fullText || e.text)).toLowerCase().slice(0, 3000).split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+    const titleSt = titleStemsS9(e.title);
     // v0.8 entity-must rule: a question naming a specific entity (UBA, Paystack, a product)
     // only accepts values from units that mention that entity — a USSD code from a
     // different provider's page is not evidence for a UBA question.
@@ -376,6 +396,11 @@ export function extractValueCandidates(qa, evidence) {
     const GEO_CTX = new Set(['nigerian','nigeria','african','africa','national','federal','international','global','local']);
     const entStems = [...new Set((qa.entities || []).map(e2 => stemS9(e2.toLowerCase())).filter(t => t.length > 2 && !GEO_CTX.has(t)))];
     if (entStems.some(t => !unitStems.has(t))) return;
+    // F-GAP4-2a (Dad, Oct 8): TITLE-OR-WINDOW BINDING. Every discriminating entity stem must
+    // appear in the bearing line, its window, or the (compound-split) title. A stem mentioned
+    // anywhere else in the unit is NOT evidence that the value belongs to that entity:
+    // provenance wins over retrieval convenience.
+    if (entStems.some(t => !lineStems.has(t) && !(winSt || new Set()).has(t) && !titleSt.has(t))) return;
     const shared = [...qStems].filter(t => unitStems.has(t));
     const lineShared = [...qStems].filter(t => lineStems.has(t));
     if (shared.length >= 2 && lineShared.length >= 1) out.push({ value, kind, source: e.title, document_id: e.document_id, line: line.trim().slice(0, 160), matched_stems: shared.slice(0, 6) });
@@ -385,12 +410,14 @@ export function extractValueCandidates(qa, evidence) {
     for (const m of text.matchAll(/(?<![\d/])\b\d{10}\b(?![\d/])/g)) {
       let line = text.slice(Math.max(0, m.index - 100), m.index + m[0].length + 100).replace(/\s+/g, ' ').trim();
       const sp = line.indexOf(' '); if (m.index - 100 > 0 && sp > 0 && sp < 40) line = line.slice(sp + 1);
-      addIf(m[0], 'account_number', e, line);
+      const winSt = new Set(text.slice(Math.max(0, m.index - 250), m.index + m[0].length + 250).toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+      addIf(m[0], 'account_number', e, line, winSt);
     }
     for (const m of text.matchAll(/\*\d{3,}[\d#*]*/g)) {
       let line = text.slice(Math.max(0, m.index - 80), m.index + m[0].length + 80).replace(/\s+/g, ' ').trim();
       const sp = line.indexOf(' '); if (m.index - 80 > 0 && sp > 0 && sp < 40) line = line.slice(sp + 1);
-      addIf(m[0], 'ussd_code', e, line);
+      const winSt = new Set(text.slice(Math.max(0, m.index - 250), m.index + m[0].length + 250).toLowerCase().split(/[^a-z0-9]+/).map(stemS9).filter(Boolean));
+      addIf(m[0], 'ussd_code', e, line, winSt);
     }
   }
   const seen = new Set(); const dedup = [];
