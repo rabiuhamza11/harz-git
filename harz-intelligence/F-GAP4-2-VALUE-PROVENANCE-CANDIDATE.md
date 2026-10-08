@@ -59,3 +59,12 @@ value path never runs. Pre-existing ordering, disclosed.
 F-GAP4-2 candidate: built + gated, heals every frozen red in the value class, closes the
 reasoner fallthrough for exact-value claims. F-GAP4-2a remains OPEN and is now precisely
 characterized. Awaits Dad: PROMOTE / REVERT / next boundary on F-GAP4-2a.
+
+---
+
+## PROMOTED — Dad's ruling, Oct 8 ~07:52: "Do both" (promote the candidate + open F-GAP4-2a)
+
+The F-GAP4-2 value provenance candidate (deployed 7a656493) is PROMOTED. The value class
+is now reach-healed (bounded ladder, frozen gates unchanged) and the reasoner fallthrough
+for exact-value claims is retired: no value candidate in packet or ladder -> honest refusal.
+value_regression + identifier_free_lookup: CLOSED / GREEN.
