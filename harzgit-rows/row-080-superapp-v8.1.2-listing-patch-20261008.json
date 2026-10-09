@@ -1,0 +1,9 @@
+{
+  "id": 80,
+  "name": "superapp-v8.1.2-listing-patch-20261008",
+  "description": "Super App v8.1.2: re-added harz-circle (dropped by the 00:13 v8.1.1 redeploy) and added harz-browser to Core; count label fixed to 99 services; all v8.1.1 entries preserved including harz-defense-ops, harz-reader, zone-verify.",
+  "created_at": "2026-10-08T00:37:15Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "5c1b96adae85cb14ee396688930f2e675cba0ddcbf565e287797053dfa2b70a3",
+  "content": "{\n  \"change\": \"W array 97 -> 99 entries: +harz-circle (Business & Store, restored from Oct 4 listing lost in the 00:13 redeploy), +harz-browser (Core). Header/search/Super-App-card labels updated 97 -> 99 services, Updated Oct 8 2026.\",\n  \"preserved\": \"all 97 v8.1.1 entries incl. harz-defense-ops, HARZ Reader, Zone Verify, Magani Agent; bindings and compat date preserved (HARZ_CHAIN, HARZ_ECONOMY KV, HARZPAY, HARZSWAP; compat 2024-09-01)\",\n  \"verified\": \"curl + browserbase render: 99 services label, HARZ Browser card in CORE (24), HARZ Circle card in BUSINESS & STORE (10) with full \\u20a6500 description\",\n  \"context\": \"v8.1.1 (deployed 2026-10-08 00:13 by another session) was built from an older W array and silently dropped the Oct 4 harz-circle listing. This patch re-merges it without touching the other session's additions.\"\n}"
+}
