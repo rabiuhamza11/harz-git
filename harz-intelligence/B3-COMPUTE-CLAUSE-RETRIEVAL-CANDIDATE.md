@@ -51,3 +51,29 @@ When a question carries 2+ entities, append each entity ALONE (first 3, determin
 ## Awaiting ruling
 
 **PROMOTE** → B3 closed; the compute clause retrieves its rate evidence deterministically. Or **REVERT** → redeploy 24abc4f5 (B2 seal intact — that law is in worker.js, unaffected by this search1.js change either way).
+
+---
+
+## PROMOTED — Dad's ruling, Oct 9, 2026. B3: PROMOTED → SEALED.
+
+PROMOTION RULING (preserved): the single-entity variant law is the v1.1b entities-alone law
+extended within a clause. Root cause accepted as proven: a question-adjacent entity the gold
+never spells ('naira' vs ₦/NGN) excluded gold from the entire pool; the additive law re-admits
+entity-bearing docs; frozen ranking/coverage/threshold laws govern. Acceptance criteria
+AC1–AC7 stand as the sealed gate evidence: rate-bearing GDEG Token top-1 unit (verbatim
+"₦15 1 GDEG = NGN"), sibling clause packets byte-identical, full frozen bar green 0 ext, junk
+out, determinism 4/4, XQZT negative fabricates nothing, intake interplay green after the
+battery suite per mandatory hygiene order.
+
+FROZEN LAW (verbatim, sealed): "A question-adjacent entity the gold never spells out must not
+exclude gold from the entire pool. Each entity alone is a variant; the frozen ranking,
+coverage, and threshold laws decide the rest."
+
+OPEN ITEMS CARRIED (unchanged): D1 'naira-as-entity' grammar question (deeper fix, bigger
+blast radius — future ruling); D2 idf table staleness vs the merged corpus (recorded, not
+touched); D3 the reasoner ground-truth check (2000 × 15 = 30,000 grounded from the packet)
+rides on the OpenRouter credential restoration and must be executed as the first reasoner
+test when the key returns.
+
+Build: 5dd03e13. Vault: 0c0f396 (candidate) → this seal. Stack now fully sealed:
+F-GAP4-2a, F-GAP4-2b, F-GAP4-2c, F-GAP4-2, B2, B3.
