@@ -55,3 +55,42 @@ Resulting law, end to end: an ingest-scoped exact-value question answers from in
 ## Awaiting ruling
 
 **PROMOTE** → freeze this law, F-GAP4-2 CLOSED (the universal-provenance precondition satisfied), or **REVERT** → worker redeploy from git main pre-candidate state.
+
+---
+
+## PROMOTED — Dad's ruling, Oct 9, 2026. F-GAP4-2: PROMOTED → SEALED.
+
+PROMOTION RULING (preserved):
+1. The live test exposed a genuine provenance breach: an ingest-scoped question received a
+   value from a corpus document outside its evidence set. The retrieval layer respected the
+   scope, but packet-level candidates and the coverage ladder bypassed it.
+2. The fix addresses both escape routes at the correct boundary: intake isolation (value
+   candidates re-extracted from intake using the frozen v1.2 extractor), conflict isolation
+   (corpus conflict metadata dropped from scoped packets), ladder isolation (raw-corpus
+   coverage ladder disabled for scoped packets), honest refusal (absent value in intake —
+   corpus cannot substitute), non-scoped preservation (flagship corpus result remains 10470;
+   ladder preserved for ordinary questions), regression green (frozen suite, clause-split,
+   determinism, zero external calls).
+3. THE DECISIVE IMPROVEMENT (verbatim): "The decisive improvement is not merely that the
+   correct UBA account number was returned. It is that the evidence scope now governs the
+   entire answer path, not just retrieval."
+
+INTAKE-GATE HYGIENE RULING (preserved): the intake store is cleared by the frozen testm2
+gate, so intake-dependent tests must run AFTER the battery suite. The diagnostic notes were
+re-ingested and the full gate rerun cleanly. THIS EXECUTION ORDER IS MANDATORY TEST HYGIENE.
+Do NOT change the frozen gate merely to preserve diagnostic fixtures.
+
+FROZEN LAW (verbatim):
+"Every answer must be grounded in evidence permitted by its declared scope. An ingest-scoped
+packet may answer from its intake evidence or refuse. Corpus retrieval, cached candidates,
+conflict metadata, and fallback ladders must never widen that scope."
+
+REMAINING OPEN (per ruling): fee-word bleed (F-GAP4-2b) remains open; B2 compute consistency
+remains open. The next work proceeds against those without reopening F-GAP4-2.
+
+QUALIFICATION (verbatim): "This ruling accepts the supplied live-test and regression
+evidence as the basis for promotion; it is not an independent execution of the deployed
+build."
+
+Decision: PROMOTE. No revert. No unrelated changes to frozen layers.
+Sealed state: candidate deployed build 3b08ede1 (worker), vault candidate record fb3f1ca.
