@@ -1,0 +1,9 @@
+{
+  "id": 85,
+  "name": "aisha-corpus-hunt-4-bulk-12-sites-20261008",
+  "description": "Corpus-hunting day 1, Aisha catch 4 (bulk): queued 12 sites — merchant-side (dashboard.paystack.com, support.paystack.com, help.gumroad.com, app.payhip.com, vendors.paddle.com, business.whatsapp.com) and customer-channel side (wa.me, whatsapp.com, web.whatsapp.com, tronlink.org, gmail.com, telegram.org). Positions 141-152.",
+  "created_at": "2026-10-08T09:21:59Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "4847edebf2a30c7e1655181103bd468914467cc318660862ae933f3d80ba8abb",
+  "content": "{\n  \"queued\": [\n    \"dashboard.paystack.com\",\n    \"support.paystack.com\",\n    \"help.gumroad.com\",\n    \"app.payhip.com\",\n    \"vendors.paddle.com\",\n    \"business.whatsapp.com\",\n    \"wa.me\",\n    \"whatsapp.com\",\n    \"web.whatsapp.com\",\n    \"tronlink.org\",\n    \"gmail.com\",\n    \"telegram.org\"\n  ],\n  \"rationale\": \"Merchant dashboards/support portals for the 10 documented payment channels (incl. Paddle Vendor 387758); WhatsApp family because the sales channel runs there (wa.me click-to-chat links are used in the ecosystem's flows); TronLink is the common TRC20 payer wallet; Gmail carries customer receipts; Telegram is the second connected channel\",\n  \"queue_state\": \"152 entries at 10:22 WAT Oct 8 \\u2014 pack hunting in bulk, queue growing ~85 entries in 5 minutes\",\n  \"aisha_ground_status\": \"Coverage complete: 10 payment channels + merchant portals, 3 signing/holding wallets, 2 tx verifiers, 4 exchanges, 2 price sites, WhatsApp/Gmail/Telegram channels\"\n}"
+}
