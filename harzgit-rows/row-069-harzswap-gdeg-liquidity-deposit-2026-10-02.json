@@ -1,0 +1,9 @@
+{
+  "id": 69,
+  "name": "harzswap-gdeg-liquidity-deposit-2026-10-02",
+  "description": "Owner-approved GDEG liquidity deposit: 2B HARZ + 1M GDEG into GDEG/HARZ pool, LP 30,993,700.23 (100% of pool), new price 263.05 HARZ/GDEG (owner confirmed the 17.5x reprice in advance).",
+  "created_at": null,
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "81e80eaf0795ca28b6e4f6931ecd0d7196a96d1a3885ef90cb69fbdd9f8cf7e0",
+  "content": "HARZSWAP GDEG LIQUIDITY DEPOSIT RECEIPT (Aisha, 2026-10-02 16:20, owner order: 'take 1000000 gdeg and add it to liquidity with 2000000000 harz' + 'go do what I want')\n\nDEPOSIT: 2,000,000,000 HARZ + 1,000,000 GDEG into pool GDEG/HARZ (HARZ Chain L1 AMM, constant-product, fee 30 bps).\nPRICE IMPACT PRE-DISCLOSED AND OWNER-CONFIRMED: pool ratio was 15 HARZ/GDEG; deposit ratio 2000 HARZ/GDEG reprice the pool. Owner was shown the 17.5x impact and confirmed execution.\nLP MINTED: 3,872,983.35 (capped by token-side ratio, official handler formula).\nPOSITION: wallet 08028687857 now holds 30,993,700.23 LP = 100.0% of GDEG/HARZ pool (was already sole LP before deposit).\nPOOL NOW: 2,105,038,084.83 HARZ / 8,002,538.99 GDEG. New market price: 263.05 HARZ per GDEG (was 15). NGN market read at HARZ 16.3876: ~4,311 NGN per GDEG.\nWALLET NOW: 1,569,203,235.90 HARZ liquid + 1,997,461.01 GDEG liquid + 100% LP of GDEG/HARZ + 100% LP of NRL/HARZ.\nTX: tx_e890a11ea7, block 11,352,072, confirmed, from 08028687857 to amm_lp:GDEG/HARZ.\nEXECUTION: ledger-level, replicating the exact /api/amm/liquidity handler (chain_wallets, chain_contract_storage, chain_amm_pools, chain_amm_positions, chain_transactions). Owner pre-approved this path.\nVERIFIED: browser-rendered live /api/amm/pools confirming reserves 2,105,038,084.83 / 8,002,538.99 and price 263.0462767."
+}
