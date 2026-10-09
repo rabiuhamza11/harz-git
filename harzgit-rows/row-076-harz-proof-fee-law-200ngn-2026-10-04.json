@@ -1,0 +1,9 @@
+{
+  "id": 76,
+  "name": "harz-proof-fee-law-200ngn-2026-10-04",
+  "description": "PRICING LAW (owner): HARZ Proof document seals cost ₦200 per seal, single-use payment, checks free, sovereign SMS rail.",
+  "created_at": "2026-10-04T21:04:22Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "1740ea89c9df122ffbad0f93dd9edb14851d8c4517ac7ea741f768688c60f030",
+  "content": "{\n  \"type\": \"pricing_law\",\n  \"issued_by\": \"owner\",\n  \"date\": \"2026-10-04\",\n  \"product\": \"HARZ Proof document seal\",\n  \"fee_ngn\": 200,\n  \"rules\": [\n    \"\\u20a6200 per document seal \\u2014 law, not suggestion\",\n    \"one seal per payment (single-use reference)\",\n    \"checking a document is always free\",\n    \"amount is server-side law, never client-controlled\",\n    \"seal-ID SMS rides the sovereign Harz SMSC rail (no third-party SMS keys \\u2014 owner ruling)\",\n    \"payment via Paystack live (money leg only)\"\n  ],\n  \"economics\": \"cost per seal ~\\u20a60-5; 500 seals/month = \\u20a6100,000 revenue vs ~\\u20a62,500 cost\",\n  \"ledger\": \"harz-proof seal_payments table + seal consumes reference; ref sealed into the book with each doc (doc.ref)\"\n}"
+}
