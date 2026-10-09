@@ -116,6 +116,20 @@ export function analyzeQuery(question) {
     const cv = [...new Set([...clCap, ...clTok])].filter(t => !SW.has(t) && !DIRECTIVE_VERBS.has(t) && t.length >= 2).slice(0, 6).join(' ');
     if (cv && tokenize(cv).length >= 2 && cv !== ce) variants.push(cv);
   }
+  // F-GAP4-2b/B3 (Oct 9): single-entity variants. The sealed v1.1b law says the clause's
+  // ENTITIES ALONE are its most precise subject query. The same law holds WITHIN a clause:
+  // when a question carries 2+ entities, every entity-bearing base variant strict-ANDs ALL
+  // of them, so one question-adjacent entity the gold never spells excludes gold from the
+  // ENTIRE pool. Proven (B3): 'compute the Naira value of 2000 GDEG at the documented rate'
+  // makes 'naira' an entity; the GDEG rate docs use the ₦ symbol/NGN, so 'naira gdeg'
+  // matched only an unrelated onboarding page, every remaining variant was generic content
+  // ('compute value...') matching harvested junk, and the packet certified junk as ok.
+  // Each entity alone (first 3, deterministic, appended — variants[0] identity and every
+  // existing variant unchanged) re-admits entity-bearing docs to the pool; the frozen
+  // ranking/coverage/threshold laws decide the rest. No gate is weakened.
+  if (entities.length >= 2) {
+    for (const e of entities.slice(0, 3)) variants.push(e);
+  }
   const seen = new Set(); const vv = [];
   for (const v of [...variants, ...compounds]) { const k = v.trim(); if (k && !seen.has(k)) { seen.add(k); vv.push(k); } }
   return { tokens, entities, content, intent, variants: vv };
