@@ -77,3 +77,42 @@ v1.2 extraction gates were proven NOT the cause (extraction is CPU-only, identif
 
 ## Promotion condition (Dad's ruling required)
 PROMOTE freezes this law and closes F-GAP4-2c; REVERT restores f358336 (one commit, no surgery).
+
+---
+
+## PROMOTED — Dad's ruling, Oct 9, 2026. F-GAP4-2c: PROMOTED → SEALED.
+
+PROMOTION RULING (verbatim law preserved):
+1. The original failure is resolved at the correct boundary: timeout-triggered splitting,
+   ordinary requests untouched, number-aware splitting protects values such as 2,000,
+   each clause follows real routing (frozen specialists first, local reasoner when capable,
+   external only when the registry authorizes), and the aggregate verifies answered claims
+   rather than mistaking disclosure text for an answer.
+2. The exposing case now composes honestly: account number via frozen specialist at 0 ext,
+   Estate Network URL via local reasoner, GDEG-to-Naira refused because the corpus contains
+   no documented conversion rate. The refusal is CORRECT — the previous expectation of 30,000
+   is not evidence of a conversion rate, and the system must not manufacture one to complete
+   a composed answer.
+3. The frozen regression boundary remains intact; the three gate-caught implementation defects
+   are evidence of effective gating, not grounds for rejection.
+4. THE FOUR LIMITATIONS REMAIN EXPLICIT AND NOT REPRESENTED AS FIXED:
+   B1 door/missions planners refuse three-part conjunctions under frozen law — remains
+   separate; do not silently broaden their authority.
+   B2 compute-clause variance between grounded refusal and disclosed unavailability with
+   external latency — remains open for a separate consistency investigation.
+   B3 streaming path not connected — documented limitation; no streaming capability claim.
+   B4 splitter cap-truncation beyond four clauses (5+ clause instructions) — documented
+   boundary; do not claim arbitrary-length composition. THE FIVE-CLAUSE CEILING STAYS IN THE
+   SEALED RECORD.
+
+BOUNDARY OF THIS CLOSURE (verbatim): "The evidence supports closing this specific finding,
+not declaring every multi-clause instruction solved."
+
+Sealed state: candidate deployed build 3c92f01; previous fallback f358336 retained as the
+one-commit rollback point; scope: timeout-triggered, number-aware clause orchestration;
+evidence: six successful compositions of the exposing case, reported frozen regression suite
+green; external calls: zero in the reported full frozen regression bar; remaining
+limitations: four, individually disclosed.
+
+Decision: PROMOTE. No revert. No unrelated changes to the frozen paths. The next workstream
+can proceed without reopening F-GAP4-2c.
