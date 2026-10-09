@@ -1,0 +1,9 @@
+{
+  "id": 81,
+  "name": "harz-browser-v7-ecosystem-patch-20261008",
+  "description": "HARZ Browser ecosystem list: added Harz Circle (after Chatbot Builder) and Harz Proof (after Projects); SW cache bumped v6 -> v7 so clients refresh; no other logic touched.",
+  "created_at": "2026-10-08T00:37:15Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "a74c9beee36ce6f1668472343b43af429b0fd4221ad7ee6d867e633ca53c3d3d",
+  "content": "{\n  \"change\": \"harzLinks array in embedded HTML: +{Harz Circle, harz-circle.harz.workers.dev}, +{Harz Proof, harz-proof.harz.workers.dev}; service worker CACHE_NAME harz-browser-v6 -> v7\",\n  \"verified\": \"curl shows both entries; browserbase: ecosystem list renders both (\\ud83d\\udfe2 Harz Circle, \\ud83d\\udd12 Harz Proof); clicked Harz Circle -> Circle loads in-frame (screenshot verified)\",\n  \"note\": \"browser deployed 2026-10-07 23:04 by another session; patch built on that exact version, zero bindings, compat 2024-01-01 preserved\"\n}"
+}
