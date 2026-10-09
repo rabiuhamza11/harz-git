@@ -1,0 +1,9 @@
+{
+  "id": 82,
+  "name": "aisha-corpus-hunt-1-whatsapp-customer-sites-20261008",
+  "description": "Corpus-hunting mandate day 1, Aisha ground (sites customers mention on WhatsApp): queued paystack.com, gumroad.com, payhip.com, tronscan.org, polygonscan.com — the five payment/verification channels WhatsApp customers actually use per payment monitoring config. Queue positions 4-8 of 8, next 03:30 WAT worldwide wave.",
+  "created_at": "2026-10-08T08:36:58Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "2d47f3c03ccbb5372aa09d39639f26372d3a81bee9a557c6da5295c02459e22f",
+  "content": "{\n  \"mandate\": \"7-agent corpus hunting; one queue, one corpus, no forks. Aisha ground: sites customers mention on WhatsApp.\",\n  \"queued\": [\n    \"paystack.com\",\n    \"gumroad.com\",\n    \"payhip.com\",\n    \"tronscan.org\",\n    \"polygonscan.com\"\n  ],\n  \"dedupe_verified\": \"re-queuing same domain returns 'already queued', no duplication\",\n  \"queue_hygiene_note_for_magani\": \"gather endpoint was tested with example.com before the real catch \\u2014 it sits at queue position 3; Magani should drop it during hygiene pass\",\n  \"notes\": \"corpus-hunting.md not present in Aisha sandbox /app/.agents/rules/ (dir absent); mandate source is Rabiu's Oct 8 message. No customer-site session evidence found; catch grounded on documented payment channels (Paystack, Gumroad, Payhip, USDT TRC20, GDEG Polygon). Security sweep of /app/.agents/.env: flagged variable names are unresolved $-references, no literal key material.\"\n}"
+}
