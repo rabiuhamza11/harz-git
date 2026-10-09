@@ -51,3 +51,44 @@ In every state — healthy, slow, dead — the compute clause refused or disclos
 ## Awaiting ruling
 
 **PROMOTE** → B2 closed (failure-triggered clause-split frozen; the credential outage is operational, separate) — findings B3 (clause packet junk) and the operational key renewal remain open items. Or **REVERT** → redeploy d968c4c2.
+
+---
+
+## PROMOTED — Dad's ruling, Oct 9, 2026. B2: PROMOTED → SEALED.
+
+PROMOTION RULING (preserved): The reproduction isolated the failure boundary — the identical
+compute clause produced three outcomes (healthy model: grounded refusal; slow model:
+backend_timeout; expired credential: backend_401) while the packet step succeeded in all three
+cases; the variation originated at the model-call layer. The deeper defect was the failure
+trigger: clause splitting activated only on timeouts, so a fast 401 bypassed recovery and could
+destroy the whole composed answer, including parts local specialists answer without external
+calls. The correction activates the existing clause-split machinery on ANY backend failure.
+Live evidence accepted: account and URL clauses survive, the compute clause discloses its
+unavailability, three clause results preserved, 2/3 answered, determinism holds, frozen
+regression green at zero external calls.
+
+FROZEN LAW (verbatim): "A backend failure must not erase independently answerable clauses.
+Preserve successful work, disclose the failed clause, and never manufacture a result to make
+the aggregate appear complete."
+
+BOUNDARY OF THIS CLOSURE (verbatim): "B2 is closed as a failure-handling defect. This does not
+mean the compute capability itself is complete or that the Naira value of GDEG has been
+established." Timeout increase NOT introduced. Recovery on timeout preserved; per-clause
+outcomes preserved; honest compute unavailability enforced.
+
+OPENROUTER CREDENTIAL RULING (preserved): The current credentials cannot support successful
+authenticated calls. Zero-budget law preserved — no credit purchases, no weakening the offline
+path to hide the dependency. A fresh key must come through the OpenRouter account and be
+configured through the supported secret-management path; do NOT paste the key into this
+conversation or commit it to the repository. Until valid credentials exist, the system
+discloses external-reasoner unavailability honestly. (Operational note: the deployed Worker
+secret and the harz-ai wrangler.toml key are both 401-expired; replacement path = Cloudflare
+dashboard, Worker harz-intelligence, Settings → Variables and Secrets → OPENROUTER_API_KEY, or
+`npx wrangler secret put OPENROUTER_API_KEY` in harz-intelligence.)
+
+B3 RULING (preserved): recorded, NOT yet authorized for implementation. It needs its own
+bounded investigation and acceptance criteria so the sealed provenance and entity-binding laws
+remain intact. B3 is the next candidate for authorization.
+
+Build: 24abc4f5. Vault: b6055cf. QUALIFICATION (verbatim): "The evidence supplied supports
+closure; I have not independently executed the deployed build."
