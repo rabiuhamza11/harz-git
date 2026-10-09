@@ -50,3 +50,32 @@ A requested-value-head resolver (`requestedHead`), consulted ONLY when both sign
 ## Awaiting ruling
 
 **PROMOTE** → F-GAP4-2b closed; the remaining open item in this stack becomes B2 compute-clause consistency. Or **REVERT** → worker redeploy from git main pre-candidate state.
+
+---
+
+## PROMOTED — Dad's ruling, Oct 9, 2026. F-GAP4-2b: PROMOTED → SEALED.
+
+PROMOTION RULING (preserved): The defect was real, the correction at the right boundary, the
+evidence supports closure. The router now respects the requested value type ("Which bank account
+does HARZ use for fee collections?" → ACCOUNT; "What is the fee on account transfers?" → FEE).
+The change is confined to routing; the sealed v1.2 entity-binding law and universal provenance
+law remain untouched. Negative cases behave correctly; the GTBank negative refuses rather than
+borrowing the UBA account; the ingest-scoped test respects its evidence boundary; the frozen
+regression suite passes with determinism stable and zero external calls.
+
+DISCLOSURE RULING (verbatim): "A correctly routed refusal is better than a confidently
+delivered value from the wrong semantic lane. Do not weaken the sealed extractor merely to
+increase the answer rate. Any future improvement to claim-shape binding should have its own
+evidence and regression gates."
+
+REMAINING LIMITATION (preserved): Some correctly routed account questions remain unanswerable
+from available evidence — a known capability limitation, not a reason to retain the routing
+defect.
+
+Build: d968c4c2. Vault: bddc88b. QUALIFICATION (verbatim): "This ruling accepts the supplied
+live and regression evidence; I have not independently executed the deployed build."
+
+NEXT (per ruling): B2 compute-clause consistency — OPEN FOR BOUNDED INVESTIGATION AND BUILD,
+without reopening the sealed findings (F-GAP4-2a, 2b, 2c, 2). First establish the failure
+boundary and reproduce the inconsistency; do not assume the answer is to increase the timeout.
+Promotion contingent on evidence.
