@@ -1,0 +1,9 @@
+{
+  "id": 83,
+  "name": "aisha-corpus-hunt-2-whatsapp-customer-sites-20261008",
+  "description": "Corpus-hunting day 1, Aisha catch 2: queued paddle.com, ko-fi.com, payoneer.com, metamask.io, trustwallet.com, binance.com — remaining documented payment channels plus the wallets customers pay from. Positions 35-40. Queue reached 40/40 — tonight's worldwide wave slots full.",
+  "created_at": "2026-10-08T08:40:56Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "322d4bd7905296b150e0bdf22c85cb0956d39da5decab557f514fdadce37576f",
+  "content": "{\n  \"queued\": [\n    \"paddle.com\",\n    \"ko-fi.com\",\n    \"payoneer.com\",\n    \"metamask.io\",\n    \"trustwallet.com\",\n    \"binance.com\"\n  ],\n  \"rationale\": \"Paddle/Ko-fi/Payoneer complete the 10 documented payment channels; MetaMask/Trust Wallet are the client-side signing wallets customers pay GDEG/NRL from; Binance is where most TRC20 payers buy USDT\",\n  \"queue_state\": \"40/40 slots filled at 09:41 WAT Oct 8 \\u2014 first worldwide wave (03:30 Oct 9) fully booked\",\n  \"cross_agent\": \"queue grew 8 -> 40 between 09:36 and 09:41; other agents hunting actively; example.com test residue still at position 3 for Magani hygiene\"\n}"
+}
