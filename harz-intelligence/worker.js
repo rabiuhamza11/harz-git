@@ -5447,6 +5447,29 @@ function buildFlowSummary(packet) {
     '\n\nEvery line above is quoted verbatim from the retrieved documentation; nothing was generated or paraphrased.\n\nCONFIDENCE: high — verbatim flow quotes with provenance (v0.9)';
 }
 
+// F-GAP4-2b (Dad's law, Oct 9): requested-value-head resolver. When a question carries BOTH
+// the fee signature and the identifier signature, the noun the interrogative actually asks for
+// decides the lane — a keyword must not steal the question into a different semantic lane.
+// Earliest head noun after the interrogative anchor wins; 'how much/how many' asks an amount
+// of money (fee family). Returns 'id' | 'fee' | null (unresolvable: caller keeps frozen order).
+function requestedHead(L) {
+  if (/\bhow much\b|\bhow many\b/.test(L)) return 'fee';
+  const anchors = [/\bwhat is the\b/, /\bwhat's the\b/, /\bwhich\b/, /\btell me the\b/, /\bwhat\b/];
+  for (const a of anchors) {
+    const m = a.exec(L);
+    if (!m) continue;
+    const win = L.slice(m.index + m[0].length).split(/[.?!]/)[0].slice(0, 60);
+    const feeI = win.search(/\b(fee|fees|price|pricing|cost|costs|charge|charges|charged|rate|rates|commission|percentage)\b/);
+    const idI = win.search(/\b(account|accounts|bank|banks|ussd|nuban)\b/);
+    if (feeI === -1 && idI === -1) continue;
+    if (feeI === -1) return 'id';
+    if (idI === -1) return 'fee';
+    return feeI < idI ? 'fee' : 'id';
+  }
+  if (/\baccount (number|details)\b|\bussd code\b/.test(L)) return 'id';
+  return null;
+}
+
 function classifyTask(message) {
   const L = String(message || '').toLowerCase();
   // v0.9: sovereign exact arithmetic runs FIRST — if the question is money-context arithmetic with
@@ -5464,8 +5487,15 @@ function classifyTask(message) {
   if (/difference between|\bcompare\b[^.?!]*\b(and|with|vs|versus)\b|\bversus\b/.test(L))
     return { class: 'comparison', harzCapable: true, reason: 'registry: two-entity comparison from verbatim evidence quotes (v0.9)' };
   // v0.10: fee/price/cost questions -> sovereign fee extraction (quote-only, refuse when absent)
-  if (/\b(fee|fees|price|pricing|cost|costs|charge|charges|charged|rate|rates)\b/.test(L) && /\b(what|how much|how many|which|tell me|does|do|is|are)\b/.test(L) && !exactArithmetic(message))
+  if (/\b(fee|fees|price|pricing|cost|costs|charge|charges|charged|rate|rates)\b/.test(L) && /\b(what|how much|how many|which|tell me|does|do|is|are)\b/.test(L) && !exactArithmetic(message)) {
+    // F-GAP4-2b: an account question must remain an account question even when its wording
+    // contains a fee-related term. When BOTH signatures match, the requested value type decides;
+    // only a resolved identifier head diverts — fee behavior is otherwise byte-unchanged.
+    const idSigB = /(which|what is the|tell me the).*(bank account|account|bank)\b|account (number|details)|ussd code/.test(L);
+    if (idSigB && requestedHead(L) === 'id')
+      return { class: 'identifier_lookup', harzCapable: true, reason: 'registry: retrieval=strong — Search-1 value extraction with provenance (TASK_REGISTRY v0.8; F-GAP4-2b head rule)' };
     return { class: 'fee_lookup', harzCapable: true, reason: 'registry: fees and prices quoted verbatim from HARZ evidence (v0.10)' };
+  }
   if (/summar[yi][sz]e/.test(L) && /\b(flow|onboarding|process|steps?|procedure|setup|set[- ]up)\b/.test(L))
     return { class: 'summary_flow', harzCapable: true, reason: 'registry: documented-flow summaries assembled from evidence (v0.9)' };
   if (/write an (essay|email|letter|article|story|post|advert)|compose|draft|summar[yi][sz]e/.test(L))
