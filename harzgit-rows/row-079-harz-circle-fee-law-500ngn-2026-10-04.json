@@ -1,0 +1,9 @@
+{
+  "id": 79,
+  "name": "harz-circle-fee-law-500ngn-2026-10-04",
+  "description": "PRICING LAW (owner): HARZ Circle costs ₦500/group/month, 7-day trial, ledger viewing free, sovereign SMS rail.",
+  "created_at": "2026-10-04T21:32:01Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "94251c9ceeef2928aeddcf981f5dc56b3f0b970e6dd18741a84244de6a9c227b",
+  "content": "{\n  \"type\": \"pricing_law\",\n  \"issued_by\": \"owner\",\n  \"date\": \"2026-10-04\",\n  \"product\": \"HARZ Circle \\u2014 contribution book per group\",\n  \"fee_ngn\": 500,\n  \"rules\": [\n    \"\\u20a6500 per group per month \\u2014 recurring, the first recurring-revenue service in the ecosystem\",\n    \"7-day free trial per circle, then recording blocked (402) until paid\",\n    \"viewing any circle's ledger is free for everyone, forever\",\n    \"amount is server-side law, never client-controlled\",\n    \"paying extends 30 days from max(now, current paid_until) \\u2014 no lost days\",\n    \"payment via Paystack live; SMS rides the sovereign Harz SMSC rail\",\n    \"no money is ever held \\u2014 records only\"\n  ],\n  \"economics\": \"cost per group ~\\u20a60-10/month; 100 groups = \\u20a650,000/month = \\u20a6600,000/year recurring\",\n  \"ledger\": \"harz-circle D1 sub_payments table + groups.paid_until; every month-extension verified by Paystack reference\"\n}"
+}
