@@ -1,0 +1,9 @@
+{
+  "id": 84,
+  "name": "aisha-corpus-hunt-3-whatsapp-customer-sites-20261008",
+  "description": "Corpus-hunting day 1, Aisha catch 3: queued bybit.com, quidax.com, luno.com, remitano.com, coinmarketcap.com, coingecko.com — exchanges customers buy USDT/MATIC from and the price-check sites they reference in WhatsApp crypto chats. Positions 63-68; queue grew past the first 40 slots (rolling, not capped).",
+  "created_at": "2026-10-08T09:17:07Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "a2c947ab51bc246249d4aed3cb835ae778f6de7e24e61f93a9eaef6b3c725f41",
+  "content": "{\n  \"queued\": [\n    \"bybit.com\",\n    \"quidax.com\",\n    \"luno.com\",\n    \"remitano.com\",\n    \"coinmarketcap.com\",\n    \"coingecko.com\"\n  ],\n  \"rationale\": \"Bybit is Rabiu's documented exchange; Quidax/Luno/Remitano are the Nigerian exchanges WhatsApp customers name when buying USDT to pay; CoinMarketCap/CoinGecko are what customers check for USDT/GDEG price context\",\n  \"queue_state\": \"68 entries at 10:17 WAT Oct 8; wave slots are rolling \\u2014 queue accepts beyond 40\",\n  \"aisha_ground_coverage\": \"All 10 payment channels + 2 signing wallets + 2 tx verifiers + 4 exchanges + 2 price-check sites now queued; Getly skipped \\u2014 domain unverified, will not queue guessed domains\"\n}"
+}
