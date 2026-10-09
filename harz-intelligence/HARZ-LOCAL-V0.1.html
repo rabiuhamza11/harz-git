@@ -50,6 +50,7 @@
   <button class="btn" data-view="knowView" onclick="showView('knowView',this)">Knowledge</button>
   <button class="btn" data-view="testsView" onclick="showView('testsView',this)">Acceptance Tests</button>
   <button class="btn" data-view="vaultView" onclick="showView('vaultView',this)">Vault / Receipts</button>
+  <button class="btn" id="assistBtn" onclick="toggleAssist()">Assisted Mode: OFF</button>
   <div id="status"><span id="dot"></span><span id="statusTxt">checking local brain…</span></div>
 </div>
 <div id="main">
@@ -104,6 +105,10 @@
 // LAW 3: Availability failure is never allowed to become authority success.
 // LAW 4: Every task produces one receipted TaskRecord. No CLOSED without a receipt.
 // LAW 5: The only inference endpoint is local (127.0.0.1). No keys. No cloud.
+// LAW 6 (Dad's ruling, Oct 9): Sovereign by DEFAULT. External weights (qwen) run ONLY
+// when Assisted Mode is explicitly switched ON by the owner, and every assisted call
+// is labeled in the receipt. Externals are fallbacks, never identity.
+// Default brain = HARZ's own deterministic lanes (tools + evidence + honest refusal).
 
 const BRAIN_URL = "http://127.0.0.1:11434";
 const BRAIN_MODEL = "qwen2.5:3b-instruct-q4_K_M";
@@ -172,6 +177,7 @@ const HARZ = {
   },
   // ---- local model call (the only inference path; records ledger) ----
   async callModel(messages) {
+    if (!this.load("assisted", false)) return { ok: false, error: "ASSISTED_MODE_OFF", attempted: false }; // LAW 6: sovereign default, no external weights without the owner's switch
     ENDPOINT_LEDGER.push(BRAIN_URL + "/v1/chat/completions");
     try {
       const res = await fetch(BRAIN_URL + "/v1/chat/completions", {
@@ -217,17 +223,22 @@ const HARZ = {
         { role: "user", content: "CONTEXT:\n[" + doc.id + "] " + doc.title + " — " + doc.text + "\n\nQUESTION: " + instruction },
       ]);
       if (r.ok) {
-        t.model_calls = 1;
+        t.model_calls = 1; t.assisted = true;
         const grounded = r.content.includes(doc.id) || /\[\w[\w-]*\]/.test(r.content);
         const refused = /NOT_IN_CONTEXT/i.test(r.content);
         t.verdict = refused ? "HONEST_REFUSAL" : (grounded ? "EVIDENCE_GROUNDED" : "EVIDENCE_UNCITED_REFUSAL");
         t.answer = refused ? "The local documents do not contain that answer. Honest refusal, nothing invented." : r.content;
         t.status = refused || !grounded ? "REFUSED" : "CLOSED";
+      } else if (r.error === "ASSISTED_MODE_OFF") {
+        // SOVEREIGN PRIMARY (LAW 6): evidence answers verbatim, cited, zero weight calls
+        t.verdict = "SOVEREIGN_EVIDENCE_QUOTE"; t.status = "CLOSED";
+        t.answer = "[" + doc.id + "] " + doc.text;
+        t.steps.push("sovereign-evidence-quote (assisted mode off, zero weight calls)");
       } else {
-        // model down: evidence still answers, deterministically, without invention
+        // assisted was ON but the brain is down: quoted evidence, disclosed
         t.verdict = "EVIDENCE_ONLY_TOOL_ANSWER"; t.status = "CLOSED";
-        t.answer = "Evidence quote (local model unavailable, quoted verbatim, no invention): [" + doc.id + "] " + doc.text;
-        t.steps.push("model-unavailable:" + r.error + " -> deterministic evidence answer, disclosed");
+        t.answer = "Evidence quote (assisted brain unavailable, quoted verbatim, no invention): [" + doc.id + "] " + doc.text;
+        t.steps.push("brain-unavailable:" + r.error + " -> deterministic evidence answer, disclosed");
       }
       return this.close(t);
     }
@@ -235,9 +246,14 @@ const HARZ = {
     // LANE 4 — general chat with the local brain
     const hist = this.load("chat", []).slice(-8).map(m => ({ role: m.user ? "user" : "assistant", content: m.text.slice(0, 500) }));
     const r = await this.callModel([...hist, { role: "user", content: instruction }]);
-    t.model_calls = 1;
-    if (r.ok) { t.verdict = "ANSWERED"; t.answer = r.content; t.status = "CLOSED"; }
-    else { t.verdict = "HONEST_REFUSAL"; t.answer = "LOCAL BRAIN UNAVAILABLE (" + r.error + "). Start Ollama (ollama serve) and pull the model. HARZ will not invent an answer in its place."; t.status = "REFUSED"; t.steps.push("failure-disclosed:" + r.error); }
+    if (r.attempted === false) {
+      // SOVEREIGN DEFAULT (LAW 6): no external weights without the owner's switch
+      t.verdict = "SOVEREIGN_CAPABILITY_STATEMENT"; t.status = "REFUSED";
+      t.answer = "Sovereign mode is ON, so HARZ answers from its own capability only: tools (calculator, clock builder) and local documents (cited evidence). This task needs none of those. For generative help, switch Assisted Mode ON — every assisted call is labeled in the receipt. HARZ will not run external weights silently.";
+      t.steps.push("sovereign-default: assisted mode off");
+    }
+    else if (r.ok) { t.model_calls = 1; t.assisted = true; t.verdict = "ASSISTED_ANSWERED"; t.answer = r.content; t.status = "CLOSED"; }
+    else { t.model_calls = 1; t.verdict = "HONEST_REFUSAL"; t.answer = "ASSISTED BRAIN UNAVAILABLE (" + r.error + "). Start Ollama (ollama serve) and pull the model. HARZ will not invent an answer in its place."; t.status = "REFUSED"; t.steps.push("failure-disclosed:" + r.error); }
     return this.close(t);
   },
   async close(t, artifact) {
@@ -273,6 +289,15 @@ if (typeof module !== "undefined" && module.exports) { module.exports = HARZ; } 
 </script>
 <script id="harz-ui">
 "use strict";
+function refreshAssistUI() {
+  const on = HARZ.load("assisted", false);
+  const b = document.getElementById("assistBtn");
+  if (b) b.textContent = "Assisted Mode: " + (on ? "ON (external weights)" : "OFF (sovereign)");
+}
+function toggleAssist() {
+  HARZ.save("assisted", !HARZ.load("assisted", false));
+  refreshAssistUI();
+}
 function showView(id, btn) {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("on"));
   document.getElementById("chatView").classList.toggle("on", id === "chatView");
@@ -291,7 +316,7 @@ async function sendMsg() {
   inp.value = ""; addMsg(v, true);
   const chat = HARZ.load("chat", []); chat.push({ user: true, text: v }); HARZ.save("chat", chat);
   const t = await HARZ.route(v);
-  addMsg(t.answer || t.verdict, false, "receipt " + t.receipt + " | " + t.status + " | verdict " + t.verdict + " | tool " + (t.tool || "chat-lane") + " | evidence " + (t.evidence.join(",") || "none") + " | model calls " + t.model_calls + " | external calls " + t.external_calls + (t.ledger_ok ? " | ledger local-only ✓" : " | LEDGER VIOLATION"));
+  addMsg(t.answer || t.verdict, false, "receipt " + t.receipt + " | " + t.status + " | verdict " + t.verdict + " | tool " + (t.tool || "chat-lane") + " | evidence " + (t.evidence.join(",") || "none") + " | model calls " + t.model_calls + (t.assisted ? " [ASSISTED — external weights, owner-enabled]" : " [sovereign]") + " | external calls " + t.external_calls + (t.ledger_ok ? " | ledger local-only ✓" : " | LEDGER VIOLATION"));
   const chat2 = HARZ.load("chat", []); chat2.push({ user: false, text: t.answer || "" }); HARZ.save("chat", chat2);
   renderVault();
 }
@@ -333,10 +358,18 @@ async function runTests() {
   const tbl = document.getElementById("testTable"); tbl.innerHTML = "<tr><th>Test</th><th>Proof required</th><th>Result</th><th>Evidence</th></tr>";
   const row = (name, proof, pass, ev) => { tbl.innerHTML += "<tr><td>" + name + "</td><td>" + proof + "</td><td class='" + (pass ? "pass'>PASS" : "fail'>FAIL") + "</td><td class='small'>" + ev + "</td></tr>"; };
   const pre = HARZ.getRecords().length; ENDPOINT_LEDGER.length = 0;
+  const modeSaved = HARZ.load("assisted", false);
+  HARZ.save("assisted", false); // SOVEREIGN BLOCK FIRST — the default identity, zero weight calls
 
   // T1 greeting
   let t = await HARZ.route("Hi");
-  row("T1 Greeting", "natural reply to 'Hi'", /hello|hi|hey|help|assist|welcome/i.test(t.answer) && t.status === "CLOSED", '"' + String(t.answer).slice(0, 60) + '"');
+  row("T1 Greeting", "natural reply to 'Hi' (assisted block)", t.status === "REFUSED" && t.verdict === "SOVEREIGN_CAPABILITY_STATEMENT", "sovereign default: honest capability statement, no silent weight calls — natural reply proven in the ASSISTED block below");
+  {
+    HARZ.save("assisted", true);
+    const tg = await HARZ.route("Hi");
+    row("T1a Greeting (assisted ON)", "natural reply with external weights owner-enabled", tg.status === "CLOSED" && /hello|hi|hey|help|assist|welcome/i.test(tg.answer), '"' + String(tg.answer).slice(0, 60) + '" [ASSISTED-labeled receipt]');
+    HARZ.save("assisted", false);
+  }
 
   // T2 arithmetic 187 × 246 = 46,002 — via the TOOL, never the model
   t = await HARZ.route("187 × 246");
@@ -354,7 +387,7 @@ async function runTests() {
 
   // T5 knowledge with evidence
   t = await HARZ.route("What is the UBA account number?");
-  row("T5 Knowledge", "answers from local docs, identifies evidence", t.status === "CLOSED" && t.answer.includes("2034326424") && /\[\w[\w-]*\]|doc-/.test(t.answer), "evidence=" + t.evidence.join(",") + ' "' + String(t.answer).slice(0, 70) + '"');
+  row("T5 Knowledge (sovereign)", "answers from local docs, cited, ZERO weight calls", t.status === "CLOSED" && t.verdict === "SOVEREIGN_EVIDENCE_QUOTE" && t.answer.includes("2034326424") && t.answer.includes("doc-10470") && t.model_calls === 0, "evidence=" + t.evidence.join(",") + " | model_calls=" + t.model_calls + " | verbatim quote cited [doc-10470]");
 
   // T6 persistence: records survive reload
   const n = HARZ.getRecords().length;
@@ -375,12 +408,13 @@ async function runTests() {
   const rs = HARZ.getRecords(); let ok = 0; for (const r of rs) if (await HARZ.verifyReceipt(r)) ok++;
   row("T9 Receipt integrity", "stored records independently checkable", ok === rs.length && rs.length > 0, ok + "/" + rs.length + " receipts re-hash to their stored value");
 
-  const results = { when: new Date().toISOString(), note: "HARZ Local v0.1 Phase 1 acceptance — each test judged individually" };
+  HARZ.save("assisted", modeSaved); refreshAssistUI();
+  const results = { when: new Date().toISOString(), note: "HARZ Local v0.1.1 Phase 1 acceptance — sovereign block judged first, assisted block second, each test individually" };
   HARZ.save("last_tests", results);
 }
 // ---- boot ----
 (async () => {
-  renderDocs(); renderVault();
+  renderDocs(); renderVault(); refreshAssistUI();
   try { const r = await fetch(BRAIN_URL + "/api/version", { signal: AbortSignal.timeout(3000) });
     document.getElementById("dot").classList.add("up");
     document.getElementById("statusTxt").textContent = "local brain online · " + BRAIN_MODEL;
