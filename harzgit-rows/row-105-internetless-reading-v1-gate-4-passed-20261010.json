@@ -1,0 +1,9 @@
+{
+  "id": 105,
+  "name": "internetless-reading-v1-gate-4-passed-20261010",
+  "description": "GATE 4 PASSED (Oct 10 2026, owner-verified on Infinix): flight-mode reading works end-to-end. LIVE->OFFLINE->offline index all proven with airplane mode on. Internetless Reading v1 core loop complete. Next build (pending approval): hash-wiring hunted pages for bulk offline library.",
+  "created_at": "2026-10-09T23:49:19Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "5fb1a41d846b2ef245bb48af16a6a418bbd44bac64e57d18eefa3e0b8d33193c",
+  "content": "{\n  \"gate\": \"GATE 4 \\u2014 FLIGHT MODE TEST \\u2014 PASSED\",\n  \"evidence\": \"Owner screenshots Oct 10 00:39-00:41 (Infinix): (1) online open 12:39:44 AM with LIVE badge, 14,424 chars, saved on device; (2) airplane mode, same link reopens 12:40 with OFFLINE badge, full 14,424-char text, status bar 'OFFLINE - reading stored copy - SW on'; (3) Saved readings index opens fully offline 12:41 listing the stored article; (4) index online with CACHED badge, SW on. Owner verbally confirmed the kill-and-restart offline retest at 00:49 ('Done').\",\n  \"scope_proven\": \"Internetless Reading v1 core loop proven end-to-end on a real phone with the radio off: open online once -> stored on device -> readable in flight mode -> offline index lists saved readings.\",\n  \"honest_labels\": \"Restart test confirmed verbally by owner, no screenshot provided. Stored-link from search results not yet exercised owner-side. Old search index (11,365 docs, zero hash overlap) still opens results as honest 2,000-char previews until hunted pages are hash-wired \\u2014 that is the next build, subject to AUDIT FIRST approval.\",\n  \"releases\": \"corpus v0.2.9, browser v4 (SW v15), search stored-link patch, receipts rows 103-105.\"\n}"
+}
