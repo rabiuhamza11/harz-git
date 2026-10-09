@@ -1,0 +1,9 @@
+{
+  "id": 72,
+  "name": "amm-swap-receipt-20261002-2b-each",
+  "description": "2B HARZ swap into GDEG/HARZ and NRL/HARZ pools (owner order)",
+  "created_at": "2026-10-02T18:45:03.806835+00:00",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "11c5eab217544745d586e11115b14af2b9ae9a057d266aec3b53d2b7f2480f30",
+  "content": "{\n \"type\": \"amm_swap_receipt\",\n \"date\": \"2026-10-02\",\n \"wallet\": \"08028687857\",\n \"order\": \"swap 2B HARZ into each pool\",\n \"swaps\": [\n  {\n   \"pool\": \"GDEG/HARZ\",\n   \"in_harz\": 2000000000,\n   \"out\": 2290114.314584,\n   \"tx\": \"tx_5ea4210081\",\n   \"block\": 11353955,\n   \"price_before\": 560.61,\n   \"price_after\": 1353.74,\n   \"pct_change\": \"+141.6%\"\n  },\n  {\n   \"pool\": \"NRL/HARZ\",\n   \"in_harz\": 2000000000,\n   \"out\": 1831575.396814,\n   \"tx\": \"tx_8a3f067920\",\n   \"block\": 11353955,\n   \"price_before\": 689.88,\n   \"price_after\": 1719.91,\n   \"pct_change\": \"+149.3%\"\n  }\n ],\n \"method\": \"direct D1 replication of /api/amm/swap handler math (fee 30bps constant-product)\",\n \"verified_by\": \"public /api/amm/pools and /api/balance match D1 state\",\n \"result_wallet\": {\n  \"harz\": 11326849548.78,\n  \"gdeg\": 5859604.15,\n  \"nrl\": 1831575.4\n }\n}"
+}
