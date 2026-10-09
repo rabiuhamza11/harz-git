@@ -1,0 +1,9 @@
+{
+  "id": 78,
+  "name": "harz-circle-superapp-listing-20261004",
+  "description": "HARZ Circle listed on Super App; harz-proof description updated to document notary.",
+  "created_at": "2026-10-04T21:32:01Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "5e5f7f13899f3a5cf556b01bcdd51cb6316bf86a2392ec8e8f0d3762dd09a4c3",
+  "content": "{\n  \"change\": \"Added harz-circle to HARZ Super App services grid (Business & Store category, 94 services shown after). Also refreshed harz-proof description to include AI document notary (v2.0+).\",\n  \"deployed\": \"2026-10-04\",\n  \"verified\": \"Super App render shows HARZ Circle card; card links directly to https://harz-circle.harz.workers.dev (clicked in browser)\"\n}"
+}
