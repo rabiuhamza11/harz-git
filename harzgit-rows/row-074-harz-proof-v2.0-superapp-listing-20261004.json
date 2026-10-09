@@ -1,0 +1,9 @@
+{
+  "id": 74,
+  "name": "harz-proof-v2.0-superapp-listing-20261004",
+  "description": "HARZ Proof added to Super App grid: HGN_SERVICES entry (Trust category, Sealed Receipts & Document Proofs, tier core), deployed to super-cloud, /api/services returns 85 incl harz-proof; browser render 200.",
+  "created_at": "2026-10-04T06:47:22.591307+00:00",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "fc29d74f7e7a5a7f0873a8518882e42d6c11a7fae901fab5a9da1767d0080e60",
+  "content": "{\n \"entry\": \"harz-proof: HARZ Proof / Trust / Sealed Receipts & Document Proofs / core\",\n \"url\": \"https://harz-proof.harz.workers.dev\",\n \"services_total\": 85,\n \"verified\": [\n  \"/api/services contains harz-proof\",\n  \"super-cloud renders 200\"\n ]\n}"
+}
