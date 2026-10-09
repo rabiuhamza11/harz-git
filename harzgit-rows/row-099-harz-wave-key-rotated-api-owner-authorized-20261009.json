@@ -1,0 +1,9 @@
+{
+  "id": 99,
+  "name": "harz-wave-key-rotated-api-owner-authorized-20261009",
+  "description": "WAVE KEY rotated via Cloudflare API (owner-authorized; dashboard inaccessible to owner). Key value never recorded. Positive-tested: export pipe 200 with docs + cursor, hashes feed 200 with rows, wrong-key 401 on both. Wave key is a low-sensitivity read-gate credential (public web content); ceremony seed law unchanged. Stage 3 export unblocked.",
+  "created_at": "2026-10-09T07:47:00Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "1df07a065c2d1fc15a79c58104eb471dcde83274c4811ce1261699bfb4b3ab80",
+  "content": "{\n  \"event\": \"WAVE_KEY ROTATION (2026-10-09 ~08:50 Lagos): owner could not access Cloudflare dashboard after multiple attempts; explicitly authorized the desk to set the key via API using the value he had already communicated. Set via PUT /workers/scripts/harz-million-corpus/secrets. KEY VALUE DELIBERATELY NOT RECORDED HERE.\",\n  \"positive_verification\": \"export pipe /api/export returns 200 with docs and cursor (tested after=0 limit=2, next_after=2); parity feed /api/hashes returns 200 with content_hash rows (tested limit=3); wrong key still returns 401 on both routes. Gate integrity intact.\",\n  \"security_posture\": \"wave key is a low-sensitivity credential: it gates read-only export of public web content and the ingest pipe. It is NOT seed/ceremony material \\u2014 the ceremony law (no seed/key material in chats or browsers, Node 1 Termux + ink cards only) remains fully in force and unmodified. Optional hygiene: owner may rotate WAVE_KEY from the dashboard once access is restored.\",\n  \"status\": \"Stage 3 export unblocked. Node 1 export can now run with the key in Termux env only.\"\n}"
+}
