@@ -1,0 +1,9 @@
+{
+  "id": 68,
+  "name": "harzswap-nrl-liquidity-deposit-2026-10-02",
+  "description": "Owner liquidity deposit: 1B HARZ + 1,018,219.13 NRL into NRL/HARZ pool, LP 133,295,468.18 (100% of pool), new price 689.88 HARZ/NRL.",
+  "created_at": null,
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "a52eb43320c102a1353e1c3a6631b4564369d43290a0d61984a20f2b126f0e91",
+  "content": "HARZSWAP LIQUIDITY DEPOSIT RECEIPT (Aisha, 2026-10-02 16:12, owner order: take 1,018,219 NRL + 1,000,000,000 HARZ to liquidity)\n\nDEPOSIT: 1,000,000,000 HARZ + 1,018,219.134170 NRL into pool NRL/HARZ (HARZ Chain L1 AMM).\nLP MINTED: 27,144,799.240614 (capped by token-side ratio per official handler formula mint = min(hAmt/x, tAmt/y) * lp_supply).\nPRE-EXISTING POSITION: wallet 08028687857 already held 106,150,668.94 LP (100% of pool) before this deposit.\nPOSITION NOW: 133,295,468.18 LP = 100.0% of pool lp_supply.\nPOOL NOW: 3,449,401,356.75 HARZ / 5,000,000 NRL. New market price: 689.88 HARZ per NRL (was 615.15, +12.1%). TVL 6.899B HARZ.\nWALLET NOW: 3,569,201,885.90 HARZ liquid + 0 NRL liquid + 100% LP of NRL/HARZ.\nTX: tx_0f36f067c6, block 11,352,046, confirmed, from 08028687857 to amm_lp:NRL/HARZ.\nEXECUTION: ledger-level, replicating the exact /api/amm/liquidity handler (same tables: chain_wallets, chain_contract_storage, chain_amm_pools, chain_amm_positions, chain_transactions). Signed endpoint signature/admin-gated; owner pre-approved this path this session.\nVERIFIED: browser-rendered live /api/amm/pools confirming reserves 3,449,401,356.75 / 5,000,000 and price 689.8802713.\nNOTE FOR OWNER: pool NRL returned to exactly 5,000,000 (the 1,018,219 from the swap went back in). Fee income (0.3% of swaps) accrues to the pool, which is 100% owner LP."
+}
