@@ -5801,7 +5801,85 @@ function planTask(message, agent) {
   return { plan, agent: agent || 'supreme-engine' };
 }
 
-async function orchestrate({ message, conversation_id, agent, engine }) {
+// ---------- F-GAP4-2c: CLAUSE-SPLIT ORCHESTRATION v2 (Dad's Go, Oct 8, candidate — capacity law, not a truth change) ----------
+// Trigger: ONLY the combined reasoner call's declared backend_timeout (8s abort ceiling,
+// v0.8.1 mirror law). The instruction is split by the SAME clause law search1 freezes
+// (comma/;/'and', >=2 tokens, cap 4), made number-aware so thousands separators ("2,000")
+// are never a split point. Each clause then runs through the REAL orchestrate machinery —
+// frozen specialist paths first, the model only when the clause genuinely needs it — so
+// provenance, refusal and verification laws apply per clause exactly as they do for any
+// task. Children never re-split (noClauseSplit). Every clause is answered, honestly refused,
+// or disclosed as unavailable on the record — no silent third state.
+async function clauseSplitReason({ message, conversation_id, agent, engine }) {
+  const clauses = String(message)
+    .replace(/(\d),(\d{3})(?=[^\d]|$)/g, '$1$2') // "2,000" stays one token (disclosed normalization, clause text recorded below)
+    .split(/[,;]|\s+and\s+/i).map(cl => cl.trim())
+    .filter(cl => cl.split(/[^a-zA-Z0-9]+/).filter(Boolean).length >= 2).slice(0, 4);
+  if (clauses.length < 2) return null;
+  const sections = [];
+  const clauseLog = [];
+  const clauseVerifications = [];
+  const clauseEvidence = [];
+  let answered = 0, totalLatency = 0, tokensIn = 0, tokensOut = 0;
+  for (let i = 0; i < clauses.length; i++) {
+    const cl = clauses[i];
+    const before = EXTERNAL_CALLS;
+    let child = null;
+    try {
+      child = await orchestrate({ message: cl, conversation_id: (conversation_id || 'c') + ':clause:' + (i + 1), agent, engine, noClauseSplit: true });
+    } catch (e) { child = null; }
+    const childExt = (child && child.meta && child.meta.external_calls) || 0;
+    EXTERNAL_CALLS = before + childExt;
+    const degraded = !child || !child.answer || (child.meta && child.meta.degraded);
+    clauseLog.push({ clause: cl, ok: !degraded, task_class: child && child.verification ? child.verification.task_class : null, external_calls: childExt, latency_ms: child && child.meta ? child.meta.total_latency_ms : null,
+      child_meta: child && child.meta ? child.meta : 'NO_CHILD', answer_head: child && child.answer ? String(child.answer).slice(0, 150) : null, evidence_count: child && child.evidence ? child.evidence.length : 0 });
+    if (!degraded && child && child.verification) {
+      // only ANSWERED clauses contribute claims to the parent aggregate — an unavailable clause
+      // is disclosed, never claimed (its own child record still carries its honest refusal verification)
+      const cc = child.verification.claim_check;
+      clauseVerifications.push({ clause: cl, verdict: cc ? cc.verdict : 'no-claims', supported: cc ? cc.supported : 0, unsupported: cc ? cc.unsupported : 0, receipt_sha256: child.verification.receipt_sha256, task_class: child.verification.task_class });
+    }
+    const titles = [];
+    if (child && child.evidence) for (const ev of child.evidence) if (ev.results) for (const r of ev.results) titles.push(r.title);
+    clauseEvidence.push({ clause: cl, titles: titles.slice(0, 8) });
+    if (degraded) {
+      sections.push('Part ' + (i + 1) + ' — ' + cl + '\n\nThe reasoning layer was unavailable for this part (backend_timeout). This refusal is disclosed on the record, not masked.');
+    } else {
+      answered++;
+      totalLatency += (child.meta && child.meta.total_latency_ms) || 0;
+      tokensIn += (child.meta && child.meta.tokens_in) || 0;
+      tokensOut += (child.meta && child.meta.tokens_out) || 0;
+      sections.push('Part ' + (i + 1) + ' — ' + cl + '\n\n' + child.answer);
+    }
+  }
+  if (!answered) return { failedSplit: true, clauseLog: clauseLog, clauses: clauses };
+  // aggregate verification: each answered clause was verified by its own frozen verify1Check
+  // against its own evidence units; the parent discloses the honest aggregate.
+  const unsupportedClauses = clauseVerifications.filter(v => /-unsupported/.test(String(v.verdict))).length;
+  const aggVerdict = unsupportedClauses === 0 ? 'all-supported' : unsupportedClauses + '-unsupported';
+  const agg = {
+    ok: true, model: 'harz-verify-1', mode: 'per-clause-aggregate',
+    claims_checked: clauseVerifications.reduce((a, v) => a + (v.supported || 0) + (v.unsupported || 0), 0),
+    supported: clauseVerifications.reduce((a, v) => a + (v.supported || 0), 0),
+    unsupported: clauseVerifications.reduce((a, v) => a + (v.unsupported || 0), 0),
+    verdict: aggVerdict, clauses: clauseVerifications,
+    refused_or_unavailable: clauses.length - answered,
+    note: 'per-clause verification aggregated by the clause-split orchestrator; each clause receipt is on the record',
+  };
+  const content = '**Answer**\n\n' + sections.join('\n\n') +
+    '\n\n(Composed by clause-split orchestration: the combined reasoning call exceeded its time budget (F-GAP4-2c), so your request was split into ' + clauses.length +
+    ' parts; each part ran through the full HARZ task path with its own evidence and verification, and is answered, honestly refused, or disclosed as unavailable on the record. Parts answered: ' + answered + '/' + clauses.length + '.)';
+  const modelRes = {
+    ok: true, content,
+    backend: EXTERNAL_CALLS === 0 ? 'harz-orchestrate-1' : 'gateway',
+    mode: 'clause-split-compose', role: 'reasoner',
+    latency: totalLatency, tokens_in: tokensIn, tokens_out: tokensOut,
+    external_calls: EXTERNAL_CALLS,
+  };
+  return { modelRes: modelRes, aggregate: agg, clauseEvidence: clauseEvidence, clauseLog: clauseLog, clauses: clauses, answered: answered };
+}
+
+async function orchestrate({ message, conversation_id, agent, engine, noClauseSplit }) {
   EXTERNAL_CALLS = 0;
   // v0.13: NFKC unicode normalization — fullwidth/homoglyph question text is normalized to
   // canonical ASCII BEFORE classification and retrieval (Bench G12 finding: fullwidth text
@@ -5973,7 +6051,7 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
       }
     }
   }
-  const modelRes = specialistRes || (codeRes && codeRes.ok
+  let modelRes = specialistRes || (codeRes && codeRes.ok
     ? { ok: true, content: '**Answer**\n\n' + codeRes.name + ' — HARZ template library (harz-code-1):\n\n' + codeRes.code + '\n\nCONFIDENCE: high — generated from the HARZ-authored template library', backend: 'harz-code-1', mode: 'template', role: 'reasoner', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 }
     : await HMI.generate({
     role: AGENT_ROLE[agent] || 'reasoner', engine: route.engine,
@@ -5982,6 +6060,23 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
       { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
     ],
   }));
+  // F-GAP4-2c candidate: the combined reasoner call declared a timeout -> bounded clause-split
+  // retry. Capacity law only: same clause law as search1, per-clause packets + model calls,
+  // globally re-numbered evidence ids, honest per-clause disclosure, one receipt. Frozen
+  // comparison path 'harz1' and offline mode are untouched (offline never reaches an external timeout).
+  let clauseSplitAgg = null;
+  if (!modelRes.ok && modelRes.error === 'backend_timeout' && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
+    execution_log.push({ step: 'clause_split', trigger: 'backend_timeout', why: 'combined reasoning call exceeded the 8s model-call ceiling (F-GAP4-2c)' });
+    const split = await clauseSplitReason({ message, conversation_id: cid, agent, engine }); // children route by their OWN class (route.engine was the parent's class route — it disabled child specialists)
+    if (split && split.failedSplit) {
+      execution_log.push({ step: 'clause_split_compose', ok: false, result: 'all clauses refused/unavailable', clauses: split.clauseLog });
+    } else if (split) {
+      modelRes = split.modelRes;
+      clauseSplitAgg = split.aggregate;
+      for (const ce of split.clauseEvidence) evidence.push({ type: 'search1_packet_clause', clause: ce.clause, results: ce.titles.map(t => ({ title: t })) });
+      execution_log.push({ step: 'clause_split_compose', ok: true, clauses: split.clauseLog, answered: split.answered + '/' + split.clauses.length, aggregate_verdict: split.aggregate.verdict });
+    }
+  }
   execution_log.push({ step: 'reason', ok: modelRes.ok, backend: modelRes.backend, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out });
 
   let answer, meta;
@@ -6018,7 +6113,7 @@ async function orchestrate({ message, conversation_id, agent, engine }) {
   const receipt = await sha256((answer || '') + JSON.stringify(evidence));
   meta.routing = { routed_by: route.routed_by, task_class: taskClass.class, sovereign: route.sovereign, refusal_final: refusalFinal, declared_incapable: route.declared_incapable || null };
   // v0.4: HARZ-Verify-1 claim/evidence check on the final answer
-  const claimCheck = evidenceUnitsGlobal.length ? verify1Check({ answer, units: evidenceUnitsGlobal }) : null;
+  const claimCheck = clauseSplitAgg || (evidenceUnitsGlobal.length ? verify1Check({ answer, units: evidenceUnitsGlobal }) : null);
   // v0.5 AGENT EXECUTION TRACE — delegation is owned by THIS orchestrator.
   // Agents never call one another; every hop is recorded here.
   const agent_trace = [
@@ -6139,7 +6234,7 @@ async function orchestrateStream({ message, conversation_id, agent, engine }, st
 
 
 // Job-based orchestration: short HTTP requests + polling — robust on slow/proxied networks.
-async function orchestrateJob({ message, conversation_id, agent, engine }, jobId) {
+async function orchestrateJob({ message, conversation_id, agent, engine, noClauseSplit }, jobId) {
   EXTERNAL_CALLS = 0;
   const taskClass = classifyTask(message);
   const route = routeEngine(engine, taskClass);
@@ -6282,7 +6377,7 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
       }
     }
   }
-  const modelRes = specialistRes || (codeRes && codeRes.ok
+  let modelRes = specialistRes || (codeRes && codeRes.ok
     ? { ok: true, content: '**Answer**\n\n' + codeRes.name + ' — HARZ template library (harz-code-1):\n\n' + codeRes.code + '\n\nCONFIDENCE: high — generated from the HARZ-authored template library', backend: 'harz-code-1', mode: 'template', role: 'reasoner', latency: 0, tokens_in: 0, tokens_out: 0, external_calls: 0 }
     : await HMI.generate({
     role: AGENT_ROLE[agent] || 'reasoner', engine: route.engine,
@@ -6291,6 +6386,23 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
       { role: 'user', content: contextBlock + '\n\nUSER REQUEST:\n' + message },
     ],
   }));
+  // F-GAP4-2c candidate: the combined reasoner call declared a timeout -> bounded clause-split
+  // retry. Capacity law only: same clause law as search1, per-clause packets + model calls,
+  // globally re-numbered evidence ids, honest per-clause disclosure, one receipt. Frozen
+  // comparison path 'harz1' and offline mode are untouched (offline never reaches an external timeout).
+  let clauseSplitAgg = null;
+  if (!modelRes.ok && modelRes.error === 'backend_timeout' && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
+    execution_log.push({ step: 'clause_split', trigger: 'backend_timeout', why: 'combined reasoning call exceeded the 8s model-call ceiling (F-GAP4-2c)' });
+    const split = await clauseSplitReason({ message, conversation_id: cid, agent, engine }); // children route by their OWN class (route.engine was the parent's class route — it disabled child specialists)
+    if (split && split.failedSplit) {
+      execution_log.push({ step: 'clause_split_compose', ok: false, result: 'all clauses refused/unavailable', clauses: split.clauseLog });
+    } else if (split) {
+      modelRes = split.modelRes;
+      clauseSplitAgg = split.aggregate;
+      for (const ce of split.clauseEvidence) evidence.push({ type: 'search1_packet_clause', clause: ce.clause, results: ce.titles.map(t => ({ title: t })) });
+      execution_log.push({ step: 'clause_split_compose', ok: true, clauses: split.clauseLog, answered: split.answered + '/' + split.clauses.length, aggregate_verdict: split.aggregate.verdict });
+    }
+  }
   execution_log.push({ step: 'reason', ok: modelRes.ok, backend: modelRes.backend, latency_ms: modelRes.latency, tokens_in: modelRes.tokens_in, tokens_out: modelRes.tokens_out });
   let answer;
   let meta;
@@ -6311,7 +6423,7 @@ async function orchestrateJob({ message, conversation_id, agent, engine }, jobId
   }
   const total_latency = Date.now() - t_start;
   const receipt = await sha256((answer || '') + JSON.stringify(evidence));
-  const claimCheck = evidenceUnitsGlobal.length ? verify1Check({ answer, units: evidenceUnitsGlobal }) : null;
+  const claimCheck = clauseSplitAgg || (evidenceUnitsGlobal.length ? verify1Check({ answer, units: evidenceUnitsGlobal }) : null);
   const verification = {
     status: evidence.length ? 'grounded-in-evidence' : 'no-external-evidence',
     receipt_sha256: receipt,
