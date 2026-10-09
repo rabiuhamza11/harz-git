@@ -5680,6 +5680,17 @@ async function search1Packet(message) {
       text: u.text, fullText: u.text, url: u.url, artifact_id: u.artifact_id,
       byte_range: u.byte_range, injection_flag: u.injection_flag, fetched_via: 'harz-intake-m1'
     }));
+    // F-GAP4-2 (Dad's law, Oct 8): the ingest scope is COMPLETE. Corpus-derived packet fields
+    // must not outlive the boundary: value candidates are RE-EXTRACTED from the intake units by
+    // the SAME frozen v1.2 extractor (entity-must, title-or-window binding — unchanged), corpus
+    // conflict metadata is dropped (it was computed over documents no longer in evidence), and the
+    // packet is flagged ingest_scoped so the corpus value ladder cannot substitute. Provenance
+    // must win over retrieval convenience: an ingest-scoped exact-value question answers from
+    // intake or refuses — corpus never substitutes (the packet law, made universal).
+    packet.value_candidates = extractValueCandidates(analyzeQuery(message), packet.selected_evidence.map(e => ({ title: e.title, document_id: e.document_id, fullText: e.fullText })));
+    packet.conflicts = [];
+    packet.mirror_groups = [];
+    packet.ingest_scoped = true;
   }
 
     if (TASKH_INJ === 'stale_evidence' || TASKH_INJ === 'contradictory_evidence' || TASKH_INJ === 'prompt_injection') {
@@ -5987,10 +5998,12 @@ async function orchestrate({ message, conversation_id, agent, engine, noClauseSp
     } else if (taskClass.class === 'identifier_lookup') {
       let lkAns = buildLookupAnswer(packet);
       let lkVia = 'value_extraction', lkCand = (packet.value_candidates || []).length;
-      if (!lkAns) {
+      if (!lkAns && !packet.ingest_scoped) {
         // F-GAP4-2 (Dad's ruling, Oct 8): bounded coverage-aware value ladder — same shape as
         // the promoted fee v0.10.4 ladder. Exact-value claims must survive corpus/index evolution:
         // the packet's own transport re-reaches the value-bearing doc when packet composition shifts.
+        // F-GAP4-2 (Oct 9): the ladder is CORPUS retrieval — it is disabled for ingest-scoped
+        // packets. Corpus never substitutes for intake scope.
         const vb = await valueFallbackLookup(message, packet);
         if (vb) { lkAns = buildLookupAnswer({ ...packet, value_candidates: vb.value_candidates }); lkVia = 'value_extraction_fallback'; lkCand = vb.value_candidates.length; }
       }
@@ -6313,10 +6326,12 @@ async function orchestrateJob({ message, conversation_id, agent, engine, noClaus
     } else if (taskClass.class === 'identifier_lookup') {
       let lkAns = buildLookupAnswer(packet);
       let lkVia = 'value_extraction', lkCand = (packet.value_candidates || []).length;
-      if (!lkAns) {
+      if (!lkAns && !packet.ingest_scoped) {
         // F-GAP4-2 (Dad's ruling, Oct 8): bounded coverage-aware value ladder — same shape as
         // the promoted fee v0.10.4 ladder. Exact-value claims must survive corpus/index evolution:
         // the packet's own transport re-reaches the value-bearing doc when packet composition shifts.
+        // F-GAP4-2 (Oct 9): the ladder is CORPUS retrieval — it is disabled for ingest-scoped
+        // packets. Corpus never substitutes for intake scope.
         const vb = await valueFallbackLookup(message, packet);
         if (vb) { lkAns = buildLookupAnswer({ ...packet, value_candidates: vb.value_candidates }); lkVia = 'value_extraction_fallback'; lkCand = vb.value_candidates.length; }
       }
