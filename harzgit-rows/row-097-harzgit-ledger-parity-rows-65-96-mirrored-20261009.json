@@ -1,0 +1,9 @@
+{
+  "id": 97,
+  "name": "harzgit-ledger-parity-rows-65-96-mirrored-20261009",
+  "description": "Ledger parity restored (Oct 9 2026): verified the cross-seat claim — GitHub public ledger stopped at row 064, D1 rows 65-96 unmirrored. All 32 rows pushed to rabiuhamza11/harz-git harzgit-rows/ as verbatim JSON wrappers with embedded sha256; read-back verification 32/32 byte-identical, rows 93-96 individually confirmed. G6 discipline condition satisfied; G6 approval still awaits Rabiu's word. Ledger law reaffirmed: receipts name their ledger, both ledgers now hold through row 96.",
+  "created_at": "2026-10-09T07:07:50Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "cfa4610c8fe57c5e17188343ba1dff4dfd9b7a3f0b19947528bd2e9994d7acbb",
+  "content": "{\n  \"finding\": \"cross-seat discipline claim VERIFIED TRUE: GitHub ledger (rabiuhamza11/harz-git / harzgit-rows) reached only row-064; D1 rows 65-96 were unmirrored (32 rows).\",\n  \"remedy\": \"all 32 missing rows (65-96, including the G6-cited rows 93, 94, 95, 96) pushed to the GitHub ledger as row-XXX-<slug>.json files, each embedding the verbatim D1 content plus its sha256.\",\n  \"read_back_verification\": \"all 32 files re-downloaded from GitHub and verified byte-identical to D1 content (sha256 match, content match): 32/32. Rows 93-96 individually confirmed.\",\n  \"g6_position\": \"the discipline condition from the forwarded brief is now satisfied. G6 itself still awaits Rabiu's explicit word. Stage 3 corpus EXPORT may start on his approval; the corpus MOVE stays REJECTED until the parity battery (no missing/altered/duplicated docs through both stores) passes on Node 1.\",\n  \"ledger_law_reaffirmed\": \"receipts must name their ledger; the two-ledger discipline (D1 harz_repos = canonical working ledger, GitHub harzgit-rows = public mirror) now holds with full parity through row 96.\"\n}"
+}
