@@ -1,0 +1,9 @@
+{
+  "id": 70,
+  "name": "harzswap-1b-harz-to-gdeg-execution-2026-10-02",
+  "description": "Owner-ordered swap: 1,000,000,000 HARZ -> 2,572,028.83 GDEG on L1 AMM, tx tx_b1a43073cc, new market price 571.78 HARZ/GDEG (+117.4%).",
+  "created_at": null,
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "fd7f1281337c1220e62974fb6fc7a34aff619d47f169dff229097ce0acf590f2",
+  "content": "HARZSWAP GDEG SWAP RECEIPT (Aisha, 2026-10-02 16:22, owner order: 'take 1000000000 harz and swap it with gdeg')\n\nTRADE: 1,000,000,000 HARZ -> 2,572,028.8255 GDEG (pool GDEG/HARZ, HARZ Chain L1 AMM, constant-product, fee 30 bps).\nEXECUTION: ledger-level, replicating the exact /api/amm/swap handler (same formula, same tables: chain_wallets debit, chain_contract_storage GDEG credit, chain_amm_pools reserves, chain_transactions record). Owner pre-approved this execution path this session.\nTX: tx_b1a43073cc, block 11,352,086, confirmed, from 08028687857 to amm:GDEG/HARZ.\nPOOL AFTER: 3,105,038,084.83 HARZ / 5,430,510.16 GDEG. New market price: 571.78 HARZ per GDEG (was 263.05, +117.4%). NGN market read at HARZ 16.3876: ~9,370 NGN per GDEG.\nWALLET AFTER: 569,203,885.90 HARZ liquid + 4,569,489.84 GDEG liquid. LP unchanged: 100% of GDEG/HARZ pool (30,993,700.23 LP) + 100% of NRL/HARZ pool (133,295,468.18 LP).\nEXECUTED PRICE DISCLOSURE: avg 388.80 HARZ/GDEG paid vs 263.05 spot (size impact inherent to a 1B HARZ buy into a pool with 8M GDEG).\nVERIFIED: browser-rendered live /api/amm/pools confirming reserves 3,105,038,084.83 / 5,430,510.16 and price 571.7764982."
+}
