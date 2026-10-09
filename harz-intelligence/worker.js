@@ -6108,8 +6108,14 @@ async function orchestrate({ message, conversation_id, agent, engine, noClauseSp
   // globally re-numbered evidence ids, honest per-clause disclosure, one receipt. Frozen
   // comparison path 'harz1' and offline mode are untouched (offline never reaches an external timeout).
   let clauseSplitAgg = null;
-  if (!modelRes.ok && modelRes.error === 'backend_timeout' && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
-    execution_log.push({ step: 'clause_split', trigger: 'backend_timeout', why: 'combined reasoning call exceeded the 8s model-call ceiling (F-GAP4-2c)' });
+  // F-GAP4-2b/B2 (Oct 9): failure-triggered clause-split. The sealed F-GAP4-2c machinery fired
+  // ONLY on backend_timeout, so a FAST model-call failure (401 expired key, 429, 5xx) bypassed
+  // the split and degraded the WHOLE composed answer — swallowing parts that frozen CPU
+  // specialists could answer (account, URL, fees). Failure speed must not decide whether
+  // answerable parts survive. Any backend_* failure now triggers the same bounded clause-split;
+  // per-clause routing, per-clause honest disclosure, and one receipt are unchanged.
+  if (!modelRes.ok && /^backend_(timeout|\d{3})$/.test(modelRes.error || '') && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
+    execution_log.push({ step: 'clause_split', trigger: modelRes.error, why: 'combined reasoning call failed (' + modelRes.error + ') — bounded clause-split so CPU-answerable parts survive (F-GAP4-2c machinery, failure-triggered per B2)' });
     const split = await clauseSplitReason({ message, conversation_id: cid, agent, engine }); // children route by their OWN class (route.engine was the parent's class route — it disabled child specialists)
     if (split && split.failedSplit) {
       execution_log.push({ step: 'clause_split_compose', ok: false, result: 'all clauses refused/unavailable', clauses: split.clauseLog });
@@ -6436,8 +6442,14 @@ async function orchestrateJob({ message, conversation_id, agent, engine, noClaus
   // globally re-numbered evidence ids, honest per-clause disclosure, one receipt. Frozen
   // comparison path 'harz1' and offline mode are untouched (offline never reaches an external timeout).
   let clauseSplitAgg = null;
-  if (!modelRes.ok && modelRes.error === 'backend_timeout' && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
-    execution_log.push({ step: 'clause_split', trigger: 'backend_timeout', why: 'combined reasoning call exceeded the 8s model-call ceiling (F-GAP4-2c)' });
+  // F-GAP4-2b/B2 (Oct 9): failure-triggered clause-split. The sealed F-GAP4-2c machinery fired
+  // ONLY on backend_timeout, so a FAST model-call failure (401 expired key, 429, 5xx) bypassed
+  // the split and degraded the WHOLE composed answer — swallowing parts that frozen CPU
+  // specialists could answer (account, URL, fees). Failure speed must not decide whether
+  // answerable parts survive. Any backend_* failure now triggers the same bounded clause-split;
+  // per-clause routing, per-clause honest disclosure, and one receipt are unchanged.
+  if (!modelRes.ok && /^backend_(timeout|\d{3})$/.test(modelRes.error || '') && !specialistRes && !(codeRes && codeRes.ok) && engine !== 'harz1' && !noClauseSplit) {
+    execution_log.push({ step: 'clause_split', trigger: modelRes.error, why: 'combined reasoning call failed (' + modelRes.error + ') — bounded clause-split so CPU-answerable parts survive (F-GAP4-2c machinery, failure-triggered per B2)' });
     const split = await clauseSplitReason({ message, conversation_id: cid, agent, engine }); // children route by their OWN class (route.engine was the parent's class route — it disabled child specialists)
     if (split && split.failedSplit) {
       execution_log.push({ step: 'clause_split_compose', ok: false, result: 'all clauses refused/unavailable', clauses: split.clauseLog });
