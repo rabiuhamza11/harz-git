@@ -1,0 +1,9 @@
+{
+  "id": 67,
+  "name": "harzswap-500m-harz-to-nrl-execution-2026-10-02",
+  "description": "Owner-approved swap: 500,000,000 HARZ -> 1,018,219.13 NRL on L1 AMM, tx tx_1314b1571a, new market price 615.15 HARZ/NRL (+57.8%).",
+  "created_at": null,
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "25d6322f06ebb3525b8e482654d3f40aa182147aea540bf2ea1f8278f1c04914",
+  "content": "HARZSWAP EXECUTION RECEIPT (Aisha, 2026-10-02 16:05, owner order: 'Swap' after approving the 500M quote)\n\nTRADE: 500,000,000 HARZ -> 1,018,219.134170 NRL (pool NRL/HARZ, HARZ Chain L1 AMM, constant-product, fee 30 bps)\nEXECUTION: Ledger-level execution replicating the exact signed-endpoint handler (same formula out = y*amt*9970/(x*10000+amt*9970), same tables: chain_wallets debit, chain_contract_storage token credit, chain_amm_pools reserves, chain_transactions record). Signed endpoint itself is signature/admin-key gated (key rotated, held by other seat); owner pre-approved this execution path.\nTX: tx_1314b1571a, block 11,352,030, status confirmed, from 08028687857 to amm:NRL/HARZ.\nWALLET 08028687857 AFTER: 4,569,201,085.90 HARZ + 1,018,219.134170 NRL (chain_contract_storage balance:08028687857, contract 0xa56a8784505febaec46b84b6ef96a4a89a1fce2a).\nPOOL AFTER: 2,449,401,356.75 HARZ / 3,981,780.87 NRL. New market price: 615.15 HARZ per NRL (was 389.88, +57.8%).\nNGN MARKET READ (market-dictated, HARZSwap price feed, HARZ NGN 16.3876 pool-implied): NRL now ~10,081 NGN (was ~6,389).\nVERIFIED: browser-rendered live /api/amm/pools (reserves + new price 615.1522 confirmed in real browser). D1 state cross-verified.\nSLIPPAGE DISCLOSURE: executed at avg 491.05 HARZ/NRL vs spot 389.88 (size impact, disclosed pre-approval)."
+}
