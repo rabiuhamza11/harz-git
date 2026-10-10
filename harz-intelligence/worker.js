@@ -21,7 +21,7 @@ import { reasoner1Call } from './reasoner1-runtime.js';
 //             Agent runtime | Verification (evidence + receipts) | HARZ Root identities | PWA interface
 // Standing order honored: NVIDIA Nemotron via OpenRouter (default model, gateway-abstracted).
 
-const VERSION = '0.8'; // v0.8: + MISSIONS v0.1 layer + Console PWA (contracts/MISSIONS-V1.md)
+const VERSION = '0.8.1'; // v0.8.1: C4 evidence-vs-proof disclosure on chat surfaces (audit C4-CHAT-PROOF-BOUNDARY-AUDIT-V1; smallest fix A1, additive) // v0.8: + MISSIONS v0.1 layer + Console PWA (contracts/MISSIONS-V1.md)
 let ENV = {}; // module workers receive bindings via env — stored here at request start
 
 // G23 AUTHORITY-V2 (additive; frozen ac08d3d): the sovereign origin signs every
@@ -5920,6 +5920,18 @@ async function clauseSplitReason({ message, conversation_id, agent, engine }) {
   return { modelRes: modelRes, aggregate: agg, clauseEvidence: clauseEvidence, clauseLog: clauseLog, clauses: clauses, answered: answered };
 }
 
+// C4 EVIDENCE-VS-PROOF DISCLOSURE (Oct 10, Dad's Go on audit C4-CHAT-PROOF-BOUNDARY-AUDIT-V1):
+// chat answers to proof / judgment / verification demands must state plainly that retrieved
+// evidence is not proof. Deterministic, zero model calls, appended ONLY on matched shapes —
+// ordinary evidence questions are byte-identical. The front door (/console) refuses these
+// shapes outright; the chat surface composes evidence and now says so honestly.
+function proofDemandDisclosure(message) {
+  const m = String(message || '');
+  const demand = /\b(?:prove|proof)\b|\bverify (?:that|whether)\b|\b(?:the|a) (?:best|worst|greatest|fastest|cheapest|safest|most (?:secure|valuable|reliable))\b|\bbetter (?:than|than others)\b|\bsuperior to\b/i;
+  if (!demand.test(m)) return null;
+  return '\n\nDISCLOSURE — evidence, not proof: the lines above are retrieved evidence related to your request. They do not prove the claim asked. HARZ answers from evidence; evaluative claims (best / better / superior) cannot be established from it, and a verification demand is answered only as far as the evidence reaches. Proof-type tasks are refused outright at the front door (/console).';
+}
+
 async function orchestrate({ message, conversation_id, agent, engine, noClauseSplit }) {
   EXTERNAL_CALLS = 0;
   // v0.13: NFKC unicode normalization — fullwidth/homoglyph question text is normalized to
@@ -6142,6 +6154,8 @@ async function orchestrate({ message, conversation_id, agent, engine, noClauseSp
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
     meta = { engine: null, latency_ms: modelRes.latency, degraded: true, error: modelRes.detail || modelRes.error };
   }
+  const c4Note = proofDemandDisclosure(message);
+  if (c4Note) answer += c4Note;
 
   // memory write (explicit authorization only)
   let memoryWritten = null;
@@ -6258,6 +6272,8 @@ async function orchestrateStream({ message, conversation_id, agent, engine }, st
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
     writer.write(enc.encode(answer));
   }
+  const c4NoteS = proofDemandDisclosure(message);
+  if (c4NoteS) { answer += c4NoteS; writer.write(enc.encode(c4NoteS)); }
   let memoryWritten = null;
   if (plan.some(p => p.step === 'memory_write')) {
     const m = message.match(/remember (?:this|that)[:\s]+(.+)|don'?t forget[:\s]+(.+)|keep in memory[:\s]+(.+)/i);
@@ -6471,6 +6487,8 @@ async function orchestrateJob({ message, conversation_id, agent, engine, noClaus
       evidence.map(e => e.type === 'search' ? e.results.map(r => '- ' + r.title + ' (' + r.url + ')').join('\n') : JSON.stringify(e.result || e.excerpt || '')).join('\n');
     meta = { engine: null, degraded: true, error: modelRes.detail || modelRes.error, latency_ms: modelRes.latency };
   }
+  const c4NoteJ = proofDemandDisclosure(message);
+  if (c4NoteJ) answer += c4NoteJ;
   let memoryWritten = null;
   if (plan.some(p => p.step === 'memory_write')) {
     const m = message.match(/remember (?:this|that)[:\s]+(.+)|don'?t forget[:\s]+(.+)|keep in memory[:\s]+(.+)/i);
