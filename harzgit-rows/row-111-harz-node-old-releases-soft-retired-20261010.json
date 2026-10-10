@@ -1,0 +1,9 @@
+{
+  "id": 111,
+  "name": "harz-node-old-releases-soft-retired-20261010",
+  "description": "RETIRED (Rabiu approved 'Retire'): reader-offline v0.1, v0.2, v0.3, v0.5 moved to drafts — hidden, reversible, assets intact. v0.7 (validated standard) and v0.6 (app shells, referenced by v0.7) stay published. search-offline-v0.2 untouched (out of scope).",
+  "created_at": "2026-10-10T01:55:35Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content_sha256": "490d767d50c26fefb6b1a59ec342801f01e56d0310caab632f1221ec1a0a5c67",
+  "content": "{\n  \"change\": \"Soft-retired old harz-node releases to drafts (hidden, fully reversible): reader-offline-v0.1, v0.2, v0.3, v0.5. (No v0.4 release ever existed.)\",\n  \"kept_published\": {\n    \"reader-offline-v0.7\": \"current validated standard one-file (Rabiu confirmed SEALED on Infinix, receipt 110)\",\n    \"reader-offline-v0.6\": \"carries the 83 offline HARZ app shells \\u2014 v0.7's listApps points here; not duplicated elsewhere, so it stays live\",\n    \"search-offline-v0.2\": \"different artifact lineage, out of retirement scope, untouched\"\n  },\n  \"reversibility\": \"draft=true only. Git tags, commits and assets all remain; un-draft via single API call if ever needed.\",\n  \"audit_note\": \"Phone file of unknown origin (receipt 108) was among reasons retirement waited until v0.7 was validated on the Infinix. With v0.7 confirmed and in use, the drafts no longer risk cutting off a working artifact.\",\n  \"approved_by\": \"Rabiu, WhatsApp 2026-10-10 02:55 WAT ('Retire')\"\n}"
+}
