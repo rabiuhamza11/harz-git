@@ -1,1 +1,0 @@
-TORN 2026-10-04T05:25:26.961Z bytes=112 :: {"envelope":{"from":"ab","ts":1,"nonce":"torn","sig":"ff","text":"torn tail from kill -9 mid-append","name":"X"}

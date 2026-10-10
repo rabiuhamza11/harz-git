@@ -6,3 +6,4 @@ backups/
 *.log
 .env
 **/keys/*-key.pem
+tmp/
