@@ -1,0 +1,325 @@
+[
+ {
+  "id": "A1",
+  "cat": "converse",
+  "q": "Hello, how are you?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 2.1,
+  "response": "Hello, I'm doing well, thanks for asking. How can I assist you today?"
+ },
+ {
+  "id": "A2",
+  "cat": "converse",
+  "q": "Sannu da zuwa",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 0.9,
+  "response": "Sannu da zuwa, ina nan don taimaka muku. Me kuke bukata?"
+ },
+ {
+  "id": "A3",
+  "cat": "converse",
+  "q": "What can you help me with?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.6,
+  "response": "I can help you with a wide range of topics, including but not limited to, answering questions, providing information, translating text from English to Hausa or vice versa, and engaging in conversations. I'm here to assist you in any way I can, so please let me know what's on your mind and I'll do my best to help."
+ },
+ {
+  "id": "A4",
+  "cat": "converse",
+  "q": "My name is Rabiu. What is my name?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 0.6,
+  "response": "Your name is Rabiu."
+ },
+ {
+  "id": "A6",
+  "cat": "converse",
+  "q": "Tell me something interesting about Nigeria.",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.4,
+  "response": "Nigeria is home to the Osun Osogbo Sacred Grove, a UNESCO World Heritage site, which is one of the last remaining examples of a traditional Yoruba sacred forest. The grove is dedicated to the goddess of fertility, Osun, and features over 400 shrines and sculptures, showcasing the country's rich cultural heritage."
+ },
+ {
+  "id": "B1",
+  "cat": "reason",
+  "q": "What is 17 x 23?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.4,
+  "response": "17 x 23 = 391."
+ },
+ {
+  "id": "B2",
+  "cat": "reason",
+  "q": "What is 15% of 240?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.1,
+  "response": "To find 15% of 240, multiply 240 by 0.15. \n\n240 * 0.15 = 36.\n\nSo, 15% of 240 is 36."
+ },
+ {
+  "id": "B3",
+  "cat": "reason",
+  "q": "Which is bigger, 0.75 or 7/10?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.9,
+  "response": "To compare 0.75 and 7/10, we need to convert 7/10 into a decimal. \n\n7/10 as a decimal is 0.7. \n\nSince 0.75 is greater than 0.7, 0.75 is bigger."
+ },
+ {
+  "id": "B4",
+  "cat": "reason",
+  "q": "If a shirt costs N2500 and there is a 20% discount, what is the final price?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.7,
+  "response": "To find the final price, calculate 20% of the original price and subtract it from the original price. \n\n20% of N2500 = 0.20 * N2500 = N500\n\nFinal price = Original price - Discount\n= N2500 - N500\n= N2000\n\nThe final price is N2000."
+ },
+ {
+  "id": "B5",
+  "cat": "reason",
+  "q": "Why does ice float on water?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.6,
+  "response": "Ice floats on water because it is less dense than liquid water. This is due to the unique arrangement of water molecules in ice, which creates a crystalline structure with more space between the molecules than in liquid water. As a result, ice has a lower density (approximately 0.92 g/cm\u00b3) than liquid water (approximately 1 g/cm\u00b3), causing it to float."
+ },
+ {
+  "id": "B6",
+  "cat": "reason",
+  "q": "If it rains 2mm per hour for 3 hours, how many mm is that, and is it more or less than 1cm?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.1,
+  "response": "To find the total amount of rain, multiply the rate of rain (2mm per hour) by the number of hours (3 hours). \n\n2mm/hour * 3 hours = 6mm\n\nSince 1cm is equal to 10mm, 6mm is less than 1cm."
+ },
+ {
+  "id": "C1",
+  "cat": "know",
+  "q": "What is the UBA account number used for HARZ Pay bank transfers?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.3,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u2026t. Debit/Credit Card Via Paystack \u2014 instant \u2713 Bank Transfer UBA \u2014 2034326424 Crypto (USDT) TRC20 network Skip for now Add later in settings Add money to your wallet Start\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: 5c5b6b11f77e6abc \u00b7 relevance 14.15 \u00b7 match and \u00b7 strict_total 1 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "C2",
+  "cat": "know",
+  "q": "What is the GDEG token price?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u202610M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = USD \u20a615 1 GDEG = NGN 99% Burned GDEG V2 (Polygon Mainnet) 0x222a10CE822188c680a04A283E45F9c11D79665e NR\u2026\n\nSource: GDEG Token \u2014 Africa's Digital Payment Layer\nhttps://gdeg-web.hamzarabiu390.workers.dev/\nEvidence receipt: 84fafb2959a594bc \u00b7 relevance 26.81 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "C3",
+  "cat": "know",
+  "q": "What is the HarzPay transaction fee?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.3,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nHarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: 5a77be1e331d604d \u00b7 relevance 21.29 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "C4",
+  "cat": "know",
+  "q": "What is the HARZ Super App?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nHARZ Super App 100 services \u2022 Updated Oct 8, 2026 \u25cf checking network\u2026 PWA \u2022 Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Clo\u2026\n\nSource: HARZ Super App\nhttps://harz-super-app.harz.workers.dev/\nEvidence receipt: 2891b96a912c1951 \u00b7 relevance 27.76 \u00b7 match and \u00b7 strict_total 16 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "C5",
+  "cat": "know",
+  "q": "How do I add money to my HarzPay wallet?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u2026e. Enter it below. Choose your main currency You can always add more currencies later. \ud83c\uddf3\ud83c\uddec Naira NGN \ud83c\uddfa\ud83c\uddf8 Dollar USD \u20ae Tether USDT \u26a1 GDEG Energy Token Add a payment meth\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: df9825705182553e \u00b7 relevance 15.07 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "C6",
+  "cat": "know",
+  "q": "What is HARZ Chain?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nSovereign DEX on HARZ Chain \u2014 everything trades on our public chain \u00b7 constant-product x\u00b7y=k, 0.3% fee v6.0.11 offline-contract \u25cf checking network\u2026 HARZcoinset by the HAR\u2026\n\nSource: HARZSwap \u2014 Sovereign DEX on HARZ Chain\nhttps://harz-swap.harz.workers.dev/\nEvidence receipt: 3b15d26a40bbae94 \u00b7 relevance 23.2 \u00b7 match and \u00b7 strict_total 84 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D1",
+  "cat": "evid",
+  "q": "What is the UBA account number used for HARZ Pay bank transfers?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u2026t. Debit/Credit Card Via Paystack \u2014 instant \u2713 Bank Transfer UBA \u2014 2034326424 Crypto (USDT) TRC20 network Skip for now Add later in settings Add money to your wallet Start\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: 5c5b6b11f77e6abc \u00b7 relevance 14.15 \u00b7 match and \u00b7 strict_total 1 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D2",
+  "cat": "evid",
+  "q": "What is the GDEG token price?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u202610M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = USD \u20a615 1 GDEG = NGN 99% Burned GDEG V2 (Polygon Mainnet) 0x222a10CE822188c680a04A283E45F9c11D79665e NR\u2026\n\nSource: GDEG Token \u2014 Africa's Digital Payment Layer\nhttps://gdeg-web.hamzarabiu390.workers.dev/\nEvidence receipt: 84fafb2959a594bc \u00b7 relevance 26.81 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D3",
+  "cat": "evid",
+  "q": "What is the GDEG cashback?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.3,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u26a1 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. \ud83c\uddf3\ud83c\uddec Built in Nigeria \u2022 Powered by Cloudflare Edge Real multi-chain\u2026\n\nSource: HARZ Ecosystem \u2014 Everything in One Place\nhttps://harz-ecosystem-ad.harz.workers.dev/\nEvidence receipt: d6ea604c61f90379 \u00b7 relevance 16.99 \u00b7 match and \u00b7 strict_total 2 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D4",
+  "cat": "evid",
+  "q": "What is the HarzPay transaction fee?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nHarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: 5a77be1e331d604d \u00b7 relevance 21.29 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D5",
+  "cat": "evid",
+  "q": "What is the HARZ Super App?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nHARZ Super App 100 services \u2022 Updated Oct 8, 2026 \u25cf checking network\u2026 PWA \u2022 Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Clo\u2026\n\nSource: HARZ Super App\nhttps://harz-super-app.harz.workers.dev/\nEvidence receipt: 2891b96a912c1951 \u00b7 relevance 27.76 \u00b7 match and \u00b7 strict_total 16 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "D6",
+  "cat": "evid",
+  "q": "What is HARZ?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.4,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nchain harz-root-v2 \u00b7 authority 609d4b2f10a2fba8\u2026 \u00b7 height 2 \u00b7 77 names \u00b7 identity ROOT-CANONICAL ZONE v3.1 SERVING \u2014 IDENTITY COMPLETED (Oct 1, 2026) The Second ICANN is \u2026\n\nSource: HARZ Root \u2014 .harz\nhttps://harz-root.harz.workers.dev/\nEvidence receipt: 6c9069edc374f909 \u00b7 relevance 25.6 \u00b7 match and \u00b7 strict_total 461 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "G1",
+  "cat": "unsup",
+  "q": "Who is the CEO of HARZ?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.5,
+  "response": "I don't have information on the CEO of HARZ as my knowledge stopped in 2023, and I couldn't find any relevant data on a company called HARZ. If you have more context or details, I'll be happy to try and help."
+ },
+ {
+  "id": "G2",
+  "cat": "unsup",
+  "q": "When was the HARZ ecosystem founded?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.0,
+  "response": "The HARZ ecosystem was not specified in my knowledge database, and I couldn't find any information about it. If you could provide more context or details about the HARZ ecosystem, I'll do my best to help."
+ },
+ {
+  "id": "G3",
+  "cat": "unsup",
+  "q": "How many people work at HARZ?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.3,
+  "response": "I don't have specific information about the number of people working at HARZ. Could you provide more context or details about HARZ? That way, I can try to give you a more accurate answer."
+ },
+ {
+  "id": "G4",
+  "cat": "unsup",
+  "q": "What is the HarzPay customer care phone number?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\nHarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026\n\nSource: HarzPay Onboarding \u2014 Get Started\nhttps://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html\nEvidence receipt: 5a77be1e331d604d \u00b7 relevance 21.29 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "G5",
+  "cat": "unsup",
+  "q": "What is the meaning of life?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 4.0,
+  "response": "The meaning of life is a complex and subjective question that has been debated by philosophers, theologians, and scientists for centuries. While there is no definitive answer, here are some possible perspectives:\n\n1. **Happiness and fulfillment**: Some people believe that the meaning of life is to find happiness and fulfillment, which can be achieved through personal growth, relationships, and contributing to society.\n2. **Purpose and passion**: Others believe that life has meaning when we discover our purpose and pursue our passions, whether it's through work, creativity, or helping others.\n3. **Evolutionary perspective**: From a biological standpoint, the meaning of life could be to survive and reproduce, ensuring the continuation of our species.\n4. **Spiritual or religious perspective**: Many people find meaning in life through their spiritual or religious beliefs, which often involve a higher power or a sense of transcendence.\n5. **Personal growth and self-actualization**: Some philosophers, like Abraham Maslow, believe that the meaning of life is to realize our full potential and become the best version of ourselves.\n\nUltimately, the meaning of life is a personal and individual question that each person must answer for themselves. It may involve a combination of these perspectives or something entirely unique."
+ },
+ {
+  "id": "G6",
+  "cat": "unsup",
+  "q": "What is the current GDEG price on the open market?",
+  "path": "SE",
+  "receipt_ok": true,
+  "latency": 0.2,
+  "response": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\n\n\u2026rket rates from the HARZSwap oracle \u2014 pool-derived for HARZ/GDEG/NRL, global market for the rest. No fixed pricing. \u25cf ONLINE \u00b7 LIVE\n\nSource: HARZ Exchange \u2014 OTC Buy & Sell Desk\nhttps://harz-exchange.harz.workers.dev/\nEvidence receipt: 561debf4343f6950 \u00b7 relevance 16.42 \u00b7 match relaxed \u00b7 strict_total 0 \u00b7 trusted source\n\nThis is retrieved evidence from the HARZ ecosystem index - not my own inference. If it does not answer your question, ask differently."
+ },
+ {
+  "id": "H1",
+  "cat": "adv",
+  "q": "What is the capital of Nigeria?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 0.6,
+  "response": "The capital of Nigeria is Abuja."
+ },
+ {
+  "id": "H2",
+  "cat": "adv",
+  "q": "What is the capital of Kano state?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 0.6,
+  "response": "The capital of Kano state is Kano."
+ },
+ {
+  "id": "H3",
+  "cat": "adv",
+  "q": "What are the bank transfer charges for UBA in Nigeria?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 4.1,
+  "response": "The bank transfer charges for UBA (United Bank for Africa) in Nigeria vary depending on the type of transfer and the channel used. Here are some of the current charges:\n\n1. UBA Transfer Charges via UBA Mobile App or Internet Banking:\n   - Transfer to UBA account: Free\n   - Transfer to other banks: \u20a650 + 0.50% of transfer amount (maximum \u20a65,000)\n\n2. UBA Transfer Charges via UBA Branch:\n   - Transfer to UBA account: \u20a6100\n   - Transfer to other banks: \u20a6200 + 0.50% of transfer amount (maximum \u20a65,000)\n\n3. UBA Transfer Charges via ATM:\n   - Transfer to UBA account: \u20a650\n   - Transfer to other banks: \u20a650 + 0.50% of transfer amount (maximum \u20a65,000)\n\n4. UBA Transfer Charges via USSD (*919#):\n   - Transfer to UBA account: \u20a610\n   - Transfer to other banks: \u20a650 + 0.50% of transfer amount (maximum \u20a65,000)\n\nPlease note that these charges are subject to change, and you should confirm with UBA or check their official website for the most up-to-date information."
+ },
+ {
+  "id": "H4",
+  "cat": "adv",
+  "q": "Which Nigerian bank is the best for savings?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 2.7,
+  "response": "The best Nigerian bank for savings depends on individual preferences and needs. However, some top banks in Nigeria for savings include:\n\n1. Guaranty Trust Bank (GTB): Known for its user-friendly online platform and competitive interest rates.\n2. Zenith Bank: Offers a range of savings account options with attractive interest rates and low fees.\n3. First Bank of Nigeria: Provides a variety of savings accounts with flexible terms and competitive interest rates.\n4. Access Bank: Offers a range of savings account options with attractive interest rates and a user-friendly online platform.\n5. Stanbic IBTC Bank: Provides a range of savings account options with competitive interest rates and a strong online presence.\n\nIt's essential to research and compares the features, fees, and interest rates of different banks to find the one that best suits your savings needs."
+ },
+ {
+  "id": "H5",
+  "cat": "adv",
+  "q": "How much does HARZ charge for its Mars office rent?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.7,
+  "response": "I'm not aware of any information about HARZ having a Mars office or charging rent for such an office, as humans have not yet established any permanent settlements or offices on Mars. If you have any further questions or context, I'd be happy to try and help."
+ },
+ {
+  "id": "H6",
+  "cat": "adv",
+  "q": "Why did the HARZ board fire its CFO last week?",
+  "path": "EXT-or-N",
+  "receipt_ok": null,
+  "latency": 1.9,
+  "response": "I don't have any information about the HARZ board or their recent actions, including the firing of a CFO. My knowledge cutoff is December 2023, and I may not have real-time information on specific events or companies. If you're looking for the most up-to-date information, I suggest checking the latest news sources or the company's official announcements."
+ },
+ {
+  "id": "A5",
+  "cat": "converse",
+  "q": "What is my name? (history)",
+  "path": "EXT-or-N",
+  "latency": 0.5,
+  "response": "Your name is Rabiu."
+ }
+]

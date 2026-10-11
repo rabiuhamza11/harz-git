@@ -1,0 +1,74 @@
+[
+ {
+  "id": "E1",
+  "q": "Build me a calculator.",
+  "online": true,
+  "obs": "ai: \u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT VERIFIED FOR RELEVANCE\u202610M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = U || ai: \u25cf BUILT ON-DEVICE \u00b7 PREVIEW OPENCalculator built on your device - preview is open on top of the chat. Say \"show preview\" to reopen it after closing."
+ },
+ {
+  "id": "E2",
+  "q": "Build me a clock.",
+  "online": true,
+  "obs": "user: Build me a clock. || ai: Clock built, tested (8/8) and verified by the HARZ artifact engine.Open your working clock here:https://harz-intelligence.harz.workers.dev/api/artifac"
+ },
+ {
+  "id": "E3",
+  "q": "Build me a clock and a calculator.",
+  "online": true,
+  "obs": "ai: 2 build tasks requested:\u25cf Task 1 of 2: clock - building via the HARZ artifact engine, result below.\u25cf Task 2 of 2: calculator - BUILT ON-DEVICE \u00b7 PREVI || ai: Clock built, tested (8/8) and verified by the HARZ artifact engine.Open your working clock here:https://harz-intelligence.harz.workers.dev/api/artifac"
+ },
+ {
+  "id": "E4",
+  "q": "Build me a notes pad.",
+  "online": true,
+  "obs": "ai: Clock built, tested (8/8) and verified by the HARZ artifact engine.Open your working clock here:https://harz-intelligence.harz.workers.dev/api/artifac || ai: \u25cf BUILT ON-DEVICE \u00b7 PREVIEW OPENNotes pad built on your device - preview open. Notes save on your device and survive restarts. Say \"show preview\" to r"
+ },
+ {
+  "id": "E5",
+  "q": "What time is it now?",
+  "online": true,
+  "obs": "user: What time is it now? || ai: I'm a large language model, I don't have real-time access to the current time. But I can suggest ways for you to find out the current time.You can che"
+ },
+ {
+  "id": "E6",
+  "q": "Build me a piano.",
+  "online": true,
+  "obs": "ai: I'm a large language model, I don't have real-time access to the current time. But I can suggest ways for you to find out the current time.You can che || ai: \u25cf BUILT ON-DEVICE \u00b7 PREVIEW OPENI cannot build that yet - and I will not pretend. I can build and preview ON YOUR DEVICE: 1) a clock 2) a calculator 3"
+ },
+ {
+  "id": "F1",
+  "q": "What is 2 + 3?",
+  "online": false,
+  "obs": "user: What is 2 + 3? || ai: \u25cf OFFLINE \u00b7 LOCAL BRAIN2 + 3 = 5 (calculated on-device)"
+ },
+ {
+  "id": "F2",
+  "q": "What is 17 x 23?",
+  "online": false,
+  "obs": "user: What is 17 x 23? || ai: \u25cf OFFLINE \u00b7 LOCAL BRAINI cannot answer that offline - my local brain is small. It handles greetings, Nigeria facts, time and date, arithmetic, clock/c"
+ },
+ {
+  "id": "F3",
+  "q": "Sannu da zuwa",
+  "online": false,
+  "obs": "user: Sannu da zuwa || ai: \u25cf OFFLINE \u00b7 LOCAL BRAINGood morning! Sannu da zuwa. Na nan gare ka - offline mode, local brain."
+ },
+ {
+  "id": "F4",
+  "q": "What time is it now?",
+  "online": false,
+  "obs": "user: What time is it now? || ai: \u25cf OFFLINE \u00b7 LOCAL BRAINYour device clock says: 5:52:31 AMDate: 10/11/2026"
+ },
+ {
+  "id": "F5",
+  "q": "Build me a calculator.",
+  "online": false,
+  "obs": "user: Build me a calculator. || ai: \u25cf OFFLINE \u00b7 LOCAL BRAINCalculator built on your device - preview open. Works fully offline."
+ },
+ {
+  "id": "F6",
+  "q": "Who is the president of France?",
+  "online": false,
+  "obs": "user: Who is the president of France? || ai: \u25cf OFFLINE \u00b7 LOCAL BRAINI cannot answer that offline - my local brain is small. It handles greetings, Nigeria facts, time and date, arithmetic, clock/c"
+ }
+]
