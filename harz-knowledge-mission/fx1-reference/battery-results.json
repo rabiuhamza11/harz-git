@@ -1,0 +1,254 @@
+{
+ "results": [
+  {
+   "url": "https://en.wikipedia.org/wiki/World_War_II",
+   "pages": [
+    {
+     "url": "https://en.wikipedia.org/wiki/World_War_II",
+     "status": 200,
+     "bytes": 2061350
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "World War II - Wikipedia",
+   "method": "readability-density-v1",
+   "char_len": 188720,
+   "full_text_sha256": "cd79573e9ea64b9adc2fceb6e6a8ab49a9f9515f04d1bab31fb6740d7eec6237",
+   "full_len": 188720,
+   "pagination_pages": 1,
+   "ms": 292,
+   "case": "A-1a",
+   "wall_s": 0.29
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/History_of_Nigeria",
+   "pages": [
+    {
+     "url": "https://en.wikipedia.org/wiki/History_of_Nigeria",
+     "status": 200,
+     "bytes": 1384412
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "History of Nigeria - Wikipedia",
+   "method": "readability-density-v1",
+   "char_len": 190575,
+   "full_text_sha256": "d385ece3cdc502f518aff6e5c5e4d0c73439a5afbec1db6d2fd28a210fd05e87",
+   "full_len": 190575,
+   "pagination_pages": 1,
+   "ms": 232,
+   "case": "A-1b",
+   "wall_s": 0.23
+  },
+  {
+   "url": "http://127.0.0.1:8910/pg1.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/pg1.html",
+     "status": 200,
+     "bytes": 1805
+    },
+    {
+     "url": "http://127.0.0.1:8910/pg2.html",
+     "status": 200,
+     "bytes": 1775
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Doc Part 2",
+   "method": "readability-density-v1",
+   "char_len": 3400,
+   "full_text_sha256": "6eba9ac81fde4533c1908b6543490220d96d83e1b53303f0b947cdade738e949",
+   "full_len": 3400,
+   "pagination_pages": 2,
+   "ms": 101,
+   "case": "A-2",
+   "wall_s": 0.1
+  },
+  {
+   "url": "http://127.0.0.1:8910/shell.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/shell.html",
+     "status": 200,
+     "bytes": 116
+    }
+   ],
+   "status": "unsupported",
+   "reason": "js-only rendering (V1 limitation)",
+   "title": "SPA Shell",
+   "case": "A-3a",
+   "wall_s": 0.05
+  },
+  {
+   "url": "https://www.heritage.org/",
+   "pages": [
+    {
+     "url": "https://www.heritage.org/",
+     "status": 403,
+     "bytes": 5472
+    }
+   ],
+   "status": "unsupported",
+   "reason": "access denied (bot wall or forbidden)",
+   "case": "A-3b",
+   "wall_s": 0.05
+  },
+  {
+   "url": "http://127.0.0.1:8910/bad.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/bad.html",
+     "status": 200,
+     "bytes": 1834
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Broken Page",
+   "method": "readability-density-v1",
+   "char_len": 1733,
+   "full_text_sha256": "5394e8ad7eb5f349d30ceccdeaed0656c81333186c677686ab3c6bafabcb19ae",
+   "full_len": 1733,
+   "pagination_pages": 1,
+   "ms": 48,
+   "case": "A-4",
+   "wall_s": 0.05
+  },
+  {
+   "url": "http://dead-harz-nonexistent-xyz99123.com/",
+   "pages": [
+    {
+     "url": "http://dead-harz-nonexistent-xyz99123.com/",
+     "status": 0,
+     "bytes": 1
+    }
+   ],
+   "status": "failed_fetch",
+   "reason": "HTTP 0",
+   "case": "A-5a",
+   "wall_s": 0.01
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/HARZ_Nonexistent_Test_Page_87231",
+   "pages": [
+    {
+     "url": "https://en.wikipedia.org/wiki/HARZ_Nonexistent_Test_Page_87231",
+     "status": 404,
+     "bytes": 51333
+    }
+   ],
+   "status": "failed_fetch",
+   "reason": "HTTP 404",
+   "case": "A-5b",
+   "wall_s": 0.06
+  },
+  {
+   "url": "http://127.0.0.1:8910/dup-a.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/dup-a.html",
+     "status": 200,
+     "bytes": 1771
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Duplicate Study",
+   "method": "readability-density-v1",
+   "char_len": 1679,
+   "full_text_sha256": "bcb9aced29a1385af28fe8697f59eac925d4567839b3eff864b74a6d5169b0d4",
+   "full_len": 1679,
+   "pagination_pages": 1,
+   "ms": 49,
+   "case": "A-6a",
+   "wall_s": 0.05
+  },
+  {
+   "url": "http://127.0.0.1:8910/dup-b.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/dup-b.html",
+     "status": 200,
+     "bytes": 1771
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Duplicate Study",
+   "method": "readability-density-v1",
+   "char_len": 1679,
+   "full_text_sha256": "bcb9aced29a1385af28fe8697f59eac925d4567839b3eff864b74a6d5169b0d4",
+   "full_len": 1679,
+   "pagination_pages": 1,
+   "ms": 49,
+   "case": "A-6b",
+   "wall_s": 0.05
+  },
+  {
+   "url": "http://127.0.0.1:8910/change.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/change.html",
+     "status": 200,
+     "bytes": 1794
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Living Doc",
+   "method": "readability-density-v1",
+   "char_len": 1697,
+   "full_text_sha256": "aacb6d2aeb87f7761cb88df646f2264a87feec15106b7d375dedbe1775d3a8e0",
+   "full_len": 1697,
+   "pagination_pages": 1,
+   "ms": 48,
+   "case": "A-7v1",
+   "wall_s": 0.05
+  },
+  {
+   "url": "http://127.0.0.1:8910/change.html",
+   "pages": [
+    {
+     "url": "http://127.0.0.1:8910/change.html",
+     "status": 200,
+     "bytes": 1811
+    }
+   ],
+   "status": "complete",
+   "reason": "",
+   "title": "Living Doc",
+   "method": "readability-density-v1",
+   "char_len": 1714,
+   "full_text_sha256": "51ab93332b89d7854eef66f18bc05b9d4df4ac64367e594bd0f9dd835d79924d",
+   "full_len": 1714,
+   "pagination_pages": 1,
+   "ms": 48,
+   "case": "A-7v2",
+   "wall_s": 0.05
+  }
+ ],
+ "dup_ok": true,
+ "version_ok": true,
+ "m1": [
+  {
+   "doc": "WW2",
+   "full_chars": 188720,
+   "snippet_2k": 2000,
+   "ratio": 94.4,
+   "d1_row_kb": 185.2,
+   "fetch_ms": 292
+  },
+  {
+   "doc": "HistNigeria",
+   "full_chars": 190575,
+   "snippet_2k": 2000,
+   "ratio": 95.3,
+   "d1_row_kb": 187.1,
+   "fetch_ms": 232
+  }
+ ]
+}
