@@ -1,0 +1,77 @@
+{
+  "workstream": "HARZ Offline Knowledge Expansion",
+  "team": "A - Corpus Inventory and Reconciliation",
+  "version": "v0 (first live pull, 2026-10-11 ~23:55 WAT)",
+  "scale_ruling": "C (reference library + expandable web archive; owner's own Oct 8 order + corpus mandate)",
+  "stores": [
+    {
+      "store": "harz-million-corpus (D1, account 1, uuid ea622de9-44a6-499e-8839-a42cd5a690d5)",
+      "role": "master full-text reservoir",
+      "live_measured": {
+        "docs": 1065734,
+        "content_bytes": 7250224584,
+        "d1_file_size_bytes": 8924024832,
+        "docs_over_2000_chars": 739572,
+        "domains": 2823,
+        "cap": "9.5GB (honored)",
+        "backup": "docs_enc_backup_20261011 table (563 rows)"
+      },
+      "by_source": [
+        {"source": "wikipedia-ccby-sa-4.0", "docs": 881966, "bytes": 4790298465},
+        {"source": "gutenberg-public-domain", "docs": 163003, "bytes": 2344995655},
+        {"source": "hunted-recrawl", "docs": 6156, "bytes": 45109391},
+        {"source": "unlabeled", "docs": 5335, "bytes": 11617642},
+        {"source": "hunted-stage2", "docs": 4389, "bytes": 28486652},
+        {"source": "web", "docs": 3480, "bytes": 21917472},
+        {"source": "cloud-wave", "docs": 780, "bytes": 4932044},
+        {"source": "news-rss", "docs": 625, "bytes": 2867263}
+      ],
+      "by_language": [
+        {"lang": "en", "docs": 688993},
+        {"lang": "simple", "docs": 171669},
+        {"lang": "ha", "docs": 103764},
+        {"lang": "ig", "docs": 46259},
+        {"lang": "ff", "docs": 22961},
+        {"lang": "yo", "docs": 12567}
+      ],
+      "dedupe_ledger": {"meta_total_ingested": 1623831, "stored": 1065734, "rejected_by_dedupe_laws": 558097}
+    },
+    {
+      "store": "harz_search_v02 (D1, account 1, uuid 3f84cac4) - live search index",
+      "live_measured": {"docs": 11365, "domains": 1610, "index_digest": "aa22a26ed4bd5aeaee6e7de4e431c1f4e6bc1e48689c173276a83b71445834ac", "text_depth": "snippets (2,000-char cap)", "full_text_wired": 6285, "wired_pct": "55.3", "remain_preview": 5080, "preview_breakdown": "381 dead-at-origin + 4,699 near-duplicate rejected by prefix-hash law"}
+    },
+    {
+      "store": "harz_search_v02 (D1, account 2) - big node",
+      "recorded": {"docs": 42622, "note": "source of the accepted 5K Knowledge Core; disjoint from live index by the Oct 11 dual-store audit"}
+    },
+    {
+      "store": "Knowledge Core kb5k (KV + phone kit)",
+      "status": "ACCEPTED (frozen, seal 0a5c75d4, 5,000 docs, 4.6MB phone kit)",
+      "role": "known-good offline baseline - never replaced casually"
+    },
+    {
+      "store": "harz-fx-v1 (D1, account 2, uuid f8ca1ce5)",
+      "live_measured": {"docs": 4, "complete": 2, "chars": 190110}
+    },
+    {
+      "store": "one-file readers (GitHub releases)",
+      "recorded": {"v03": "411 docs / 3,503,360 chars", "v05": "1,209 docs / 5,743,838 chars", "v06": "932 docs / 5,906,020 chars", "role": "zero-server sovereign fallback (sealed static, predate Oct 10 wiring)"}
+    },
+    {
+      "store": "phone one-file copy (Rabiu's device)",
+      "recorded": {"docs": 785, "chars": 5997406, "content": "Times of India present", "lineage": "NOT on HarzGit record - origin unconfirmed (row 108 flag)"}
+    }
+  ],
+  "discrepancy_report": [
+    "Forwarded-plan figure '785 documents with full readable text' maps to the PHONE one-file copy (row 108), a build lineage absent from HarzGit. Server-side full-text is far larger: 739,572 reservoir docs exceed 2,000 chars and 6,285 index pages are wired to stored full text. The figure came from a different snapshot/store, as the plan suspected.",
+    "Forwarded-plan figure '1.06M documents / 8.9 GB' CONFIRMED live: 1,065,734 docs. The 8.9GB is the D1 file size (indexes + backup table); actual stored content is 7.25GB of the 9.5GB cap.",
+    "meta.total_ingested (1,623,831) vs stored (1,065,734): 558,097 ingest attempts were rejected by dedupe laws - the dedupe ledger is healthy and recorded.",
+    "The real gap is NOT acquisition: the reservoir already holds a licensed library (Wikipedia CC-BY-SA 4.0 incl. Hausa 103K, Igbo 46K, Fulfulde 23K, Yoruba 12.6K docs + 163K Gutenberg public-domain books). The gap is OFFLINE AVAILABILITY: every offline artifact today is tiny (4.6MB kit, ~6MB one-files) while the reservoir is 7.25GB. Stage 1 must move verified, searchable slices of existing content offline - before any new collection."
+  ],
+  "architectural_measurement_contract": "Every future count must state STORED (on device) vs SEARCHABLE (offline index) vs USABLE (complete text, retrievable, readable). Record counts alone never imply usability.",
+  "open_items": [
+    "phone one-file lineage origin (Rabiu to confirm)",
+    "Team B scope: recover remaining 5,080 preview pages (4,699 prefix-hash near-dupes need a wiring honesty design; 381 dead-at-origin stay honest previews)",
+    "license audit: confirm every by_source label is backed by acquisition records"
+  ]
+}
