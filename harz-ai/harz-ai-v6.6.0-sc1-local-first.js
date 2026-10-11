@@ -764,7 +764,7 @@ var LF_PLACES=/\\b(in|at|of|for)\\s+[a-z]+|\\blondon\\b|\\btokyo\\b|\\bparis\\b|
 function lbLocalFirst(txt){
 try{
 var t=String(txt||'').toLowerCase().trim();
-if(!t||mode!=='chat')return null;
+if(!t||mode!=='chat')return null;if(lbBuildKinds(txt).length)return null;
 var tok=t.replace(/[?!.]+$/,'').split(/\\s+/).filter(function(w){return w.length;});
 if(!LF_PLACES.test(t)&&(/^what'?s? (is )?(the )?time( now)?\\??$|^what time (is it( now)?)?\\??$|^time( now)?\\??$|tell me the time( now)?\\??$|^sa'?a (ce|nawa)\\??$|^wane sa'?a\\??$|^me sa'?a\\??$/.test(t))){
 var n=new Date();return LF_L+'Your device clock says: <b>'+n.toLocaleTimeString()+'</b><br>Date: '+n.toLocaleDateString();}
