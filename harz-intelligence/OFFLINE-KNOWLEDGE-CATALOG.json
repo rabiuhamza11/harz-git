@@ -1,5 +1,5 @@
 {
-  "catalog_version": "C-v1.2",
+  "catalog_version": "C-v1.3",
   "generated": "2026-10-11T23:50:00+01:00",
   "workstream": "HARZ Offline Knowledge Expansion",
   "team": "C — Knowledge Acquisition (Hauwa, per Dad's assignment Oct 11, 2026)",
@@ -435,5 +435,22 @@
     "total_est_gb": null,
     "note": "ESTIMATES. Every item re-verifies license and exact bytes at acquisition; batch holds if verification breaks the 2.2GB ceiling. Full Tier-1 reference library (~54GB) requires the storage ruling, not this batch.",
     "total_note": "See ACQUISITION-BATCH1-STATUS.md: OSM byte-verified 677MB; trimmed batch ~1.93GB fits the 2.2GB headroom with 0.27GB margin; MedlinePlus deferred to batch 2."
+  },
+  "byte_verified_updates_2026_10_12": {
+    "wikipedia-en-all-nopic": {
+      "verified_bytes": 52690706555,
+      "note": "49.0 GiB (2026-06 edition) — nearly double my 32GB estimate. CORRECTION RECORDED. Irrelevant for corpus re-acquisition (882K Wikipedia docs already in corpus); matters only if the full-article-depth ZIM is ever purchased for device storage."
+    },
+    "wiktionary-en-all-nopic": {
+      "verified_bytes": 9156425592,
+      "note": "8.5 GiB (2026-08 edition) — estimate 10GB confirmed. Real name: wiktionary_en_all_nopic_2026-08.zim"
+    },
+    "zim_naming_convention": "Kiwix ZIMs carry date suffixes; always resolve current filename from download.kiwix.org/zim/<category>/ before download",
+    "unresolvable_from_sandbox_tonight": {
+      "openstax": "site is a JS app; asset links are per-book signed URLs resolved from book pages — resolve at acquisition (browser step)",
+      "devdocs": "docs.devdocs.io unreachable from sandbox (conn 000) — re-verify at acquisition",
+      "standard-ebooks": "OPDS feed serves HTML to curl; download slugs resolve at acquisition",
+      "medlineplus": "no prebuilt ZIM found in Kiwix 'other'; method = curated topic export via NLM web services at acquisition"
+    }
   }
 }
