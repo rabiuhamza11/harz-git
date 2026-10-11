@@ -1,0 +1,5512 @@
+{
+ "generated": "2026-10-11T23:08:14Z",
+ "index_docs": 11365,
+ "wired": 10664,
+ "previews_total": 701,
+ "classes": {
+  "unextractable": 83,
+  "recovered_new": 431,
+  "dead_or_blocked": 187
+ },
+ "manifest": [
+  {
+   "sid": 3,
+   "url": "https://harz-chain-v2.harz.workers.dev/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 21,
+   "url": "https://cowrywise.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ede60baa4bc9244b04c71049f31d7d5ea45dedfdd0023a179b9539e5053ed5ba",
+   "norm_hash": "d96c7eb3ab48ae1619783494908cb9a77f7ee5d1225c47f68c69d61dbb3fbc2c",
+   "chars": 2608
+  },
+  {
+   "sid": 32,
+   "url": "https://moniepoint.com/",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 95,
+   "url": "https://techcabal.com/category/news",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b0aadefc7bc865449a8ce257122de89aea367e7f29222fc72701c33226ab576e",
+   "norm_hash": "26b5699e20bb8d0d1feaeeacdcfbc193c7d35fbc28e25501e2117b965b45b262",
+   "chars": 3504
+  },
+  {
+   "sid": 142,
+   "url": "https://scuml.efcc.gov.ng/cdn-cgi/content?id=M8a6q.LHeECiqLO7H37smk0YO2Fo47ZUAFo_tNH7b6A-1789805577.4501572-1.2.1.1-RbDo6IAE2LsW2ZyHdMU.kO1uMVewRqT06xnZBxJtRavrf_.4JnsRj.yuYnCbBkfc",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 147,
+   "url": "https://scumlportal.efcc.gov.ng/scuml_verify.php",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "aff9ccf8e71e0a92154707ff6955c7b341d953008f953e57acf94f5f796871c4",
+   "norm_hash": "605fed54c13c33020d2a0e73e9e5f33165ec2faf15f249939b1e73efcadbe23e",
+   "chars": 2382
+  },
+  {
+   "sid": 161,
+   "url": "https://cowrywise.com/privacy",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7f6e08c06be7205458bab5d201792b4b78523cbca3df556b251278f1d1188ea9",
+   "norm_hash": "769b02d5aa15647eac11f228c4c568fbb6053b6a03cca49f8bf1aba5c52f5e28",
+   "chars": 20253
+  },
+  {
+   "sid": 164,
+   "url": "https://cowrywise.com/save",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6f5c79243abebade734531538fa6892ea124bf814cdff1165495626efd4613ac",
+   "norm_hash": "d6a8cb20b663e88a455944349449a32065fd199f54e7281c14bdb6a86c0f2f38",
+   "chars": 1724
+  },
+  {
+   "sid": 165,
+   "url": "https://cowrywise.com/security",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e50d0f24eca6eccf2b2f1db244f48fd4489c0cf237c4690961f4a2486c950d53",
+   "norm_hash": "ecc4019ae750cf69941b233f5a10cec5ef456f685c6a4b453f36e37a92643f12",
+   "chars": 2713
+  },
+  {
+   "sid": 166,
+   "url": "https://cowrywise.com/stocks",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "036a29c864d250f1a8ec2d7aa3fa4ba58e2f58858b4b4a9de98ea8598f50394e",
+   "norm_hash": "9fd32076478e4bdf42775ecd06830aa83fca9a5c5d031f8ac60b3dda776ff85b",
+   "chars": 4820
+  },
+  {
+   "sid": 169,
+   "url": "https://cowrywise.com/sprout",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d4677e22de8bb539aaaf8076810d6321534a8ab4edd5165b34808f9cb6ff2b38",
+   "norm_hash": "541d0f48e06324e428bd6ca019ae0a4229c9a409b3715ca317cf47a5171bdee0",
+   "chars": 2610
+  },
+  {
+   "sid": 178,
+   "url": "https://cowrywise.com/mutual-funds",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0d556d505fedef2e3bfdf4085f1d2e2b18575087596ad148ea242d63f534acf3",
+   "norm_hash": "eeec10e2f0bf51cee760b70e49a3ac4d91a5fc33d07406e46528bb4fcbbd85e4",
+   "chars": 3618
+  },
+  {
+   "sid": 180,
+   "url": "https://developer.mozilla.org/ko",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1b82f21d1693fd3d3752dc18fcca696a50554e0cbffcd0c52f5d0640e1fc705f",
+   "norm_hash": "50f3da110f9859aaa0bcf7059c9f6e2c6c32b91092fe3e4d003782cf959e37d0",
+   "chars": 4302
+  },
+  {
+   "sid": 182,
+   "url": "https://developer.mozilla.org/pt-BR",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "199531608fd7d1d6b76c8d366643c7d8645abf597c559da1a780f3023971fc70",
+   "norm_hash": "a6e462bc79ad996c778f1f141d24918bb2ce305a7f2ca83f25bb988f7eda909b",
+   "chars": 4368
+  },
+  {
+   "sid": 184,
+   "url": "https://developer.mozilla.org/ru",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "74d8d7f6362b8eaa4392daa8de4634f81779e93d5b34c4fe6c8e5be8854db9e8",
+   "norm_hash": "50f3da110f9859aaa0bcf7059c9f6e2c6c32b91092fe3e4d003782cf959e37d0",
+   "chars": 4412
+  },
+  {
+   "sid": 185,
+   "url": "https://developer.mozilla.org/zh-TW",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "baac587fb4fe2d5d0c9bea8fcba07cd24f09eca996f8b90d960bb911d0ce2e07",
+   "norm_hash": "50f3da110f9859aaa0bcf7059c9f6e2c6c32b91092fe3e4d003782cf959e37d0",
+   "chars": 4302
+  },
+  {
+   "sid": 202,
+   "url": "https://python.org/shell",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "87cf712af83a8f2200c4b8d0f8d44dc7c392d51f809fac185eda572b73e534d9",
+   "norm_hash": "784a58c4bf5e997e97eea915868d37480cd1ea4de0e06fd0ba72f2ca83f09af1",
+   "chars": 4426
+  },
+  {
+   "sid": 206,
+   "url": "https://ncdc.gov.ng/diseases/a-z",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 254,
+   "url": "https://moniepoint.com/credit",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 255,
+   "url": "https://moniepoint.com/payments",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 256,
+   "url": "https://moniepoint.com/banking",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 257,
+   "url": "https://moniepoint.com/business-management",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 259,
+   "url": "https://moniepoint.com/culture",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 260,
+   "url": "https://moniepoint.com/press",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 261,
+   "url": "https://moniepoint.com/careers",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 262,
+   "url": "https://moniepoint.com/about",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 263,
+   "url": "https://moniepoint.com/contact",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 264,
+   "url": "https://moniepoint.com/blog",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 265,
+   "url": "https://engineering.moniepoint.com/",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 274,
+   "url": "https://blog.rust-lang.org/releases/latest",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 308,
+   "url": "https://jobberman.com/jobs",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "184e27cb5f39b2060a6a81b561481a91268a3909863d87fb8c57407980e541f0",
+   "norm_hash": "b99ac389c1d08cf5ed7b7454011fa6b61e7c68b058f59ff2faf9a526a570ab0e",
+   "chars": 10045
+  },
+  {
+   "sid": 340,
+   "url": "https://techcabal.com/category/money",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "187ff709e989de7e3cec61a4b1641dcf7dfb494ca9925ac8aa4eeece8c13378b",
+   "norm_hash": "b12a37b5742881ac2e1a17028d612a42b426c6171be499594c15a10209f75be3",
+   "chars": 3111
+  },
+  {
+   "sid": 342,
+   "url": "https://techcabal.com/category/startups",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b01a86427a4a377b5e5ba5c05b7df1c090b19bf2f2b7f7fd2661017876bf1a78",
+   "norm_hash": "dadee7402613334dc93f04e3d9175636655253decaf7661433fba95f68a022b8",
+   "chars": 3412
+  },
+  {
+   "sid": 343,
+   "url": "https://techcabal.com/category/enterprise-policy",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "008b883bbd584707a68524312e368b4a7297dd2872e7ab8f795923434e925472",
+   "norm_hash": "ddf213dcc2347c9a35cbe63c55a1a2851edea2ada90d568f3d95598b0edb1786",
+   "chars": 3358
+  },
+  {
+   "sid": 344,
+   "url": "https://techcabal.com/category/techcabal-columns/day-1-1000",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "94d40ac260e1ba60c3cb69bcc0aa59f7329c228de68e1ec4c96fb72671cf044a",
+   "norm_hash": "eb1e314e4396734383e4ab9699cae209f7e57d994221be0cc9221e945a502839",
+   "chars": 2239
+  },
+  {
+   "sid": 345,
+   "url": "https://techcabal.com/category/life-work",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "75643f8d281c82992f3450bfa4692a8984c054ee1950f73075520db8368fdbb7",
+   "norm_hash": "3daf4eb2a4079a09b72a2f68a89f808b3b6d307298d6d7211a6b1621f6f72f22",
+   "chars": 3280
+  },
+  {
+   "sid": 351,
+   "url": "https://techcabal.com/category/techcabal-columns/journeys",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "332b2a61c8fca3b23387a303b03f013a96ac709ac900c64bf8198f9cbe448c80",
+   "norm_hash": "04edc912106c946b98a4a8d9e0499575814ea06d4544155ca615c3eeb2ee2aa0",
+   "chars": 2433
+  },
+  {
+   "sid": 353,
+   "url": "https://pencom.gov.ng/first-quarter-report-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 354,
+   "url": "https://pencom.gov.ng/monthly-report-april-2026-2",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 355,
+   "url": "https://pencom.gov.ng/circular-on-asset-crossing-between-pension-funds",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 358,
+   "url": "https://pencom.gov.ng/monthly-report-june-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 359,
+   "url": "https://pencom.gov.ng/monthly-report-april-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 363,
+   "url": "https://pencom.gov.ng/monthly-report-march-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 371,
+   "url": "https://pencom.gov.ng/monthly-report-february-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 374,
+   "url": "https://pencom.gov.ng/uncredited-contribution-employers-list-2026",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 380,
+   "url": "https://pencom.gov.ng/fourth-quarter-report-2025",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 389,
+   "url": "https://smashingmagazine.com/categories/ux",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9368e1be43da9c3140c0340e6c98b90d2d50f41cb41c2c7b0b8cb6348cffd0aa",
+   "norm_hash": "93865dd31ecd25993cc72472ba8831fde0dbf0787760ed8ff4c84d987f471333",
+   "chars": 3910
+  },
+  {
+   "sid": 396,
+   "url": "https://smashingmagazine.com/categories/ai",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f44ab69d42272d0b700341f26292fab38646ef7f061b21b9d0cb381fddee9656",
+   "norm_hash": "e0f4a39ce119afa788bb0d2735e4ea82e964e3c9298406a37a66910eb6b4bbcf",
+   "chars": 3698
+  },
+  {
+   "sid": 404,
+   "url": "https://news.ycombinator.com/submit",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 425,
+   "url": "https://digitalocean.com/sitemap",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "54c1458960d014822b95a2781904bbd1a2408a8981bc4fff3b731fc20680ec16",
+   "norm_hash": "b2bc6135ea391bd299ebc06ea5856c3c4e0343da2605baa7df1ea4ea7d3cd6b7",
+   "chars": 1221
+  },
+  {
+   "sid": 464,
+   "url": "https://scientificamerican.com/login",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 481,
+   "url": "https://news.apache.org/foundation/entry/introducing-the-asfs-new-logo",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6317afcddcba3dacdedd940a6441170629a3d36f566919b89dff5214a4e09190",
+   "norm_hash": "a082c87eb83d5895b950c4f6dd92a47b9bc27a778609372dec79165102fc25aa",
+   "chars": 8022
+  },
+  {
+   "sid": 564,
+   "url": "https://store.arduino.cc/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b0e2bb8e92bbf8bd1081c1ac36abeff35e820760df77e15d86689cad733eca7a",
+   "norm_hash": "8bc439057ffba2315f6df7545ee21de3aab359483a6cc41186a979d164a3ebf9",
+   "chars": 13401
+  },
+  {
+   "sid": 586,
+   "url": "https://education.gov.ng/federal-scholarships-board",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3a02388e522354a60380559ec73be26c07c9cd0f52b0340964c750e5dc8a41e7",
+   "norm_hash": "dea2b148a1959adf7e720bef1076a554b636da37f2d7fe96351ad9342488afa0",
+   "chars": 3773
+  },
+  {
+   "sid": 587,
+   "url": "https://education.gov.ng/author/abosede",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e8bd20eb05d992f0fad9876ca59cefce44cebb972c31fbe630fa6222f88e192e",
+   "norm_hash": "56d00820be667c805e5c0d426e57474dc650d3a8c8bd32d64c55021c70d2c71d",
+   "chars": 1299
+  },
+  {
+   "sid": 627,
+   "url": "https://health.gov.ng/campaigns",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 628,
+   "url": "https://health.gov.ng/events",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 633,
+   "url": "https://health.gov.ng/press-releases",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 699,
+   "url": "https://doc.rust-lang.org/error-index.html",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 705,
+   "url": "https://ncdc.gov.ng/news/archive",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 721,
+   "url": "https://nuc.edu.ng/undergraduate-accreditation-results",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 724,
+   "url": "https://waecnigeria.org/article/wassce-private-candidates-2026-second-series-final-timetable",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 725,
+   "url": "https://waecnigeria.org/article/bookkeeping-office-practice-2022-2025-wassce-syllabus",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 735,
+   "url": "https://waecnigeria.org/article/list-selected-texts-wassce-arabic-edo-efik-hausa-ibibio-igbo-literature-english-and-yoruba",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 740,
+   "url": "https://waecnigeria.org/article/click-download-list-selected-texts-wassce-arabic-edo-efik-hausa-year-2021-2025",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 741,
+   "url": "https://waecnigeria.org/article/time-limit-candidates-challenge-court-decisions-nigeria-examinations-committee-nec",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 794,
+   "url": "https://scumlportal.efcc.gov.ng/cdn-cgi/content?id=09eWPOO6MWlI5VrlsmW4CMeFNdHzHRMI12GNq6_JNd4-1789805588.1635144-1.2.1.1-tduDf5O1W0myhsNi0m5UXcNc8acs4lw4cz8lGToxaPAvIbscEG35gjMdCbdN8IqL",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 795,
+   "url": "https://scumlportal.efcc.gov.ng/cdn-cgi/content?id=Z_sJB9NKG5rLMlWXV63yeUiHyAf82_IDmOUrOlnKEHA-1789805588.5602264-1.2.1.1-E1XctAJ0C2WZ3a2RE6GCdYeoXDfrzKaFvjtCifP1pO32dSEEY3LIzEiRA1D6ryWe",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 796,
+   "url": "https://scumlportal.efcc.gov.ng/cdn-cgi/content?id=v3qnyglA2oLIoWcHfAJ65ftoF.Ab3MBlUAvAWHWOz9s-1789805588.5845852-1.2.1.1-5XSiS8ipN0JQtswovLqPDhtv75pBrR3RcXjHnNaUgb0el8lo1hc_NAbNzx7eyany",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 798,
+   "url": "https://scumlportal.efcc.gov.ng/cdn-cgi/content?id=D7O9GhGWndOfpEHR38lxD6pnBy.ZcoYx1PyVQ8nOVZg-1789805588.1591907-1.2.1.1-QxS47MsEM1BfebO9ea9W8GiSHR4wHOPySQZDO7MmIbcLXygerpJrlFX8oPKWiFCH",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 821,
+   "url": "https://cowrywise.com/stocks/market-summary",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b04c0c8f575614674d311a851cb0c505b24fdf866901d959d7bb74d5197b7358",
+   "norm_hash": "7a933a4c993c04ce1e9666c5a376a6e77efbfdf35bec09b8d9cd1eaa265aa32c",
+   "chars": 1788
+  },
+  {
+   "sid": 822,
+   "url": "https://cowrywise.com/testimonials",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6e09af75a95d6ed9064ef0d61e34ccf2044c766feb515a00d421c86dd26520c5",
+   "norm_hash": "bdc8d5fa01715aa4d6a2e279fac32d232e3c88ee565f4e943d7824a73b61baeb",
+   "chars": 2137
+  },
+  {
+   "sid": 823,
+   "url": "https://cowrywise.com/circles/challenges",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 832,
+   "url": "https://cowrywise.com/mutual-funds/halal-fixed-income-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "20888f9811a64409e8baf055ca62361148b3dcba2e47008d82d4c31ebefebe25",
+   "norm_hash": "3543257fe40f32f5bc4229c04f6ececb54176a61917da6100950534b76092119",
+   "chars": 1453
+  },
+  {
+   "sid": 833,
+   "url": "https://cowrywise.com/mutual-funds/cowrywise-conservative-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d52037aec5e22db961002de8ba8fbdf3dcaf0b4e10eac68d9a54cb2277077567",
+   "norm_hash": "94ad1bc25ef939ee4e4e1f78ead1fe0895b763adb1b34e69b9bdabacf2ec93a1",
+   "chars": 1311
+  },
+  {
+   "sid": 834,
+   "url": "https://cowrywise.com/mutual-funds/fixed-income-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8f9ea615b275a413a92a396049df33513a368551e85be6c572494011c4977f40",
+   "norm_hash": "b3ec7850f888ea0b5b9bc7ad6a40ea56e3ac4bf9456063ca5ad63531fba0f162",
+   "chars": 1471
+  },
+  {
+   "sid": 835,
+   "url": "https://cowrywise.com/mutual-funds/halal-balanced-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cc7d21e57045ed3518a0e28a2a4b8e93c83756f1ccac37c49d13d4d9535cb145",
+   "norm_hash": "2194c2deb6918697126cd9893f7c1bf101cdcf179d0e8df849af491953e0ba6c",
+   "chars": 1385
+  },
+  {
+   "sid": 836,
+   "url": "https://cowrywise.com/mutual-funds/balanced-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8b225ffe2cc2554839d69a7d37bab42f38e83dbaa6293aba3186b66f52ca7b54",
+   "norm_hash": "6a59507e4c4c69e5cc408f4272d55ae8baa6730507dd819c200aa13520f8b4bd",
+   "chars": 1453
+  },
+  {
+   "sid": 837,
+   "url": "https://cowrywise.com/mutual-funds/equity-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3117ee03082e10638b82a7e8690c2f01f9b2d89e5bf2def2713af59d843d0861",
+   "norm_hash": "91e36113493fb2cbd430c62ec984c5f5d707bbaebb1f0817a0820e0904a2158e",
+   "chars": 1453
+  },
+  {
+   "sid": 838,
+   "url": "https://nairalytics.com/dashboard",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 840,
+   "url": "https://ncdc.gov.ng/blog",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 842,
+   "url": "https://ncdc.gov.ng/diseases/info/C",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 843,
+   "url": "https://ncdc.gov.ng/departments/hods",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 845,
+   "url": "https://ncdc.gov.ng/departments",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 857,
+   "url": "https://telegram.me/share/url?text=Personal+Income+Tax+Calculator&url=https%3A%2F%2Fbusinessday.ng%2Fbusiness-economy%2Farticle%2Ftax-calculator%2F",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 869,
+   "url": "https://businessday.ng/author/chinwe-michael",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8dc3544e8687a40ea4642a7bd16eba011e691ea7135457b8ed3c06d292b648ed",
+   "norm_hash": "51b24c0c26ab7b5e9dd30a0c8edc1c6a59685a976eb92bd4b1bd4ee80f4fe239",
+   "chars": 3062
+  },
+  {
+   "sid": 896,
+   "url": "https://docs.nginx.com/nginxaas/aws/overview",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 922,
+   "url": "https://moniepoint.com/ng/cookie-policy",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 936,
+   "url": "https://moniepoint.com/blog/categories/business-tips",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 937,
+   "url": "https://moniepoint.com/blog/meet-the-dreammaker-abdulgafar-lead-aptpay-suite-at-teamapt",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 939,
+   "url": "https://moniepoint.com/blog/categories/education-series",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 948,
+   "url": "https://moniepoint.com/blog/categories/impact-stories",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 952,
+   "url": "https://moniepoint.com/blog/categories/news",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 953,
+   "url": "https://moniepoint.com/blog/meet-the-dreammaker-chiamaka-a-site-reliability-engineer-at-teamapt",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 954,
+   "url": "https://moniepoint.com/blog/categories/people",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 955,
+   "url": "https://moniepoint.com/blog/meet-the-dreammaker-uche-compliance-business-partner-at-moniepoint",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 956,
+   "url": "https://moniepoint.com/blog/categories/product-updates",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 1035,
+   "url": "https://maggiepint.com/2017/04/09/fixing-javascript-date-getting-started",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "862ad22ee5fe3c83677e0d9c1cf3e130f03ba36091a52f377fd817fdf153f37c",
+   "norm_hash": "5b00a1616d5db8d4fb16401f8f21a6e8da8fdf8623f99de9c5f8fd7a69e10b55",
+   "chars": 4611
+  },
+  {
+   "sid": 1105,
+   "url": "https://pencom.gov.ng/category/news-events/annoucements",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 1106,
+   "url": "https://pencom.gov.ng/category/news-events",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 1107,
+   "url": "https://pencom.gov.ng/category/publications",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1108,
+   "url": "https://pencom.gov.ng/category/pension-industry-performance-dashboard",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1109,
+   "url": "https://pencom.gov.ng/category/news-events/updates",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1111,
+   "url": "https://pencom.gov.ng/category/news-events/media-center",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1113,
+   "url": "https://pencom.gov.ng/category/publications/quarterly-reports",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1118,
+   "url": "https://pencom.gov.ng/category/publications/monthly-reports",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1123,
+   "url": "https://pencom.gov.ng/category/regulations-guidelines-circulars-frameworks/circulars",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1127,
+   "url": "https://pencom.gov.ng/category/regulations-guidelines-circulars-frameworks",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 1331,
+   "url": "https://luckslab.org/team/jblucks",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "177bc48ef01624ac351d652ad62f4866aaa9eb25202fb6f352257d39b871a383",
+   "norm_hash": "7ccf067885b505c4dc97b0e6600d23fe7e98a1de83641410ff692aa0f813a75e",
+   "chars": 7075
+  },
+  {
+   "sid": 1359,
+   "url": "https://antigravity.google/blog/introducing-google-antigravity-2-0",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 1399,
+   "url": "https://zamfarastate.gov.ng/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 1427,
+   "url": "https://ubagroup.com/",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 1429,
+   "url": "https://fcmb.com/",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 1545,
+   "url": "https://git.kernel.org/stable/h/v6.12.110",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4f84ca3076866761bf658b53cbb0991640a305ee98f2a4e12954ad0a9a42ac07",
+   "norm_hash": "0f0511368bb338589188309b935c7b64e57f64b0a909a9a031896a876b2bc5d1",
+   "chars": 3421
+  },
+  {
+   "sid": 1550,
+   "url": "https://git.kernel.org/stable/ds/v6.18.52/v6.18.51",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e9976acc1326e26cbee5323e18c3d6e910f6b34139909b6cb8c3ffb3a12de7cd",
+   "norm_hash": "3fe8bc01da8ee6077f932eb6505b75016613755d8a9594005360daa4edb17ea9",
+   "chars": 71611
+  },
+  {
+   "sid": 1555,
+   "url": "https://git.kernel.org/stable/ds/v6.12.110/v6.12.109",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2567abaf46901617f93ae1fcb4b9f047785c139bab665b2bcc38ab9b143e8e92",
+   "norm_hash": "668f5e9bb0a6cd1dcbd85526d102e74270dd1762e24ad2a98a348cf2f52238dd",
+   "chars": 57239
+  },
+  {
+   "sid": 1616,
+   "url": "https://nairametrics.com/category/opinion-editorials/columnists",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9b75b69f13119af4d54e10ba47d9a43c010e6299c0965b37507d4e96ca8328fe",
+   "norm_hash": "520f66a5c8c4081c36e18088a1499efebbe05f18d6b5c2ff450bcf4e0e54db3c",
+   "chars": 1492
+  },
+  {
+   "sid": 1701,
+   "url": "https://moniepoint.com/ng/digital-banking",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 1741,
+   "url": "https://moniepoint.com/blog/how-moniepoint-helps-one-of-africas-most-important-markets-move-money",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 1830,
+   "url": "https://edx.org/school/mitx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f092effa925f2057617f1f8743872a79e931e014797c5c86be41db170e90185c",
+   "norm_hash": "d6fa4d364a462f413a80187947d0ec3f390ff9ccb91026a565c94b54da4ff084",
+   "chars": 4057
+  },
+  {
+   "sid": 1858,
+   "url": "https://smashingmagazine.com/categories/data-visualization",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4ca2c11a01bdada0690c086fed76e0a0dafbfe8abcfebe04b67c771dc7c5fb3d",
+   "norm_hash": "954235b9c8e57e14c741517dcb6515cbb77f07e052fe989c4d972bf2b813e6c6",
+   "chars": 3801
+  },
+  {
+   "sid": 1860,
+   "url": "https://smashingmagazine.com/articles/page/2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f170187f5e4b5b93364a5b8d571802a1d37797d3802a7867b348a61c77377dfd",
+   "norm_hash": "ed6c48ba43f27ef38cdcb67c8eebd73c881cd54c2560d5b8a407cb271722cecd",
+   "chars": 4015
+  },
+  {
+   "sid": 1861,
+   "url": "https://smashingmagazine.com/categories/javascript",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4c6229848a1ce0b0f848515af6d1a6c649439b61c40c2259a411c5c2f0501d18",
+   "norm_hash": "ca0b19e4a86617c61ae26c23705e9585395a750f5b3b72a5a5e8f8d41e2e8b54",
+   "chars": 3880
+  },
+  {
+   "sid": 1863,
+   "url": "https://smashingmagazine.com/categories/tools",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "24aaf176af4ddf3101dea052c8c8dd786d6f64f3548de677768da6907827f3fd",
+   "norm_hash": "b8b8e0a7a26c442a04abc62e8d8d6536d63fbaa34e2d0d5ad2f37922f72015a9",
+   "chars": 4189
+  },
+  {
+   "sid": 1896,
+   "url": "https://businessdayintelligence.ng/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8a81eb0a3b7be3635d93c62cdb8e776e9ca935d85265950b7942691c17bbcc2d",
+   "norm_hash": "8599ae19b60717ddfab181bda2691602c7dd422215d910e9237d47f9a21c0c33",
+   "chars": 1683
+  },
+  {
+   "sid": 1922,
+   "url": "https://news.ycombinator.com/user?id=nandakishor_ml",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 1991,
+   "url": "https://techcabal.com/category/video",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3638c1c965e7f69fa5674151cb9e302daa9332a3936ce94fb8a156d88073b3fc",
+   "norm_hash": "e0a7f0e90fc0cbf67c521232367fabe9a646af74c40d2e7223b108274251abfa",
+   "chars": 3572
+  },
+  {
+   "sid": 1993,
+   "url": "https://techcabal.com/categories",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "36ef1dfc8ca0407819c9d024ad8eba8b79d24f5057f630fea0c69d09872c5b72",
+   "norm_hash": "d1a3be696e0cdd8bf57ed18db99141c75557987de382420b5593779c4ca03b48",
+   "chars": 1433
+  },
+  {
+   "sid": 1995,
+   "url": "https://techcabal.com/events",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "aec3bd4026697d2ecdc121d836463663ccce679b7b9bce24f152bf57c5934ae9",
+   "norm_hash": "2088ff919bb12fd55aaa76fc0f13eff375e35002585033e345122976776e175a",
+   "chars": 3839
+  },
+  {
+   "sid": 1998,
+   "url": "https://techcabal.com/category/techcabal-columns",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d876da855f5c20fd68066aa3d3406e32590a2f8410d32ba586d5aec163d4b7df",
+   "norm_hash": "23addb7508089282c3e23ddd14dfd62b9c823b5be8ecb61821fa5bddb11bdd42",
+   "chars": 1861
+  },
+  {
+   "sid": 2000,
+   "url": "https://techcabal.com/2026/09/18/kenyan-fintech-payd-to-resume-services-after-fx-losses-disrupt-customer-payouts",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1f8d47434352e8ced8d35e8eee2537183fd8af65aa22733f5be92f70847d0f8c",
+   "norm_hash": "ae2fee074dca90f9cd49d4eb36afd58f33b4b848ff4ee025cc4796bd76505272",
+   "chars": 13345
+  },
+  {
+   "sid": 2006,
+   "url": "https://techcabal.com/category/newsletters/tc-daily",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d13033a5bcc1e9e545d379ec5325e7a893f82363603e83ab9e09455ce9b8635d",
+   "norm_hash": "d8576b06c1487f25afc0a9e2bee1b2218e3dc97e675dd972e8885ed7ba92abc2",
+   "chars": 3682
+  },
+  {
+   "sid": 2007,
+   "url": "https://techcabal.com/author/frank-eleanya",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "44ef5692a76d480e12fa36a3ac621127e0d2d16674e897ea04773588ea3d58a9",
+   "norm_hash": "881c64b1c51ae221bf6e7798bb0b9ea3773d60408268e6ea1b3ef874d4b86403",
+   "chars": 4125
+  },
+  {
+   "sid": 2011,
+   "url": "https://techcabal.com/search",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "148cc1fc4748fb392c62ad9483662aa5a7d5517870e75e81c5c7bd3a328d65d2",
+   "norm_hash": "a77dadca69111b34e560ebe013e0709526cb4b40b1a331f4f72261de6c053d73",
+   "chars": 1341
+  },
+  {
+   "sid": 2014,
+   "url": "https://techcabal.com/author/phathisani-moyo",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3a21ef00dbf403ffc7e2a632e0324fabf371bfa92487a10e29a88c137adf926a",
+   "norm_hash": "cc1b88a7f1d5bd87085088d4a129675f825ba247988da6e270bb8e0f98367303",
+   "chars": 4457
+  },
+  {
+   "sid": 2025,
+   "url": "https://techcabal.com/category/analysis",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "26d53f7ff61d1fc2e2b2a3b9d3a8205362314b9dae2ee05769a025b293ffeee3",
+   "norm_hash": "4d2e0685f3d01c3984e5f1cc59822c3524b8e4d58042f1d21c5b54e535553c36",
+   "chars": 3523
+  },
+  {
+   "sid": 2031,
+   "url": "https://techcabal.com/author/adonijah",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d622e75c590eb64ef54f091aa34d2b7d7e4e3ebe9a35e9ba0d31530935a587cf",
+   "norm_hash": "c024f2b330bc7e3a14a509032ea021aab4ce23d26bc8ab8d3686aef4a13492aa",
+   "chars": 3564
+  },
+  {
+   "sid": 2032,
+   "url": "https://techcabal.com/category/money/banking",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a513a86fa55b63cd3a82924afca7cf6fa5ad05054ed290d1cf3ee1a64ae5030f",
+   "norm_hash": "31d593071e7d5e2c62efdd31643083398dcf586eb46b4c75ddfbef8445f70e15",
+   "chars": 3292
+  },
+  {
+   "sid": 2033,
+   "url": "https://techcabal.com/author/kenn-abuya",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9cb5c8d232d3f551632fc67e96fb0326fffa9498f2a3030461318f56d124f8eb",
+   "norm_hash": "7b23d63eae51d9a391dfbac1e096c1ffeb641e2e3902622882fd86c883088935",
+   "chars": 4635
+  },
+  {
+   "sid": 2038,
+   "url": "https://scuml.efcc.gov.ng/cdn-cgi/content?id=Pprxu4.GvsWi4lNoU7nSeH.WdrETHCKPRXY3b0NX9OU-1789836983.4620976-1.2.1.1-W8XG60nCNyUpWla7WlLzeMEie5CA4B6ZqUAKzs3RBQI4ODf2.0r9AaMXoiSUo7zR",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 2039,
+   "url": "https://techcabal.com/category/events",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ca1b75a2049eb1e0fd6ebd0b97041583b37d1f0371123dc53cd8ec2ab4eeb25f",
+   "norm_hash": "73401444c772122db352277c72199691e06f0ad72d7de0649942960057092bd6",
+   "chars": 3433
+  },
+  {
+   "sid": 2042,
+   "url": "https://techcabal.com/category/startups/fintech",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "aebc029b1d9ac0a9a19630662aa00fb9107f8a5c63d3b168e152ea5846b2de04",
+   "norm_hash": "7bdbe23cea09123cca15dd244446f64c486d4e2e6836ed3d5aaf7e24e108d142",
+   "chars": 3296
+  },
+  {
+   "sid": 2090,
+   "url": "https://eff.org/deeplinks",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5881863be165ceed0188be572a8053d0d6d766176dbaff8aca199fe4094dd267",
+   "norm_hash": "ec5c9abb924383289864ec90d010984049345ec7e4cd0ccc17880d20ab896998",
+   "chars": 6346
+  },
+  {
+   "sid": 2091,
+   "url": "https://shop.eff.org/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3b6ec47de18d35757065cbb4cbffbcfab39314327c6aea17c04314cb1aa094f1",
+   "norm_hash": "43e314fbb84b82179e65a08ab97b531063efd8a0e61dd537bd682a0809b99d11",
+   "chars": 2401
+  },
+  {
+   "sid": 2095,
+   "url": "https://nptel.ac.in/walloflove",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 2172,
+   "url": "https://jamb.gov.ng/Board_Members.aspx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "33523a549713862eb3066056e09a3591df9303652e72c6c0439d22d2a83be91d",
+   "norm_hash": "a38ceec06ba8a6ce86104859162e3fe1fda766762dd6590c71e05a244fa274e2",
+   "chars": 3299
+  },
+  {
+   "sid": 2175,
+   "url": "https://jamb.gov.ng/Bulletins.aspx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ac2927a2de6a8b527790962f05735e43ddf655c5d65afdffbb1752d5cd720416",
+   "norm_hash": "e4762c7f89ee37b9fb21bf23b5c8ccd20246f67bc89439fe96301b026dbc9d9d",
+   "chars": 3534
+  },
+  {
+   "sid": 2178,
+   "url": "https://jamb.gov.ng/Events-Gallery.aspx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1563c5a728e45902fef60f4f03dfa7c893e369b949b45b83867fe835c11f93fb",
+   "norm_hash": "5ac15950a0c13ee79a9a6e5952a6c2debb522f31a4f1760de2ac4e481217885f",
+   "chars": 7582
+  },
+  {
+   "sid": 2183,
+   "url": "https://jamb.gov.ng/partners.aspx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bc1f00f0ec2bdf48a8adc90bc21347d5f64399d5f8dbf717a663ef3f4d274875",
+   "norm_hash": "0317411928aa4822465dc237440f62b05705425f2bdf4405192d5759441f1e14",
+   "chars": 3420
+  },
+  {
+   "sid": 2184,
+   "url": "https://jamb.gov.ng/Speeches-Presentations.aspx",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "377528e87c27f912bd181e8baa036024ff9cee2ea02871db0fefcba980635c47",
+   "norm_hash": "4299201e67759e91a87f73b348a6ec0272c273ff327a32c1517e06550d93c464",
+   "chars": 3917
+  },
+  {
+   "sid": 2206,
+   "url": "https://nafdac.gov.ng/category/events",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a32843b2afd9e689a93311aa28513cbaee274079be5c1b4a32435a58804595c8",
+   "norm_hash": "5304e3277c9556df3b7724634df4e94277056c82abed85c1c8a70963a71c927b",
+   "chars": 2191
+  },
+  {
+   "sid": 2212,
+   "url": "https://nafdac.gov.ng/category/speeches",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cbcc9c5b895007c65434749404eabde852fbf445038dbe736ae0a86f82b2a0c5",
+   "norm_hash": "68560a82d7aef5debde1c02df3b83bab7f19a75407d9006ec77e1f758d146038",
+   "chars": 5462
+  },
+  {
+   "sid": 2213,
+   "url": "https://nafdac.gov.ng/category/recalls-and-alerts",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f1847925954b4e162fc96650cd9d0b9d52115e03a8989e06de60f7021b2cd82e",
+   "norm_hash": "4c2bb7799ac06e53ce45d2dae34d46857313547172bd0fd9b1b0a4539a482bf9",
+   "chars": 67496
+  },
+  {
+   "sid": 2274,
+   "url": "https://kuda.com/business/team-banking/%20",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "aa195c2b4514b30680f04966d406817aef94a561c6b2e5ac1da6fb3f8154ab16",
+   "norm_hash": "aa36311a5f93b8abf2f2968318787e38bce4a7b2610ff751fb365675bbf82a82",
+   "chars": 2935
+  },
+  {
+   "sid": 2284,
+   "url": "https://cowrywise.com/mutual-funds/halal-commodities-portfolio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9856086eaa7c53494a6e3a733b52c7a883740df9b0fcee9f693bb46fc9deb288",
+   "norm_hash": "7fdde8216fced7f1c244c471ddb32ceab83ab0d7f9d68bfa02e040b225247c22",
+   "chars": 1413
+  },
+  {
+   "sid": 2286,
+   "url": "https://postgrespro.ru/docs/postgresql",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 2308,
+   "url": "https://docs.nginx.com/nginx/admin-guide/monitoring/nginx-plus-api-reference",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 2348,
+   "url": "https://education.gov.ng/wp-content-uploads-2026-06-cce-facilitators-guide-final-pdf",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1a55e859f963e50aaf63ce01f4841f7db49b6b740f73f5b798620ee230e81f05",
+   "norm_hash": "58489e238855e3477dc4f85aab961ba7efd6e7f940073767f6967811a6bebcb2",
+   "chars": 993
+  },
+  {
+   "sid": 2349,
+   "url": "https://education.gov.ng/highlights",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "44e960fcaf42ea1d20c3aa7791ade126adcb75646c67c0c15a7031377930c44e",
+   "norm_hash": "4fa485787248996bfd0ec0cb89b2433842dbb7a26633f1610b366c61135ea96c",
+   "chars": 4655
+  },
+  {
+   "sid": 2367,
+   "url": "https://rustc-dev-guide.rust-lang.org/print.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "718e121350a52aecf8df9a2b8c0ac3e61fef84ccace022cf755ff61e49d3186d",
+   "norm_hash": "dfed4e6ae313dbac533b338becda688842206df82f51a3c3e00aeee7af6df798",
+   "chars": 1549607
+  },
+  {
+   "sid": 2402,
+   "url": "https://nuc.edu.ng/nuc-directory-of-full-professors",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fcfc48f98c6fdcdceeb430b629493e2c55049454a296a3e8654115a62f0d18da",
+   "norm_hash": "283a9e0458cc50fa855dc2924d286544ed5b75f4e23a1eabc91c748c55ab6bcb",
+   "chars": 761
+  },
+  {
+   "sid": 2403,
+   "url": "https://nuc.edu.ng/nuc-statistical-digest-2017",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7f2e6393d1401134fd86a55e522e508e592e37d71291499c8b14461394ae0e92",
+   "norm_hash": "bd1fff11f9b16b49773ecb8d54dfaa510507c359e5593c8760c86faab0b973d3",
+   "chars": 686
+  },
+  {
+   "sid": 2404,
+   "url": "https://nuc.edu.ng/project/human-resources",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ee1a4d4e3ac916564c8dba7de628f782264c4e43372ef00dc65620e55ea68fa6",
+   "norm_hash": "4f5a897ac8678a64a0375453c343afbf394966cc6b85ef6c116465e54f222850",
+   "chars": 10087
+  },
+  {
+   "sid": 2501,
+   "url": "https://ai.google.dev/gemini-api/prompts",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "476ebf66f4229021ce6785b1fc96263c8efbbdff85646ca2dc0da8ee634eddfd",
+   "norm_hash": "049aab32a580e953c5a19ebb44228e809669f101e74ec1963ecb35730b04202d",
+   "chars": 2573
+  },
+  {
+   "sid": 2606,
+   "url": "https://v0.app/chat",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "742af9c4702a48c10753ea5bf09a4bcd55da15f2009c9be98cabece032edecf1",
+   "norm_hash": "a51e9f0f1e93d32add121b653125f94619ef1da1cb9bee75d1b3b6e2f9574e68",
+   "chars": 3830
+  },
+  {
+   "sid": 2629,
+   "url": "https://coremountainmedia.com/insights/ux-marketing-roi",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 2667,
+   "url": "https://outintech.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ea5598f009f069713a06b7514c6ae7b0f09584495ffad3b6e4fa9f64810deda4",
+   "norm_hash": "4d84720e079c626b34a82e20ded19e607ecdbbdc136566f0cb99ced7e43e9b09",
+   "chars": 2976
+  },
+  {
+   "sid": 2675,
+   "url": "https://business.edx.org/contact-us/for-business",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ad6506209aeb7a5ed527f50552c478fe282f7120af0a392750690ed0b4da4fa6",
+   "norm_hash": "ad350202e74445e5aefe1f70b79f7d9d33ae039d6cd7dd80a3841cb4202c3fea",
+   "chars": 3338
+  },
+  {
+   "sid": 2686,
+   "url": "https://business.edx.org/category/webinar",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "32068c7732f6cc4c9b0242de56f9f8d44d77d1cc1facedf56ada16e8c128e9f1",
+   "norm_hash": "ff3c5958d8d0b566b51bacadfd4fa4212e378da07a84292940d9988b51e22a78",
+   "chars": 754
+  },
+  {
+   "sid": 2688,
+   "url": "https://business.edx.org/category/product-update",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cf14438652b63764bf5d6778728c14ba66475e4bfff9092a1c6a2a594ee03c05",
+   "norm_hash": "63ae7b19bbfb647486c975a84969e40aae024635b7ce090a1b9c7ff0fd226da3",
+   "chars": 903
+  },
+  {
+   "sid": 2763,
+   "url": "https://discuss.ai.google.dev/c/gemini-api/4",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b5fd1c5ddff2dff6cebee7e9dba7bb614d6f9afed2f12c8de9859b4fa1d58e31",
+   "norm_hash": "c5b0588a33fd08fe663ca602b7186db213a15160a06dee1062f12ccae5fc6d4f",
+   "chars": 3967
+  },
+  {
+   "sid": 2882,
+   "url": "https://help.ubuntu.com/community/UsingTheTerminal",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 2888,
+   "url": "https://bytemark.co.uk/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 2893,
+   "url": "https://svcg.education.gov.ng/authentication/signin",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 2929,
+   "url": "https://pypi.org/search",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 2959,
+   "url": "https://hudsonrivertrading.com/careers",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 2977,
+   "url": "https://techatbloomberg.com/",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 3112,
+   "url": "https://rust-cli.github.io/book/print.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5fe4251b616a722ee47e1ca173299d399295faf60cddd3eaa948fcc87eb92ab3",
+   "norm_hash": "584e751e43aa05ded01c5884b875b8182c788cc07eab5b045769860cbcb02f6d",
+   "chars": 69015
+  },
+  {
+   "sid": 3183,
+   "url": "https://bloomberg.com/news/articles/2021-03-24/myanmar-citizens-find-ways-around-crackdown-on-internet",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 3221,
+   "url": "https://postgresql.org/docs/19/tutorial-start.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3df71f1adf8401c697fc8d0bb37c30a184770b28cc8dadbb4860d68c056773ce",
+   "norm_hash": "42c8a62a3e7516a0462b62433286e4e7281ce0e2269cbf50cc110bb41ecafd9b",
+   "chars": 802
+  },
+  {
+   "sid": 3231,
+   "url": "https://postgresql.org/docs/19/tutorial-sql.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4d99d6a0381cfdedab8851d79557f7515ec578ca8de29cd11583a1a85bd2af8b",
+   "norm_hash": "a1e7736fb2df82f77caa3b7d4dae529029693f792570aee54356a1a97089413a",
+   "chars": 906
+  },
+  {
+   "sid": 3232,
+   "url": "https://postgresql.org/docs/19/tutorial-advanced.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cb83f8b221fb54b0705e14dc037fbe053c669cd631fab5e7589eb1a4ace73831",
+   "norm_hash": "d7db416042caae7b0e2fa994701336a82a7f8963316601e6ebd328e07a7a8c57",
+   "chars": 825
+  },
+  {
+   "sid": 3236,
+   "url": "https://postgresql.org/docs/19/queries.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bd4018ae397a10a27127ed5cdc99bf895a1e1d950dd47db21c5f9c3aaa8d71b0",
+   "norm_hash": "9b8e1b72f0b08f9294c944023c708d5cc153ac23b0634ddf370bcc070855833e",
+   "chars": 1475
+  },
+  {
+   "sid": 3282,
+   "url": "https://education.gov.ng/national-policy-on-non-state-schools-in-nigeria-npnsn-with-its-implementation-guidelines",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6d5d9df431d687a309a10a0acaf5f771faf2038374e32e81aa2c3362acf4a59b",
+   "norm_hash": "e2e4111392a84f6a896ea16a9259a147f2759dec07c06bd4a861d0fa8b984e74",
+   "chars": 1040
+  },
+  {
+   "sid": 3283,
+   "url": "https://education.gov.ng/category/resource",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2f69c773a4905cc292c28c1ae3fb4cc7fee430acef881a71ca11ac0d75861ba3",
+   "norm_hash": "3e4342fd8cae85664f32a40f56c241bd948a29469369a842152e7d2259db3140",
+   "chars": 2029
+  },
+  {
+   "sid": 3284,
+   "url": "https://education.gov.ng/author/edu",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1b40021de41f7c76bb768496d694b0b7947ead3a619b373e672b3955c16ceaa1",
+   "norm_hash": "02d26debcd3a2818cedf389a03cd18a497ac99317bf9df847b9d3a3754f87ee4",
+   "chars": 2021
+  },
+  {
+   "sid": 3285,
+   "url": "https://education.gov.ng/fme-journal-2023",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b9d813d008f985075326f2b498b58dd09eab50f1edb1a8e28ff07ac6842be8ae",
+   "norm_hash": "c378097cdf431fe904fa645054ae609cb50c5ac9e53408623ae748bfe4a9fe0c",
+   "chars": 837
+  },
+  {
+   "sid": 3286,
+   "url": "https://education.gov.ng/fme-newsletter",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d81975224ce8e0a7bdd4592acf0e78d1a21cc02a701cb863e34ddf150a5180d1",
+   "norm_hash": "3980ccdd241bb35cf2a820e049e157b27cd85cfb5ae29d353934e3831d831b58",
+   "chars": 813
+  },
+  {
+   "sid": 3287,
+   "url": "https://education.gov.ng/unity-spotlight",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "30db809014e3e745072f3e64041a90478ed7941efbd6045599c8ac5fa907c9c5",
+   "norm_hash": "4f149f60c2da2b053be0ee381b72f19a6f46ef32cbb6a1e7458d710e9e4ef9c3",
+   "chars": 816
+  },
+  {
+   "sid": 3359,
+   "url": "https://sec.gov.ng/for-investors/keep-track-of-circulars/proposed-rules-on-online-forex-trading-and-contract-for-difference",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 3423,
+   "url": "https://who.int/mega-menu/health-topics/resources/questions-and-answers",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3630,
+   "url": "https://news.ycombinator.com/user?id=Thaxll",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3637,
+   "url": "https://news.ycombinator.com/user?id=emadda",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3641,
+   "url": "https://news.ycombinator.com/user?id=ok_dad",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3644,
+   "url": "https://news.ycombinator.com/user?id=adpande",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3670,
+   "url": "https://apps.apple.com/ng/app/piggyvest-save-invest-today/id1263117994",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4792cd76eb5d25b433013fc2905785b690052f281337b62367389f2c714c7d9",
+   "norm_hash": "5a252e3cced0fd71440b9413d391aa95998733067b91d1f42f9ea70119e45611",
+   "chars": 18371
+  },
+  {
+   "sid": 3721,
+   "url": "https://rust-analyzer.github.io/manual.html",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 3793,
+   "url": "https://docs.rust-embedded.org/discovery/f3discovery",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0b7ffe2ba150e82bba8b4288a3930e2e674d8fa9b69362133436ed5f745013e3",
+   "norm_hash": "851de19a1fef52ba9f3f51d4a92a1f0c7969e2eceb5bd70d8f3d507f41368083",
+   "chars": 2646
+  },
+  {
+   "sid": 3877,
+   "url": "https://guidestar.org/guidestar-pro",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 3903,
+   "url": "https://blog.candid.org/post/updates-to-candid-profile-demographic-data-race-and-ethnicity-options",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 3924,
+   "url": "https://charitynavigator.org/discover-charities/cause-based-giving",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3e678e938ca025ea8adfab824594bfdc3b53c90850ecea91cd1f60737d7dc01b",
+   "norm_hash": "24b3e9d658b8056ab3c392dc56ec67086202e1f48ff4c73aa91fddd2fde138e6",
+   "chars": 25226
+  },
+  {
+   "sid": 3925,
+   "url": "https://charitynavigator.org/discover-charities",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6498c96900fa5cff767590a79c7c5a82ae78141e6f04d97d8f438db28fb92a5b",
+   "norm_hash": "5629bfef1c5617b9dbc8b1259eef354d5ebb2c4e93071e32e71fc3a3cebb7d16",
+   "chars": 26358
+  },
+  {
+   "sid": 3926,
+   "url": "https://charitynavigator.org/donor-basics/tools-for-giving/giving-basket",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ac6afa61eb602824fee2316deb2bd4e2a8ab255a12a45ace6a7e79b7b0424427",
+   "norm_hash": "5b701d3aba862e79fd41788c6b127980be4d60ebac71ea8603c65c12a879746f",
+   "chars": 24547
+  },
+  {
+   "sid": 3927,
+   "url": "https://enterprise.buoyant.io/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 3928,
+   "url": "https://deno.com/blog",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "825713768f3c69083e6cfa766b9190244a89e9b7db174d73b065c9c33eeb203a",
+   "norm_hash": "6d95015c6b815793dfbf7928cf5511c1d428b701308be5270f22125f8aec460e",
+   "chars": 50867
+  },
+  {
+   "sid": 4061,
+   "url": "https://maggiepint.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a1814207f4c03b2bcd50cb8cc56d52f9f8b3f9ef5c3d0517d066461d22d7c98b",
+   "norm_hash": "189994551901d4b019d12d96474242053ff1bc726a224330b97ade3d69618009",
+   "chars": 32318
+  },
+  {
+   "sid": 4067,
+   "url": "https://maggiepint.com/2017/04/11/fixing-javascript-date-web-compatibility-and-reality",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e42e58fe737e4724807bebd2393de77acc805a05ce6f705b586bd74f007e0095",
+   "norm_hash": "319f054fae9dbebb80959265669ac4d8695ea0f6136e98841f6d9738d13c85cb",
+   "chars": 8133
+  },
+  {
+   "sid": 4073,
+   "url": "https://maggiepint.com/category/conference-follow-up",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "03df53ddd2f3806d50ad6cc1e14543b89de7012232dfdf01dc7ab092286ae241",
+   "norm_hash": "f65bc2a8940ca5c3c341f7c3db830229a2233bdbae5d9425c10dbcf70da98abd",
+   "chars": 664
+  },
+  {
+   "sid": 4074,
+   "url": "https://maggiepint.com/category/date-proposal",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e970795e8f4f6ebade30700c1a2e5bce54ff5a2cf5182201d9c7e27adcd0e547",
+   "norm_hash": "b52d985425b810598bd68f30c27f8d19a74ad1036253fc939b7b5a850344c257",
+   "chars": 11872
+  },
+  {
+   "sid": 4075,
+   "url": "https://maggiepint.com/category/angularjs",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2bc42ffe7c0457812434b0f82bd21c985e8e52f11b5c386a6bd595ab578216b5",
+   "norm_hash": "2ef0047ec20d0e5bf69afffda9318e1d8e3e51d0abbd8f61c775ee6ac5d8df27",
+   "chars": 3205
+  },
+  {
+   "sid": 4076,
+   "url": "https://maggiepint.com/category/raven-mistakes",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "204782fce290b6f6e7f81e3bda7afa359d8e3bada5d9282d33f6846cbfb4ee41",
+   "norm_hash": "001655a0711c75718b26493931786e37461cd47708f1a6916fe8eb8f14ef6340",
+   "chars": 10633
+  },
+  {
+   "sid": 4077,
+   "url": "https://maggiepint.com/category/uncategorized",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cf0f6bb9277b773ba1a14b7dafc2425548f3868d6b083bc196ac9802f0416f00",
+   "norm_hash": "b4e39de26c78d96080a8e376ac1bdab93fb30f0b0fe25bfafb88ac46837e2246",
+   "chars": 15825
+  },
+  {
+   "sid": 4078,
+   "url": "https://maggiepint.com/category/moment-js",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3227f5dfa445d3ae7cf806bc8ec4d94df4e911a549409f212944edc54be219ce",
+   "norm_hash": "66cbd02fa0283e5eb7e131ae439d560887a95c20bc3d90518e93ca7d3a77d3da",
+   "chars": 19608
+  },
+  {
+   "sid": 4079,
+   "url": "https://wordpress.com/abuse?report_url=https%3A%2F%2Fmaggiepint.com%2F2017%2F04%2F09%2Ffixing-javascript-date-getting-started%2F",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3ceb44171fce1c021d38339c55c0b6cb2c37171b9ee5d9f3f643ecb584623c11",
+   "norm_hash": "450f2856e5fa38a1d0664b2381aad35ea8e7956edac55034c253726d8c99abcc",
+   "chars": 2938
+  },
+  {
+   "sid": 4080,
+   "url": "https://maggiepint.com/2017/04/09/fixing-javascript-date-getting-started?share=facebook",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4081,
+   "url": "https://subscribe.wordpress.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "60cbc6d536a62fdb28963931808f7b5fd0594c94fcf9ef59c6ed2e9dfe1d788c",
+   "norm_hash": "28f1b8df87732c2c6bea79c13ba87c76397f317adf867627527098aafe8a4fef",
+   "chars": 2776
+  },
+  {
+   "sid": 4083,
+   "url": "https://deno.com/blog?tag=freejavascript",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e4f824f0021b32bd3a9dc7f8c0076274676f286831199ca34687c7eba6866788",
+   "norm_hash": "9ac41c8ff496c1177a48f8c38d253144e5c6d97605a16f9598fac88155296d87",
+   "chars": 1446
+  },
+  {
+   "sid": 4084,
+   "url": "https://deno.com/blog?tag=javascript",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b51930838dd7c39e557bf7a15ad12ff07583d56d47c1f3256e2b679a62bb7276",
+   "norm_hash": "9ee70e49db88df1af9dca3cf96a9b9bc1f41eb5c2fa9c40746acfa5c163c789c",
+   "chars": 754
+  },
+  {
+   "sid": 4085,
+   "url": "https://deno.com/blog?tag=deno-in-production",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b5d57dceaf0767d23d14a6b1e388cc41d326c96b08bf2a2f32b9a9ed537bf033",
+   "norm_hash": "6e87eb72659297e7bf0e29184bce7978c110740a6f8d0f203a43ee6327a6814d",
+   "chars": 2059
+  },
+  {
+   "sid": 4086,
+   "url": "https://deno.com/blog?tag=fresh",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "510015ff4a821aaf8db737a5e6376ec85dae892c46b6450156e1786ed4849af8",
+   "norm_hash": "c8ff20195893eb5fcdf2a3f8c228ab049e18f504c5cee01738a53d149ca6b2e4",
+   "chars": 3945
+  },
+  {
+   "sid": 4087,
+   "url": "https://deno.com/blog?tag=performance",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d9aedffa68ef54ab92fc17d71b89e3ba7fc8a0f130394a7e7fd4574dd33489f7",
+   "norm_hash": "1e542c7ca64d769306e4792282bcf74b2ad50585c1380f1e135baec0f3d0d7a6",
+   "chars": 873
+  },
+  {
+   "sid": 4088,
+   "url": "https://deno.com/blog?tag=deno-deploy",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "881c644ff36c74b0fb5411abe386b3357bc5c1da93063223da33612363e037ae",
+   "norm_hash": "5efe1caf0f877e4acc299c33a1c69d81914b565f13d6c137e987cb4e6285abc2",
+   "chars": 12113
+  },
+  {
+   "sid": 4089,
+   "url": "https://deno.com/blog?tag=engineering",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d6bcccb4a3481b833aae1e6fbe65e85c875bbb040e606773994a50ba34694f05",
+   "norm_hash": "02fd066d964db9f0c26aed2ba26754959d71cb9aa036afd17f69b5c53b61f1d1",
+   "chars": 6770
+  },
+  {
+   "sid": 4090,
+   "url": "https://deno.com/blog?tag=announcements",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2f5952592bea42915965f738624de38f30907965e2cfae08bd9279b7dada657d",
+   "norm_hash": "2dcb0cb408065754bbf4eaf208be69dc3c173ecf7ae154c4f6227d244c06c38a",
+   "chars": 4911
+  },
+  {
+   "sid": 4092,
+   "url": "https://deno.com/blog?tag=deno-kv",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7e612412b317a453f6b1e8571292c770777b20fde313a8870d65d9cf2bac216b",
+   "norm_hash": "39da477f2778f4da8484afa204b28988a8675cbdfd3ce89522e9802d1ea3e372",
+   "chars": 2971
+  },
+  {
+   "sid": 4094,
+   "url": "https://deno.com/blog?tag=docs",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4097,
+   "url": "https://deno.com/blog?tag=partnerships",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "59a31684d703554f78548e81a6aef87f65b48abb795aad019d33dfb2d649a937",
+   "norm_hash": "fd062a378a81cc5005059832a22aaa58b9274248a440c8bcdca285035a0314aa",
+   "chars": 1711
+  },
+  {
+   "sid": 4099,
+   "url": "https://deno.com/blog?tag=jsr",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d8f78d19ab15dbdb5ab5a6e8954d2af53bc62c130073a3c7959b8bd30e635384",
+   "norm_hash": "504da7f907c4346ed021a93b0ddd2f1f9c9d946d28bfc597897ed7dbebbee95c",
+   "chars": 2934
+  },
+  {
+   "sid": 4100,
+   "url": "https://deno.com/blog?tag=astro",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "44de5f4074cb9bd066caf518b023cb24718c318b930e4468028a698e1742b7d6",
+   "norm_hash": "51ee4a0c107ece8938b1292fb1686224dd6896591346ad232ae30656f824df72",
+   "chars": 562
+  },
+  {
+   "sid": 4101,
+   "url": "https://deno.com/blog?tag=subhosting",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ce5ec3f78fda626a914f5db9ae22fcd501deff87fd00e211576b3e4057464db7",
+   "norm_hash": "b16d067c47d4f3bb2781f9e32a67576ce7f413125f86849b8809314ee208986f",
+   "chars": 4227
+  },
+  {
+   "sid": 4109,
+   "url": "https://deno.com/blog?tag=how-to",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e30199073cee2f586e40996550d0f87004fed36aefdab4199fb8474a61f98bae",
+   "norm_hash": "648c636182c18c80c0c5d00c7957659d74bd8777a0d50f20bd85125d14e8cc31",
+   "chars": 11294
+  },
+  {
+   "sid": 4144,
+   "url": "https://vercel.com/d?title=Firewall+tab&to=%2F%5Bteam%5D%2F%5Bproject%5D%2Ffirewall",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4239,
+   "url": "https://digitalocean.com/blog/tags/engineering",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4244,
+   "url": "https://digitalocean.com/community/users/piyushsrivastava",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4726f80cbaddb66bcb9489ac6aa5311a4a420bb832964b62020a792a91a8c63a",
+   "norm_hash": "84a83aed8f3ea5ffbc757d6e7a9692bf7cee09873165effd869253b153ec0aa6",
+   "chars": 1078
+  },
+  {
+   "sid": 4247,
+   "url": "https://digitalocean.com/community/users/bdutt",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b6f8a80ad5f38cb6555593d8556e1ebc0a1e9f6b9eafb3ec9ec58a2131a4b05d",
+   "norm_hash": "2e199a2a2c133aa6a37e3002b66f3f8c5c024d796a7d8c3d015d4e1e1a36c852",
+   "chars": 1057
+  },
+  {
+   "sid": 4250,
+   "url": "https://digitalocean.com/community/users/rramesh",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ecfc1a709f4c9c8beece03b3f36f153e28df27154132a9266b08d1083d434762",
+   "norm_hash": "bef71edf67d31434bfb9f3f57a8ade3cf5d02ea5a619ddba43434786953dc714",
+   "chars": 1066
+  },
+  {
+   "sid": 4256,
+   "url": "https://digitalocean.com/community/users/paddys",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cd65bda7da45d3f95f4e6b6dd48ad0b31da7d3dd41c4019455352d579c7c7381",
+   "norm_hash": "fcde6b06110219ed8f74633e181cf7146edef3599d5d8bbe86d089adc8a87469",
+   "chars": 1062
+  },
+  {
+   "sid": 4258,
+   "url": "https://digitalocean.com/community/users/karnikmodi",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1b09ce83cf6986b616c0e55c5482a7d9ce9a66b570611d53509820023d5358f5",
+   "norm_hash": "c1ed1f76685f121fc5de18fbfea13451772c8deca3430501497865046da165f9",
+   "chars": 1061
+  },
+  {
+   "sid": 4263,
+   "url": "https://digitalocean.com/community/users/draha",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d54439c354975397d7a45167f94f88784236cb44beebfa09fb3ad6112f9ed3a2",
+   "norm_hash": "73efbd09d953391bf3ced3de3391ebc316592729beda7cd305726559ed521afe",
+   "chars": 1058
+  },
+  {
+   "sid": 4270,
+   "url": "https://digitalocean.com/community/users/tkimdo",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1e688c92bac7ab3c7bdb47de09b66d7540ed2fb4e985e092dfb283e9ed71f467",
+   "norm_hash": "5e3ef5baeb740b339e02035ba0838cd31ffa7e94e26552ebd00db442abc45e19",
+   "chars": 1059
+  },
+  {
+   "sid": 4316,
+   "url": "https://ai-sdk.dev/docs/foundations",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "55bdebb4d9160cfb25d830cebf9ba189db4094ef1dc2a8e91234facb22f5b6e0",
+   "norm_hash": "400f24567ff5b9bd8fcfeaaddee1a9f46dc6d6471da40b24018d8c0446426701",
+   "chars": 3201
+  },
+  {
+   "sid": 4347,
+   "url": "https://ai-sdk.dev/docs/agents/overview",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3cdb4fcd6712afba97f82c754b0a2a9a58b8f557f3482dffabbacc80fd9c6c95",
+   "norm_hash": "edeae88f05b6ea1b37f31b80d1a691153307ffc3db350546db03874955489d6a",
+   "chars": 4850
+  },
+  {
+   "sid": 4353,
+   "url": "https://ai-sdk.dev/docs/ai-sdk-core",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2494893487ccb3e443bc8b474af788abaed19ccc44f3ab3769c24e648e182c65",
+   "norm_hash": "57c5e67777e77f26ab1bead5f8ba3abe823f5c255546c0c453bbc5fdf12fa64f",
+   "chars": 2143
+  },
+  {
+   "sid": 4430,
+   "url": "https://shop.xboxgamestudios.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "188f8370cd7de04d24481c818cc8ab5a81e3dc51eefafa329f58c4a994762cd0",
+   "norm_hash": "74335d52a8f3948f9ba845338446a08839bdb1e70a1a77d85c1d408cce861611",
+   "chars": 2157
+  },
+  {
+   "sid": 4459,
+   "url": "https://vuejs.org/examples",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4492,
+   "url": "https://xbox.com/en-us/play/user?xr=shellnav",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "61f6e8b64b25aa4c2af4390b88f73956cef645a91f22cb472b2f77f45ad55f22",
+   "norm_hash": "80d3cf1a36e50cfc4fb742672e9cb5b8d3f61da2297e01d052fec05779db24cb",
+   "chars": 2474
+  },
+  {
+   "sid": 4550,
+   "url": "https://astro.build/themes/details/prima-persona",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8703b99dcd4fb3dbed7fbc6ecd411204f86ed14a2dc41c9866efae164f16e862",
+   "norm_hash": "56817f3b86d03575b4b1e713c74113f1a6cb647ba3c07fa9b38b2d0c9f2a03e3",
+   "chars": 1761
+  },
+  {
+   "sid": 4585,
+   "url": "https://svelte.dev/tutorial/kit",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "be99d5043cb760949696a7f5639f5f3f8fea5da7b856cc370580e57132c5c13f",
+   "norm_hash": "368f6929ceac1fe9ca8adef3bd646544778ae5b69b83caf6e68508ef59d20bfe",
+   "chars": 5064
+  },
+  {
+   "sid": 4618,
+   "url": "https://astro.build/themes/details/astro-design-system-docs",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "97874d1a665c04a312cc86959847aac593ab51bfc3f09df4e5acfaaaa5818c84",
+   "norm_hash": "966f01cf495ff2a3cade741487c35c3a9c652d81f75809cf962115bbcefa84d0",
+   "chars": 1252
+  },
+  {
+   "sid": 4628,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10178192",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4688,
+   "url": "https://smashingmagazine.com/category/career",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1344da05a3735a261d7b7b50ee4e33fa1364bf5e5f8cb41defd5eebbc5310700",
+   "norm_hash": "87d3335e84189fab568c4e986d50e865a7db4f28b2e3f0d9462f8ea417f75b0d",
+   "chars": 3745
+  },
+  {
+   "sid": 4748,
+   "url": "https://blog.exceeds.ai/ai-code-analysis-benchmark-reports",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4814,
+   "url": "https://mangrove-web.com/blog/resources/the-green-ux-checklist",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 4819,
+   "url": "https://ui-patterns.com/patterns/Wizard/examples/1452",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4826,
+   "url": "https://ui-patterns.com/patterns/NavigationTabs/examples/12",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4831,
+   "url": "https://ui-patterns.com/patterns/CalendarPicker/examples/1494",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 4844,
+   "url": "https://tumwebsme.com/en/customer/blog/green-web-design-sustainable-websites-carbon-footprint-guide",
+   "class": "dead_or_blocked",
+   "http": 410
+  },
+  {
+   "sid": 4872,
+   "url": "https://ocw-openmatters.org/category/open-educational-resources",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a15e078e900a213d5d1b70e8752af5fafb3459428452ec56ba2bf4d2b32c7261",
+   "norm_hash": "336da4f99d471c6b6557cb5491bfb115555bac5ec8aaa7635f0b4e936b9427d4",
+   "chars": 4113
+  },
+  {
+   "sid": 4873,
+   "url": "https://ocw-openmatters.org/category/open-educational-resources/uncategorized",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "508cb452289a17b8f91c605e70b32c2fec3a16a7cba3dea3fb6ae8e0d7211924",
+   "norm_hash": "71aca1936a4f03d8a396e44cbb4cfe0afd5bf14f0a6b41c0944d825fccca7f10",
+   "chars": 4100
+  },
+  {
+   "sid": 4875,
+   "url": "https://ocw-openmatters.org/category/open-education",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1558e5628a68ae61581a15bb5a44e738f72b1986cf5344088c464a72e3bb6490",
+   "norm_hash": "cd14d30387fc5a82001366d434a74c88b96aae5ddaa459047e81c3eeec776b7b",
+   "chars": 4185
+  },
+  {
+   "sid": 4949,
+   "url": "https://ocw-openmatters.org/tag/chalk-radio",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5908d5f4b08ee2e2dedd23fecd2ddf6136bc42661a1c61b14410041d783121fd",
+   "norm_hash": "97baa570c8fed0c1e0d08c8249c8b53c1045d28a543457b8c123b7b005792b9e",
+   "chars": 4094
+  },
+  {
+   "sid": 4963,
+   "url": "https://ocw-openmatters.org/tag/collaborations",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f685dc7df2a9a4f0ea978c5bc308bb71fb2dd4b11cb5a3f0fe945be90590030b",
+   "norm_hash": "2b22141d6c4e23d51202de403f90e1cc49ffa77cea6bf73f26dd06f75acf9559",
+   "chars": 4356
+  },
+  {
+   "sid": 4964,
+   "url": "https://ocw-openmatters.org/tag/community-colleges",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "56250935cbc7ff23ad488c6736b54930b7eec075a0357e2860cbbcd3dc8a3f0d",
+   "norm_hash": "ca61d3dca118afb039ab475a752acc0b33098fd4d1c428ac49f8b59087a91ac7",
+   "chars": 2104
+  },
+  {
+   "sid": 4966,
+   "url": "https://ocw-openmatters.org/tag/mit-opencourseware",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "066d0e9da853a99e7b4c5e289c0086949337602668ef45258953405dbd7b9ee1",
+   "norm_hash": "a2bf7d7e89b7f3c9da520fe3a0dc9a03016b8330725ad131352102909855016d",
+   "chars": 4187
+  },
+  {
+   "sid": 4972,
+   "url": "https://ocw-openmatters.org/tag/open-education",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "449deb16315a6361cf1b0594ae9e71c5b60c24b95453778fd66691672dbbb589",
+   "norm_hash": "1232bae012d583224f54d362e555896bcb7a7df15ee3fa2b47f4f75e8f18614f",
+   "chars": 4217
+  },
+  {
+   "sid": 5055,
+   "url": "https://ecma-international.org/technical-committees/tc55?tab=published-standards",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "63762d0a33303b7c87ffc434983027656adf0ab0c21401718f846ec1feedd243",
+   "norm_hash": "6ac52ece661c7c7491a750053aaf884a7472a4024a3609ee056fa35425f7fd05",
+   "chars": 1943
+  },
+  {
+   "sid": 5138,
+   "url": "https://med.stanford.edu/research",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "dc5eb242fcb9edbd38b225ad72e229d7967d42f0a764db1457f2758e2bb0b7fe",
+   "norm_hash": "3c77be9c750263b826822300c37dd8827c96ffcb38a4cbf618a9c8c01ee27fd1",
+   "chars": 3000
+  },
+  {
+   "sid": 5187,
+   "url": "https://seths.blog/2026/08/the-amazon-tax",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ac658d16829403bef2d322f240ceaea27a69baa1b29d0c943c0c443d002ac287",
+   "norm_hash": "12403ae838b46c70a23b80837854eabfb0d1b1178b9d15273176ccf29e935b99",
+   "chars": 4396
+  },
+  {
+   "sid": 5192,
+   "url": "https://gowers.wordpress.com/2026/09/17/why-i-didnt-sign-the-fields-medallists-letter",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "83ca5fa911302a1c8a24f3ab7b79b8c0823179e19cd0b836ab344bbd8d155617",
+   "norm_hash": "c4dfa2f438cec4ecea4ff0a57ecc5e261de9ac13bab23ea5dbf4ed7dc63a45d4",
+   "chars": 80942
+  },
+  {
+   "sid": 5228,
+   "url": "https://3pillarglobal.com/insights/world-without-interfaces-golden-krishna",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b1212a9efd606b3078ff9aefd9d01b3ce7818a9894bacbb6579e27c0a70a9b85",
+   "norm_hash": "e5e798eb7780fb7f860fb0350f9445e9c214e31392ff6a7bdae486586c3a42d8",
+   "chars": 2711
+  },
+  {
+   "sid": 5237,
+   "url": "https://business.edx.org/contact-talk-to-a-learning-advisor",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 5265,
+   "url": "https://business.edx.org/category/case-study",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f10867da03fcb7e9ecc947f9d59a6556cb2c67d7aac3d56c6c6cf07e2324961e",
+   "norm_hash": "d5e579d00dd697d70eeeb7fc6405bbd450b2dece5deaff9d60dca98344bfa83f",
+   "chars": 916
+  },
+  {
+   "sid": 5288,
+   "url": "https://snaccooperative.org/ark:/99166/w6hf0rfw",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5331,
+   "url": "https://yale.edu/feature-archive",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 5336,
+   "url": "https://yale.edu/index.html",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 5340,
+   "url": "https://commons.wikimedia.org/w/index.php?action=edit&section=3&title=File%3AAshton-under-Lyne_town_hall.jpg",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4b0d4442a5043614d2716a783a2d8ad76e8bc6d52a8ba4c834325d30b5679340",
+   "norm_hash": "c4f06140477d358706824e97cca9ece1a61ff7a60baaaea314356bb59e7db5d1",
+   "chars": 1447
+  },
+  {
+   "sid": 5411,
+   "url": "https://yaleclimateconnections.org/the-climate-connections-podcast",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0613a777eaba1d448fc68346971b6c6eeedb91e28cefd62c1b4a0716960e6e36",
+   "norm_hash": "7cfce78b2bfba97705079b402d824bdbd87c10a5fa1d4f31102cc201e82a59f0",
+   "chars": 4241
+  },
+  {
+   "sid": 5456,
+   "url": "https://calendar.gse.harvard.edu/en/36YmkP6/g/54VVVpBN0P/schools-and-americas-250th-patriotism-pluralism-and-civic-education-5a5YUc2N6oL/overview?source=hgse_web",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5524,
+   "url": "https://uxplaybook.org/faq",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 5569,
+   "url": "https://developer.chrome.com/docs/ai/evals/quiz",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8bada8ae1dbac38f2247085c2c8496e59e25ae4375fb991aec4e4b69e4f942d0",
+   "norm_hash": "97c4dfde7341d507d80b58981a2c0c1945acd2516766678110f82201fcb99be0",
+   "chars": 3751
+  },
+  {
+   "sid": 5581,
+   "url": "https://developer.chrome.com/docs/web-platform/new-in-chrome",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5583,
+   "url": "https://developer.android.com/updates",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5604,
+   "url": "https://developer.chrome.com/docs/devtools/tips",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5636,
+   "url": "https://merlot.org/merlot/communities.htm?fromAdvancedSearch=true&type=2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1d53d8912aa92d24d9352ff08aecef5d45f6163bf7101808efd36012a00832bf",
+   "norm_hash": "b88ca5609c7015a95740cd3807439e7819c299a6d2b14b8dfbfd3f8198c2260f",
+   "chars": 4182
+  },
+  {
+   "sid": 5643,
+   "url": "https://merlot.org/merlot/communities.htm?fromAdvancedSearch=true&type=0",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5c3fc623434125fa15e9b326cd506d14f84e64ab7eb38960b48aeeb83f96d5d2",
+   "norm_hash": "6fa6dec7dff8180afc1aa51ac68647b4135c2250850ac9dfe6ea398b54899abd",
+   "chars": 2763
+  },
+  {
+   "sid": 5644,
+   "url": "https://merlot.org/merlot/searchMaterials.htm",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7b287a4be481139ad00866bcbe819b851c2117a77a9da8f770f2f7797bbf28b8",
+   "norm_hash": "4f5699a941906d4ad49f0a0665ee29212a977c267d997a0d6bd8caf70b377311",
+   "chars": 9325
+  },
+  {
+   "sid": 5646,
+   "url": "https://merlot.org/merlot/communities.htm?type=1",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "11cada86997586427cf04e96638502485aa697dc0307fe02dd57d4ad64aeddf8",
+   "norm_hash": "800529976efbe84526193772bf056f93601d2dfce44b38fedd80bf49c1e4ee11",
+   "chars": 1833
+  },
+  {
+   "sid": 5657,
+   "url": "https://merlot.org/merlot/communities.htm?type=0",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0f682693f50861e3a5ba1a652cd3d6cfa16752a8cdca0b5d97f95295dcb5850a",
+   "norm_hash": "d81fcbe5ab04f756c716c3859946a0bfeb426702d2aed75c6bb0cd534e287fd7",
+   "chars": 2882
+  },
+  {
+   "sid": 5795,
+   "url": "https://googlechrome.github.io/samples/downloading-built-in-models/gemini.html",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5796,
+   "url": "https://googlechrome.github.io/samples/downloading-built-in-models/index.html",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 5821,
+   "url": "https://luckslab.org/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4a324b50b136f51b6e6a948bf71500f7a5f813b9a5335df5f1f6da67279c1f9d",
+   "norm_hash": "7a3704a8ebe997a258a9f7b6bc9df25478386fd7edbe3e0f11553f90bc3eb747",
+   "chars": 3709
+  },
+  {
+   "sid": 5839,
+   "url": "https://wordpress.com/abuse?report_url=https%3A%2F%2Fluckslab.org%2Fteam%2Fjblucks%2F",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "73504315a9d4e68198f21f2b43914a61c49ef991b4ce6983e030079a01d09dcf",
+   "norm_hash": "4ed81780200d30bdc380fd5eb06211d8d2a312667a32a28f9d14014e664760d2",
+   "chars": 2899
+  },
+  {
+   "sid": 5841,
+   "url": "https://nature.com/subjects/arts",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8c8882dd44629b862167e4d1e8fc5b9bb7f3b508c2c66adac15841b704f792b3",
+   "norm_hash": "06c2f04a24490a058a96be85d9c3f67aa07e32101bdfe491a2bad8eb16c86244",
+   "chars": 3670
+  },
+  {
+   "sid": 5891,
+   "url": "https://rumble.com/c/whitehouse",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 5896,
+   "url": "https://whitehouse.gov/presidential-actions/executive-orders",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "023f622f61bd275a0b9147e5cd8a2beb8b04d2b2150abf34277989e052699c60",
+   "norm_hash": "2c5ba7b92ccfcc2b5ba45f5fff91eecb82827398959009759b7137df08fffa3e",
+   "chars": 1426
+  },
+  {
+   "sid": 5902,
+   "url": "https://whitehouse.gov/presidential-actions/presidential-memoranda",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "637b232ce74f37dad566bbd83a027bc78ba397d7ae81bb9d3eadf7d420337fc2",
+   "norm_hash": "a846b564f72d39d39a5e39f93d1a38c627a30d68b4f955305dc7139665a47df8",
+   "chars": 1760
+  },
+  {
+   "sid": 5904,
+   "url": "https://whitehouse.gov/fact-sheets",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3f68d34e929a5ede96fcab5f544b935f5475ce896b44b0b71ed4a5724d61228a",
+   "norm_hash": "e57693a9dd1f4520b0154d45b5213d7a748ff7fe19e9a4493cf7df0fcab59158",
+   "chars": 1369
+  },
+  {
+   "sid": 5911,
+   "url": "https://chicagobiomedicalconsortium.org/",
+   "class": "dead_or_blocked",
+   "http": 301
+  },
+  {
+   "sid": 5918,
+   "url": "https://whitehouse.gov/wire",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4c03c88540710b0c37c165f35b19a548a8e1a924dd58cfd516e478b7d0c9d7ab",
+   "norm_hash": "d98afe1f13ecb7373d65792e24b299700ad125a3c77d5a9aaa108dc61b729221",
+   "chars": 3298
+  },
+  {
+   "sid": 5919,
+   "url": "https://whitehouse.gov/videos/president-donald-j-trumps-first-year-in-office",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "560c2a5ed583da9516d0d78610539cbc2703002e960af98eb7f92e13be4d480f",
+   "norm_hash": "7c15c4e31272cf7c24b94753f849736ea7aaf6d050ba13dba8a410cbc02ac01a",
+   "chars": 538
+  },
+  {
+   "sid": 5968,
+   "url": "https://info.cell.com/e3t/Ctc/I1+113/c3j3g04/VWB2rh6jdcvJW3gG2YN7p9C68W87_Sgk5TN-H1N5t-nkM3qgz0W7Y8-PT6lZ3pLW1HPl6979c2M1W2PSXlC2dL7V3W5ywJ2j4v_bpKW94r86b8dgNP1W6MKmg_4l3kgLW6Wx_h01VpLKBW7QwxlW1Z8tTNW4x_tbv3cGjwpW79Y9CJ5LGqS8W1N7pSJ2c5Dn1W7YTlP037jDRPN5_HQN-Xd4lyW3HT7jj1Nq9KkW2CKPHZ5Rv20yW2PblTh3lXqrGW52cQc71ml3GCW2WJgDb7hpGfRW8bdSDV7z-CHZW7MdTZk8gmFLdN2FrXbXXP8_6W1MrVmj8pM0ZXW4zXnCt7pGgNXW6qxzHH1GxZttW2kKDFK47VMX8W7CBd2Q917lDHW18v_b462TdQ8f2YbXrY04",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6096,
+   "url": "https://voices.org.ua/en/donat",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3d4ea4ef5b22483bb8f4674f493ec783321307e0ec809b065e364d7779ff4668",
+   "norm_hash": "c296563b976217bfad04ab4a0de001531fd257572ccb9bc5cd1090680298f97d",
+   "chars": 5357
+  },
+  {
+   "sid": 6107,
+   "url": "https://voices.org.ua/en/polityky-shchodo-roboty-z-ditmy",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bc82210bc796f854fb13caae3f5dd8f1a66f9d77637e341ec1ba9979dc4a8271",
+   "norm_hash": "7fc9c685c31a04f7a1b8ea93145d31d2df5cba8a8eccee541ed80b89f6cd8392",
+   "chars": 3782
+  },
+  {
+   "sid": 6109,
+   "url": "https://ukrposhta.ua/en",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 6112,
+   "url": "https://voices.org.ua/en/news",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8c9ebbf3f0777702a45950575a8e715c2818f29bfd8495bba29e4ac234d725df",
+   "norm_hash": "8e919c8b4fbf2ac0e7a126bb1568981ac9cf1a69eefc0f251b612e04a9893598",
+   "chars": 6177
+  },
+  {
+   "sid": 6114,
+   "url": "https://voices.org.ua/nahliadova-rada",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "79d2042a5816ed8a5a7d2ce60179c191bd6cdc37c5541dca534f301edb02b70a",
+   "norm_hash": "40c48492b5f4627004b29b75b8c9977e58f384ca2509c8c15489841d90644c55",
+   "chars": 9650
+  },
+  {
+   "sid": 6115,
+   "url": "https://voices.org.ua/en/centers",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c2bf9b6533d08e3b42eb2aa1e4e1ba7a8cc379364d2fb426a0c77fa5d74104ca",
+   "norm_hash": "d6aaed7c0051ad23b6fbba636e23a34cc4e0bbca2797e7108b26cc5629a28b59",
+   "chars": 1630
+  },
+  {
+   "sid": 6116,
+   "url": "https://voices.org.ua/en/expert-materials",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e5ea29867a0645a641c0cf87ac99a58a76a4e3c6590a01f115cb4e9a436056c9",
+   "norm_hash": "5f41b4db647af8062b51134ebf7c090c39f2f9326d538c6085f0434ea3ee1c7f",
+   "chars": 10346
+  },
+  {
+   "sid": 6124,
+   "url": "https://voices.org.ua/en/dopomoha-ditiam-i-batkam",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "10e48567bb11633ee95d89f6a34310de1184aaefe3ade5d3f17e180cfce88262",
+   "norm_hash": "5c48f1c6d46477e6ccd3f5324f372ef825a9738e6b8d02f6e216c7003773f273",
+   "chars": 2565
+  },
+  {
+   "sid": 6134,
+   "url": "https://voices.org.ua/en/partnerships",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b7f0def45636c871cda1a70a1b94de1e17bed3eeadb131548c1b0bd6b9b321bf",
+   "norm_hash": "3d72c6c927fdef23907040b345bd3c8bdc724c47fb235bbf664aaef4496ae332",
+   "chars": 39156
+  },
+  {
+   "sid": 6142,
+   "url": "https://voices.org.ua/en/media",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f1408161986e5dde0715a4ed8e7d06a59444eee4ab79b1a5ee5328ecbffd6ea3",
+   "norm_hash": "613c7e28e7b1c2dba9c01b3a72a479da73825c25ae3177f269227ddb5806600c",
+   "chars": 905
+  },
+  {
+   "sid": 6143,
+   "url": "https://voices.org.ua/en/knyzhka-viyna-holosamy-ditey",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a0fb48a64bb29bfde4c44c74e211387c802661c5fed4b4d623979b89077894da",
+   "norm_hash": "eca7608737f1ae48f02aaa146be98b41c148a8386506a1334b1036ea77a4caa1",
+   "chars": 3726
+  },
+  {
+   "sid": 6147,
+   "url": "https://voices.org.ua/en/TsentEr-Dytynstva",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fb3ea3b895e71f16d33075e293a9b6d6be252598e22e7be7ba440f02ded05d27",
+   "norm_hash": "f9112ccc157e2d3b93fd42057dc71e639e4e9b9320f46872630bd2257c1d2e86",
+   "chars": 5093
+  },
+  {
+   "sid": 6148,
+   "url": "https://voices.org.ua/en/documents",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "22d9183b41d31a39c1d61bb735effa525e62de440c66c72dc4325f4687ddbbe8",
+   "norm_hash": "fce75680cad9b79a90877633608fdbe6253348c6d8bf22e88d1984af86838668",
+   "chars": 5109
+  },
+  {
+   "sid": 6149,
+   "url": "https://voices.org.ua/en/onlayn-pidtrymka",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b4c45e23b6403863ec454e1d2f8de97ddc59ca4c1a240e83442ac6612d14af20",
+   "norm_hash": "b68f32ad08bd62661c7d09cd2f9d526110cff3c3789c7ec221cbf1838d12de7e",
+   "chars": 6258
+  },
+  {
+   "sid": 6150,
+   "url": "https://voices.org.ua/en/advokatsiia-holosu-dytyny",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "74842b0327cd62f323d9c2a9746bd52bc380b36c9b921fd34dc30dd35a0edc0b",
+   "norm_hash": "b47f6ed65e23c7d25f9466ad0f8d7d3122d5faa9bfc422eabd6df13a20d42ca4",
+   "chars": 2598
+  },
+  {
+   "sid": 6154,
+   "url": "https://voices.org.ua/en/about-us",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "86c6b194867d00f9f5f9e3bb7a364a731a194a96ecf1027f89ff4bd5aeb69d03",
+   "norm_hash": "52f9adf7917c276c90a2d6fcf651ae3973f23404e8f86bbbe6c0ae7927a17d41",
+   "chars": 3497
+  },
+  {
+   "sid": 6155,
+   "url": "https://voices.org.ua/en/ekspertyza",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2de2fac0dd9de1868ff44239b9d4ad8eccc22ca0d0b76fd1165a5017d34590b6",
+   "norm_hash": "545dd12d7c5568afcb9f3b4833f3d292fcce2ebada9625addd093437573e24df",
+   "chars": 1923
+  },
+  {
+   "sid": 6157,
+   "url": "https://voices.org.ua/kempy",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "388ed31f5cbce8530c350b791e2803cb817ac3f27be5db2c6bce01e5eb3db869",
+   "norm_hash": "10393e082cbb44b2b6bf92e56a6ef831ab80e4a3bd60bad9eb4c28954b831e6c",
+   "chars": 6423
+  },
+  {
+   "sid": 6161,
+   "url": "https://voices.org.ua/en/zvity",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2f863672df12613bb11966f06634351000099cb2aacb8c7ae3595fe2de07c668",
+   "norm_hash": "9ec31e3edd08d5f90b07e97163c4696b38cc6ddc590b180b9ea9055304e9f693",
+   "chars": 5614
+  },
+  {
+   "sid": 6162,
+   "url": "https://voices.org.ua/en/team",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3df5ed0c2bd22541c8010952856b08ec7d1a2824f5f4cf929bcb4ab7cdce4ddc",
+   "norm_hash": "5ea2767d89cfe8d5d8a388b39b200e560a676ef09072b256b3fef5e5fd468123",
+   "chars": 24311
+  },
+  {
+   "sid": 6163,
+   "url": "https://voices.org.ua/en/stories",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cd6ba2d4278eede1cb95084ad14608a4aacc9b8e45d306f905bc05a2c299c583",
+   "norm_hash": "2a9b8a9012d44bc3ed0e19c3a54a07caf048efb96af304432307c535bf8bf1cd",
+   "chars": 4975
+  },
+  {
+   "sid": 6170,
+   "url": "https://voices.org.ua/en/projects/foundation",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b99cfbc8b1035d8b252d0a9827fa691cb41dbe96f32f488a000baf713f8b9093",
+   "norm_hash": "5946b4dcebaf74d1272380ea13cc258c2efaf20ad95c48c9775bb652b1150020",
+   "chars": 1821
+  },
+  {
+   "sid": 6182,
+   "url": "https://git.io/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6192,
+   "url": "https://avrora.ua/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9620bdf447749cf345698d500b583049c3176f50422ce07cafce6697f53df1d0",
+   "norm_hash": "6cd70791b6c611baa937bf8eff37e66d37796f1d457211bf0ed0beb14c92bf11",
+   "chars": 37586
+  },
+  {
+   "sid": 6258,
+   "url": "https://thesourceng.com/category/opinions/for-the-records",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "59105867a8986fd252a053ffacf656ae071ea34ba4ad0832925d1416968d31e0",
+   "norm_hash": "5f0be2966c83041a6c9167acc750bc56af3c1f7e6b6f64c31f5c9f6f19a2ac16",
+   "chars": 2985
+  },
+  {
+   "sid": 6259,
+   "url": "https://thesourceng.com/category/news",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2f13e24bc2508a946867ec7347226832bf2124ffbc24dda1e402cd3af29de326",
+   "norm_hash": "b1531fb2c1d989750e659df56f48f05515d9de3427329f9ff14cde82c021a44c",
+   "chars": 3015
+  },
+  {
+   "sid": 6261,
+   "url": "https://thesourceng.com/category/features",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fc685247b6fa15e5a1fced35a9b1034dc89ff1f283a6f2737b7ea87ba262010c",
+   "norm_hash": "3473e58dc1838023ba3b3d34847b7f1f25e9c09b52382f46954ea019ba41213d",
+   "chars": 2840
+  },
+  {
+   "sid": 6262,
+   "url": "https://thesourceng.com/category/news/environment",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "82e209812f34f6033b7ce57f89346cad9a5f0e43dfde61e0a8fcd94519350914",
+   "norm_hash": "a85ba6edb7688bc0ac3b389e589770cc8dc4f153ce3d88472ac8a17e87b5cec1",
+   "chars": 3050
+  },
+  {
+   "sid": 6263,
+   "url": "https://thesourceng.com/category/features/sports",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "31a757ed15294743d312dff71bcf7016554ef4b9f4522030721ee1d18f176923",
+   "norm_hash": "50287bffada71e72acf81bff6e452a03c084e1e76579810c451f452fea8fbd98",
+   "chars": 2973
+  },
+  {
+   "sid": 6264,
+   "url": "https://thesourceng.com/category/features/tribute",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9c5ab37bc034f218e117a80b0adcfcbefd24dde0454a1d416e76a921753022ff",
+   "norm_hash": "f20b0c09282d8ab43f91c408d5cc3f2102fef3b9a77b3c2bbd00fe68d3323ea0",
+   "chars": 2721
+  },
+  {
+   "sid": 6267,
+   "url": "https://thesourceng.com/category/photo-gallery",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "57200da0420530f5f5e97e898df32e7ebeae1529b77136e4cc40230d03d5563d",
+   "norm_hash": "53955eac4705c9ee2e07f68c7232b0df46813d4f1a22420a53509fc86836f573",
+   "chars": 2681
+  },
+  {
+   "sid": 6268,
+   "url": "https://thesourceng.com/category/opinions/viewpoint",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8bf8c0a4486b4fee8b9a0a4e3bb063d528eaa9638430a2064c28489c07a0cf48",
+   "norm_hash": "9f626be5ab7627c7a1a68e66b54008da67b2ce7a20da1ec9adcb8d913d8c176f",
+   "chars": 2764
+  },
+  {
+   "sid": 6270,
+   "url": "https://thesourceng.com/category/trending",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f8a77533c2197dedc2887769c4bab5b0c62f93395987e48c7d7ccebdfeb2e4c9",
+   "norm_hash": "48e0f45b2bc9dbdfbef1bb9a1b0825e0538a5c1b5b8d842a5370f7c14e9c11fb",
+   "chars": 3035
+  },
+  {
+   "sid": 6271,
+   "url": "https://thesourceng.com/category/news/education",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "443af8c1024d28d69a0b82fed7b4b8538d31ae8b8df84858b66e5eedbba1446a",
+   "norm_hash": "c012371fa9b4088b23e0f1c670b5193d6ead47dd6248d62463e5a9e369b62c2a",
+   "chars": 2965
+  },
+  {
+   "sid": 6272,
+   "url": "https://thesourceng.com/category/opinions",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d88c74fce5242cf53df5236c06ffa5f762adacb1b87dbcbf90248d3b7bcd9b43",
+   "norm_hash": "ee52afa819da24ef2d4afba86c74c64e49189fc04b6657a675bd445f071c41ed",
+   "chars": 2411
+  },
+  {
+   "sid": 6274,
+   "url": "https://thesourceng.com/category/meridian",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b986c6b6150eadc537041806875cc38c11dd94aacbe65139435c3374aa323284",
+   "norm_hash": "b5ae0e739ac26132c424b9ae6b05a016493f730db6090f3d47152c063b10059a",
+   "chars": 2353
+  },
+  {
+   "sid": 6282,
+   "url": "https://thesourceng.com/category/news/foreign",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4c4710d393042eb9d1b4403f3800da06627174ef8bdc2e83a0b3ab41ef012c23",
+   "norm_hash": "f318aaf2878bd9e24bcce1ae58223ce869d383914c4d37579dd6546513c4beeb",
+   "chars": 3103
+  },
+  {
+   "sid": 6284,
+   "url": "https://thesourceng.com/category/news/politics",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cfaf96c5b07758b5022665607b5149c62b4f9dca2913a791ae6a228fe00e641d",
+   "norm_hash": "313b0c8045411dd6cb45159c4a9993bdcc07a101c855d252a2add3d5f2de7579",
+   "chars": 3062
+  },
+  {
+   "sid": 6285,
+   "url": "https://thesourceng.com/category/features/health",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cb43bc5062d0b4b10b5e740ce4d2de98a415ea983dcc7414873446ba3ec403de",
+   "norm_hash": "5e028c81f627e8c8c135cb144d7f91a94d2f461f90cb4fc327ec31433ae4a912",
+   "chars": 2806
+  },
+  {
+   "sid": 6286,
+   "url": "https://thesourceng.com/category/business",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e13f8f4da04a80cdb6fc8ad536a7004ffdfbfd647c4a538b734b90a21b77c3f5",
+   "norm_hash": "159dca8543fa79c97e37ae91458f5335ca739567aacd7d4825c38b4ec9f10999",
+   "chars": 2627
+  },
+  {
+   "sid": 6288,
+   "url": "https://thesourceng.com/category/opinions/discourse",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "132c7e38405c6357ec3a2306ab6e66dcd23d674b96c8707854b521495d92e20c",
+   "norm_hash": "fc30cf88829b89a0c044d0d24f0220f1ea51243b65162afded767a6adb0a0be4",
+   "chars": 1711
+  },
+  {
+   "sid": 6291,
+   "url": "https://thesourceng.com/author/akinwale",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "877d039e55d2c500f320680f36209f7e28226de900762effef8297a6b711ebf9",
+   "norm_hash": "0b688ef1f083aad5fc9168da71d96e9b8480f4aad45efbe8d674faa07c2565b6",
+   "chars": 3044
+  },
+  {
+   "sid": 6292,
+   "url": "https://thesourceng.com/category/features/life-and-style",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9b5b41500a77f4aa2beb88f7f8134d5c53bd06e0d7373c34bfdea38533ba6e91",
+   "norm_hash": "4e2a8b666badfd70c2823a5c50003161ca06ea96e4a39d31f6cf99dd66ee3e5d",
+   "chars": 2830
+  },
+  {
+   "sid": 6298,
+   "url": "https://thesourceng.com/author/james-orji",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c9f0773303a9f6e046ff90d3ba7912bb451f494ae9917d0b765d7961318bb80d",
+   "norm_hash": "e2c668aa593b578b9906521d893b0ec240fea8c2792e7ff67dead1a21ebcfc3b",
+   "chars": 2794
+  },
+  {
+   "sid": 6348,
+   "url": "https://dailytrust.com/cdn-cgi/content?id=65Gk3iFe.npU3UDJWD97sS_U5o3bg4uSeZNCy_SPRYU-1789837096.3327928-1.2.1.1-tHCoZpqKvxBL2XOX4G6ZY0uCN4dIFLJ1RQ8eTU24m6GCOiOOLTPO5._GduN2skNp",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 6353,
+   "url": "https://dailytrust.com/topics/entrepreneurship",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3bf01d303b7461b099f76e4f1cb85640e522a88c77a6c6169e3729ed8d7ba019",
+   "norm_hash": "0eeab10cfaff6192fe6cfc71c40b6cfbcbf2b7058b2ef52581e31e9d4df09008",
+   "chars": 1179
+  },
+  {
+   "sid": 6359,
+   "url": "https://dailytrust.com/topics/law",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "dce08a9d5e2eac6c38ecc74320b60666d9e7d463701ed74e9f8c89e8873c703a",
+   "norm_hash": "e43e8a7ecc532432effd144bf39de090e21726f808ce8986953a376cb942a8bd",
+   "chars": 1262
+  },
+  {
+   "sid": 6369,
+   "url": "https://dailytrust.com/topics/bookshelf",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "998cda14fcc3d848627b79cf8162d078b0a70da0abd6da902a841dc2acfabc59",
+   "norm_hash": "d034be8ed88df72416c04403881f7221b8648f469e35340079dd47dcc374716c",
+   "chars": 1190
+  },
+  {
+   "sid": 6370,
+   "url": "https://dailytrust.com/headlines",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "dd345e12004a301bdc04bd3a288b2e92489c203a6e35f6ac7bacab130dc713e7",
+   "norm_hash": "7c5440e9d083165cc01fbb317a5612db57a6396cbb58641857a1b930351194c9",
+   "chars": 1024
+  },
+  {
+   "sid": 6374,
+   "url": "https://dailytrust.com/topics/factcheck",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "082a4c760b14fdfadd02e0226afd834b016a5e13f22c4d389e3aee92ffb941c3",
+   "norm_hash": "0084e3998ece88418528e8fbda880a86687fccba7e3074733371c9919f342e38",
+   "chars": 1408
+  },
+  {
+   "sid": 6379,
+   "url": "https://dailytrust.com/topics/online-special",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "630814fe9d5cb0d478ab6c3c289b2e976939fe770a83b14d47e92d3ad4f5ac6e",
+   "norm_hash": "cdf529482d46d3e935762aace86a72a68708a49f1220e545c07c5c35ba3427c5",
+   "chars": 1229
+  },
+  {
+   "sid": 6386,
+   "url": "https://dailytrust.com/topics/art-and-ideas",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4a496e5f5c10f9f7e132f4a9e9eef82943dc96f2b163e08b150d4b384c70896d",
+   "norm_hash": "1f5c0a60bff90976a0ccaa9c0598f66ca1cf3257daf7e4a7967c9707b6dbc882",
+   "chars": 1207
+  },
+  {
+   "sid": 6394,
+   "url": "https://zamfarastate.gov.ng/ihrms.zamfarastate.gov.ng",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6403,
+   "url": "https://dailytrust.com/topics/news",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0ef5c0612bafb0a4004bc8662617801c3928f2577895216397129d2959b2da49",
+   "norm_hash": "044a6563481a1774f71d2a917e36772202e1faf9763926dcf7751a368621d9d2",
+   "chars": 1242
+  },
+  {
+   "sid": 6415,
+   "url": "https://kebbistate.gov.ng/all-projects",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "868b94b69bc33fae8e73f4d42f9b9d700cc534b16dda70004ac092b48372acba",
+   "norm_hash": "8ed2c8e15b4d4a0c7b4b449d5cf153b80486353be468d8225bea1a94f5303d3a",
+   "chars": 691
+  },
+  {
+   "sid": 6418,
+   "url": "https://kebbistate.gov.ng/portfolio/newly-kebbi-state-secreterait-birnin-kebbi",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "173e8f942ae5a0ac836b52a3faad3d5b69a4706658945ffaf3933499ce88cad5",
+   "norm_hash": "8916e29c9ca60688001a0da5b9d7b4055ff61479adcdedfadb41954cd0cbc298",
+   "chars": 505
+  },
+  {
+   "sid": 6420,
+   "url": "https://dailytrust.com/topics/sponsored-post",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4718c1d32a7894194b48650db29ecf55894e8e33c722d7d2e485f2095cdbf07",
+   "norm_hash": "a20fd34652393f230ef11ebdf32c3a8b39913e5a1b372bd0e5a8749760fc37d5",
+   "chars": 1145
+  },
+  {
+   "sid": 6427,
+   "url": "https://kebbistate.gov.ng/news/governor/police-present-13-armoured-vehicles-gov-idris-strengthen-fight-against-banditry",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fa30d552833c6c67ed7810e632d5e8669c266eb3709358a38f9315f5ab143c4b",
+   "norm_hash": "69492274942804c8c538e5101e2056d6720d49c340bb7f1249fe841f3bde15dd",
+   "chars": 4465
+  },
+  {
+   "sid": 6444,
+   "url": "https://pulse.ng/lifestyle",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7e1c89b50f09d813768bbc066befbd96420f4d2a496721a96696ed04bcc490ca",
+   "norm_hash": "40f02fc497f8229c16dfe202b09e172280ffb62c0c87caa671b589175ebf1297",
+   "chars": 1911
+  },
+  {
+   "sid": 6538,
+   "url": "https://benuestate.gov.ng/event",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6541,
+   "url": "https://mediaprovenance.googlesource.com/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6542,
+   "url": "https://benuestate.gov.ng/blog",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6543,
+   "url": "https://benuestate.gov.ng/event/64th-independence-day-celebration-2024",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6544,
+   "url": "https://benuestate.gov.ng/event_type/entertainment",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6545,
+   "url": "https://benuestate.gov.ng/cat_por/goverment",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6546,
+   "url": "https://benuestate.gov.ng/event/1-year-of-strategic-governance-in-office",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6559,
+   "url": "https://benuestate.gov.ng/ova_por",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6561,
+   "url": "https://benuestate.gov.ng/cat_por/health",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6564,
+   "url": "https://benuestate.gov.ng/cat_por/agriculture",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6565,
+   "url": "https://benuestate.gov.ng/event_type/conference",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6566,
+   "url": "https://benuestate.gov.ng/cat_por/infrastructure",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6568,
+   "url": "https://ui.edu.ng/news/ui-constitutes-eibic-programme-implementation-committee",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "87b66bc15fff291fcf9089c37cfce2af100b2b36063b336362bf13ec2390a37b",
+   "norm_hash": "fcc62d472f14edbfbc0887189359c779e8f4c2e54a95390e2be170eef97c624c",
+   "chars": 1461
+  },
+  {
+   "sid": 6569,
+   "url": "https://benuestate.gov.ng/cat_por/public-places",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6570,
+   "url": "https://benuestate.gov.ng/ova_por/agro-business",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6571,
+   "url": "https://benuestate.gov.ng/ova_por/new-face-of-state-secretariat",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6575,
+   "url": "https://benuestate.gov.ng/cat_por/business",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6576,
+   "url": "https://benuestate.gov.ng/ova_por/bsu-teaching-hospital",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6578,
+   "url": "https://ui.edu.ng/events",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6588,
+   "url": "https://benuestate.gov.ng/ova_doc",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6593,
+   "url": "https://ecampus.ui.edu.ng/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8cc1a05a7d77ee71e4cd5cee7ab4f98b58c37ee65a1941dd310eb748c4130f99",
+   "norm_hash": "29f8b4c4e9914d8f9ce57d64f4feee1106f30e4754b9144217a19673e9af9414",
+   "chars": 7179
+  },
+  {
+   "sid": 6658,
+   "url": "https://akwaibomstate.gov.ng/investment",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c35214164527e5d7b8f96cfe308f0cd1b0eb9467aae73fec285b18d50abea8b7",
+   "norm_hash": "2532818d0fdbf2ab1208d4582b7dcb4f7f6937f871f9373f789e09ab5bd1d60d",
+   "chars": 2172
+  },
+  {
+   "sid": 6671,
+   "url": "https://akwaibomstate.gov.ng/service-category/achievements",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "521d019d2cd8800888fd7b7b98234d641c0b44a5b310439af88d03ce8932485a",
+   "norm_hash": "79be59b6002b62176ca175a161bbdb519175b07c6bc51db4d197eae09026acef",
+   "chars": 3032
+  },
+  {
+   "sid": 6701,
+   "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "72e31932fecaf141a6f0ac5696fb4cff9980751dc95338eb3bb72b96bc2a2035",
+   "norm_hash": "ecf6bc28ba7e55c70791d3e3cd694d9ce094ac3233c3c24d1ee778a7adce3f03",
+   "chars": 1228
+  },
+  {
+   "sid": 6715,
+   "url": "https://akwaibomstate.gov.ng/infrastructural-maintenance-and-advancement",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cafd82deb8fd761511e08f5a7dd4978a4a99907210d57c784d36ce5d46e6f679",
+   "norm_hash": "8ac3c7d65e36189a08b210433b4ae68564cc38fc2dbd4ff8cd57ea64a3f52e4b",
+   "chars": 793
+  },
+  {
+   "sid": 6795,
+   "url": "https://yeea.jg.gov.ng/",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 6808,
+   "url": "https://pca.st/dRBh",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 6814,
+   "url": "https://stackoverflow.blog/author/phoebe-sajor",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f5bc4eed7ec2d8dc57347fe15c793a4804f9ec072726610733700e631b8a1c4c",
+   "norm_hash": "5174a6a11688b7ea974b211e650a7eb1eb00d6694eb64d23994e96f57f351510",
+   "chars": 11178
+  },
+  {
+   "sid": 6824,
+   "url": "https://stackoverflow.blog/buiilding-software",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 6829,
+   "url": "https://stackoverflow.blog/stack-internal",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f9a01d75cab990fd6ced4d68f92eae39ed0785822b5a8f130a91716a98328d3d",
+   "norm_hash": "adb0a103481d3cf5773d7758ad60b6a9fd7e6166c338fdc7489f893af50ec659",
+   "chars": 8486
+  },
+  {
+   "sid": 6831,
+   "url": "https://stackoverflow.blog/data",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5c078550d015e952bb9f9ead3def3be21e348c4ac9323e49e742dc2ee363f506",
+   "norm_hash": "2f17bf5504bd854b43a3df33ac86386dde53ed0cba1fc3b89a7261c63af33914",
+   "chars": 10493
+  },
+  {
+   "sid": 6935,
+   "url": "https://nsia.com.ng/2026/05/21",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "466d1ed1162b11fdc0fbcb0061128b02ba53e7bbfc788e2e498d13dd3f619fe6",
+   "norm_hash": "688952a2853c16f2a39b4305e917015eedd29fd798ec6a1dcd87721d61ecfa2b",
+   "chars": 1164
+  },
+  {
+   "sid": 6938,
+   "url": "https://nsia.com.ng/2026/04/10",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ab6bf83f8a563c95fb834b8444e081cda123fd21585aeac3497b6e800d65707a",
+   "norm_hash": "4839e32b0b2cc266bf149a81353828fe551d6d4a2eb2d4a8c66defbab048db7d",
+   "chars": 1154
+  },
+  {
+   "sid": 6953,
+   "url": "https://marcel.gg/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 6987,
+   "url": "https://gnu.org/home.en.html?distro=dragora",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "685c31ae39834c800475ed0ed844da70693eeacc3f367992d07371870f4141f5",
+   "norm_hash": "ef2800bd0d716671a634c2738608ac8f36975b89cfd3704d457620c918080776",
+   "chars": 6611
+  },
+  {
+   "sid": 6995,
+   "url": "https://gnu.org/home.en.html?distro=pureos",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b4d8aac12ce0c6a051b2c28f48b9723dfc9780101f84f51c7b4e3b199e406f10",
+   "norm_hash": "197a77954e9dcd6212230e1ee9bb2c3894c1d8dea3109d93c41b98f02f1c6f5c",
+   "chars": 6655
+  },
+  {
+   "sid": 7004,
+   "url": "https://gnu.org/home.en.html?distro=parabola",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f690c8897950d2f23da01eaa2522efa950f4a28554b300286de8ee07ff48599f",
+   "norm_hash": "f3d9228ce329f551d47952b18bc488c1215473973dbe661f44c12a1bff0b61e3",
+   "chars": 6608
+  },
+  {
+   "sid": 7005,
+   "url": "https://gnu.org/home.en.html?distro=hyperbola",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "adaef23efe2d7451e256204b94ef0dca95b0b2e66e0f029f0d03a91492cd42e8",
+   "norm_hash": "bd0e0386ae896d50b770e678dcce6a75cab556a71e6ba02c1e9668223b2864fc",
+   "chars": 6705
+  },
+  {
+   "sid": 7010,
+   "url": "https://gnu.org/home.en.html?distro=trisquel",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "09bd1b083f6b881a065496bffd5bba17f8879c1c6f0d60fc42abc62abe5eec74",
+   "norm_hash": "3a4fdf6a32418bfa7f9429c10d5597127331ac4879e843ec4d7cb7ce6eb4bf1b",
+   "chars": 6642
+  },
+  {
+   "sid": 7014,
+   "url": "https://gnu.org/home.en.html?distro=guix",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7e7b55a5c3f5b1ae7085d1b297438b433d85abf6a7b8a631c936b40fc7c67b3e",
+   "norm_hash": "5eccd95b7b80f9dc7c08f69975215742dddf41bcd90940562757ccb72b6b185d",
+   "chars": 6644
+  },
+  {
+   "sid": 7020,
+   "url": "https://fsf.org/campaigns/priority-projects",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5455af07a9481c0b7f9eb052a6d2c486c43e3d14d6fe275fdf61850cad3a5278",
+   "norm_hash": "ac890740dc50bc908e41b9ade2ff47b2536b7c7e7c92abaa3fcbc3e7312ef965",
+   "chars": 7819
+  },
+  {
+   "sid": 7031,
+   "url": "https://savannah.gnu.org/news?id=10933",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "667e4647181e5d54e3017925d651c8560ef9ff5355d066e09423cc807895bb42",
+   "norm_hash": "ebc9f3183db3180c86f7229332bac45956f808938f96255e462a404d41841d0b",
+   "chars": 2480
+  },
+  {
+   "sid": 7035,
+   "url": "https://fsf.org/blogs/community/help-others-find-free-software-watch-and-share-escape-to-freedom",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8e8924b11d37b8a5747ebb6c8505f56a20d5f048910f98330d69d0f7bd500f60",
+   "norm_hash": "f62779353f3518f241eda1118bcf81a8f4afb31771e2de89b91723dee8cec79e",
+   "chars": 5264
+  },
+  {
+   "sid": 7046,
+   "url": "https://premiumtimesng.com/store",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e0da3975d82abce1803b3b0b2d5e49c8bf6bbf70ce23644d47aa92eac0be524d",
+   "norm_hash": "c29a2f8ebaa50df51a7010d44bc8a405ffa10895d049f0ab3c9f66b03ec72d87",
+   "chars": 7148
+  },
+  {
+   "sid": 7050,
+   "url": "https://premiumtimesng.com/category/news/headlines",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e67f790838024456a429795576db10d89f0a42383df32e948bdb106e6ed35868",
+   "norm_hash": "f37584b00fa81a70ac7c952c4afcb32fd5d44fa55238751e4b3d4c1ffd942f78",
+   "chars": 14380
+  },
+  {
+   "sid": 7063,
+   "url": "https://oauife.edu.ng/meet-our-awardees",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "24cf805ef94d002b921d7d15e56d5e50c17464990da7852ba2ddda32504e1804",
+   "norm_hash": "c77e12d3a98a99a24873bd2bd0c73c6aa575678d4ba1b33ea9a4d0dca5f706f2",
+   "chars": 4991
+  },
+  {
+   "sid": 7065,
+   "url": "https://oauife.edu.ng/principal-officers",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ea7d746138a4fb8c72f3084d655eb66e5cc885d1a240eb6e8d763c504114b313",
+   "norm_hash": "c61f198dda17e3591b44f6c7ac8ea158e115cb25b7b3e51774f6feabd7d9d7dd",
+   "chars": 5015
+  },
+  {
+   "sid": 7071,
+   "url": "https://oauife.edu.ng/category/news",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b3ba1700391fa9b418965e2f6be84d58e881f21eb62cf983880d80d59a7f0912",
+   "norm_hash": "a1a5dcd781060ef2c5e9aa0eeece689361dcb2a211c30c2fdd4320da0d71cbb9",
+   "chars": 7728
+  },
+  {
+   "sid": 7086,
+   "url": "https://premiumtimesng.com/category/business",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "abb11d88cca26bb26389f4ad5bc6e54f52e86577f67cb7070d827c24d12bd45c",
+   "norm_hash": "04c38820806fd2cc8714e36f4140ee4eabae34de8d98512de7ebf9bff4a18a84",
+   "chars": 14228
+  },
+  {
+   "sid": 7168,
+   "url": "https://redis.io/tutorials",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b344adae284acd061929cbd62e4a765e0a592fcb3ec8cbdac4b19cd3995c3193",
+   "norm_hash": "0e0683363d3696787e8a3320b94be2fe97aef016777b7964dea782cbbd6f54d5",
+   "chars": 1539
+  },
+  {
+   "sid": 7192,
+   "url": "https://about.gitlab.com/gitlab-duo-agent-platform",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "97110eb8e1f0ae5aea8e15a55a217f1182aa3853826d29da23ffbba5565b418a",
+   "norm_hash": "4de8a66a781257d8eeb07c2d74f427590c306c8d34a85fc63f6f3840bc3f9c03",
+   "chars": 9693
+  },
+  {
+   "sid": 7276,
+   "url": "https://sterling.ng/personal/open-account",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ece7130becfe2b23cb4cf7e7ccd28ed239360f13840d04b3387ee016a668a85c",
+   "norm_hash": "85a9bb32db86d8c476e30a8ffe487077896a2c059481275eb4703fd5eb88acf0",
+   "chars": 5599
+  },
+  {
+   "sid": 7339,
+   "url": "https://binghamuni.edu.ng/v2/staff-resource",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 7341,
+   "url": "https://binghamuni.edu.ng/v2/student-resource",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 7407,
+   "url": "https://core.ac.uk/cdn-cgi/content?id=0piYcWM3p8xG2rVwURSKWYJX_fxDdMxdOgcBBf62HuU-1789837097.9732585-1.2.1.1-hwtJlak8tbtd1UOmTZRrLz_COn0w6i2NHIWZ77VcrOVMnnO3QToDlzJZZeZti_Lo",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 7412,
+   "url": "https://mongodb.com/products/platform/atlas-cloud-providers/google-cloud",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2dbb74cd9d8ecb231d1f2b9514fa8dcaac84691870881b95539972ec91ea5e7f",
+   "norm_hash": "134b6bc5ac3f6e4d129e1e002bebbfeb7dc05da76919c286739ed2528a582e61",
+   "chars": 8507
+  },
+  {
+   "sid": 7471,
+   "url": "https://eos.org/tag/earth-science",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0bbf26f2b498707341777ba4209218e8440fb6ac787af284d24c5439b5235e89",
+   "norm_hash": "a3f1afb5b35f8b3fec2b3b4978ff80f5d1d07e7eac8134f6b47353f2889eafeb",
+   "chars": 3551
+  },
+  {
+   "sid": 7683,
+   "url": "https://php.net/downloads.php?version=8.5",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "771a783bc1a9c51aa52e689a10bd0ec7124296f24f3a4f08b214861f41dd34b4",
+   "norm_hash": "084e562c856d35ac59b4915169f4113cc06e85b96dee5c0e526e022ab05d35d9",
+   "chars": 1406
+  },
+  {
+   "sid": 7689,
+   "url": "https://php.net/downloads.php?version=8.3",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c7273aad66fa0de772be9718d3ef1d3a8c803bf355b1c80b2945adc48ed69db8",
+   "norm_hash": "193f34671b1a2865053ed492d3dbaafcfa8165dfbf2c35aa2984b442daeba398",
+   "chars": 1406
+  },
+  {
+   "sid": 7690,
+   "url": "https://php.net/downloads.php?version=8.2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "09258236972e27bdf7a6cb9a9e09cc26c601eeb93ddd50c42643b750e0e49386",
+   "norm_hash": "82956aa5d842847e4f1497f09bb1456acdd9005b1b0cbe3ac78fdb42499b71a2",
+   "chars": 1406
+  },
+  {
+   "sid": 7698,
+   "url": "https://php.net/downloads.php?os=windows&version=8.4",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3437599bc22db5f187afff9bf491e33eedd4ae43240e0f3ed75d4cae614c9aba",
+   "norm_hash": "4748d7c7ead1682d17be98e5ce162b01a82d3b7240b6b9642596b229fa17eb08",
+   "chars": 2817
+  },
+  {
+   "sid": 7700,
+   "url": "https://php.net/downloads.php?os=windows&version=8.3",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "09914009ad96aec5398512133e8c65e43de91affa35253b8d11fa6e2284ae220",
+   "norm_hash": "7b5ff594e2fbd2eb092eb85dfb17fbfc7130598e0ecebc8df40eb75a8c8fe886",
+   "chars": 2816
+  },
+  {
+   "sid": 7701,
+   "url": "https://php.net/downloads.php?os=windows&version=8.2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "342ec1d7f54e105dd17a26e5a9d4028a44ce0bfa97d1fea03d81ed37e5d82535",
+   "norm_hash": "0b97d24445b3253b8a76e7305e8e7271358f173cd380aa26910fe809fa40f914",
+   "chars": 2816
+  },
+  {
+   "sid": 7781,
+   "url": "https://adamawastate.gov.ng/news",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7787,
+   "url": "https://adamawastate.gov.ng/the-executive-council",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7790,
+   "url": "https://adamawastate.gov.ng/category/government",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7797,
+   "url": "https://adamawastate.gov.ng/category/announcement",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7799,
+   "url": "https://adamawastate.gov.ng/category/development",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7803,
+   "url": "https://adamawastate.gov.ng/category/news",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 7906,
+   "url": "https://newtelegraphng.com/category/politics",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d4e223ad58ec7dbc4ef1680fb7111521b6daf21170ed12e5add3a77991ef317d",
+   "norm_hash": "81a859daeb2503e0779f6b1727f0aa30d190b469ffbbcad80f7d45649c451dc4",
+   "chars": 3444
+  },
+  {
+   "sid": 7907,
+   "url": "https://newtelegraphng.com/category/top-stories",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "630a670a22f8776df91028bf4a808d4fcfb4643c717f3abe7bbfdddd9f1f9463",
+   "norm_hash": "6fd1d769d8b601df5f87732ad8475434d3b836084ef508cc545b31e059e46d21",
+   "chars": 3305
+  },
+  {
+   "sid": 7968,
+   "url": "https://abu.edu.ng/eten-student-handbook",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "34eb9695d57f3ca0b36f4b4109a02447e84e3237ba3a9099beed370266249f97",
+   "norm_hash": "df0ebc7ebfa5faf7adadf0f247475a4d49f707fc11206d0d4ce989e75b511a57",
+   "chars": 3509
+  },
+  {
+   "sid": 7980,
+   "url": "https://abu.edu.ng/schools-and-colleges",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8007,
+   "url": "https://providusbank.com/news",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8008,
+   "url": "https://providusbank.com/investor-relations",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8011,
+   "url": "https://providusbank.com/sustainability",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8012,
+   "url": "https://providusbank.com/loan-facilities",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8013,
+   "url": "https://providusbank.com/hospitality-support",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8014,
+   "url": "https://providusbank.com/trade-services",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8015,
+   "url": "https://providusbank.com/energy",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8018,
+   "url": "https://providusbank.com/banking-apis",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8019,
+   "url": "https://providusbank.com/virtual-payments",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8020,
+   "url": "https://providusbank.com/mobile-app",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8023,
+   "url": "https://providusbank.com/delivery-details",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8025,
+   "url": "https://providusbank.com/non-government-institutions",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8030,
+   "url": "https://providusbank.com/health-care",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8031,
+   "url": "https://providusbank.com/public-sector",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8032,
+   "url": "https://providusbank.com/mortgage",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8033,
+   "url": "https://providusbank.com/lifestyle-services",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8034,
+   "url": "https://providusbank.com/sme-cash",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8035,
+   "url": "https://providusbank.com/wealth-creation",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8036,
+   "url": "https://providusbank.com/nqr",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8037,
+   "url": "https://providusbank.com/providusnotify",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8038,
+   "url": "https://providusbank.com/point-of-sales",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8040,
+   "url": "https://providusbank.com/cust-acq",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8042,
+   "url": "https://providusbank.com/diaspora-pounds-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8043,
+   "url": "https://providusbank.com/diaspora-dollar-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8044,
+   "url": "https://providusbank.com/diaspora-savings-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8046,
+   "url": "https://providusbank.com/diaspora-current-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8047,
+   "url": "https://providusbank.com/diaspora-euro-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8050,
+   "url": "https://providusbank.com/bvnnin",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8051,
+   "url": "https://providusbank.com/account-opening-document",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8055,
+   "url": "https://providusbank.com/business-concierge",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8056,
+   "url": "https://providusbank.com/banking-tools",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8057,
+   "url": "https://providusbank.com/rm-feedback",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8059,
+   "url": "https://providusbank.com/media",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8061,
+   "url": "https://providusbank.com/photos",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8062,
+   "url": "https://providusbank.com/speeches",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8063,
+   "url": "https://ibank.providusbank.com/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8065,
+   "url": "https://providusbank.com/domicilliary-savings-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8067,
+   "url": "https://providusbank.com/current-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8068,
+   "url": "https://providusbank.com/branch-locator",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8069,
+   "url": "https://providusbank.com/salary-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8070,
+   "url": "https://providusbank.com/individual-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8072,
+   "url": "https://providusbank.com/loans",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8073,
+   "url": "https://providusbank.com/affluent-current-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8074,
+   "url": "https://providusbank.com/domicilliary-current-account",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8111,
+   "url": "https://futminna.edu.ng/the-management",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "368932475ee381e3bb107abdb3c5d9ba149060c8908923efcd37a735813cd183",
+   "norm_hash": "62f34067fb79a279edd123c6930bf0be08216ccd89977583a0503c42a8b5852d",
+   "chars": 3052
+  },
+  {
+   "sid": 8118,
+   "url": "https://futminna.edu.ng/personnel/registrar-2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2458faf6376098b28b869d7cb37ef9fbf30687f24af008d2b827f5464d66632f",
+   "norm_hash": "e6b09a4fa95f9dd91155727b939169ae118c3ea45a179b823f110b10d5119517",
+   "chars": 2754
+  },
+  {
+   "sid": 8123,
+   "url": "https://futminna.edu.ng/personnel/chancellor",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "08b43a43efadb3d998f64ce7ff4d9202d4725da7b482cd411697cd0f0d7f09d3",
+   "norm_hash": "97a416f004e6027ab365c808670af3630b6b442e891e7815b7e20a2f42e00950",
+   "chars": 2747
+  },
+  {
+   "sid": 8124,
+   "url": "https://futminna.edu.ng/sahs",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "df24968e69137483208d6baeb4cc5924454b9aed302846980357641a91379a01",
+   "norm_hash": "447c33683d21cbaf2ffb395550b13856f5dbf096d3c0ee09bc12f5f71449e11a",
+   "chars": 3069
+  },
+  {
+   "sid": 8128,
+   "url": "https://futminna.edu.ng/sbms",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b78ede8ae2e6fb8c3e57df7378ddb9eeaea49b03539d0b7ca9c3f34818da8888",
+   "norm_hash": "e4a453bc7512178fbd19271b1a07709914db0ed709df44154ea0e79920f74842",
+   "chars": 3000
+  },
+  {
+   "sid": 8131,
+   "url": "https://futminna.edu.ng/codel",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 8133,
+   "url": "https://futminna.edu.ng/cmsht",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ecdcd4f8bb4123ff63fcd5e0e6b870705dc28b79497d4fcb36e46506ae21986d",
+   "norm_hash": "70e6dc5dcebeaec4b46fe909ff3b4f614740e81f5c21162c3c8326d11b9bd509",
+   "chars": 3058
+  },
+  {
+   "sid": 8135,
+   "url": "https://futminna.edu.ng/qap",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d9f5cef9774fcd9bc7ad146c5e6d7ab597ecfbac2b8082fdb04c45188ad32be0",
+   "norm_hash": "fe9d8baa127b7dda346989b0f00efee0c0fd162dbcd9798cefab3e78dc410964",
+   "chars": 5069
+  },
+  {
+   "sid": 8137,
+   "url": "https://futminna.edu.ng/registry",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d1ce18c17b15f7a1f998bb7e1bc070a62f335b0c30f6066cb71ac7fec2122378",
+   "norm_hash": "08d3ee1babb2dfb4b47b006d999398b17ccc6034b5779ca1104772370377e1e5",
+   "chars": 8450
+  },
+  {
+   "sid": 8148,
+   "url": "https://futminna.edu.ng/saft",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6360b73e8bc03703d9580bb92fc4f62eb52f45085a53022a579285aee8b1f628",
+   "norm_hash": "8ce4020f97c30123c7ca92df3cf8add91c0a2d59d4f451ef3fe072c320add916",
+   "chars": 8817
+  },
+  {
+   "sid": 8153,
+   "url": "https://futminna.edu.ng/sphs",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "28a44659d9d06eaba21cc69672480d715cedff80b467b104744c2f7100417b34",
+   "norm_hash": "41a32ef77e4db3c7b683e4557ea1babd4e5810860889b52bd78bfe6a1bcb8990",
+   "chars": 2992
+  },
+  {
+   "sid": 8202,
+   "url": "https://unijos.edu.ng/?page=1",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8217,
+   "url": "https://stanbicibtc.com/nigeriaholdings/Stanbic-IBTC-Holdings/why-we-matter/Our-sponsorships/Arts-and-Culture",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1935bf8a99e315857e9c940db3f6185670e54a72b1eecbc9c84c9ed21dec2ee1",
+   "norm_hash": "9e3946b5625524bf954f59131707ca97dd9f464ee8cd34bbf2722392f2d1516b",
+   "chars": 1653
+  },
+  {
+   "sid": 8218,
+   "url": "https://stanbicibtc.com/nigeriaholdings/Stanbic-IBTC-Holdings/why-we-matter/Our-sponsorships/Sports",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "43de9862aef4e256ee05a07c5bbc883fdfb21ceaed453938b0e6b6774626494f",
+   "norm_hash": "2adc91701f960827aa2e1b7d9dd77e05b0ad5b2a079eb880a720c95aeec882fb",
+   "chars": 1108
+  },
+  {
+   "sid": 8278,
+   "url": "https://genome.gov/research-at-nhgri/News-and-Events",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "158041e00d02af591e31d1a31763bcd01bb60d578826712b986012ba1a1b2f9d",
+   "norm_hash": "1ad4f7a27c853502b061a36bfc926cfb5c15258c796665d47168ababecb5ae9a",
+   "chars": 1305
+  },
+  {
+   "sid": 8310,
+   "url": "https://docs.djangoproject.com/en/stable/topics/db/models",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "97bd5dcd139f590e3224281d299340f97d21f5c5a80433e87d41376bdb5f9c47",
+   "norm_hash": "e16f8c0634b4ab1d90cfc963bd79826514ca00b30fc9e5626dcac53b89e95b8e",
+   "chars": 54879
+  },
+  {
+   "sid": 8351,
+   "url": "https://svn.apache.org/repos/asf/httpd/sandbox/mod_smtpd",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8354,
+   "url": "https://svn.apache.org/repos/asf/httpd/mod_mbox/trunk",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8355,
+   "url": "https://svn.apache.org/repos/asf/httpd/sandbox/mod_domain",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8357,
+   "url": "https://svn.apache.org/repos/asf/httpd/sandbox/mod_pop3",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8379,
+   "url": "https://cwiki.apache.org/confluence/display/HTTPD/FAQ",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fd1c527dfc2463d4a83847d8be96ec30e38bde07dd26a364ad5e5c08d5881638",
+   "norm_hash": "29bb782c2c0354d7889704458448296a11253caef4ad18753febfca3e81ce598",
+   "chars": 64387
+  },
+  {
+   "sid": 8393,
+   "url": "https://ubuntu.com/appliance",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "736ea42dcd55816a044e8d22853656a45f3f0b90cfb91abaeb8df579eb3b98e8",
+   "norm_hash": "15b527d7ac7ed553d5a276143e6da26c693dd6690ad9c509940eba9ec790eaac",
+   "chars": 4799
+  },
+  {
+   "sid": 8394,
+   "url": "https://ubuntu.com/support",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "231335d4b9375e5c92c00b0857b0332f63ab48bcfb7a369940d7a9b8c5bdd26a",
+   "norm_hash": "c3fe62c3219837e2f246719b752912436ab17a4e3d8b2e525cc78de14a5f523d",
+   "chars": 16139
+  },
+  {
+   "sid": 8395,
+   "url": "https://ubuntu.com/livepatch",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ee08e5f01d565ee239755b21c536bd2e1328e6439db53957a70cd60eebd47083",
+   "norm_hash": "77d2b2d697a587b975cbd20ef990079b3ed52c7a2c68c1531ac55c5287f46558",
+   "chars": 11600
+  },
+  {
+   "sid": 8396,
+   "url": "https://ubuntu.com/esm",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "51aab83390611521d5e456c94d8f8c0c23051ccd6a4557c481475e1be30d94bb",
+   "norm_hash": "c6e91c38f4f6513e5bae1d621be48e06f48da9a418b47a044e5fab33bbece83a",
+   "chars": 12713
+  },
+  {
+   "sid": 8399,
+   "url": "https://ubuntu.com/security/security-standards",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4197e31aaff19144de7e85d554cfd495a051c1a95ee20ae11412a9f5a095d4c9",
+   "norm_hash": "3359cf58ac78eb57e46129184353183fc0be47ced029f8ea6f88446c3ad9cbd5",
+   "chars": 10283
+  },
+  {
+   "sid": 8401,
+   "url": "https://ubuntu.com/cloud/public-cloud",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a29fed7f681569698995ecc70e8ef5ae1aa40f1d5c1776d8d23b8096e2547413",
+   "norm_hash": "ff6b220e852807815a9984aca183abe387e94b8a93c9814624a6e4c43bcf3d57",
+   "chars": 9746
+  },
+  {
+   "sid": 8402,
+   "url": "https://ubuntu.com/blog/canonical-releases-ubuntu-26-04-lts-resolute-raccoon",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fd7de37339d460f022c3e9834073955fb40b7caec7db21e983df09c0bacc23ab",
+   "norm_hash": "0c072c38907908c95f70d2ac394b77c5af9ef15a073ae150fbc54971879ae48e",
+   "chars": 10444
+  },
+  {
+   "sid": 8405,
+   "url": "https://ubuntu.com/contact-us",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f7a93a70f6445ff498bde5a213d3e99b9d0340e1371f655a194301ce360997f2",
+   "norm_hash": "41726157b1c18fd31e6033c61b6052d0d6a5f94b0920804a13841499f330e976",
+   "chars": 6238
+  },
+  {
+   "sid": 8406,
+   "url": "https://ubuntu.com/kubernetes/managed",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f4a76a5089a4020fbfe01fb11830191212d0024e70955e7fc8e21371d916e438",
+   "norm_hash": "97184f0d738cbe9c87fc35bb85e91dca31cd6fe8b924d6c6e9a2f0ddcde4cddd",
+   "chars": 9348
+  },
+  {
+   "sid": 8410,
+   "url": "https://ubuntu.com/kubernetes/features",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "55b954625b05e9a4816d6ca8a3a99330096dc8146b59941c9ec0d5a01864f472",
+   "norm_hash": "86c3f1e1fb13618191d9145938988142afe4b4bf5b3b6dcf27e90c72e5d25f3d",
+   "chars": 9492
+  },
+  {
+   "sid": 8412,
+   "url": "https://ubuntu.com/pricing/infra",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "51611cf3d1c0988584c8ac797f029627dfc7804f2179378a070366ae6f506b9f",
+   "norm_hash": "f679325c43a9fc0bcf0de2f3d281f6468c370d5037d149619ad853bd47783db8",
+   "chars": 12709
+  },
+  {
+   "sid": 8416,
+   "url": "https://ubuntu.com/openstack",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "15c871952bed00a18a7470dc2444687d21d7c16c9839cb08bd04dc93c7a66d63",
+   "norm_hash": "4676ee94c124cf43a86bd82f343bf068c5be1ba344c32c88453cc0162a10feae",
+   "chars": 6475
+  },
+  {
+   "sid": 8417,
+   "url": "https://ubuntu.com/kubernetes",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "589b75252abd8bea4c25ad398b6638037259c59750af3a64cd37e8c6e43a5407",
+   "norm_hash": "a3e985a48518caccc0c785b435ec28a88d6d9c05fb0a4ba1d38481dc8753753e",
+   "chars": 10998
+  },
+  {
+   "sid": 8419,
+   "url": "https://ubuntu.com/kubernetes/contact-us",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1f033a4b7148b75eea37484f100064a9e2db52103bb7a6072de24447908a54d7",
+   "norm_hash": "37aaa7201a3ef5255e5f1871727bd7026879127081fae7128831dc550489de8f",
+   "chars": 5536
+  },
+  {
+   "sid": 8421,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0d7f1d11d593ea86c913458193407cd1fa892281381fd2896dcd91d9f4e3b3ca",
+   "norm_hash": "4ee2fdb47c6f32b5ee751fc637d0392a9977e126cf0e9573ecded3cc4d1a0350",
+   "chars": 3463
+  },
+  {
+   "sid": 8423,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/.clang-format?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3c60ee90185efcfd239aebde9d518fd579a8375c552b3c6ee564bee304bfe7b6",
+   "norm_hash": "435f799d45317545672d87fce4fe73baa1f882b568201752f465ea9da7f1c276",
+   "chars": 27779
+  },
+  {
+   "sid": 8424,
+   "url": "https://ubuntu.com/openstack/contact-us",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "083bc1c7ee57f628547ec9cb50cce94e707ebc9f0fb88d9f90058c3960522e69",
+   "norm_hash": "0d6913112ba6bac7ebfd649d925198dce7587158b4c7a8eba8cc118a9da27dd4",
+   "chars": 5125
+  },
+  {
+   "sid": 8425,
+   "url": "https://ubuntu.com/real-time",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "70d3dc5eed0f9d965c84a2393b33b0a1f6ccf056dff95ee02c2488c7eccc087b",
+   "norm_hash": "cc01539edef35b04fe9e2c17bd65ea7b41f9a60cc1dd6d816d522e1615deb7fc",
+   "chars": 8390
+  },
+  {
+   "sid": 8426,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7c1010ef7a5d7ab08089fa14a7e01c3f3fd2f691c133ff9f096bfe2be85b2e4f",
+   "norm_hash": "3621b57f8400f300d96f7445608b60c7241b4135ad2faaf75e39e101d5c40334",
+   "chars": 4391
+  },
+  {
+   "sid": 8427,
+   "url": "https://ubuntu.com/internet-of-things/appstore",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4e4fb691f842b25b1fd34be8d59321bd25b03bfba71d366e8032c8f93764c80",
+   "norm_hash": "4f0ce04c46e1d6642c777e19330402eca4a7b32bfcad6677c433c541b83c49f5",
+   "chars": 9620
+  },
+  {
+   "sid": 8428,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/stats?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4fa4b1310b94f957d63f91adff926e0075c1746dbce0614172172bae8f1afb3a",
+   "norm_hash": "eaf655f39da2cdacb7ecb2f8ff1bc17be36ea3fdf0970010a508f64657422230",
+   "chars": 1961
+  },
+  {
+   "sid": 8431,
+   "url": "https://ubuntu.com/core",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "149247b2cf29c208187c24d03abed820c9544b62b74400fc60f59078ac004088",
+   "norm_hash": "d65491ed895e704e6269a28f03ca8f9503329538232e68a04f87a9d05dd72953",
+   "chars": 10003
+  },
+  {
+   "sid": 8432,
+   "url": "https://ubuntu.com/engage/charmed-openstack-adoption-whitepaper",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d4bc9d2447bb14570ced97794226ef97b81346bf142e01d9a02c38d8b088c7b6",
+   "norm_hash": "7d4ac3aefed21259ca5cb599514be4ee2381baab776c6fd781d9fbcc867e5ec7",
+   "chars": 5830
+  },
+  {
+   "sid": 8433,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/stats/.clang-format?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1c0e049fcc873f43de3f6f95e2d458edf049c776eb8ef4668e7e790f8e2b56e2",
+   "norm_hash": "00fc57c60614bc39d8a7ab4bb84b92aa74faf00a724ff9884b8b463d94590726",
+   "chars": 2011
+  },
+  {
+   "sid": 8435,
+   "url": "https://ubuntu.com/openstack/features",
+   "class": "dead_or_blocked",
+   "http": 302
+  },
+  {
+   "sid": 8436,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/stats/.clippy.toml?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "73e1e177db71d9437ef7e37dd9bac8ad1fc7789226522e05e41a21ec9d2286c5",
+   "norm_hash": "a7ecdaeaa106f1b702714f42ccb684eae1bb3f3c837b00b11bfc6cc7b0f6ab76",
+   "chars": 2009
+  },
+  {
+   "sid": 8438,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0707c5fba7693a8518b9c6362d2b4aa8632ccc166e880329a31668a596956ced",
+   "norm_hash": "0104a4998523d683c0b202db392acde5daf2857fc5574544e255ff0ba664430d",
+   "chars": 21130
+  },
+  {
+   "sid": 8442,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git?h=v6.12.110",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c154a2d77c44acd27ef7bace1205f22f8344593bc3441669a8b58463ff680a24",
+   "norm_hash": "5e5a87ad515fe838854bde4fc12389259d0554f82d582697fa8d8826ede757bb",
+   "chars": 4260
+  },
+  {
+   "sid": 8448,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "146e0491268da2eec150cee7a98fd93c84528f0deddd040372637dfbdf360396",
+   "norm_hash": "4cbdfb3f8e97665eb987d5cba88ce78401bc2a8d7bc32a6d2a0a71115abbe4c3",
+   "chars": 4542
+  },
+  {
+   "sid": 8452,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fc7cde4cb5f3759d2ea3b2075dbb45e34227613ec65dd93e5ac090b37622f024",
+   "norm_hash": "73c54c0bc9dfac4c798ddae20345c62c9ca2a31ec498d6d705978d1576fed2c3",
+   "chars": 358551
+  },
+  {
+   "sid": 8454,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/.clang-format?h=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "107b4d65e751f89eb22d79e57bab0050bfd889078b6a52a787a6b81c2d4427e5",
+   "norm_hash": "2f69b7e97555e0fc78fdd9bf49d4d62391e088403685154314ee3d59d7574dd7",
+   "chars": 7505
+  },
+  {
+   "sid": 8501,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/about",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "941fa40f2aa85718fa08958664ec56a05ca9d1d6e07e9a66da537cc428f6027d",
+   "norm_hash": "06e964cd1efdba190dc8bb64fe25cebeb6ce8bddcb28fa2bed9d333568dec79f",
+   "chars": 7798
+  },
+  {
+   "sid": 8503,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree?id=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "866619f9501c33511ffcb15099f7264cf510f9c7b4295f28c0eb71a69c525edc",
+   "norm_hash": "9913fbc11d0f5ea2c15d167c110ecc655bd6bf1795645339037b51393665ae7a",
+   "chars": 3469
+  },
+  {
+   "sid": 8504,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit?dt=2&id=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fe10dcda4ff6355ad7a5de58533d4461afc1eefd0cac31d509a35befff5156de",
+   "norm_hash": "fed74f038247e57c9e4fb453e531fef7250a9a80b4b6118387f6d2321aeaf934",
+   "chars": 2827
+  },
+  {
+   "sid": 8514,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs?id=v6.18.52",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "191561f72c02a6096a76263b6edfbc18fd4247ffd564243bc44b0359c92a8068",
+   "norm_hash": "a2d5defeb92461b29b0019e607703e5915328b890c6ba6c3a100a35f40633b4c",
+   "chars": 358557
+  },
+  {
+   "sid": 8516,
+   "url": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8e26f0fe812f73e08c83771f661cd3811ceb05e3295180cfb745d73cf50ec6a8",
+   "norm_hash": "5ac32f2e9d7786813cc9b29fb1a1c3d9bbb8b832cd97f0e2f2d5454e8a8a45cb",
+   "chars": 21082
+  },
+  {
+   "sid": 8574,
+   "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ce644b7de52a87e96b620419506edd5818f48ebccbd7754b8838ff742ef8e58e",
+   "norm_hash": "7fb02188918392a189e316e0733630ca496614a266fd68b55667306e0d1bdd53",
+   "chars": 2605
+  },
+  {
+   "sid": 8580,
+   "url": "https://simple.wiktionary.org/wiki/Main_Page",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "47df3811d77aab3a7c7aaed0d4474a7634141c1911a9ad2366f2b5a4c590d2a3",
+   "norm_hash": "ce2bbcca17a665c1c340b7c317a9debf66c684cfa22caf1e4d772333950fcb4a",
+   "chars": 7032
+  },
+  {
+   "sid": 8706,
+   "url": "https://techcrunch.com/category/fundraising",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b5f4bba45d95e181d45aa076cb839828b906eaccaffaaa5638b8c96b089046fa",
+   "norm_hash": "408a70cdeca077f7537e45734306948685c71b1918b76a00af0aefec4b666b37",
+   "chars": 4851
+  },
+  {
+   "sid": 8731,
+   "url": "https://techcrunch.com/sponsored",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bb5e74ce823c8d9c31b9cd95d2db9d2cfbc5278a95715bba0ec41b3ba8fe599e",
+   "norm_hash": "7061d30e4c6b12e03a4e61405f7c72eac381e2aa097a8a1fa6264e03dfa53a9b",
+   "chars": 3967
+  },
+  {
+   "sid": 8740,
+   "url": "https://nimbus.com.ng/",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 8882,
+   "url": "https://alistapart.com/article/accessibility-for-vestibular",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9d6ce0c1911b91aa829286d4b39b4c291a0d885f5245c420050ed0236724ee95",
+   "norm_hash": "96c2eccee02bf64f7e47cbf9d8ab915ca86194eae316de4362e778dd2f50e31e",
+   "chars": 20045
+  },
+  {
+   "sid": 8888,
+   "url": "https://web-platform-dx.github.io/web-features",
+   "class": "dead_or_blocked",
+   "http": 200
+  },
+  {
+   "sid": 8904,
+   "url": "https://meriembenhabiles.design/",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 8917,
+   "url": "https://ricklopez.eu/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 8977,
+   "url": "https://mathnet.ru/php/archive.phtml?jrnid=ppi&option_lang=eng&paperid=1518&wshow=paper",
+   "class": "dead_or_blocked",
+   "http": 0
+  },
+  {
+   "sid": 8982,
+   "url": "https://terrytao.wordpress.com/2026/09/07/finite-time-blowup-with-smooth-forcing-term-for-the-incompressible-porous-medium-boussinesq-and-incompressible-euler-equations/comment-page-1",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5c01924b8683aa723ae6900e1b087a82254def659b50deb3dec1f51565c9289e",
+   "norm_hash": "4e9c99ca6990f87eda0fb4711eae1a7276e89fc9988d046ff99f13c973a8b3bd",
+   "chars": 103560
+  },
+  {
+   "sid": 9008,
+   "url": "https://businessdayintelligence.ng/nigerian-banking-industry",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9009,
+   "url": "https://businessdayintelligence.ng/business-case-for-investing-in-gombe-state",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9010,
+   "url": "https://businessdayintelligence.ng/lagos-good-school-guide",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9011,
+   "url": "https://businessdayintelligence.ng/all-services",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9012,
+   "url": "https://businessdayintelligence.ng/pay-tv-versus-streaming-platforms-which-will-win-nigerians-string-pocket",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9013,
+   "url": "https://businessdayintelligence.ng/insights",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9016,
+   "url": "https://businessdayintelligence.ng/data-center",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9017,
+   "url": "https://businessdayintelligence.ng/about-us",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9044,
+   "url": "https://businessdayintelligence.ng/contact-us",
+   "class": "dead_or_blocked",
+   "http": 500
+  },
+  {
+   "sid": 9120,
+   "url": "https://ndpc.gov.ng/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ff90dc34e63ff20b60c85e508ef7ae7d55e778d20dae30cba2fc47bb2d401e34",
+   "norm_hash": "bb5e0a6a25aae0f9e20652d0fdd4cc87f28ca678631af6c5e15b409e5bb33546",
+   "chars": 5869
+  },
+  {
+   "sid": 9262,
+   "url": "https://ftcsf.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ba2d26e8353d33747af943d106a7a84e7b0b4666ffc5bb162c778bd3f9388b4a",
+   "norm_hash": "dbcdb0e83be1c6bcf9141df172ad25991a8a4b9bb491af833615edb0cccdb56b",
+   "chars": 6675
+  },
+  {
+   "sid": 9267,
+   "url": "https://onlyny.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "88719ce5eb2cbd2009ffc3ba65ceaaa11f038c5c591b2a09d4dcc471adb02829",
+   "norm_hash": "3153b83d765892281996710215fa2eb7a574eebf05c60918ce017ae3f13a6af0",
+   "chars": 1981
+  },
+  {
+   "sid": 9273,
+   "url": "https://eastfork.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0bae95f6fc141eee738961fb0017fd81d48038555bf2600e30f4b4caf5881b15",
+   "norm_hash": "66fff358b1426dc3275ba1647275b532a30299b56dde7fac68138d2425c25729",
+   "chars": 3378
+  },
+  {
+   "sid": 9275,
+   "url": "https://glossier.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4bd1a8bfecd4cbab1363bc3c04e1d2a8c3ff09db7e1873bf5f96324845f55a2",
+   "norm_hash": "3de66ffefed0755bec6b0ff9fc85df5a9151e8a6ad5c693eee2f0a15d56a2ede",
+   "chars": 4200
+  },
+  {
+   "sid": 9276,
+   "url": "https://stanley1913.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "880ed25d22b5b630ec2f106c810419c98390bb7af2849cd75fd95a2e0503fa34",
+   "norm_hash": "59b8b4439926797dd0a756eefbd731f6e023ca45006b86ccd19bc80f67a87049",
+   "chars": 4668
+  },
+  {
+   "sid": 9277,
+   "url": "https://shopyowie.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "99d965efbdabd8238cd2545e5313ee83d415a4aa34d04ee79b29617e620da469",
+   "norm_hash": "3044931df22ac0fc898511dbb335ab6838821cc1ce90665cb63ae198d1c6dc0a",
+   "chars": 1031
+  },
+  {
+   "sid": 9278,
+   "url": "https://houseplant.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "02bf05a83b8abce7768224ae7098048d8084b41a0dfbb5da09000463e6c05475",
+   "norm_hash": "085ea661f838f697a16142a9836527ca2d374044c1e4fc06697e0d7a1949d856",
+   "chars": 3199
+  },
+  {
+   "sid": 9279,
+   "url": "https://ornotbike.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bd4606dc1fff6137955f86b9382fdb7724f6ed62f797fba473a62d2f3a2116e9",
+   "norm_hash": "8cbc84d84ab335142e365234ed1adb2c497c59144ddf84f689e7c1a329a93ae4",
+   "chars": 5537
+  },
+  {
+   "sid": 9280,
+   "url": "https://monos.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d13d68b1a39d305858e503e42588d348d1aca967140d09868ca1b504f76090a5",
+   "norm_hash": "6d7c4955f6a61d5f761106cf58ced0b33f0fd289cad9fe15f64825471eeefb8f",
+   "chars": 13789
+  },
+  {
+   "sid": 9281,
+   "url": "https://stevemadden.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2852b74a0eaf480f30110b7990d434ffe39f295111beffec27149a68e449dc43",
+   "norm_hash": "85a31c3dfecb5939e976ddbe7b42ba8d000acc8ff997f2fc5745ae85c70398f4",
+   "chars": 1505
+  },
+  {
+   "sid": 9554,
+   "url": "https://builtinnyc.com/companies/type/artificial-intelligence-companies",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7608560009bba9cdd58a1b32a1b867e5e5798f0635f0004ce4414f3b8a614af8",
+   "norm_hash": "654722a2fae8b0eb7a63cad4912a194aba3f214e0bf9aa14a7c9bc6db137a29c",
+   "chars": 35532
+  },
+  {
+   "sid": 9568,
+   "url": "https://builtin.com/jobs?city=Vancouver&country=CAN&searcharea=25mi&state=British+Columbia",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b2316f0abe6c5680e74caa2a7b548465be6bdd4c7d77548d479ac5295a537576",
+   "norm_hash": "083e1b22a9c4dba4f80a5fe56287b74fbcc372f0b637b53be0514421f10b575d",
+   "chars": 9959
+  },
+  {
+   "sid": 9581,
+   "url": "https://builtinnyc.com/companies/type/software-companies",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "56fcf54ce3b9bde176b921325e84f31496b3f3dd6e3d650e92e5a7a8d500ac35",
+   "norm_hash": "08b401ff6cc392dbc557b9b51c9ba7a839d9935bdd6c7b45ffeda169f6e37fd4",
+   "chars": 35635
+  },
+  {
+   "sid": 9595,
+   "url": "https://builtinnyc.com/job/senior-product-security-engineer-secure-design-kernel-and-virtualization/9963571",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a97992db84829d9287e849cb8d2297da3b0857cd4a0fd3ca022d530b64d5dd48",
+   "norm_hash": "e96f642b56745a205a12bdb568d47d830262a8ce7f8e6aa2017d543e6c3c5600",
+   "chars": 11769
+  },
+  {
+   "sid": 9599,
+   "url": "https://builtinnyc.com/job/senior-security-analyst-i/11194366",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "4bd65d40fec11bf144ae893fdfadd45e149eab3f702a95685639354863c827de",
+   "norm_hash": "e13f32128b9e984571d5782c7f6c6ac9f328f55c8a6ed9234cc67478836f61c7",
+   "chars": 11179
+  },
+  {
+   "sid": 9651,
+   "url": "https://sourceforge.net/auth",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 9716,
+   "url": "https://africa.businessinsider.com/local/markets/asia-europe-abandon-suez-canal-route-as-middle-east-tensions-drive-record-traffic/nkqdxnq",
+   "class": "dead_or_blocked",
+   "http": 503
+  },
+  {
+   "sid": 9756,
+   "url": "https://learnjavascript.online/app.html",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 9760,
+   "url": "https://githubstatus.com/incidents/0rn90wk115q9",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e4553fb0fcb90d3c38e377b2c913b05b4c058e39c2db9743c5fbc92c82711089",
+   "norm_hash": "d24550eb8cc5dd071ea15d12c1c1117c7aaa9ffbce0be3bb037efe54ff04f6a8",
+   "chars": 22349
+  },
+  {
+   "sid": 9799,
+   "url": "https://shop.eff.org/products/privacys-defender-by-cindy-cohn",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "122f9eabf2e9992ccd51818154b05ebebcf042c36d88fd3132d7a3aa751f74d7",
+   "norm_hash": "68621f1ecbfbc0c97dbf442ccfd9ca42ce7466134a2cfea4535fc01284988213",
+   "chars": 928
+  },
+  {
+   "sid": 9800,
+   "url": "https://shop.eff.org/products/alprs-are-for-the-birds",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8c6cd19b9e9119ca1fc7364c47e8ffd7d70f0f03bc7cb8f7370e97141d344dd1",
+   "norm_hash": "4504fd0330f3d0c2bee68beecc639b78e44c854f52ae456780425f66ac70caed",
+   "chars": 830
+  },
+  {
+   "sid": 9802,
+   "url": "https://shop.eff.org/collections/more",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a2dcdd513a0f224f3ea3e811521fb9bcf05354bebe8a3bbaeeed444bc618f64c",
+   "norm_hash": "3e3779ee427508d3542b33e4ee7b939e6408d8a72f1fdc12fcf15cc3e4ecebcc",
+   "chars": 2131
+  },
+  {
+   "sid": 9803,
+   "url": "https://shop.eff.org/products/privacy-badger-crewneck-1",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8e876e841dc612a8b2ac895bb33fe02d87746fc9ec1e0f7abfcc8b7950e3a00c",
+   "norm_hash": "15c11ee845112bfc70da86546f3e67f73cf4537cd35ba2817c9415c749c6e9e1",
+   "chars": 914
+  },
+  {
+   "sid": 9804,
+   "url": "https://shop.eff.org/products/lets-sue-the-government-t-shirt",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "eda4a027cf3136549b1858bd0be368147dede5607a0b3501a3b2b0dd594cc80c",
+   "norm_hash": "9783e3d325e4f7551ba4f81e13128b5f639671fe804f835a2e57abba07bfce24",
+   "chars": 991
+  },
+  {
+   "sid": 9805,
+   "url": "https://shop.eff.org/collections/apparel-accessories",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4422898a3284075c0ed9c4c93b14dcdb86b9347eb09b3fd8c51ab71a494a9e2",
+   "norm_hash": "4e6a1e4b1d199c471d64fe718bccde40d9422c8250a531ac0711e2797b97bc35",
+   "chars": 2694
+  },
+  {
+   "sid": 9807,
+   "url": "https://shop.eff.org/products/enshittification-sticker",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "36cd8387129c0e81d31231d41ed22bc8fac6de70b657ef5b99040fd830aaf036",
+   "norm_hash": "10e7fe5ab407a1267d5cc7044c21d4ddb67066538e4ac56d5a6200966bb50264",
+   "chars": 849
+  },
+  {
+   "sid": 9808,
+   "url": "https://shop.eff.org/products/stim-sticker",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e348ecd0e8573dd1b138b38fd641a1ca22fbad4b58219f9255098e489d475a11",
+   "norm_hash": "35958238d1d903ab88290925f943314ae418855ca173b3a5cf0522dc9fe785a0",
+   "chars": 876
+  },
+  {
+   "sid": 9809,
+   "url": "https://shop.eff.org/products/eff-grey-hat",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a0653fa7560527e552cc75379801a8583cf608d11301c31e6b87e592cffcaff3",
+   "norm_hash": "ec5d7d51b795bae29a1c132c771fabcf8f2fdabc9c78416cbbb1d32264a33618",
+   "chars": 731
+  },
+  {
+   "sid": 9810,
+   "url": "https://shop.eff.org/products/lady-justice-braille-sticker",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "46e6142a918c7ce6deae901cb813a2f8de42317531a41dde13b4bb8bc8ed575a",
+   "norm_hash": "7583543349d4782ad277e5ead2f2c19fc0083ecd16b9e5eef62566189a6d49c6",
+   "chars": 1135
+  },
+  {
+   "sid": 9812,
+   "url": "https://shop.eff.org/products/liquid-core-eff-dice",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ca3a865664379d991f3d7eb840e46f24edb327f7151e26df71f17c63fb4ffa56",
+   "norm_hash": "409b75471496bd66eaeba28f3214474c0b36d166f89da58c2e883e5fcf6d0431",
+   "chars": 929
+  },
+  {
+   "sid": 9813,
+   "url": "https://shop.eff.org/products/motherboard-hooded-sweatshirt",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e1027322c7623a8e50ba9d94881bdfbccbe20945e1c3f09e6ca9cdb242a03569",
+   "norm_hash": "a39a302c1ee1b94b96413f2482a9c706bb93cb84f079751e731b7687148a13f8",
+   "chars": 925
+  },
+  {
+   "sid": 9815,
+   "url": "https://shop.eff.org/products/many-hands-make-light-work-sticker",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f2538c89d9bbd03b30bf4fcec8e4de3da0534d17865efdf22558444c4bbff9c2",
+   "norm_hash": "c382dd683848822ed1cec270d98eb648605c8ebb52b66b8ff64aedb91cbe5b0f",
+   "chars": 969
+  },
+  {
+   "sid": 9816,
+   "url": "https://shop.eff.org/collections/all-products",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3f04c76e552d5db3b1ac81d62a302dff573c05c8a3b8fe6d6ce447be35a68bf0",
+   "norm_hash": "987e1e7a554b0d01df7051b1885cf7e8b3894f929a65f2d24034bb64ad92f80d",
+   "chars": 3739
+  },
+  {
+   "sid": 9818,
+   "url": "https://shop.eff.org/products/http-code-playing-cards",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e00be8f9ba2dfdf132b9a16779db6b0b08fc5181f677d3274af77a8a0557e6be",
+   "norm_hash": "023bf1453c3afb1c47ad3ba767702d39b2e919797675576cf0cfb5599e02255b",
+   "chars": 929
+  },
+  {
+   "sid": 9819,
+   "url": "https://shop.eff.org/products/scoop-neck-motherboard-shirt",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "e4eb2414755dbe93f74124d3bc61cce056f3682adc99768e2e27e9fc95a8c63a",
+   "norm_hash": "2b2bc4f0846b8bbb13e31524e66fc2fa83d5be424eeeff29d30e6c9ec70f123c",
+   "chars": 857
+  },
+  {
+   "sid": 9843,
+   "url": "https://shop.eff.org/products/enshittification-pin",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8d5b2d756c8f4d1e1db0cf52c376971cb2447e71830b9aa50e335e1de13feadf",
+   "norm_hash": "bfcb726c60494e7935c9110814de032fe1f497c4d4e5ab8e998bb0bd4d28307a",
+   "chars": 1046
+  },
+  {
+   "sid": 9848,
+   "url": "https://creativecommons.org/licenses/by-sa/3.0/igo",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "625704049ba5251303bd4e4d8e847bfb98840cde713703f3c5f6eb5ec08f568c",
+   "norm_hash": "7e622af7868d17d878ca797f4802202149008f2da612c5dbe3f904e26169df9a",
+   "chars": 2583
+  },
+  {
+   "sid": 9891,
+   "url": "https://nafdac.gov.ng/cosmetic-program",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 9896,
+   "url": "https://nafdac.gov.ng/cosmetic-products-labelling-regulations-2021",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "17a0f2232fd53f1e890ec26d619e5f4c61189bb973b04eb2988416e1c910b57c",
+   "norm_hash": "ef99d47ee32b7d8b25ff5297bbad799a85a6431379d045f57176e3ef9c817ac4",
+   "chars": 595
+  },
+  {
+   "sid": 9905,
+   "url": "https://markwkm.blogspot.com/",
+   "class": "dead_or_blocked",
+   "http": 429
+  },
+  {
+   "sid": 10249,
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/vtest.wav",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "bb7e40fe7fe7e062df6fa6e020fb8f8daf924bc2caf698b208f65bdfb86be078",
+   "norm_hash": "f0724bb8999624c960aa2fa97ef44ab2677e5f4af5d835f8ee6d5a5465ae89e4",
+   "chars": 51244
+  },
+  {
+   "sid": 10394,
+   "url": "https://harzos-one.harz.workers.dev/",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 10417,
+   "url": "https://harz-mesh-lab.hamzarabiu390.workers.dev/source?f=app%2Fproguard-rules.pro",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10427,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "272da8980131921e5b127ad9125851262cd74028faa9c7903b3560203e5579df",
+   "norm_hash": "887eae4a7e774466e4e04bb847f9a8544017c85c154c6e26a8a9d24fdae5117e",
+   "chars": 1489
+  },
+  {
+   "sid": 10464,
+   "url": "https://harzos-one.harz.workers.dev/manifest.json",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 10479,
+   "url": "https://docs.python.org/3/tutorial",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "df07f4bf6d8797d8d20fd5794851ff79774c83cc3010f1dbf481b5f7c448a637",
+   "norm_hash": "d49eb777804653157fec48fcc0974a30d8695df8ab7287505cd022348e5a4390",
+   "chars": 7027
+  },
+  {
+   "sid": 10491,
+   "url": "https://nginx.org/en/docs/index.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "039f52a88cb643efbb1fbba7498ea8d6cfb0d05266eb61e4fffd90bccc2af5ae",
+   "norm_hash": "2dcda675be6ff53dd45990ad449afeca07d278872a4c16247dc9b1e37a981aa7",
+   "chars": 3447
+  },
+  {
+   "sid": 10500,
+   "url": "https://git.kernel.org/torvalds/p/v7.3-rc6/v7.2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5d0aac15e8177b93758a299511cb417bf617e81bee819a9ab23dab0f97dbbe01",
+   "norm_hash": "ea5afa8826cf9236e2c1f1dbec0017a72127fb3f0387896f38ed659bf74168a3",
+   "chars": 52906183
+  },
+  {
+   "sid": 10517,
+   "url": "https://smashingmagazine.com/categories/ui",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "53cfa59b1ff9b5f81d531bf2ce34d5a439531a699c21e8d9749b623a5206f3d7",
+   "norm_hash": "c47d73f4b53fcfdb8712514bc18271c8067093ca5717e51efdfedce552178b84",
+   "chars": 3921
+  },
+  {
+   "sid": 10543,
+   "url": "https://docs.nginx.com/nginx-ingress-controller/install",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7586435a82ca71c4d523da9df0ff2d63a11fefde1562ad19256a1b6182a90e3e",
+   "norm_hash": "86b98e9df18337cd8ce405aa59d9204716937d61af8324c33764aab8ae0da545",
+   "chars": 652
+  },
+  {
+   "sid": 10576,
+   "url": "https://ai-sdk.dev/docs/reference/ai-sdk-core/generate-object",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f46e9d0661276d3e2487fd9b9c698c78629fb27347e44e658c74a83f8a3a3fe1",
+   "norm_hash": "4478ce4923bb91b76963687f4acd9da87b7696f2fb61a58461369427d8ad24ec",
+   "chars": 8335
+  },
+  {
+   "sid": 10585,
+   "url": "https://news.ycombinator.com/user?id=payanai",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10643,
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Ashton-under-lyne-town-hall2011.jpg",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b7ab4e1f23405207985ce2341b42541005c8643a3e72be15a517129cef80bc54",
+   "norm_hash": "47ea9a3aa59b7c03baa175df722bef402eb1cceee04720f1843e470eb21f0f56",
+   "chars": 1959933
+  },
+  {
+   "sid": 10645,
+   "url": "https://exportfromnigeria.info/board/16/non-oil-export-nigeria-video",
+   "class": "dead_or_blocked",
+   "http": 406
+  },
+  {
+   "sid": 10646,
+   "url": "https://data.smashing.services/ball?title=The+Impact+Of+Humanoid+Robots+On+Humanity&uri=%2F%2Fwww.linkedin.com%2FshareArticle%3Furl%3Dhttps%3A%2F%2Fwww.smashingmagazine.com%2F2026%2F06%2Fimpact-humanoid-robots-humanity%2F",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ef34540a408682163cf1db39fd87eaf1ff6f5060e71119e3c5d41c34a80080bf",
+   "norm_hash": "8a4200676dbc6ea8e02630fee83aa1904baa9e125eac040a9db6e8ef34b2df6d",
+   "chars": 527
+  },
+  {
+   "sid": 10649,
+   "url": "https://docs.python.org/library/index.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "50a3155540a8e9a4e8b8b889e6d71fab7851510bf532a0222f5f5c7642c5d0e8",
+   "norm_hash": "92f917aa9d871a4cd2880afb28e8ed89e100bba42f78248899af2d60118d78a8",
+   "chars": 13513
+  },
+  {
+   "sid": 10659,
+   "url": "https://moniepoint.com/blog/moniepoint-publishes-impact-report-62-of-women-entrepreneurs-received-their-first-formal-loan-as-inclusive-lending-drives-business-growth",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10678,
+   "url": "https://pencom.gov.ng/wp-content/uploads/2026/07/GUIDELINESS-ON-STEWARDSHIP-RESPONSIBILITIES-BY-PFA-ISSUED-COPY.pdf",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7b15d3b1ba4342debbf4b3cb4a5166be6ac9b3eecc5dbffd384bc5374daf94b6",
+   "norm_hash": "c02dd4fea77db56c5f3f3ff5451e9e6bb4aa7e205a99f2d4dd19a9371dfbe075",
+   "chars": 151762
+  },
+  {
+   "sid": 10680,
+   "url": "https://www.linkedin.com/login/ru",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10687,
+   "url": "https://ocw.mit.edu/search/?t=Computer&",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10689,
+   "url": "https://xbox.com/en-us/games/all-games/pc?PlayWith=PC&xr=shellnav",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "fdbafef7e03faa8e828db52513a56150edc2e6ea320d2f4f09a5192d203896c6",
+   "norm_hash": "81fb07dd45ffe5dfec495ca7a8f26dcb5c146c92ebdb6f29b8f3a3d24e735013",
+   "chars": 2402
+  },
+  {
+   "sid": 10694,
+   "url": "https://cowrywise.com/blog/saving-money-friend",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "963a95eefe5b51c63b03190af36f87dc5e6703a326a90eb67117e1f5514f7085",
+   "norm_hash": "3a493efcb2935218311d590fd0137df071c67f9177b48a15276dcf0d1d3d6bbc",
+   "chars": 5785
+  },
+  {
+   "sid": 10695,
+   "url": "https://doc.rust-lang.org/rustc/print.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "83009a2c48f108bf8b237b8e4d98e0cc60cb2778493aa9751de2589983d964a9",
+   "norm_hash": "639ccb30e2b8538d60f267f3704fd427df9bb2eef77fbcdcf0035c7339aa1c50",
+   "chars": 938994
+  },
+  {
+   "sid": 10701,
+   "url": "https://github.com/seanmonstar/reqwest/tree/master/examples",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "345b41d6a9b097787800a46ddf6fa4aba58540320f1cee1ba6ffe1753d8ad8ef",
+   "norm_hash": "aa05d6e22afbbd132a189db7738c5e164cab1b750d82d41e362c271853062c69",
+   "chars": 967
+  },
+  {
+   "sid": 10707,
+   "url": "https://pgpedia.info/",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10709,
+   "url": "https://store.arduino.cc/products/uno-q-arcade-bundle",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "18caccaf2327aa62800f2dc3aaec1dbefe28639cfcf6cfbb868a1b2be4973478",
+   "norm_hash": "9c89c6f39e8acfc8dbda8d12b231bb8fc88883832fe0d8580106f4fa98c5b879",
+   "chars": 9224
+  },
+  {
+   "sid": 10713,
+   "url": "https://arxiv.org/pdf/2609.17110",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f9720cf5994b3d9cf0ecbd36563f6d803cd6cfe97c3e34f3ef4ba8a7db104e88",
+   "norm_hash": "07a1c3628aea33414b726cc396aca3048f7004321b602abbd85a610a5da1ffb5",
+   "chars": 137232
+  },
+  {
+   "sid": 10714,
+   "url": "https://youtube.com/watch?v=jhZ3el3n-u0",
+   "class": "dead_or_blocked",
+   "http": 429
+  },
+  {
+   "sid": 10716,
+   "url": "https://support.apple.com/en-ng/guide/mac-help/mh40614/15.0/mac/15.0",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8d72bf900fd677c6fde9896131d0b2257f44432597a8b4e05771687416f2ce65",
+   "norm_hash": "f99f0fe2c07e50de6b13145430a551d67fe1ce1743368cd32ae6ba936dc8c243",
+   "chars": 7278
+  },
+  {
+   "sid": 10721,
+   "url": "https://www.jobberman.com/account/cv-services",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "397ccf88853773abff8838c85ecfcaa7b14c54bd26c093b5e90c378d003351a2",
+   "norm_hash": "8ee5222f7f9b0747ee9fe738de12d880ffb438ef1cf28ab05939af5ee55267a7",
+   "chars": 12904
+  },
+  {
+   "sid": 10727,
+   "url": "https://ncdc.gov.ng/news/press",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10729,
+   "url": "https://moniepoint.com/blog/whats-the-point-of-business-accounts",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10742,
+   "url": "https://pgpedia.info/postgresql-versions/postgresql-19.html",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10758,
+   "url": "https://youtube.com/watch?v=8pDqJVdNa44",
+   "class": "dead_or_blocked",
+   "http": 429
+  },
+  {
+   "sid": 10761,
+   "url": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/960px-Commons-logo.svg.png",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "7fc0484f4f1b3875f7bcca88d39705c0fba8784695318e8da36e935d900f74c1",
+   "norm_hash": "984bec3e60cb3a35b251318007840f4e14852b9f3bb551ac7eed975aa557e921",
+   "chars": 24242
+  },
+  {
+   "sid": 10778,
+   "url": "https://www.instagram.com/nig.education/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10789,
+   "url": "https://www.linkedin.com/login/pl",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10798,
+   "url": "https://nafdac.gov.ng/guideline-for-lot-release-of-human-vaccines-and-other-biologicals-2023-d",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "46ee96e76f07580ee2af8738957fc48a4a0c354a1943ed1d1330fe560289c33b",
+   "norm_hash": "9d36210457fcdb4fc1217d9a570d0c5ebb5164f88069faf07b07c29e5eff8443",
+   "chars": 611
+  },
+  {
+   "sid": 10805,
+   "url": "https://forums.manning.com/posts/list/43064.page",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "177a0ca5a184e423844e4d550a1d102b82bb452bee7edb4080d23e81a82f80d6",
+   "norm_hash": "512ebc91177a1e69644e47da89826dc1e1eab7a6c9ad5ddf44646d68fce033a4",
+   "chars": 568
+  },
+  {
+   "sid": 10808,
+   "url": "https://cowrywise.com/blog/saving-tips/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4bcfdaa038f91c5c69dc9d59d0480faa5f1f8d165f8d669b476fd7179a95701",
+   "norm_hash": "7c30fd62a3d3af19a829995260e98a058dfb62fd3e1ebdfc69ec5122308598fe",
+   "chars": 1537
+  },
+  {
+   "sid": 10809,
+   "url": "https://moniepoint.com/blog/author/oluwanifemi-adewolu",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10826,
+   "url": "https://vite.dev/releases",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "55c79b6c021e63f167e198967fe9f6668be3df4a02a2bc0d63b7378cdad903dc",
+   "norm_hash": "225930a70b5e18d8034f0934b4770e8e778c7f935a95dade05bea3a6a599875f",
+   "chars": 4144
+  },
+  {
+   "sid": 10837,
+   "url": "https://faq.whatsapp.com/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10848,
+   "url": "https://fossil-scm.org/build.wiki",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6ba219f9948318b0a371b83d9eaf7457b8f64a0d0674a2a8b9141525016f12b2",
+   "norm_hash": "e02e88c6c32ab4028d0d3abe0f0a837d62437283a84ddc2e18d568bead2f330b",
+   "chars": 2728
+  },
+  {
+   "sid": 10853,
+   "url": "https://ncdc.gov.ng/diseases/info/H",
+   "class": "dead_or_blocked",
+   "http": 403
+  },
+  {
+   "sid": 10859,
+   "url": "https://dropbox.com/scl/fi/tpxsx5i9r1vkjlf2recad/Cat-Mode-1756829427.mp4?raw=1&rlkey=wfyu7192971mnu19p3i2mmqs4",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cacf4e1852fba4bd5465f2b6d118d990027932929f42cb953a58c09f2a124bd5",
+   "norm_hash": "3b783f7fd1ec063e335ccf6f3a724ec700505894f2beac7f7d3f4d363f277da6",
+   "chars": 317259
+  },
+  {
+   "sid": 10860,
+   "url": "https://github.com/denoland/celld/tree/main/examples/cron",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c1fc47742fc1c4c5ff51ad0ce9bf4061f1f4a64f8974e9654023ec8210529f0a",
+   "norm_hash": "44f84e043081edb7ffbdea9140ad3a4d8574cbe870a7292f3cb25bef453e7069",
+   "chars": 703
+  },
+  {
+   "sid": 10864,
+   "url": "https://it.pinterest.com/pin/create/link/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10865,
+   "url": "https://youtube.com/DigitalOcean",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10870,
+   "url": "https://ocw.mit.edu/courses/6-100l-introduction-to-cs-and-programming-using-python-fall-2022/video_galleries/lecture-videos/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ba1e1634460640be64e34de212605dfed5fe9aeb61dcc625dc3e622c6085a0fe",
+   "norm_hash": "2ea922563b46adad53b5872d61ad52c494a438634204ffcb271eb62920286510",
+   "chars": 2808
+  },
+  {
+   "sid": 10879,
+   "url": "https://nuc.edu.ng/wp-content/uploads/2026/03/Administration-and-Management.pdf",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "48a6ff0ee6fd1c34d949f69cfef026ca46470ef1a96586616277ddc115a68507",
+   "norm_hash": "545fc7af9e19f0f90240176a408dabfada614ca935264da092f5c059dc11e73b",
+   "chars": 2310738
+  },
+  {
+   "sid": 10885,
+   "url": "https://www.instagram.com/nig.education/?hl=es",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10887,
+   "url": "https://www.instagram.com/arduino.cc?hl=bn",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10894,
+   "url": "https://cl.pinterest.com/pin/create/link/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10908,
+   "url": "https://simple.wikipedia.org/w/index.php?title=Wikipedia:How_to_write_Simple_English_pages&amp;action=edit",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "133bd6c8c87e3801731111b7c8e562bd1ecc21d5ae762556e8c828bb05b47d20",
+   "norm_hash": "f15856b5d820d424ad2f86b529a6772c1b82b22ec2c64041b15391574b9b9493",
+   "chars": 16693
+  },
+  {
+   "sid": 10911,
+   "url": "https://www.mediawiki.org/wiki/MediaWiki",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "96a82ffcffdce1c1147f256174caca3d03d2bac1f2c9a9d0dacdb5b08831ce43",
+   "norm_hash": "5504a618dbeb698b279869f6067bdbd64ab8cc1dc360d80cf9243424501c5224",
+   "chars": 2735
+  },
+  {
+   "sid": 10922,
+   "url": "https://www.instagram.com/arduino.cc?hl=kn",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10932,
+   "url": "https://www.xbox.com/en-US/xbox-game-pass?xr=shellnav",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "9bed130f2d90dc29da2b7d2a5f4828cd4210a5e768a940edaa835134a68c96bb",
+   "norm_hash": "9d3c135c56d904f2678748bdb124b80e2b9583e0ffaffc390bc1ba37981ef67e",
+   "chars": 12275
+  },
+  {
+   "sid": 10935,
+   "url": "https://avatars.githubusercontent.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "27569ee8335c5ff751d136464513da631f65ae4233ff3458c5ed322c79fe550b",
+   "norm_hash": "7b59d9152979ead1b6bc3ffce72d08c475e9967d057d89e64adf2632d7d08d28",
+   "chars": 4701
+  },
+  {
+   "sid": 10941,
+   "url": "https://docs.python.org/tutorial/index.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "df07f4bf6d8797d8d20fd5794851ff79774c83cc3010f1dbf481b5f7c448a637",
+   "norm_hash": "d49eb777804653157fec48fcc0974a30d8695df8ab7287505cd022348e5a4390",
+   "chars": 7027
+  },
+  {
+   "sid": 10942,
+   "url": "https://youtube.com/watch?v=mvlmx1nduAE",
+   "class": "dead_or_blocked",
+   "http": 429
+  },
+  {
+   "sid": 10952,
+   "url": "https://instagram.com/cowrywise.com",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10966,
+   "url": "https://developer.android.com/guide",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f73611a1b05fee68ec48e247c34ce67a29a0ee7a29ebf1daa256201a6a9e11a3",
+   "norm_hash": "c3ef2ac439223fdef996bc109b7908b002ba0753e15a138f2285c6251a860362",
+   "chars": 4144
+  },
+  {
+   "sid": 10980,
+   "url": "https://docs.python.org/3/whatsnew/index.html",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "69504ddf9148591559096c75fceefd20c3c1e3967c3d90a4dbb2ffc4230b6e23",
+   "norm_hash": "2b77d585808f7131aa12e456f359f66d7513c541aabc3bfecb2170c352371a4f",
+   "chars": 14565
+  },
+  {
+   "sid": 10983,
+   "url": "https://no.pinterest.com/pin/create/link/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 10989,
+   "url": "https://smashingmagazine.com/category/ai",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f44ab69d42272d0b700341f26292fab38646ef7f061b21b9d0cb381fddee9656",
+   "norm_hash": "e0f4a39ce119afa788bb0d2735e4ea82e964e3c9298406a37a66910eb6b4bbcf",
+   "chars": 3698
+  },
+  {
+   "sid": 11019,
+   "url": "https://kr.pinterest.com/pin/create/link/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11028,
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Ashton-under-lyne-town-hall2011.jpg/1280px-Ashton-under-lyne-town-hall2011.jpg",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ab294a6328cedbccb7d110de2ceeef2089d64255f5454bf252babaec3682738e",
+   "norm_hash": "a45234a01b457681bb1af2887fffb7e51333b7ff9352e85c3dc3f8baa42a0a04",
+   "chars": 97450
+  },
+  {
+   "sid": 11061,
+   "url": "https://github.com/user-attachments/assets/567bbbf5-12a1-45be-8ffa-93712574d4a0",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "6db25f202ac0aa338b087fa2f0fadf2031242f79d965fd850cf60650de4d01ad",
+   "norm_hash": "08b20381bf99a3f2b8ba4051570828cc1a7e7d606399559dbdef1110e7426ceb",
+   "chars": 278228
+  },
+  {
+   "sid": 11065,
+   "url": "https://www.linkedin.com/login/sv",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11071,
+   "url": "https://store-usa.arduino.cc/collections/portenta-family",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "b590c1b7470a435c61ed4014e6cca678f2a1e63c28b3f1e74b1938f3a60fe811",
+   "norm_hash": "f040c08aae05c4945c5f3183f2af8c02cf3a867be725934d11c5df129c84e71b",
+   "chars": 15285
+  },
+  {
+   "sid": 11087,
+   "url": "https://www.jobberman.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d428dc0298726ca4bb7307c8431e4399330a5d47241f6deae108792a887945be",
+   "norm_hash": "952b423ab83456d5eddcfad9f4197592ff3ec247b455814e9cbd36d2618da479",
+   "chars": 9095
+  },
+  {
+   "sid": 11090,
+   "url": "https://youtube.com/",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11106,
+   "url": "https://impact-openlearning.mit.edu/2024-25-the-impact-of-mit-opencourseware?hsLang=en",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1823cad966637e4c85bcd48b60379508443e31ad75791492192591b0f68f3f4d",
+   "norm_hash": "3fa3c6a24ac6b0ceb052c94ea9d4038779dd4fcbbb643152803b8736015eb736",
+   "chars": 74209
+  },
+  {
+   "sid": 11121,
+   "url": "https://www.instagram.com/dropbox",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11126,
+   "url": "https://education.gov.ng/wp-content/uploads/2026/09/ATTP-ACCELERATED.jpeg",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "8d43076c28e6c3561d951ce109bca8ca3ad413bbd2ca6a8ab6f0b1ab7d7c998d",
+   "norm_hash": "d20a30a0eb5b60aff93cce2a457ef9e0764b1bfcd6898afe16857feebe9b2121",
+   "chars": 68574
+  },
+  {
+   "sid": 11128,
+   "url": "https://cowrywise.com/blog/stories/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "26e2b36804ed506e06e82107d95ec81f3272a7ed49517a2725f51b4f5d537509",
+   "norm_hash": "08edb2481c185ec4028cd11754b6d73f6f114878175a9cd2ceb374e456cced1c",
+   "chars": 1559
+  },
+  {
+   "sid": 11135,
+   "url": "https://github.com/windmaple/autofinetune/tree/main/FunctionGemma-SFT",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0a8a8f772d032cec177ae5bd2e9d4019a9ff2725d10cc121fbde3f0da1ebaa8f",
+   "norm_hash": "59a0ecd3e2ce32181e84ee625798c4c0a187b99afeafaacf760a1593a1276407",
+   "chars": 736
+  },
+  {
+   "sid": 11149,
+   "url": "https://www.getly.store/product/1-000-nigerian-sme-grants-funding-sources-complete-database-mtl04qie",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 11151,
+   "url": "https://thumb.wikimedia.org/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "d692194e34993135df5c8e551641d4ecbec62e8f626baaef15d95cbf4e0e8494",
+   "norm_hash": "4be9bba799b544ac4be9006a47e062963323663b8f18e5681fd1fe0e7791de18",
+   "chars": 4760
+  },
+  {
+   "sid": 11156,
+   "url": "https://whatsappbusiness.com/resources/resource-library/page/2/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1a64a1306a8fdd1a5ecfd18c773a57836e1c4ef753ae9d08d70d65ed13492dac",
+   "norm_hash": "050214ab3ac5d4d1d5ab0d4ed62f0fc1b13b2935ed328f0fcdf193720c83decb",
+   "chars": 5049
+  },
+  {
+   "sid": 11158,
+   "url": "https://www.instagram.com/arduino.cc?hl=sv",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11161,
+   "url": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/1280px-Commons-logo.svg.png",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "ddbc383b2bed5b961ef42732e8eeafd3c8f95bc3062850a33b77dfd79d6dace5",
+   "norm_hash": "6e3fe4185d0605ca5ad4b47af104ddedbfa9e3a7e573d6faece9f56114ec093a",
+   "chars": 41440
+  },
+  {
+   "sid": 11164,
+   "url": "https://github.com/rust-lang/rust/labels?q=PG-",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5a52b2fa533708f584b91707f9fc30aacb320e362b47bb527ddbeb0becc971c4",
+   "norm_hash": "4fb47b447b9584c46e7896ab38cc803cee8bf83e17db99c5cbef43f667370ca3",
+   "chars": 862
+  },
+  {
+   "sid": 11166,
+   "url": "https://support.apple.com/en-ng/guide/mac-help/mchlgtd_web01/mac",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a4b3f975018fd030fb044a091ad58a8a09245bff5efd58145aa6489f7a2f9c99",
+   "norm_hash": "56484c1664058f310e154e836239b7a8c6a9d8359ec5d364274be696da39b332",
+   "chars": 9568
+  },
+  {
+   "sid": 11172,
+   "url": "https://www.digitalocean.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "f8a461254853a28a2ad329e325db7f4bb943408981b86f5fab94febddaf9c52a",
+   "norm_hash": "17dab08e817cbe5d565e69363c15a2d497f62d27736e77eb2341fbc21bfc2040",
+   "chars": 5727
+  },
+  {
+   "sid": 11186,
+   "url": "https://nginx.org/download/nginx-1.30.5.tar.gz",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0bdfcf352eaf44cff8cf75d9369008a1a69b0d2e3c0abd8c7133efd4092a9eb7",
+   "norm_hash": "f43ef924df3f882d065355a7a76db433769fc3bad5973ca76007ed3093a113bf",
+   "chars": 606755
+  },
+  {
+   "sid": 11189,
+   "url": "https://store.arduino.cc/collections/nicla-family",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "a44c5fcb4804ec0002be958ef4f45f7a5b1f68798af23e8549c6d6296897b80e",
+   "norm_hash": "b0b33f84b8ee796c7d2022cf528c431b01276f4a3cb9ec87f2a9462ae4248ecb",
+   "chars": 8802
+  },
+  {
+   "sid": 11201,
+   "url": "https://www.whitehouse.gov/remarks/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "cd0a29d1252ed44207c8af90200c2a48efa31826c257085556d7d0a25433d43a",
+   "norm_hash": "bdfcac6b6e54635158779e179805d07b01e54a99e34daf19ec3f01ee6e5343d1",
+   "chars": 545
+  },
+  {
+   "sid": 11236,
+   "url": "https://www.youtube.com/playlist?list=PL6cp6kydiOXdZZ-MHXmFaxM8KKC01YLN0",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11255,
+   "url": "https://instagram.com/sindresorhus",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11266,
+   "url": "https://www.getly.store/product/sops-for-social-media-management-25-procedures-mtl05dxo",
+   "class": "dead_or_blocked",
+   "http": 404
+  },
+  {
+   "sid": 11269,
+   "url": "https://sec.gov.ng/search/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "5d06be9634682e36181cf3cf8a8499fc3c506a7dc2ac4dd856a8d648db4c2913",
+   "norm_hash": "2b39aa03a18c42bc54309abec186ea9c6c06cb8f880da42a02b128800a85d7af",
+   "chars": 672
+  },
+  {
+   "sid": 11272,
+   "url": "https://ocw.mit.edu/terms/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c6495eb52e3b1d3e2ba65c331a2d1b20cae2f48b4f86c72100ade4c54659ef9c",
+   "norm_hash": "a73c3cf4c1bb8549a8494562d52a673f419926c3c796f575881c1fdb8fbc2294",
+   "chars": 10791
+  },
+  {
+   "sid": 11276,
+   "url": "https://www.kuda.com/transfers/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0fe491532ae831e56b2ad0a2ef29c118813d94db3a0d1d015ec55b03e53d9fa0",
+   "norm_hash": "38dccb2f691004a90dc2389d810c17c3c5bb797bedb9ee59e65cde6b41482ce6",
+   "chars": 1495
+  },
+  {
+   "sid": 11286,
+   "url": "https://digitalocean.com/community/tutorials/using-grep-regular-expressions-to-search-for-text-patterns-in-linux",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "609a0a719a22f5582131f6c8cfb398c4b6fd9a605e0c690f51716298fab25103",
+   "norm_hash": "5a2fab85956a212eaedc61d2952d24280ec6b14bac145e2ca778b4b19938fce3",
+   "chars": 831
+  },
+  {
+   "sid": 11291,
+   "url": "https://www.instagram.com/sindresorhus?hl=te",
+   "class": "unextractable",
+   "http": 200
+  },
+  {
+   "sid": 11302,
+   "url": "https://static.licdn.com/sc/h/azwg99ikna95v1rkvm6iq7k7z",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c0183e3028c75f760c87b97cf9dd698258d942d9a1ccebc3a4e73641926175ad",
+   "norm_hash": "648ad8a821a80d57afbe48c313e45e9c9956c4d5fac5475481c3aabcc7fcbd2b",
+   "chars": 458633
+  },
+  {
+   "sid": 11305,
+   "url": "https://github.com/oxc-project/website",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "0edf39c029d3462a223a07d2e50b3b030690acde8d7512eac5ffa63ab422dfbf",
+   "norm_hash": "2dc232e7950fc2c4453c75ad7b3d262903d8ae5030b6e1e4041c221b323072aa",
+   "chars": 1508
+  },
+  {
+   "sid": 11307,
+   "url": "https://www.jobberman.com/discover/job-search-advice/page/2",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "77b1860f23ed89aefb1951e4980f4eb8960c93cf166fdb66cf07d6c46a889393",
+   "norm_hash": "3aca225170e4b81d501b46af391051d344e67c4138d0b64c7ebbaecaea3e41d9",
+   "chars": 919
+  },
+  {
+   "sid": 11309,
+   "url": "https://www.xbox.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "3d01efead556e46478166f95fe93bcdab743c3de3e5fa0647e13b0e2bb7e5b8f",
+   "norm_hash": "b8b51396e4a8236ae27c1f13e0238229334f24a00fdf2149d8a59883ff59a75f",
+   "chars": 1661
+  },
+  {
+   "sid": 11320,
+   "url": "https://www.kuda.com/airtime/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "da98aa326cdb4e6020916b4245585306c2c0b9cf500daf31adcbe570a73d7355",
+   "norm_hash": "6aa6152a1692417f509bbd1a94ec46dded0f6fd605f64d49d85df57ce5a4b1b0",
+   "chars": 2437
+  },
+  {
+   "sid": 11329,
+   "url": "https://github.com/denoland/celld/tree/main/examples/workflow",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "2750d73b5f917fc031493fc9f780c2198bc06a9206ce18f1a6c53af05fa4ecfc",
+   "norm_hash": "7d2b95aad566d1e6326a4f0c4e6de1c23cea422e1a9dd859b068406b5c306c53",
+   "chars": 715
+  },
+  {
+   "sid": 11339,
+   "url": "https://uxplaybook.org/more",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "18e9671f035eaa6648f55122d0519c7593225bd7cb45a0f89a8105523bbc15ca",
+   "norm_hash": "860746f209156c398dbedca998bb05ada80979ade6d82ecb9e4393b9faf6c1ca",
+   "chars": 3443
+  },
+  {
+   "sid": 11341,
+   "url": "https://developer.microsoft.com/",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "1266b579743801f205078cb19512d3d05140cd22a3b4b3919acb15c18aee1d5d",
+   "norm_hash": "592a38edf85825c35779657ebe8231bfe1ad5379b58cf17465d4b3edc326f833",
+   "chars": 11783
+  },
+  {
+   "sid": 11363,
+   "url": "https://nuc.edu.ng/wp-content/uploads/2023/09/POST-GRADUATE-ACCREDITATTION-RESULT.pdf",
+   "class": "recovered_new",
+   "http": 200,
+   "content_hash": "c6c82519e3c940f4198cefc0f2d6291bfb9defbe68374de6c1b03ef5bc392346",
+   "norm_hash": "53765856cb3f8b4c6c15a2cf8a18a6a38e4807600d284d7f52e83edaaab43ae6",
+   "chars": 502772
+  }
+ ]
+}
