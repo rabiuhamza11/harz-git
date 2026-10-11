@@ -1,0 +1,474 @@
+{
+ "stage1": [
+  {
+   "id": "EV1",
+   "q": "What is the UBA account number used for HARZ Pay bank transfers?",
+   "old": true,
+   "new": true,
+   "score": 14.15,
+   "match": "and",
+   "dropped": [],
+   "strict": 1,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "\u2026t. Debit/Credit Card Via Paystack \u2014 instant \u2713 Bank Transfer UBA \u2014 2034326424 Crypto (USDT) TRC20 network Skip for now Add later in settings Add money to your wallet Start\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "EV2",
+   "q": "How do I add money to my HarzPay wallet?",
+   "old": true,
+   "new": false,
+   "score": 15.07,
+   "match": "relaxed",
+   "dropped": [
+    "add",
+    "my"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "\u2026e. Enter it below. Choose your main currency You can always add more currencies later. \ud83c\uddf3\ud83c\uddec Naira NGN \ud83c\uddfa\ud83c\uddf8 Dollar USD \u20ae Tether USDT \u26a1 GDEG Energy Token Add a payment meth\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "EV3",
+   "q": "What is HARZ?",
+   "old": true,
+   "new": true,
+   "score": 25.6,
+   "match": "and",
+   "dropped": [],
+   "strict": 461,
+   "url": "https://harz-root.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "chain harz-root-v2 \u00b7 authority 609d4b2f10a2fba8\u2026 \u00b7 height 2 \u00b7 77 names \u00b7 identity ROOT-CANONICAL ZONE v3.1 SERVING \u2014 IDENTITY COMPLETED (Oct 1, 2026) The Second ICANN is \u2026",
+   "title": "HARZ Root \u2014 .harz"
+  },
+  {
+   "id": "EV4",
+   "q": "What is the GDEG token price?",
+   "old": true,
+   "new": false,
+   "score": 26.81,
+   "match": "relaxed",
+   "dropped": [
+    "price"
+   ],
+   "strict": 0,
+   "url": "https://gdeg-web.hamzarabiu390.workers.dev/",
+   "trusted": true,
+   "snippet": "\u202610M Supply 99% Burned 10% Cashback 10M Total Supply $0.01 1 GDEG = USD \u20a615 1 GDEG = NGN 99% Burned GDEG V2 (Polygon Mainnet) 0x222a10CE822188c680a04A283E45F9c11D79665e NR\u2026",
+   "title": "GDEG Token \u2014 Africa's Digital Payment Layer"
+  },
+  {
+   "id": "CH1",
+   "q": "Why do we see lightning before we hear thunder?",
+   "old": false,
+   "new": false,
+   "score": 0,
+   "match": "relaxed",
+   "dropped": [
+    "see",
+    "before",
+    "hear",
+    "lightning"
+   ],
+   "strict": 0,
+   "url": "https://apps.apple.com/ng/iphone/charts/6007?chart=top-free",
+   "trusted": false,
+   "snippet": "Your everyday AI assistant Secure, fast & organised email Best VPN for iPhone in 2026 MTN Your AI assistant from Google AI chat & video generation AI assistant for life a\u2026",
+   "title": "\u200eBest Productivity Apps for iPhone"
+  },
+  {
+   "id": "CH2",
+   "q": "Who is the president of France?",
+   "old": false,
+   "new": false,
+   "score": 10.05,
+   "match": "and",
+   "dropped": [],
+   "strict": 2,
+   "url": "https://thisdaylive.com/2026/09/18/mambilla-power-project-tinubu-welcomes-icc-ruling-rejecting-arbitration-claims-instituted-by-sunrise-power-and-transmission-company-against-nigeria",
+   "trusted": false,
+   "snippet": "\u2026 efforts of the legal team, witnesses Deji Elumoye in Abuja President Bola Tinubu has welcomed the judgement delivered in Paris, France on Thursday by International Arbit\u2026",
+   "title": "Mambilla Power Project: Tinubu Welcomes ICC Ruling Rejecting Arbitration Claims Instituted By Sunrise Power and Transmission Company Against Nigeria \u2013 THISDAYLIVE"
+  },
+  {
+   "id": "CH3",
+   "q": "Hello, how are you?",
+   "old": false,
+   "new": false,
+   "score": 7.83,
+   "match": "and",
+   "dropped": [],
+   "strict": 217,
+   "url": "https://doc.rust-lang.org/rustc/index.html",
+   "trusted": false,
+   "snippet": "\u2026\u2019d need to do so. Basic usage Let\u2019s say you\u2019ve got a little hello world program in a file hello.rs: fn main() { println!(\"Hello, world!\"); } To turn this source code into\u2026",
+   "title": "What is rustc? - The rustc book"
+  },
+  {
+   "id": "CH4",
+   "q": "How do I cook jollof rice?",
+   "old": false,
+   "new": false,
+   "score": 10.54,
+   "match": "relaxed",
+   "dropped": [
+    "rice",
+    "cook"
+   ],
+   "strict": 0,
+   "url": "https://legit.ng/entertainment",
+   "trusted": false,
+   "snippet": "A court in Abuja has ordered the arrest of Rochas Okorocha and Ifeanyi Araraume over alleged forgery, as INEC disowns a disputed APC primary result.\nEntertainment\n    \n  \u2026",
+   "title": "Entertainment News \u2013 Movies, Music, TV Updates on Legit.ng News"
+  },
+  {
+   "id": "T1",
+   "q": "What is the capital of Kano state?",
+   "old": true,
+   "new": false,
+   "score": 19.1,
+   "match": "and",
+   "dropped": [],
+   "strict": 5,
+   "url": "https://dailytrust.com/kano-will-benefit-significantly-from-dangote-refinery-ipo-emir-sanusi",
+   "trusted": false,
+   "snippet": "\u2026 positioned its people to benefit from participation in the capital market.\nThe Emir said he had followed the development of the Dangote Group from its early years and de\u2026",
+   "title": "Kano will benefit significantly from Dangote Refinery IPO \u2014 Emir Sanusi \u2013 Daily Trust"
+  },
+  {
+   "id": "T2",
+   "q": "What is the capital of Nigeria?",
+   "old": true,
+   "new": false,
+   "score": 24.14,
+   "match": "and",
+   "dropped": [],
+   "strict": 300,
+   "url": "https://sec.gov.ng/for-investors/keep-track-of-circulars/revised-minimum-capital-mc-for-regulated-capital-market-entities",
+   "trusted": false,
+   "snippet": "Revised Minimum Capital for Regulated Capital Market Entities Published: January 16, 2026\n1. INTRODUCTION\nThe Securities and Exchange Commission (\u201cthe Commission\u201d), pursu\u2026",
+   "title": "Revised Minimum Capital (MC) for Regulated Capital Market Entities - Securities and Exchange Commission, Nigeria"
+  },
+  {
+   "id": "T3",
+   "q": "What are the bank transfer charges for UBA in Nigeria?",
+   "old": true,
+   "new": false,
+   "score": 22.99,
+   "match": "and",
+   "dropped": [],
+   "strict": 1,
+   "url": "https://apps.apple.com/ng/app/opay-beyond-banking/id1463776084",
+   "trusted": false,
+   "snippet": "OPay-Beyond Banking Finance Only for iPhone Free \u00b7 Designed for iPhone. Not verified for macOS. iPhone OPay is Nigeria's trusted financial services platform, offering sec\u2026",
+   "title": "\u200eOPay-Beyond Banking App - App Store"
+  },
+  {
+   "id": "T4",
+   "q": "Which Nigerian bank is the best for savings?",
+   "old": true,
+   "new": false,
+   "score": 15.64,
+   "match": "and",
+   "dropped": [],
+   "strict": 2,
+   "url": "https://apps.apple.com/ng/app/opay-beyond-banking/id1463776084",
+   "trusted": false,
+   "snippet": "\u2026count to others, including non-OPay users. \u25cf Powered by all Nigerian banks: Access Bank, Zenith Bank, GT Bank, UBA Bank, Ecobank Nigeria, First Bank of Nigeria etc., ensu\u2026",
+   "title": "\u200eOPay-Beyond Banking App - App Store"
+  },
+  {
+   "id": "I1",
+   "q": "Who is the CEO of HARZ?",
+   "old": false,
+   "new": false,
+   "score": 8.09,
+   "match": "relaxed",
+   "dropped": [
+    "harz"
+   ],
+   "strict": 0,
+   "url": "https://nairametrics.com/category/exclusives/interviews",
+   "trusted": false,
+   "snippet": "\u2026localisation push could make Nigeria Africa\u2019s data hub\u2014OADC CEO\nCNG adoption faces supply and safety hurdles as Nigeria expands rollout, expert says\nNigeria\u2019s insurance i\u2026",
+   "title": "Interviews Archives - Nairametrics"
+  },
+  {
+   "id": "I2",
+   "q": "What is the HarzPay customer care phone number?",
+   "old": true,
+   "new": true,
+   "score": 21.29,
+   "match": "relaxed",
+   "dropped": [
+    "number",
+    "customer",
+    "phone",
+    "care"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "HarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  }
+ ],
+ "stage2": [
+  {
+   "id": "S1a",
+   "q": "What is a capital market?",
+   "old": true,
+   "new": false,
+   "score": 26.49,
+   "match": "and",
+   "dropped": [],
+   "strict": 223,
+   "url": "https://sec.gov.ng/for-investors/keep-track-of-circulars/revised-minimum-capital-mc-for-regulated-capital-market-entities",
+   "trusted": false,
+   "snippet": "Revised Minimum Capital for Regulated Capital Market Entities Published: January 16, 2026\n1. INTRODUCTION\nThe Securities and Exchange Commission (\u201cthe Commission\u201d), pursu\u2026",
+   "title": "Revised Minimum Capital (MC) for Regulated Capital Market Entities - Securities and Exchange Commission, Nigeria"
+  },
+  {
+   "id": "S1b",
+   "q": "What is inflation and how does it affect savings?",
+   "old": false,
+   "new": false,
+   "score": 5.32,
+   "match": "relaxed",
+   "dropped": [
+    "savings"
+   ],
+   "strict": 0,
+   "url": "https://dc.cbn.gov.ng/jas/vol16/iss1/2",
+   "trusted": false,
+   "snippet": "\u2026 growth, debt servicing, population growth, trade openness, inflation, unemployment, and government expenditure, are used to capture broader debt drivers. The results ind\u2026",
+   "title": "\"Institutional Quality and Public Debt Dynamics in Sub-Saharan Africa: \" by Abdullahi Sani"
+  },
+  {
+   "id": "S1c",
+   "q": "How does blockchain work?",
+   "old": false,
+   "new": false,
+   "score": 9.63,
+   "match": "and",
+   "dropped": [],
+   "strict": 4,
+   "url": "https://harz-architecture.hamzarabiu390.workers.dev/",
+   "trusted": true,
+   "snippet": "\u2026s, transaction recording, audit trail TESTED \u2193 HARZ Chain \u2014 Blockchain Infrastructure Proof-of-work chain (38M+ blocks), GDEG/NRL tokens on Polygon Mainnet IMPLEMENTED \u2193 \u2026",
+   "title": "HARZ Digital Infrastructure \u2014 Enterprise Architecture Overview"
+  },
+  {
+   "id": "S1d",
+   "q": "What is BVN?",
+   "old": true,
+   "new": false,
+   "score": 17.87,
+   "match": "and",
+   "dropped": [],
+   "strict": 65,
+   "url": "https://providusbank.com/bvnnin",
+   "trusted": false,
+   "snippet": "\u2026o Account account opening document Diaspora Current Account Bvn/Nin Help & Support Help & Support Banking Tools Business Concierge LEGAL Locator Branch-locator rm-feedbac\u2026",
+   "title": "Bvn/Nin"
+  },
+  {
+   "id": "S2a",
+   "q": "What is the HarzPay transaction fee?",
+   "old": true,
+   "new": true,
+   "score": 21.29,
+   "match": "relaxed",
+   "dropped": [
+    "transaction",
+    "fee"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "HarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "S2b",
+   "q": "What is the GDEG cashback?",
+   "old": true,
+   "new": true,
+   "score": 16.99,
+   "match": "and",
+   "dropped": [],
+   "strict": 2,
+   "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "\u26a1 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. \ud83c\uddf3\ud83c\uddec Built in Nigeria \u2022 Powered by Cloudflare Edge Real multi-chain\u2026",
+   "title": "HARZ Ecosystem \u2014 Everything in One Place"
+  },
+  {
+   "id": "S2c",
+   "q": "What is HARZ Chain?",
+   "old": true,
+   "new": true,
+   "score": 23.2,
+   "match": "and",
+   "dropped": [],
+   "strict": 84,
+   "url": "https://harz-swap.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "Sovereign DEX on HARZ Chain \u2014 everything trades on our public chain \u00b7 constant-product x\u00b7y=k, 0.3% fee v6.0.11 offline-contract \u25cf checking network\u2026 HARZcoinset by the HAR\u2026",
+   "title": "HARZSwap \u2014 Sovereign DEX on HARZ Chain"
+  },
+  {
+   "id": "S2d",
+   "q": "What is the HARZ Super App?",
+   "old": true,
+   "new": true,
+   "score": 27.76,
+   "match": "and",
+   "dropped": [],
+   "strict": 16,
+   "url": "https://harz-super-app.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "HARZ Super App 100 services \u2022 Updated Oct 8, 2026 \u25cf checking network\u2026 PWA \u2022 Cloudflare HARZ ECONOMY WALLET Powered by HARZSwap Check Claim Daily Earn Top Up Swap HARZ Clo\u2026",
+   "title": "HARZ Super App"
+  },
+  {
+   "id": "S3a",
+   "q": "When was the HARZ ecosystem founded?",
+   "old": true,
+   "new": false,
+   "score": 15.92,
+   "match": "relaxed",
+   "dropped": [
+    "ecosystem",
+    "harz"
+   ],
+   "strict": 0,
+   "url": "https://gizmodo.com/the-doomsday-warnings-ai-ceos-gave-when-they-first-founded-their-companies-2000814278",
+   "trusted": false,
+   "snippet": "It seems like the only thing that Silicon Valley has been able to talk about in recent years is how glorious the future of humanity is going to be, thanks to artificial i\u2026",
+   "title": "The Doomsday Warnings AI CEOs Gave When They First Founded Their Companies"
+  },
+  {
+   "id": "S3b",
+   "q": "How many people work at HARZ?",
+   "old": false,
+   "new": false,
+   "score": 12.35,
+   "match": "and",
+   "dropped": [],
+   "strict": 1,
+   "url": "https://harz-workforce.hamzarabiu390.workers.dev/",
+   "trusted": true,
+   "snippet": "\u2026err + TaskRabbit + AI Agents + African Services Marketplace People and AI agents provide services to businesses and individuals. HARZ takes a commission from every comple\u2026",
+   "title": "HARZ Workforce Network"
+  },
+  {
+   "id": "S4a",
+   "q": "How do I get GDEG cashback on payments?",
+   "old": true,
+   "new": false,
+   "score": 20.15,
+   "match": "relaxed",
+   "dropped": [
+    "get"
+   ],
+   "strict": 0,
+   "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "\u26a1 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. \ud83c\uddf3\ud83c\uddec Built in Nigeria \u2022 Powered by Cloudflare Edge Real multi-chain\u2026",
+   "title": "HARZ Ecosystem \u2014 Everything in One Place"
+  },
+  {
+   "id": "S4b",
+   "q": "What is the HarzPay customer care email address?",
+   "old": true,
+   "new": true,
+   "score": 21.29,
+   "match": "relaxed",
+   "dropped": [
+    "email",
+    "address",
+    "customer",
+    "care"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "HarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "S5a",
+   "q": "Compare HarzPay fees with GDEG token benefits.",
+   "old": true,
+   "new": false,
+   "score": 22.69,
+   "match": "relaxed",
+   "dropped": [
+    "benefits",
+    "token",
+    "fees",
+    "compare"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "HarzPay Payments made simple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Se\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "S5b",
+   "q": "What are all the payment methods HarzPay supports and their fees?",
+   "old": true,
+   "new": false,
+   "score": 16.62,
+   "match": "relaxed",
+   "dropped": [
+    "all",
+    "their",
+    "payment",
+    "supports",
+    "methods"
+   ],
+   "strict": 0,
+   "url": "https://rabiuhamza11.github.io/harz-portfolio/harzpay-onboarding.html",
+   "trusted": true,
+   "snippet": "\u2026mple for Africa Send money, pay merchants, and manage your wallet in Naira, Dollars, and Crypto \u2014 all in one app. Low Fees 1.5% per transaction Secure Paystack powered Mu\u2026",
+   "title": "HarzPay Onboarding \u2014 Get Started"
+  },
+  {
+   "id": "S6a",
+   "q": "What blockchain is GDEG on?",
+   "old": true,
+   "new": true,
+   "score": 18.09,
+   "match": "and",
+   "dropped": [],
+   "strict": 5,
+   "url": "https://harz-ecosystem-ad.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "\u26a1 25+ platforms. Real crypto wallet. GDEG & NRL tokens. Blockchain. AI. Marketplace. All in one place. \ud83c\uddf3\ud83c\uddec Built in Nigeria \u2022 Powered by Cloudflare Edge Real multi-chain\u2026",
+   "title": "HARZ Ecosystem \u2014 Everything in One Place"
+  },
+  {
+   "id": "S6b",
+   "q": "What is the current GDEG price?",
+   "old": false,
+   "new": false,
+   "score": 11.4,
+   "match": "relaxed",
+   "dropped": [
+    "current"
+   ],
+   "strict": 0,
+   "url": "https://harz-exchange.harz.workers.dev/",
+   "trusted": true,
+   "snippet": "\u2026rket rates from the HARZSwap oracle \u2014 pool-derived for HARZ/GDEG/NRL, global market for the rest. No fixed pricing. \u25cf ONLINE \u00b7 LIVE",
+   "title": "HARZ Exchange \u2014 OTC Buy & Sell Desk"
+  }
+ ]
+}
