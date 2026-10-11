@@ -1,0 +1,177 @@
+[
+ {
+  "id": "P1",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)12 + 30 = 4"
+ },
+ {
+  "id": "P2",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)100 / 4 = 2"
+ },
+ {
+  "id": "P3",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)5 * 6 = 30 "
+ },
+ {
+  "id": "P4",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)20 /100* 24"
+ },
+ {
+  "id": "P5",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)5 > 4 is TR"
+ },
+ {
+  "id": "P6",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)5 < 10 is T"
+ },
+ {
+  "id": "P7",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)17 * 23 = 3"
+ },
+ {
+  "id": "P8",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)Sai anjima!"
+ },
+ {
+  "id": "P9",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)Water is H2"
+ },
+ {
+  "id": "P10",
+  "expected": "LOCAL",
+  "actual": "LOCAL",
+  "posts": 0,
+  "ans": "\u25cf LOCAL \u00b7 ON-DEVICE BRAIN (no external inference)The Sun is "
+ },
+ {
+  "id": "N1",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "17 * 23 = 391"
+ },
+ {
+  "id": "N2",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "20% of 240 = 0.20 * 240 = 48"
+ },
+ {
+  "id": "N3",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "To find the final price, first calculate the discount amount"
+ },
+ {
+  "id": "N4",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "I'm not aware of any information about a company called HARZ"
+ },
+ {
+  "id": "N5",
+  "expected": "SE",
+  "actual": "SE",
+  "posts": 1,
+  "ans": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT V"
+ },
+ {
+  "id": "N6",
+  "expected": "SE",
+  "actual": "SE",
+  "posts": 1,
+  "ans": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT V"
+ },
+ {
+  "id": "N7",
+  "expected": "SE",
+  "actual": "SE",
+  "posts": 1,
+  "ans": "\u25cf LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED CONTENT, NOT V"
+ },
+ {
+  "id": "N8",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "I don't have enough information to make a comparison between"
+ },
+ {
+  "id": "A1",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "12 + 30 = 42.Addition is a fundamental mathematical operatio"
+ },
+ {
+  "id": "A2",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "I'm a large language model, I don't have the ability to phys"
+ },
+ {
+  "id": "A3",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "Water is made up of two elements: hydrogen and oxygen. Its c"
+ },
+ {
+  "id": "A4",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "The question \"Why is water wet?\" is a bit tricky, as \"wet\" i"
+ },
+ {
+  "id": "A5",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 1,
+  "ans": "Tell me about water"
+ },
+ {
+  "id": "A6",
+  "expected": "SERVER",
+  "actual": "SERVER",
+  "posts": 0,
+  "ans": "Water is a clear, colorless, and odorless liquid substance t"
+ },
+ {
+  "id": "A7",
+  "expected": "BUILD",
+  "actual": "BUILD",
+  "posts": 1,
+  "ans": "Clock built, tested (8/8) and verified by the HARZ artifact "
+ }
+]
