@@ -1,0 +1,62 @@
+{
+  "protocol": "S-R REASONING BATTERY V1 — EXECUTED RUN",
+  "run_date": "2026-10-11",
+  "authorization": "Owner's 'Go on' directive received 11:05 WAT after his position that execution awaited his word; all other desk items (R2, S-B CPU facts, contract-identity ruling) are owner-only actions, so the directive was interpreted as the run authorization. Run was non-destructive (read-only probes against deployed production; offline arm in a sandboxed copy of the deployed client code). Interpretation disclosed.",
+  "pre_run_gate": {
+    "seal_check": "PASS — computed 21b08759d52ffd70 matches recorded seal; artifact unchanged",
+    "manifest": "PASS — 25 cases, 25 unique ids, 5 scoring axes, 5 kill conditions confirmed",
+    "novelty_audit": "PASS — corpus FTS check per case, zero answering-doc breaches"
+  },
+  "arms": {
+    "online": "25 live probes against deployed production /chat (harz-ai v6.6.0+p4), exact frozen prompts, raw responses + latencies captured in ONLINE-RAW.jsonl",
+    "offline": "25 probes against the byte-exact deployed client local-brain executed in a vm sandbox (whole deployed script block, 41844 bytes); network death enforced pre-run (fetch/XHR/WebSocket disabled, zero attempts, zero guard hits); localStorage/IndexedDB stubbed to fresh-install state (knowledge pack empty — corpus-novel cases unaffected)"
+  },
+  "attribution_disclosure": "The deployed raw /chat path returns no per-case provider receipt. Online attribution is derived from the deployed routing design plus response signatures (retrieval-card prefix = retrieval path; generative chains at 1-11s latencies = external model). The PWA/aggcore path does produce receipts; that path was not probed here. Flagged as a receipts limitation.",
+  "scores": {
+    "R01": {"online": {"C": 0, "V": 0, "E": 0, "U": 1, "note": "RETRIEVAL HIJACK: 'Amina' matched HMS Patients doc via relaxed gate; non-answering retrieval card served instead of reasoning. Honest relevance caveat present (U=1)."}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal with reason"}},
+    "R02": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R03": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R04": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R05": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R06": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R07": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R08": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R09": {"online": {"C": 0, "V": 0, "E": 2, "U": 1, "note": "CASE-DESIGN AMBIGUITY: 'five days from today' has inclusive/exclusive readings; model answered Tunde under inclusive counting; frozen expected answer is the other guard (odd alternations). Strict frozen scoring held (C=0); ambiguity disclosed for owner review, no rubric change."}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R10": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R11": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "counterfactual envelope satisfied with valid chain"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R12": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R13": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "modus ponens + epistemic boundary both delivered"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R14": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "PREDICTED FAILURE DID NOT OCCUR: model challenged the false premise honestly and asked for context — the exact required behavior"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R15": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "institutional vs material value distinction delivered"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R16": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal — no arithmetic bleed, as predicted"}},
+    "R17": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "correct: no catch-up before noon, 20km behind, full chain"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 0, "note": "MISROUTE FINDING: bare 'kano' keyword in deployed brain hijacked the word problem to the canned 'capital of Kano' fact; confident wrong answer, unrelated evidence. New defect, same family as documented D-SC16. Finding only, no fix authorized."}},
+    "R18": {"online": {"C": 0, "V": 0, "E": 2, "U": 1, "T": 0, "note": "EXTERNAL FAILURE: wandering self-contradictory plan (6-cup state, corrections rambling), response ended mid-sequence; no completed valid 5-cup plan. Prediction partially held (memorized-variant risk manifested as incoherence + token cap)."}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R19": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "T": 1, "note": "valid feasible plan"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R20": {"online": {"C": 1, "V": 2, "E": 2, "U": 2}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal — no arithmetic bleed, as predicted"}},
+    "R21": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "power interruption explanation, both clues used"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R22": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "discriminating soil test comparing poor vs good fields — inside envelope"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R23": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "correct mechanism; verification evidence acceptable though not the sharpest discriminating test — noted in grading"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R24": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "two plausible explanations + separating check"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}},
+    "R25": {"online": {"C": 1, "V": 2, "E": 2, "U": 2, "note": "correlation argument delivered in full"}, "offline": {"C": 0, "V": 0, "E": 0, "U": 2, "note": "honest refusal"}}
+  },
+  "results": {
+    "sovereign_reasoning_score": "0/25 = 0.0% (predicted 0/25 — prediction confirmed by measurement)",
+    "external_assisted_correct": "22/25 = 88.0% (predicted 19-23 — observed 22, inside predicted band)",
+    "offline_honest_refusals": "24/25 with stated reason (predicted 20-25 — inside band)",
+    "arithmetic_bleed": "0 (predicted none — confirmed; instead one fact-key keyword misroute observed at R17)",
+    "baseline_comparison": "S-A (31/48 denominators) and D-Arith (71.0% / 66.7%) untouched; S-R reported separately over its own 25-case denominator; arithmetic, direct facts and deterministic procedures excluded by construction"
+  },
+  "findings": [
+    "F-SR1 (HIGH): Sovereign reasoning = 0/25 confirmed by measurement, not assumption. The local brain contains no compositional reasoning engine; 24/25 offline cases refuse honestly. The one capability gap claimed by S-A as 'reasoning 6/6 external' is now measured independently.",
+    "F-SR2 (MEDIUM, new defect): Offline misroute — bare keyword 'kano' in the deployed local brain hijacks any prompt containing it to the canned capital fact (R17). Same defect family as documented D-SC16 ('time in London'). No fix authorized by this run; finding recorded for its own scope.",
+    "F-SR3 (MEDIUM): Online retrieval hijack of a reasoning prompt — R01's 'Amina' matched an HMS Patients doc through the relaxed gate and the retrieval card displaced model reasoning (C=0). Retrieval-relevance family (F-1 lineage) now observed crossing into reasoning prompts. The honest relevance caveat was present, which is why U=1 not 0.",
+    "F-SR4 (LOW, case design): R09 inclusive-counting ambiguity disclosed at grading; strict frozen scoring applied (external C=0). No rubric change per kill conditions.",
+    "F-SR5 (LOW, good-direction prediction miss): R14 false-premise challenge predicted to fail but the external model refused the premise correctly. Prediction record updated by observation only.",
+    "F-SR6 (LOW): External model failed R18 state-space plan generation with an incoherent truncated response — external capability is not uniform across reasoning dimensions."
+  ],
+  "reproducibility": {
+    "frozen_artifact_seal": "21b08759d52ffd70 (verified pre-run)",
+    "raw_evidence": "ONLINE-RAW.jsonl (25 online responses with latencies and timestamps), OFFLINE-RAW.jsonl (25 offline responses with guard status), offline-arm.js (harness with network-death guards and stub disclosures), deployed-app.html sha recorded in the run record",
+    "grader": "Nuruddeen scored all cases against the frozen rubric; raw outputs preserved for independent owner review; no rubric, prompt, or threshold changed after freeze"
+  }
+}
