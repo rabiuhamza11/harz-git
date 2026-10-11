@@ -1,0 +1,23 @@
+domain                     http dns  title                                   
+tnebnet.org                000  FAIL                                         
+kvs.gov.in                 000  ok                                           
+upbhulekh.gov.in           200  ok   भूलेख                                   
+baike.com                  403  ok   403 Forbidden                           
+savvasrealize.com          200  ok                                           
+muckrack.com               403  ok   Just a moment...                        
+weatherspark.com           202  ok                                           
+heritage.org               403  ok   Just a moment...                        
+latrobe.edu.au             301  ok                                           
+globalsources.com          429  ok                                           
+belta.by                   200  ok   Новости Беларуси | БелТА                
+sme.sk                     403  ok   Security Verification | SME             
+okstate.edu                403  ok   Just a moment...                        
+pearltrees.com             301  ok                                           
+dowjones.io                000  FAIL                                         
+ns.gov                     000  FAIL                                         
+bellybelly.com.au          403  ok   Security Verification                   
+mq.edu.au                  403  ok   Just a moment...                        
+tyc.edu.tw                 000  FAIL                                         
+europeana.eu               403  ok   Just a moment...                        
+builtin.com                200  ok   Built In: Job Search &amp; Company Resea
+pitchbook.com              403  ok   Just a moment...                        
