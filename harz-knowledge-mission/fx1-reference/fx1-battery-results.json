@@ -1,0 +1,194 @@
+[
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "https://en.wikipedia.org/wiki/World_War_II",
+  "pages": [
+   {
+    "url": "https://en.wikipedia.org/wiki/World_War_II",
+    "status": 200,
+    "bytes": 2061349
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "World War II - Wikipedia",
+  "charLen": 187074,
+  "fullTextSha256": "1810aaa588305c8940df614e564007d03fd85dfcad0509fb838b3aed37dc0217",
+  "case": "A-1a"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "https://en.wikipedia.org/wiki/History_of_Nigeria",
+  "pages": [
+   {
+    "url": "https://en.wikipedia.org/wiki/History_of_Nigeria",
+    "status": 200,
+    "bytes": 1384411
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "History of Nigeria - Wikipedia",
+  "charLen": 190069,
+  "fullTextSha256": "de2e564c3595a36d3fd93f3da61b51fdb2d51bbc73152467f8ada72ecb830b5c",
+  "case": "A-1b"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/pg1.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/pg1.html",
+    "status": 200,
+    "bytes": 1804
+   },
+   {
+    "url": "http://fx1.localtest.me:8920/pg2.html",
+    "status": 200,
+    "bytes": 1774
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Doc Part 2",
+  "charLen": 3400,
+  "fullTextSha256": "6eba9ac81fde4533c1908b6543490220d96d83e1b53303f0b947cdade738e949",
+  "case": "A-2"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/shell.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/shell.html",
+    "status": 200,
+    "bytes": 115
+   }
+  ],
+  "status": "unsupported",
+  "reason": "js-only rendering (V1 limitation)",
+  "title": "SPA Shell",
+  "case": "A-3a"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "https://www.heritage.org/",
+  "pages": [
+   {
+    "url": "https://www.heritage.org/",
+    "status": 403,
+    "bytes": 5471
+   }
+  ],
+  "status": "unsupported",
+  "reason": "access denied (bot wall or forbidden)",
+  "case": "A-3b"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/bad.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/bad.html",
+    "status": 200,
+    "bytes": 1833
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Broken Page",
+  "charLen": 1733,
+  "fullTextSha256": "5394e8ad7eb5f349d30ceccdeaed0656c81333186c677686ab3c6bafabcb19ae",
+  "case": "A-4"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://dead-harz-nonexistent-xyz99123.com/",
+  "pages": [],
+  "status": "failed_fetch",
+  "reason": "fetch error: TypeError: fetch failed",
+  "case": "A-5a"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "https://en.wikipedia.org/wiki/HARZ_Nonexistent_Test_Page_87231",
+  "pages": [
+   {
+    "url": "https://en.wikipedia.org/wiki/HARZ_Nonexistent_Test_Page_87231",
+    "status": 404,
+    "bytes": 51332
+   }
+  ],
+  "status": "failed_fetch",
+  "reason": "HTTP 404",
+  "case": "A-5b"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/dup-a.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/dup-a.html",
+    "status": 200,
+    "bytes": 1770
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Duplicate Study",
+  "charLen": 1679,
+  "fullTextSha256": "bcb9aced29a1385af28fe8697f59eac925d4567839b3eff864b74a6d5169b0d4",
+  "case": "A-6a"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/dup-b.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/dup-b.html",
+    "status": 200,
+    "bytes": 1770
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Duplicate Study",
+  "charLen": 1679,
+  "fullTextSha256": "bcb9aced29a1385af28fe8697f59eac925d4567839b3eff864b74a6d5169b0d4",
+  "case": "A-6b"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/change.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/change.html",
+    "status": 200,
+    "bytes": 1793
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Living Doc",
+  "charLen": 1697,
+  "fullTextSha256": "aacb6d2aeb87f7761cb88df646f2264a87feec15106b7d375dedbe1775d3a8e0",
+  "case": "A-7v1"
+ },
+ {
+  "version": "fx1-js-1.0.0",
+  "url": "http://fx1.localtest.me:8920/change.html",
+  "pages": [
+   {
+    "url": "http://fx1.localtest.me:8920/change.html",
+    "status": 200,
+    "bytes": 1810
+   }
+  ],
+  "status": "complete",
+  "reason": "",
+  "title": "Living Doc",
+  "charLen": 1714,
+  "fullTextSha256": "51ab93332b89d7854eef66f18bc05b9d4df4ac64367e594bd0f9dd835d79924d",
+  "case": "A-7v2"
+ }
+]

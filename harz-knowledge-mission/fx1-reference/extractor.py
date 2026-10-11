@@ -26,10 +26,21 @@ def robots_allows(domain, path="/"):
     code, _, body = curl(f"https://{domain}/robots.txt", 15)
     if code != 200:
         return True, "no robots.txt (allowed by default)"
+    groups, current = {}, None
     for line in body.splitlines():
         line = line.strip()
-        if line.lower().startswith("disallow:") and path in line.split(":", 1)[1].strip():
-            return False, f"disallowed: {line}"
+        ua = line.lower().startswith("user-agent:")
+        dis = line.lower().startswith("disallow:")
+        if ua:
+            current = line.split(":", 1)[1].strip().lower()
+            groups.setdefault(current, [])
+        elif dis and current:
+            groups[current].append(line.split(":", 1)[1].strip())
+    for d in groups.get("*", []):
+        if d == "":
+            continue
+        if d == "/" or (path or "/").startswith(d):
+            return False, f"robots disallow: {d}"
     return True, "robots ok"
 
 # ---------- S4 readability (own extractor, density-scored) ----------
