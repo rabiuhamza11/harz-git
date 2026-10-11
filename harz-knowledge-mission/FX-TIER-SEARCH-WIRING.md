@@ -37,3 +37,18 @@ No existing route, no scoring path, no index, no corpus was modified.
 4. No corpus-scale ingestion; 100K pilot still parked.
 
 Rollback: redeploy harz-search-pre-fx.js (preserved in fx-tier/).
+
+## OWNER RULING (Rabiu, Oct 11, 2026)
+
+Accepted implementation status; acceptance claim NOT expanded. Binding
+boundaries: (1) frozen p4 baseline unchanged; (2) NO automatic
+promotion of FX results into the sealed 5K evidence tier — the sealed
+engine and FX full-text serve different purposes, provenance and
+evidence labels stay separate, FX must never be misrepresented as
+sealed-5K output; (3) 100K pilot stays parked; (4) repeated identical
+endpoint calls support repeatability for those calls only, NOT a
+universal determinism claim and NOT independent live-browser
+acceptance. Sealed 5K engine and corpus integrity per report
+(11,365 docs, digest intact). Recommended next: D1 phone test for the
+20K gates when the owner authorizes it. Governing principle: a new
+capability is not permission to change an accepted system.
