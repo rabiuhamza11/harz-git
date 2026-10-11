@@ -1,5 +1,5 @@
 {
-  "catalog_version": "C-v1.1",
+  "catalog_version": "C-v1.2",
   "generated": "2026-10-11T23:50:00+01:00",
   "workstream": "HARZ Offline Knowledge Expansion",
   "team": "C — Knowledge Acquisition (Hauwa, per Dad's assignment Oct 11, 2026)",
@@ -396,14 +396,16 @@
       {
         "id": "geonames-ng",
         "name": "GeoNames Nigeria + West Africa filtered gazetteer",
-        "est_gb": 0.05,
-        "license": "CC BY 4.0"
+        "est_gb": 0.002,
+        "license": "CC BY 4.0",
+        "verified_bytes": 1957738
       },
       {
         "id": "osm-nigeria",
         "name": "OpenStreetMap Nigeria extract (.osm.pbf)",
-        "est_gb": 0.3,
-        "license": "ODbL 1.0"
+        "est_gb": 0.68,
+        "license": "ODbL 1.0",
+        "verified_bytes": 710100878
       },
       {
         "id": "openstax-curated",
@@ -430,7 +432,8 @@
         "license": "MIT/open"
       }
     ],
-    "total_est_gb": 2.0,
-    "note": "ESTIMATES. Every item re-verifies license and exact bytes at acquisition; batch holds if verification breaks the 2.2GB ceiling. Full Tier-1 reference library (~54GB) requires the storage ruling, not this batch."
+    "total_est_gb": null,
+    "note": "ESTIMATES. Every item re-verifies license and exact bytes at acquisition; batch holds if verification breaks the 2.2GB ceiling. Full Tier-1 reference library (~54GB) requires the storage ruling, not this batch.",
+    "total_note": "See ACQUISITION-BATCH1-STATUS.md: OSM byte-verified 677MB; trimmed batch ~1.93GB fits the 2.2GB headroom with 0.27GB margin; MedlinePlus deferred to batch 2."
   }
 }

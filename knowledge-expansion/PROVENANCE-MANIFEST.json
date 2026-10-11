@@ -1,0 +1,35 @@
+{
+  "manifest_version": "C-v1.0",
+  "generated": "2026-10-12",
+  "team": "C \u2014 Knowledge Acquisition (Hauwa)",
+  "job": "Provenance labeling of 5,335 unlabeled docs (Team A flag, Dad's assignment Oct 11)",
+  "result": "COMPLETE. Zero unlabeled docs remain in the corpus.",
+  "classification_evidence": {
+    "domains_of_unlabeled": {
+      "en.wikipedia.org": 5335
+    },
+    "languages": {
+      "en": 5335
+    },
+    "id_range": "3481-8816",
+    "sample_urls": [
+      "https://en.wikipedia.org/wiki/9th_Nigeria_National_Assembly",
+      "https://en.wikipedia.org/wiki/Ukwuani,_Delta_State",
+      "https://en.wikipedia.org/wiki/Kurama_language"
+    ],
+    "license_applied": "wikipedia-ccby-sa-4.0 (matches 881,966 existing same-domain docs)"
+  },
+  "backup": "docs_source_backup_20261011 (5,335 rows verified originally-empty; rollback statement recorded in row-120)",
+  "post_state": {
+    "wikipedia_cc_by_sa_4_0": 887301,
+    "gutenberg_public_domain": 163003,
+    "hunted_recrawl": 6156,
+    "hunted_stage2": 4389,
+    "web": 3480,
+    "cloud_wave": 780,
+    "news_rss": 625,
+    "unlabeled": 0,
+    "total": 1065734
+  },
+  "receipt": "harzgit-rows/row-120-teamC-provenance-labeling-5335-20261011.json"
+}
