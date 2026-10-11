@@ -1,5 +1,5 @@
 {
-  "catalog_version": "C-v1.0",
+  "catalog_version": "C-v1.1",
   "generated": "2026-10-11T23:50:00+01:00",
   "workstream": "HARZ Offline Knowledge Expansion",
   "team": "C — Knowledge Acquisition (Hauwa, per Dad's assignment Oct 11, 2026)",
@@ -358,5 +358,79 @@
     "NC-FLAGGED SOURCES (Khan Academy, FAO, LibreTexts) are lawful for internal/educational offline use; redistribution requires a separate review.",
     "LICENSES RE-VERIFY AT ACQUISITION: sources change terms; the license recorded at download time is the one that binds.",
     "AUTHORITATIVE FIRST: quality rank beats byte count. 15GB of Tier-1 sources outperforms 100GB of indiscriminate bulk."
-  ]
+  ],
+  "reconciliation": {
+    "date": "2026-10-11",
+    "basis": "Team A Receipt 172, CORPUS-INVENTORY.json v2 (live 1,065,734 docs; 739,747 substantive >=2KB; zero dup/empty/missing hashes; 2,823 domains; 7.25GB of 9.5GB cap used = ~2.2GB headroom)",
+    "covered_entries_do_not_reacquire": [
+      {
+        "id": "wikipedia-en-all-nopic",
+        "reason": "882,000 Wikipedia CC BY-SA 4.0 docs ALREADY in corpus per Receipt 172. Re-acquiring the 32GB ZIM would duplicate 69% of existing knowledge. ZIM becomes relevant only if full-article depth verification (Team B) shows the crawled set is snippet-class."
+      },
+      {
+        "id": "gutenberg-top10000",
+        "reason": "163,000 Project Gutenberg public-domain docs ALREADY in corpus. The 70GB 'complete' entry is likewise downgraded to archive-scale-only."
+      },
+      {
+        "id": "hausa-and-nigerian-wikis",
+        "reason": "~190K Nigerian/regional-language docs already present; Hausa alone 103,764. Team D's head start is real. Entry downgraded to verification-only."
+      }
+    ],
+    "genuinely_new_knowledge_gaps": [
+      "OpenStax textbooks (CC BY) — no university-textbook class content in inventory",
+      "Standard Ebooks (CC0) — formatted literature, distinct from raw Gutenberg feed",
+      "Wiktionary (dictionaries), Wikibooks, Wikivoyage — sibling projects not evidenced in inventory",
+      "MedlinePlus (public domain) — no authoritative consumer-health class found",
+      "devdocs/MDN — programming/API reference class not evidenced",
+      "OSM + GeoNames — maps/gazetteer data class entirely absent",
+      "FSI Hausa course (public domain) — structured language pedagogy absent",
+      "Kolibri channels, Khan Academy exercises (NC-flagged) — structured curricula absent",
+      "FAO/CGIAR agriculture — practice-oriented agriculture depth to verify vs existing"
+    ],
+    "storage_reality": "Only ~2.2GB headroom under the standing 9.5GB cap. No full catalog package fits. Two lawful paths: (1) curated first batch within 2.2GB (below), or (2) Dad's explicit cap/storage ruling — device-side storage (laptop disk) can host the 60GB reference library without touching the D1 cap. NO PREMATURE CAP RAISE per standing ruling; C proposes, Dad decides.",
+    "provenance_job_flag_accepted_by_c": "Team A flagged 5,335 docs without provenance labels. Licensing/provenance is Team C's lane. C PROPOSES taking the labeling job (read-only analysis -> provenance manifest -> labels through the proper mutation channel), but it requires Dad's assignment since it touches the corpus and Team A's mutation lock must stay untouched."
+  },
+  "stage_2_first_batch_fits_headroom": {
+    "law": "Curated selections only; byte-verify every item at acquisition (Team E law); total target <=2.0GB to leave margin under the 2.2GB headroom",
+    "items": [
+      {
+        "id": "geonames-ng",
+        "name": "GeoNames Nigeria + West Africa filtered gazetteer",
+        "est_gb": 0.05,
+        "license": "CC BY 4.0"
+      },
+      {
+        "id": "osm-nigeria",
+        "name": "OpenStreetMap Nigeria extract (.osm.pbf)",
+        "est_gb": 0.3,
+        "license": "ODbL 1.0"
+      },
+      {
+        "id": "openstax-curated",
+        "name": "OpenStax curated: math, accounting, business, economics, physics, chemistry, biology",
+        "est_gb": 1.0,
+        "license": "CC BY 4.0 (per-book verify)"
+      },
+      {
+        "id": "standardebooks-200",
+        "name": "Standard Ebooks curated top ~200 (business, history, science)",
+        "est_gb": 0.3,
+        "license": "CC0/PD"
+      },
+      {
+        "id": "medlineplus-curated",
+        "name": "MedlinePlus curated topic set (major diseases, drugs, wellness)",
+        "est_gb": 0.25,
+        "license": "US public domain"
+      },
+      {
+        "id": "devdocs-core",
+        "name": "devdocs core packs (JavaScript, Python, HTML, HTTP)",
+        "est_gb": 0.1,
+        "license": "MIT/open"
+      }
+    ],
+    "total_est_gb": 2.0,
+    "note": "ESTIMATES. Every item re-verifies license and exact bytes at acquisition; batch holds if verification breaks the 2.2GB ceiling. Full Tier-1 reference library (~54GB) requires the storage ruling, not this batch."
+  }
 }
