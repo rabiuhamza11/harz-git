@@ -1,0 +1,8 @@
+{
+  "id": 126,
+  "name": "se-neardup-audit-closed-keep-both-20261012",
+  "description": "SE near-duplicate item CLOSED by full audit: real overlap is one book (Art of War), ~104KB B-side vs prior 30-40MB estimate; B docs 83% covered by A but hold non-overlapping fragments. Decision: keep both, no deletion (0.0014% of corpus; deletion risk > saving). Recipe-A equal sizes verified as fixed chunk size, not dupes; exact-dup guards held. Corpus 1,327,988 unchanged.",
+  "created_at": "2026-10-12T07:46:00Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content": "See harz-knowledge-mission/SE-NEARDUP-AUDIT-2026-10-12.md"
+}
