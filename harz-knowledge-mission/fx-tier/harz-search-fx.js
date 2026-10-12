@@ -501,11 +501,28 @@ async function handle(req, env) {
     var fq = u.searchParams.get("q") || "";
     if (!fq) return json({ error: "missing q" }, 400);
     try {
-      var fxr = await fetch("https://harz-fx-ingest.hamzarabiu390.workers.dev/fx1/search?q=" + encodeURIComponent(fq), { headers: { "User-Agent": "harz-search-fx-tier/1.0" }, signal: AbortSignal.timeout(20000) });
-      var fxj = await fxr.json();
+      // FX-2 (Oct 12): corpus-wired index-only tier (harz-fx-idx, contentless FTS5,
+      // 1.3M+ docs; text never duplicated - master corpus is the single source).
+      // Pilot FX-1 store kept as fallback only.
+      var fxj = null;
+      try {
+        if (env && env.FXSEARCH) {
+          var fsr = await env.FXSEARCH.fetch("https://harz-fx-search/fx1/search?q=" + encodeURIComponent(fq));
+          fxj = await fsr.json();
+        } else {
+          var fxr = await fetch("https://harz-fx-search.harz.workers.dev/fx1/search?q=" + encodeURIComponent(fq), { headers: { "User-Agent": "harz-search-fx-tier/1.1" }, signal: AbortSignal.timeout(20000) });
+          fxj = await fxr.json();
+        }
+      } catch (e) { fxj = null; }
+      var engineStr = "d1+fts5 contentless corpus-wired (fx2-js-1.0.0)";
+      if (!fxj || fxj.ok !== true) {
+        var fxr1 = await fetch("https://harz-fx-ingest.hamzarabiu390.workers.dev/fx1/search?q=" + encodeURIComponent(fq), { headers: { "User-Agent": "harz-search-fx-tier/1.0" }, signal: AbortSignal.timeout(20000) });
+        fxj = await fxr1.json();
+        engineStr = "d1+fts5 (fx1-js-1.0.0)";
+      }
       if (!fxj || fxj.ok !== true) return json({ ok: false, tier: "full-text", error: "fx upstream error" }, 502);
       return json({
-        ok: true, tier: "full-text", engine: "d1+fts5 (fx1-js-1.0.0)",
+        ok: true, tier: "full-text", engine: engineStr,
         label: "LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED FULL TEXT, NOT VERIFIED FOR RELEVANCE",
         count: fxj.count, results: fxj.results
       });
@@ -517,13 +534,30 @@ async function handle(req, env) {
     var fid = Number(p.split("/")[3]);
     if (!fid) return json({ error: "bad id" }, 400);
     try {
-      var fdr = await fetch("https://harz-fx-ingest.hamzarabiu390.workers.dev/fx1/doc/" + fid, { headers: { "User-Agent": "harz-search-fx-tier/1.0" }, signal: AbortSignal.timeout(20000) });
-      var fdj = await fdr.json();
-      if (!fdj || fdj.ok !== true) return json({ ok: false, tier: "full-text", error: "not found" }, 404);
+      var fdj = null;
+      try {
+        if (env && env.FXSEARCH) {
+          var fdr0 = await env.FXSEARCH.fetch("https://harz-fx-search/fx1/doc/" + fid);
+          fdj = await fdr0.json();
+        } else {
+          var fdr = await fetch("https://harz-fx-search.harz.workers.dev/fx1/doc/" + fid, { headers: { "User-Agent": "harz-search-fx-tier/1.1" }, signal: AbortSignal.timeout(20000) });
+          fdj = await fdr.json();
+        }
+      } catch (e) { fdj = null; }
+      if (!fdj || fdj.ok !== true) {
+        var fdr1 = await fetch("https://harz-fx-ingest.hamzarabiu390.workers.dev/fx1/doc/" + fid, { headers: { "User-Agent": "harz-search-fx-tier/1.0" }, signal: AbortSignal.timeout(20000) });
+        fdj = await fdr1.json();
+        if (!fdj || fdj.ok !== true) return json({ ok: false, tier: "full-text", error: "not found" }, 404);
+        return json({
+          ok: true, tier: "full-text",
+          label: "LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED FULL TEXT, NOT VERIFIED FOR RELEVANCE",
+          doc: fdj.doc, chunks: fdj.chunks, text: fdj.text
+        });
+      }
       return json({
         ok: true, tier: "full-text",
         label: "LIVE \u00b7 TRUSTED ECOSYSTEM SOURCE \u2014 RETRIEVED FULL TEXT, NOT VERIFIED FOR RELEVANCE",
-        doc: fdj.doc, chunks: fdj.chunks, text: fdj.text
+        doc: fdj.doc, text: fdj.doc ? fdj.doc.text : null
       });
     } catch (e) {
       return json({ ok: false, tier: "full-text", error: "fx unreachable: " + String(e).slice(0, 80) }, 502);
