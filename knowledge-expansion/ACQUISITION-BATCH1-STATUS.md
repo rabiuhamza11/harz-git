@@ -2,7 +2,13 @@
 
 Law: recommend before download; byte-verify at acquisition; batch holds if it breaks the 2.2GB ceiling.
 
-## OCT 12 UPDATE — STAGED, PUSH PENDING WAVE_KEY
+## OCT 12 (02:15 WAT) UPDATE — BATCH 1 SOURCES COMPLETE, PUSH PENDING WAVE_KEY
+
+Late-night resolution wins (receipt row-122): OpenStax slug law cracked (drop 'of'; accounting = principles-financial-accounting/-managerial; Concepts-Biology hyphen) — 20/20 books staged. devdocs reachable: 12 packs, 6,028 docs. SE at 19 books incl. Plato Republic (via Dialogues/Jowett).
+
+FINAL: 84,935 docs / 112.2MiB text — GeoNames 76,332 | OpenStax 3,612 | SE 624 | DevDocs 6,028. All license-labeled. Zero live-corpus writes. OSM pbf 710MB sha256-verified, held out of D1.
+
+Older table (superseded):
 
 Acquired, byte-verified, transformed, and staged (receipt row-121):
 

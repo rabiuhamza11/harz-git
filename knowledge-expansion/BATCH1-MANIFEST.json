@@ -1,6 +1,6 @@
 {
   "batch": "HARZ Offline Knowledge \u2014 Batch 1",
-  "generated_at": "2026-10-12T00:12:43Z",
+  "generated_at": "2026-10-12T01:26:06Z",
   "status": "STAGED \u2014 AWAITING WAVE_KEY FOR PUSH",
   "staged_sets": [
     {
@@ -8,50 +8,58 @@
       "files": 1,
       "docs": 76332,
       "text_bytes": 23925327,
-      "license": "CC BY 4.0",
-      "license_label_applied": true
+      "license": "CC BY 4.0"
     },
     {
-      "set": "OpenStax textbooks (15 books)",
-      "files": 15,
-      "docs": 2422,
-      "text_bytes": 29733175,
-      "license": "CC BY 4.0",
-      "license_label_applied": true
+      "set": "OpenStax textbooks (20 books)",
+      "files": 20,
+      "docs": 3615,
+      "text_bytes": 39749620,
+      "license": "CC BY 4.0"
     },
     {
-      "set": "Standard Ebooks classics (16 books)",
-      "files": 16,
-      "docs": 451,
-      "text_bytes": 10846104,
-      "license": "CC0 / Public Domain",
-      "license_label_applied": true
+      "set": "Standard Ebooks classics (19 books)",
+      "files": 19,
+      "docs": 690,
+      "text_bytes": 18955188,
+      "license": "CC0 / Public Domain"
+    },
+    {
+      "set": "DevDocs packs (12 packs)",
+      "files": 12,
+      "docs": 4298,
+      "text_bytes": 34977951,
+      "license": "per-pack upstream open docs licenses"
     }
   ],
   "totals": {
-    "docs": 79205,
-    "text_bytes": 64504606,
-    "text_mib": 61.5,
-    "d1_capacity_ceiling": "9.5GB",
-    "fits": true
+    "docs": 84935,
+    "text_bytes": 117608086,
+    "text_mib": 112.2,
+    "d1_ceiling": "9.5GB",
+    "fits": true,
+    "source_footprint_bytes": 2605600859,
+    "note": "~2.42GB source incl. 710MB OSM pbf held out of D1; text in D1 is ~100MiB"
   },
   "binary_artifacts_staged_not_ingested": {
     "nigeria-latest.osm.pbf": {
       "bytes": 710100878,
-      "sha256": "f49bd5c7029c32219f7c7399760250d491bf48071be81d27a8196e586eb953eb",
-      "note": "offline maps binary \u2014 durable home (R2 vs device) is Team E decision"
+      "sha256": "f49bd5c7029c32219f7c7399760250d491bf48071be81d27a8196e586eb953eb"
     }
   },
+  "resolution_laws": [
+    "OpenStax assets: stable unsigned URLs, slug pattern <slug>_-_WEB.pdf; slug drops 'of' (principles-economics-3e); Concepts-Biology uses hyphen not underscore",
+    "Standard Ebooks: epub link from book page, download needs ?source=download + Referer",
+    "DevDocs: documents.devdocs.io/<pack>/{index,db}.json; db.json is dict path->HTML; User-Agent required"
+  ],
   "deferred_to_batch_1b": [
-    "OpenStax accounting v1+v2, economics 3e, finance, concepts-of-biology (resolution blocked: SPA + asset naming not yet cracked)",
-    "Standard Ebooks: plato/republic, seneca/letters, mill/utilitarianism, paine/common-sense, lao-tzu, plutarch, carnegie, hill (render-missed; retry later)",
-    "MedlinePlus (moved per earlier capacity ruling)",
-    "devdocs.io (unreachable from sandbox tonight: HTTP 000)"
+    "SE misses: seneca/letters, mill/utilitarianism, paine/common-sense, tao-te-ching, plutarch/lives, carnegie, hill (not resolvable tonight; honest misses)",
+    "devdocs dom+php packs (65MB+32MB, deferred for size ranking)",
+    "MedlinePlus (per capacity ruling)"
   ],
   "push": {
     "route": "https://harz-million-corpus.harz.workers.dev/api/ingest-wave",
     "script": "push-batch1.py",
-    "batch_size": 40,
     "blocker": "WAVE_KEY value required from Dad"
   }
 }
