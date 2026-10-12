@@ -2,27 +2,23 @@
 
 Law: recommend before download; byte-verify at acquisition; batch holds if it breaks the 2.2GB ceiling.
 
-## BYTE-VERIFIED TONIGHT (HEAD requests, no bulk download)
+## OCT 12 UPDATE — STAGED, PUSH PENDING WAVE_KEY
 
-| Source | Verified size | Was estimated |
-| OSM Nigeria (geofabrik nigeria-latest.osm.pbf) | 677 MB (710,100,878 bytes, HTTP 200) | 300 MB |
-| GeoNames Nigeria (NG.zip) | 1.9 MB (1,957,738 bytes, HTTP 200) | 50 MB |
+Acquired, byte-verified, transformed, and staged (receipt row-121):
 
-## PENDING byte-verification at acquisition
+| Source | Acquired | Corpus docs | Text bytes | License label |
+| OSM Nigeria pbf | 710,100,878 B, sha256 f49bd5c7... | 0 (binary, held OUT of D1) | n/a | ODbL |
+| GeoNames NG | 1,957,738 B zip, 76,332 records | 76,332 | 23.7 MB | geonames-ccby-4.0 |
+| OpenStax (15 books) | 1,531 MiB PDFs, 13,368 pages | 2,419 | 31.5 MB | openstax-ccby-4.0 |
+| Standard Ebooks (16 books) | 16 epubs | 425 | 11.4 MB | standardebooks-cc0 |
+| TOTAL | ~2.4GB source footprint | 79,205 | 61.5 MiB | fits 9.5GB ceiling and 2.2GB headroom |
 
-1. OpenStax curated: asset URLs are per-book signed links resolved from the book pages; total ~1.0GB estimate stands but is UNVERIFIED at byte level
-2. Standard Ebooks curated: OPDS feed, ~200 titles est 0.3GB
-3. devdocs core packs (JS, Python, HTML, HTTP) est 0.1GB
-4. MedlinePlus curated est 0.25GB
+Resolution laws learned: OpenStax assets are STABLE UNSIGNED URLs (slug_-_WEB.pdf and Title_Case variants) — corrects the 'signed links' note; Standard Ebooks downloads require ?source=download + Referer (interstitial); devdocs HTTP 000 from sandbox tonight.
 
-## HONEST SIZE CORRECTION
+## PENDING (batch 1b)
+1. OpenStax accounting v1+v2, economics 3e, finance, concepts-of-biology (SPA hides asset URLs)
+2. SE render-misses: plato/republic, seneca/letters, mill/utilitarianism, paine/common-sense, lao-tzu, plutarch, carnegie, hill
+3. MedlinePlus (per capacity ruling)
 
-Verified OSM (677MB, not 300MB) pushes the full original list to ~2.3GB — OVER the 2.2GB headroom.
-Proposed trimmed batch that fits with margin:
-OSM Nigeria 677MB + OpenStax curated 1000MB + Standard Ebooks 150MB + devdocs 100MB + GeoNames 2MB = ~1.93GB
-Headroom margin: ~0.27GB. MedlinePlus moves to batch 2.
-
-## DEPENDENCY
-
-Actual download + ingestion awaits Team E's resumable ingestion procedure (their deliverable).
-No bulk download has begun. Cap guard untouched.
+## BLOCKER (single)
+Push via ingest-wave requires WAVE_KEY value from Dad. Local copy lost to sandbox reset Oct 11; rotation rejected (breaks offline-browser secret + Node 1 Termux export). push-batch1.py is resumable and ready in batch1-staging/.
