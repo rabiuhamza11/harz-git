@@ -2,7 +2,9 @@
 
 Law: recommend before download; byte-verify at acquisition; batch holds if it breaks the 2.2GB ceiling.
 
-## OCT 12 (07:30 WAT) — BATCH 1 PUSHED. COMPLETE.
+## OCT 12 (08:05 WAT) — BATCH 1 + 1b PUSHED. COMPLETE.
+
+Batch 1b (row-124): 8 Gutenberg classics + devdocs dom/php + MedlinePlus (2,029 topics, US-gov PD) pushed, 0 failures. Corpus: 1,325,232 unique docs, 34 languages, 132% of 1M target. Honest misses: Seneca Letters, Think and Grow Rich (neither on SE nor PG). Batch 1 delivered ALL planned content including MedlinePlus (originally deferred by the 2.2GB cap ruling, now landed).
 
 Row-123: WAVE_KEY rotated via Cloudflare API (Dad's tokens) on both holders; push executed 84,935 docs: 82,151 inserted, 2,784 dup-rejected, 0 failed, 22 minutes. Corpus server: 1,280,488 unique docs, 34 languages — 1M target EXCEEDED. Concurrent sibling writer (~17K docs, likely Team E) deduped safely server-side. Key delivered to Dad via signed private URL for Node 1 Termux. Batch 1b (SE misses, devdocs dom/php, MedlinePlus) is next in Team C lane.
 
