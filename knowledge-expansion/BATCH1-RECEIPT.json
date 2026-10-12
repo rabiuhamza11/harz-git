@@ -1,0 +1,18 @@
+{
+ "generated": "2026-10-12T00:12:19Z",
+ "batch": "BATCH-1 (partial, owner-authorized 'run batch 1 and 2 and 3 and etc')",
+ "acquired": {
+  "geonames NG.zip": "1,957,738 B, sha256 in acquire/NG.zip.done",
+  "python docs text": "verified+acquired (see acquire/pydocs.done)",
+  "OSM Nigeria pbf": "acquired as FILE (transform pending)",
+  "devdocs": "NETWORK-UNREACHABLE from sandbox - deferred",
+  "standardebooks": "HTTP 401 - deferred to batch 2",
+  "openstax": "deferred to dedicated resolver run (signed URLs)"
+ },
+ "ingested": {
+  "inserted_rows": 76604,
+  "docs_total_now": 1142670,
+  "content_gb_now": 7.281
+ },
+ "cap": "9.5GB law honored; guard enforced pre-ingest"
+}
