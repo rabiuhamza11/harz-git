@@ -1,0 +1,742 @@
+[
+ {
+  "slug": "additive-manufacturing-essentials",
+  "title": "Additive Manufacturing Essentials",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 20640015,
+  "sha256": "650b8bda1f26e7b53166eaae6ffc5ac3840cd922c0829d162f850d7e4b02d543",
+  "pages": 179,
+  "docs": 13,
+  "inserted": 13
+ },
+ {
+  "slug": "algebra-1",
+  "title": "Algebra 1",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 82715252,
+  "sha256": "c3f613a7b0c5b9ec1d163e1ee9a4cfaf2d81bdf7033ba795316bc7ba4347e271",
+  "pages": 1535,
+  "docs": 43,
+  "inserted": 43
+ },
+ {
+  "slug": "algebra-and-trigonometry-2e",
+  "title": "Algebra and Trigonometry 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 116281063,
+  "sha256": "7108d242ef7f7ee286c1d0faf4f8477570e843c1b1cdd5e3b05e8c31797da9f0",
+  "pages": 1467,
+  "docs": 49,
+  "inserted": 49
+ },
+ {
+  "slug": "american-government-4e",
+  "title": "American Government 4e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 155034953,
+  "sha256": "71e30f1c28a649dd72a6664a7add1462c0672df82b66d1bc282c4a47dd12e1be",
+  "pages": 737,
+  "docs": 55,
+  "inserted": 55
+ },
+ {
+  "slug": "anatomy-and-physiology-2e",
+  "title": "Anatomy and Physiology 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 476335014,
+  "sha256": "aa2e577b2083c343f4d57b38f00dd935dd2d98befdb38c0f368d72d636d0ff46",
+  "pages": 1347,
+  "docs": 87,
+  "inserted": 87
+ },
+ {
+  "slug": "astronomy-2e",
+  "title": "Astronomy 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 162975061,
+  "sha256": "9c3c49fc2d0b35a122509d27714780a5991b8e97cb6bd8db954e2b37542797a5",
+  "pages": 1151,
+  "docs": 73,
+  "inserted": 73
+ },
+ {
+  "slug": "biology-2e",
+  "title": "Biology 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 401298122,
+  "sha256": "4d1f413fd779f114838cdaeab7859dcb2922ca7529230d3bfd7d36a77b4e27b6",
+  "pages": 1475,
+  "docs": 94,
+  "inserted": 94
+ },
+ {
+  "slug": "biology-ap-courses",
+  "title": "Biology for AP\u00ae Courses",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 265033179,
+  "sha256": "86faba42bf6b89c038f573f6e5797fbaaf5a59927a9aaada4beb83d06af57d48",
+  "pages": 1745,
+  "docs": 113,
+  "inserted": 113
+ },
+ {
+  "slug": "business-ethics",
+  "title": "Business Ethics",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 51368382,
+  "sha256": "9d0a7b3be44c1059fe800de8e90195a654f48df27c52f3700c47579fe5034c01",
+  "pages": 355,
+  "docs": 27,
+  "inserted": 27
+ },
+ {
+  "slug": "business-law-i-essentials-2e",
+  "title": "Business Law I Essentials 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 13076311,
+  "sha256": "6e7b5db71416d923ae0007154edad4288c98f8efcb2f93870fb6e4ab31baad4f",
+  "pages": 164,
+  "docs": 9,
+  "inserted": 9
+ },
+ {
+  "slug": "calculus-volume-1",
+  "title": "Calculus Volume 1",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 52104540,
+  "sha256": "7303513c1927b9b6d04d150502e769cc1821638a24c774e2f6bba82bf9875990",
+  "pages": 769,
+  "docs": 24,
+  "inserted": 24
+ },
+ {
+  "slug": "calculus-volume-2",
+  "title": "Calculus Volume 2",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 47350759,
+  "sha256": "f6ac06038088711766e5b664a8114c8fcb0b7b88cfb38e92bbaf56ba2df43f4a",
+  "pages": 737,
+  "docs": 23,
+  "inserted": 23
+ },
+ {
+  "slug": "calculus-volume-3",
+  "title": "Calculus Volume 3",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 79186757,
+  "sha256": "6feec9e9e64a286f880ae9b7444e2f262df6ab59bff4869e28322106d0c9018f",
+  "pages": 913,
+  "docs": 28,
+  "inserted": 28
+ },
+ {
+  "slug": "chemistry-2e",
+  "title": "Chemistry 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 217794376,
+  "sha256": "fd89db1b8a1fee06b8ad3e8982f4f4b34bde4e93654a4ce28b724f8c0efe98d6",
+  "pages": 1203,
+  "docs": 59,
+  "inserted": 59
+ },
+ {
+  "slug": "chemistry-atoms-first-2e",
+  "title": "Chemistry: Atoms First 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 218252485,
+  "sha256": "083f28d4574dc50a927a67efd19e89cfca2284f1f4e63efe2d1c804523288cfb",
+  "pages": 1201,
+  "docs": 60,
+  "inserted": 60
+ },
+ {
+  "slug": "clinical-nursing-skills",
+  "title": "Clinical Nursing Skills",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 95717314,
+  "sha256": "cd5224b3f6c3096362c33a3e3af1f08f04a593e85ba444b82955689c50157175",
+  "pages": 1347,
+  "docs": 89,
+  "inserted": 89
+ },
+ {
+  "slug": "college-algebra-2e",
+  "title": "College Algebra 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 84220165,
+  "sha256": "381c7d1f2ce21d6786a9e4624d33cdedf3c3be468c011321b25c865786999802",
+  "pages": 1073,
+  "docs": 37,
+  "inserted": 37
+ },
+ {
+  "slug": "college-algebra-corequisite-support-2e",
+  "title": "College Algebra 2e with Corequisite Support",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 91254385,
+  "sha256": "23984faa497e08e75c804fe60d94dee0a1311f1cb1d272d9d6e109bb52456431",
+  "pages": 1247,
+  "docs": 43,
+  "inserted": 43
+ },
+ {
+  "slug": "college-physics-2e",
+  "title": "College Physics 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 263463256,
+  "sha256": "a052d9fae2a90e135a74d70c001a78bb49b83280be58191e108d5de577699bb6",
+  "pages": 1671,
+  "docs": 96,
+  "inserted": 96
+ },
+ {
+  "slug": "college-physics-ap-courses-2e",
+  "title": "College Physics For AP\u00ae Courses 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 266882977,
+  "sha256": "de438d7a0ed13339340d3e6bb93346920ef146c99e1275e8c84ba476555943d7",
+  "pages": 1773,
+  "docs": 104,
+  "inserted": 104
+ },
+ {
+  "slug": "college-success",
+  "title": "College Success",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 87510264,
+  "sha256": "a22309438c12691cf91217fcd8afe65c0c2a1cf775f83d88c5d9759e1f0456d0",
+  "pages": 417,
+  "docs": 26,
+  "inserted": 26
+ },
+ {
+  "slug": "college-success-concise",
+  "title": "College Success Concise",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 21239128,
+  "sha256": "70fb761b4a7ae6e49991df05d8ff5aa4c20ad387d06f01a2deffd7fee2b642a1",
+  "pages": 235,
+  "docs": 15,
+  "inserted": 15
+ },
+ {
+  "slug": "concepts-biology",
+  "title": "Concepts of Biology",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 185858638,
+  "sha256": "da0ffc8585e172f04eb0abb08949087baf85cc229ef2736ef06e5aa17094b1f6",
+  "pages": 613,
+  "docs": 39,
+  "inserted": 39
+ },
+ {
+  "slug": "contemporary-mathematics",
+  "title": "Contemporary Mathematics",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 106819604,
+  "sha256": "300726c9820a8d0822c56e33582a44dffa47111147d64e9cb936b316c448ab38",
+  "pages": 1899,
+  "docs": 76,
+  "inserted": 76
+ },
+ {
+  "slug": "elementary-algebra-2e",
+  "title": "Elementary Algebra 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 56728705,
+  "sha256": "a250861ff5e945a63a0b90f8c8790a6ed73d9eb04675854824a3880073d0759e",
+  "pages": 1290,
+  "docs": 36,
+  "inserted": 36
+ },
+ {
+  "slug": "entrepreneurship",
+  "title": "Entrepreneurship",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 129375799,
+  "sha256": "e2a29cee570f552360742956e9d27ef4df6aec35047d2cdc60b6b2cb24524613",
+  "pages": 631,
+  "docs": 46,
+  "inserted": 46
+ },
+ {
+  "slug": "foundations-information-systems",
+  "title": "Foundations of Information Systems",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 25619781,
+  "sha256": "496dd5f206da66e0334514df9c22a22fa58267851c349619f35c2d3aeba69306",
+  "pages": 497,
+  "docs": 37,
+  "inserted": 37
+ },
+ {
+  "slug": "fundamentals-nursing",
+  "title": "Fundamentals of Nursing",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 96583335,
+  "sha256": "3818e4964b45513119d676c06e5dc3e81cb4424ae8db53891bff2619773a1cb9",
+  "pages": 1961,
+  "docs": 148,
+  "inserted": 148
+ },
+ {
+  "slug": "intermediate-algebra-2e",
+  "title": "Intermediate Algebra 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 80988726,
+  "sha256": "54a4b28b2af8d2502ab1cf55dab33135c375ed8b5f3d24b504c68159e0851f55",
+  "pages": 1335,
+  "docs": 37,
+  "inserted": 37
+ },
+ {
+  "slug": "introduction-anthropology",
+  "title": "Introduction to Anthropology",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 101187994,
+  "sha256": "2465cfb7df9635c45d30f4f1fbd3b601757b8c0ce133e4a496b59361e5be5da9",
+  "pages": 627,
+  "docs": 49,
+  "inserted": 49
+ },
+ {
+  "slug": "introduction-behavioral-neuroscience",
+  "title": "Introduction to Behavioral Neuroscience",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 262376027,
+  "sha256": "32af1ea701864dbde9be9c279cfe2bd10de02924f622085805c5bb80f409ff9f",
+  "pages": 913,
+  "docs": 57,
+  "inserted": 57
+ },
+ {
+  "slug": "introduction-business-2e",
+  "title": "Introduction to Business 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 148842597,
+  "sha256": "2001b3e30587ceea8f351b11cccb64f8f678860014617d5706a7e27d478ecdc2",
+  "pages": 663,
+  "docs": 49,
+  "inserted": 49
+ },
+ {
+  "slug": "introduction-computer-science",
+  "title": "Introduction to Computer Science",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 56261511,
+  "sha256": "fd56aaf80c851e9f3b417745785ea5c832fc2911acfd2094a86f4c517fdf435a",
+  "pages": 939,
+  "docs": 59,
+  "inserted": 59
+ },
+ {
+  "slug": "introduction-intellectual-property",
+  "title": "Introduction to Intellectual Property",
+  "license": "CC BY 4.0",
+  "pdf_bytes": 24582768,
+  "sha256": "1498509864d37cb63a6ccc11bab7c783f3d30b2ed37d808ef80c56fdb676378a",
+  "pages": 201,
+  "docs": 13,
+  "inserted": 13
+ },
+ {
+  "slug": "introduction-philosophy",
+  "title": "Introduction to Philosophy",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 48068887,
+  "sha256": "ec94e28ddb86bfb6d7703a8487124501164caa79624791ad7eadb24efada96e5",
+  "pages": 421,
+  "docs": 31,
+  "inserted": 31
+ },
+ {
+  "slug": "introduction-political-science",
+  "title": "Introduction to Political Science",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 78449891,
+  "sha256": "64eb5a880b5a38bb77433d22e98a00e8a234b3f5abd44aa8556231b69f81bf00",
+  "pages": 643,
+  "docs": 48,
+  "inserted": 48
+ },
+ {
+  "slug": "introduction-python-programming",
+  "title": "Introduction to Python Programming",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 9963388,
+  "sha256": "e1298e4fcfe541a8fc3bb786c5756d3d2be8e6ffc07997f1bc1e0ac270be383d",
+  "pages": 397,
+  "docs": 14,
+  "inserted": 14
+ },
+ {
+  "slug": "introduction-sociology-3e",
+  "title": "Introduction to Sociology 3e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 48299547,
+  "sha256": "e70f1afc8495f4a4b481f3570cf8fbc186cbd5417b3a91033d8d01d237c0c5bd",
+  "pages": 664,
+  "docs": 45,
+  "inserted": 45
+ },
+ {
+  "slug": "introductory-business-statistics-2e",
+  "title": "Introductory Business Statistics 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 22795257,
+  "sha256": "05749a9e925884c34716050b6478bb37d44a5a63d97bbbe1d59db6e36b8e63e2",
+  "pages": 627,
+  "docs": 32,
+  "inserted": 32
+ },
+ {
+  "slug": "introductory-statistics-2e",
+  "title": "Introductory Statistics 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 23503369,
+  "sha256": "a79a953b75e570030c74ea6f700b8bd70f41dc8c01bf4e9618e6a0adba3a382a",
+  "pages": 847,
+  "docs": 40,
+  "inserted": 40
+ },
+ {
+  "slug": "lifespan-development",
+  "title": "Lifespan Development",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 75075373,
+  "sha256": "660c5908d26cda5f5d959004e3b79c281a4fc203cef398fe37cac46c488d34b0",
+  "pages": 961,
+  "docs": 84,
+  "inserted": 84
+ },
+ {
+  "slug": "maternal-newborn-nursing",
+  "title": "Maternal-Newborn Nursing",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 60793393,
+  "sha256": "d4e4b9ef18e0c5f7b06a958432f3128fc85819b64e4b24ffe0bd07a3f1798703",
+  "pages": 1241,
+  "docs": 88,
+  "inserted": 88
+ },
+ {
+  "slug": "medical-surgical-nursing",
+  "title": "Medical-Surgical Nursing",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 72785345,
+  "sha256": "b91956fbef2a405f3c31a2cf19481df9d6b404bddbeb567f2012035a32ff868a",
+  "pages": 1557,
+  "docs": 112,
+  "inserted": 112
+ },
+ {
+  "slug": "microbiology",
+  "title": "Microbiology",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 332873038,
+  "sha256": "e3dd075104421429b41493171eb9380312610b68843bff07c3cdf6e9ecfc1751",
+  "pages": 1221,
+  "docs": 77,
+  "inserted": 77
+ },
+ {
+  "slug": "nutrition",
+  "title": "Nutrition for Nurses",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 31569933,
+  "sha256": "3038dcc0947a304e0ccce4f629e90f4525298fa5c9dd6d2e19e1b24b4686670a",
+  "pages": 513,
+  "docs": 36,
+  "inserted": 36
+ },
+ {
+  "slug": "organic-chemistry",
+  "title": "Organic Chemistry: A Tenth Edition",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 207713388,
+  "sha256": "d57b7da43589eaf94de53a06bb17b20a856bbde57020e7a0ee4be312085001c4",
+  "pages": 1245,
+  "docs": 48,
+  "inserted": 48
+ },
+ {
+  "slug": "organizational-behavior",
+  "title": "Organizational Behavior",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 46231554,
+  "sha256": "17f40f05d37592cc65b1c77bb7ba991cf8948b5c4b67fb5474c5ebe8fb095fa9",
+  "pages": 631,
+  "docs": 46,
+  "inserted": 46
+ },
+ {
+  "slug": "pharmacology",
+  "title": "Pharmacology for Nurses",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 47218206,
+  "sha256": "7946bd1fc784ecc7bcfb0469fcacb9a89b3ac9c559773b7af0f4e1bc05a696fc",
+  "pages": 1229,
+  "docs": 83,
+  "inserted": 83
+ },
+ {
+  "slug": "physics",
+  "title": "Physics",
+  "license": "CC BY 4.0",
+  "pdf_bytes": 57463331,
+  "sha256": "a3f75487411ef13d0270c65fc801ceff2b28e6b339afed9b407fe477f7e8453e",
+  "pages": 875,
+  "docs": 49,
+  "inserted": 49
+ },
+ {
+  "slug": "population-health",
+  "title": "Population Health for Nurses",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 60769717,
+  "sha256": "7fa848cef34723891cfcc2d3acfe0df481ab8b66e294d2044f19db9f4ff546bd",
+  "pages": 1213,
+  "docs": 96,
+  "inserted": 96
+ },
+ {
+  "slug": "prealgebra-2e",
+  "title": "Prealgebra 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 63194495,
+  "sha256": "1a58f63a28535d2a84659019103df32a0fb73db0bd14ce6e533a4dff307ca2cb",
+  "pages": 1074,
+  "docs": 31,
+  "inserted": 30
+ },
+ {
+  "slug": "precalculus-2e",
+  "title": "Precalculus 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 114386806,
+  "sha256": "4b7018778433d2c125229a35315cf70e0813cbaacb04118b7265baae625372b5",
+  "pages": 1411,
+  "docs": 46,
+  "inserted": 46
+ },
+ {
+  "slug": "preparing-for-college-success",
+  "title": "Preparing for College Success",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 22002698,
+  "sha256": "9ff792297546a40ca63170ebdacc7b01f83159ac95990236dae42a5114a8631a",
+  "pages": 291,
+  "docs": 18,
+  "inserted": 18
+ },
+ {
+  "slug": "principles-financial-accounting",
+  "title": "Principles of Accounting, Volume 1: Financial Accounting",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 167017826,
+  "sha256": "a98ed7dcb92eec2bd70f32b150aa4f1d3140ad78bb1477e86a31682ec5ac31e5",
+  "pages": 973,
+  "docs": 51,
+  "inserted": 51
+ },
+ {
+  "slug": "principles-managerial-accounting",
+  "title": "Principles of Accounting, Volume 2: Managerial Accounting",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 89822467,
+  "sha256": "233b94100de54a5ed9fd6b9cf419a2b165aa2b5975ae06c9ac7bcba556a7bc26",
+  "pages": 677,
+  "docs": 39,
+  "inserted": 39
+ },
+ {
+  "slug": "principles-data-science",
+  "title": "Principles of Data Science",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 37337845,
+  "sha256": "6b47205459a2f4e25a2b2a86369e674a26a5ae566a4cc428dd31047670692398",
+  "pages": 569,
+  "docs": 30,
+  "inserted": 30
+ },
+ {
+  "slug": "principles-economics-3e",
+  "title": "Principles of Economics 3e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 49444584,
+  "sha256": "2d2e7549e13a1975965bfb14a577a3d7935173ff10ca2e1d953815560590a4eb",
+  "pages": 995,
+  "docs": 68,
+  "inserted": 68
+ },
+ {
+  "slug": "principles-finance-2e",
+  "title": "Principles of Finance 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 30902513,
+  "sha256": "7d942df1aaf2fc3edcc7f681955cdabecdd0d4e4c754469f0bea159461a6ad79",
+  "pages": 629,
+  "docs": 38,
+  "inserted": 38
+ },
+ {
+  "slug": "principles-macroeconomics-3e",
+  "title": "Principles of Macroeconomics 3e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 33585123,
+  "sha256": "c1ac3049ae23c7463c8071ff3de22b6df80de1107db8a43980e0f1935a1e5815",
+  "pages": 635,
+  "docs": 43,
+  "inserted": 43
+ },
+ {
+  "slug": "principles-management",
+  "title": "Principles of Management",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 65629502,
+  "sha256": "59ea3ea149d631f57c26279d5ac71f588121ebc56c1a25eb6c76f011c9765b6d",
+  "pages": 605,
+  "docs": 45,
+  "inserted": 45
+ },
+ {
+  "slug": "principles-marketing",
+  "title": "Principles of Marketing",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 62477161,
+  "sha256": "7764b41cf778a8bb560f00ee3ed2c8c2d623575540c1b6702ed7429c745bcd31",
+  "pages": 707,
+  "docs": 48,
+  "inserted": 48
+ },
+ {
+  "slug": "principles-microeconomics-3e",
+  "title": "Principles of Microeconomics 3e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 29247593,
+  "sha256": "65a1856faa91d5fdef9c630928029c6e4e188a9580d9128fcbc9138c4f4a583f",
+  "pages": 595,
+  "docs": 40,
+  "inserted": 40
+ },
+ {
+  "slug": "psychiatric-mental-health",
+  "title": "Psychiatric-Mental Health Nursing",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 28707981,
+  "sha256": "07a8abe8f3d93ef52206c990ebcefb559bbcdd443ac6e452ed96982a42e80536",
+  "pages": 1015,
+  "docs": 84,
+  "inserted": 84
+ },
+ {
+  "slug": "psychology-2e",
+  "title": "Psychology 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 57739919,
+  "sha256": "2f08113c78127bc684922ad6a819db22bd4705ce9fcf28a07f36a2041b1474e2",
+  "pages": 755,
+  "docs": 53,
+  "inserted": 53
+ },
+ {
+  "slug": "statistics",
+  "title": "Statistics",
+  "license": "CC BY 4.0",
+  "pdf_bytes": 31451137,
+  "sha256": "6aef489acbf932c6d94e8b6bf5339f0eeb60835f928a72e34ad8f937551e8def",
+  "pages": 871,
+  "docs": 41,
+  "inserted": 41
+ },
+ {
+  "slug": "us-history",
+  "title": "U.S. History",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 136400038,
+  "sha256": "b1330275566d9847623394ad29173f9a6f1c9f9270279e00cd5da2ac366ea5c8",
+  "pages": 987,
+  "docs": 67,
+  "inserted": 67
+ },
+ {
+  "slug": "university-physics-volume-1",
+  "title": "University Physics Volume 1",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 81497906,
+  "sha256": "93652b69c43197d10dc83438b813b5f7515e61e7ea4336da8636ff902cb4aba8",
+  "pages": 959,
+  "docs": 50,
+  "inserted": 50
+ },
+ {
+  "slug": "university-physics-volume-2",
+  "title": "University Physics Volume 2",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 63815745,
+  "sha256": "3f5d8d0e38ba663c84a036b54cf6087bc2836adca553cb7849f2c0e85e97a445",
+  "pages": 781,
+  "docs": 41,
+  "inserted": 41
+ },
+ {
+  "slug": "university-physics-volume-3",
+  "title": "University Physics Volume 3",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 53457236,
+  "sha256": "311c6beb70bb9cc6073d40a6085d290a82afde2b38e9aaf672ccb6de0542541b",
+  "pages": 597,
+  "docs": 32,
+  "inserted": 32
+ },
+ {
+  "slug": "world-history-volume-1",
+  "title": "World History, Volume 1: to 1500",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 201039307,
+  "sha256": "227436a3d3951dc777f63a7e5d3329f2c095e2ccf5782ae192f22c40d831a4cf",
+  "pages": 791,
+  "docs": 50,
+  "inserted": 50
+ },
+ {
+  "slug": "workplace-software-skills",
+  "title": "Workplace Software and Skills",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 290264175,
+  "sha256": "cfc06bef22fb8c898e247fc70581589ce963b3bfef0d3e1f84ec94a1c18344ff",
+  "pages": 1047,
+  "docs": 49,
+  "inserted": 49
+ },
+ {
+  "slug": "world-history-volume-2",
+  "title": "World History, Volume 2: from 1400",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 132663448,
+  "sha256": "57be7ba027ed9f66d9e4594493f56e6a9028bd72c166e62dcd07e72a5266f948",
+  "pages": 723,
+  "docs": 48,
+  "inserted": 48
+ },
+ {
+  "slug": "writing-guide",
+  "title": "Writing Guide with Handbook",
+  "license": "CC BY-NC-SA 4.0",
+  "pdf_bytes": 63546834,
+  "sha256": "86ef566965110032b651122c8e466a607157613302a5a283bd1f221727e590ab",
+  "pages": 773,
+  "docs": 50,
+  "inserted": 50
+ },
+ {
+  "slug": "f\u00edsica-universitaria-volumen-1",
+  "title": "F\u00edsica universitaria volumen 1",
+  "license": "CC BY 4.0",
+  "pdf_bytes": 72134561,
+  "sha256": "36d9a201c9c41d1286d4e5c9a270fa8a3163d8c9329d60aca66686c475ae4228",
+  "pages": 1023,
+  "docs": 54,
+  "inserted": 54
+ }
+]

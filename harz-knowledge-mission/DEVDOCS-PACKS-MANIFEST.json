@@ -1,0 +1,98 @@
+[
+ {
+  "pack": "html",
+  "entries": 251,
+  "db_keys": 252,
+  "docs": 252,
+  "inserted": 252,
+  "db_bytes": 5529381
+ },
+ {
+  "pack": "css",
+  "entries": 1028,
+  "db_keys": 1029,
+  "docs": 1029,
+  "inserted": 1029,
+  "db_bytes": 15878611
+ },
+ {
+  "pack": "javascript",
+  "entries": 1300,
+  "db_keys": 1301,
+  "docs": 1301,
+  "inserted": 1301,
+  "db_bytes": 12370828
+ },
+ {
+  "pack": "dom",
+  "entries": 8107,
+  "db_keys": 8108,
+  "docs": 8108,
+  "inserted": 8108,
+  "db_bytes": 65693540
+ },
+ {
+  "pack": "http",
+  "entries": 775,
+  "db_keys": 377,
+  "docs": 377,
+  "inserted": 34,
+  "db_bytes": 7047986
+ },
+ {
+  "pack": "node",
+  "entries": 4105,
+  "db_keys": 65,
+  "docs": 65,
+  "inserted": 65,
+  "db_bytes": 6856259
+ },
+ {
+  "pack": "git",
+  "entries": 207,
+  "db_keys": 208,
+  "docs": 208,
+  "inserted": 3,
+  "db_bytes": 6243606
+ },
+ {
+  "pack": "bash",
+  "entries": 508,
+  "db_keys": 132,
+  "docs": 132,
+  "inserted": 0,
+  "db_bytes": 958336
+ },
+ {
+  "pack": "typescript",
+  "entries": 472,
+  "db_keys": 79,
+  "docs": 79,
+  "inserted": 2,
+  "db_bytes": 1947534
+ },
+ {
+  "pack": "express",
+  "entries": 113,
+  "db_keys": 24,
+  "docs": 24,
+  "inserted": 1,
+  "db_bytes": 519485
+ },
+ {
+  "pack": "c",
+  "entries": 1001,
+  "db_keys": 642,
+  "docs": 642,
+  "inserted": 633,
+  "db_bytes": 5128537
+ },
+ {
+  "pack": "cpp",
+  "entries": 6588,
+  "db_keys": 5658,
+  "docs": 5658,
+  "inserted": 5617,
+  "db_bytes": 44891108
+ }
+]
