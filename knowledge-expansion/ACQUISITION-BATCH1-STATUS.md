@@ -2,7 +2,11 @@
 
 Law: recommend before download; byte-verify at acquisition; batch holds if it breaks the 2.2GB ceiling.
 
-## OCT 12 (02:15 WAT) UPDATE — BATCH 1 SOURCES COMPLETE, PUSH PENDING WAVE_KEY
+## OCT 12 (07:30 WAT) — BATCH 1 PUSHED. COMPLETE.
+
+Row-123: WAVE_KEY rotated via Cloudflare API (Dad's tokens) on both holders; push executed 84,935 docs: 82,151 inserted, 2,784 dup-rejected, 0 failed, 22 minutes. Corpus server: 1,280,488 unique docs, 34 languages — 1M target EXCEEDED. Concurrent sibling writer (~17K docs, likely Team E) deduped safely server-side. Key delivered to Dad via signed private URL for Node 1 Termux. Batch 1b (SE misses, devdocs dom/php, MedlinePlus) is next in Team C lane.
+
+Historical (02:15):
 
 Late-night resolution wins (receipt row-122): OpenStax slug law cracked (drop 'of'; accounting = principles-financial-accounting/-managerial; Concepts-Biology hyphen) — 20/20 books staged. devdocs reachable: 12 packs, 6,028 docs. SE at 19 books incl. Plato Republic (via Dialogues/Jowett).
 
