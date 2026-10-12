@@ -1,0 +1,8 @@
+{
+  "id": 125,
+  "name": "d1-20k-phone-kit-v6-built-20261012",
+  "description": "D1 20K-gate phone test kit v6 built and sandbox-verified (ALL GATES PASS on python branch: integrity ok, 20000 rows, avg 0.3ms, top1 19/20, top3 19/20, RSS 18MB). Delivered via harz-git raw URL (integration credits exhausted, Base44 upload unavailable). Kit sha256 d53d2af972c13746fde54691be23129d0c15a953c65630079837fcdba571517f, 11104835 bytes. MEASUREMENT-ONLY; 20K promotion stays owner-ruled. Awaiting Rabiu's phone run to close.",
+  "created_at": "2026-10-12T06:42:00Z",
+  "ledger": "D1-harz_repos-mirror",
+  "content": "See harz-knowledge-mission/phone-kits/HARZ-20K-KIT-V6.md"
+}
