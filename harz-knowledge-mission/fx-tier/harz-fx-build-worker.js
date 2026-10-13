@@ -1,4 +1,4 @@
-// HARZ FX-2 index builder (cloud) — fxbuild-1.0.0 (Oct 12, 2026)
+// HARZ FX-2 index builder (cloud) — fxbuild-1.1.0 (Oct 12, 2026)
 // Replaces the sandbox builder (killed by every sandbox recycle). Runs as a
 // Cloudflare Worker: /step does bounded work per invocation; cron "* * * * *"
 // drives it to completion. Same checkpoints (meta bandX_last_id) as the
@@ -43,8 +43,23 @@ async function metaGet(db, keys) {
   return m;
 }
 
-async function buildStep(env) {
+async function buildStep(env, mode) {
   const t0 = Date.now();
+  // --- single-writer lock (owner requirement Oct 13: no unsafe overlap) ---
+  const LOCK_TTL_MS = 120000;
+  const myNonce = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  try {
+    await env.DB_IDX.prepare("CREATE TABLE IF NOT EXISTS runs (id INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT, mode TEXT, wall_ms INTEGER, batches INTEGER, docs_done INTEGER, parts_indexed INTEGER, dup_skipped INTEGER, errors INTEGER, ok INTEGER, note TEXT)").run();
+  } catch (e) {}
+  let lock = null;
+  try {
+    const lr = await env.DB_IDX.prepare("SELECT value FROM meta WHERE key = 'build_lock'").all();
+    lock = (lr.results && lr.results[0]) ? JSON.parse(lr.results[0].value) : null;
+  } catch (e) {}
+  if (lock && Date.now() - lock.ts < LOCK_TTL_MS && lock.nonce !== myNonce) {
+    return { ok: true, skipped: true, reason: "another step holds the lock", lock_age_ms: Date.now() - lock.ts };
+  }
+  await env.DB_IDX.prepare("INSERT OR REPLACE INTO meta (key, value) VALUES ('build_lock', ?)").bind(JSON.stringify({ ts: Date.now(), nonce: myNonce, mode })).run();
   const state = await metaGet(env.DB_IDX, BANDS.flatMap((_, i) => [`band${i}_last_id`, `band${i}_docs`, `band${i}_bytes`]));
   const band = { last: [], docs: [], bytes: [], done: [] };
   for (let i = 0; i < 3; i++) {
@@ -115,17 +130,24 @@ async function buildStep(env) {
     });
     if (errors > 5) break;
   }
-  return {
-    ok: true, engine: "fxbuild-1.0.0", wall_ms: Date.now() - t0, batches, docs_done, parts_indexed: indexed_parts,
+  const out = {
+    ok: errors <= 5, engine: "fxbuild-1.1.0", wall_ms: Date.now() - t0, batches, docs_done, parts_indexed: indexed_parts,
     dup_skipped, errors, bands: [0, 1, 2].map(i => ({ last: band.last[i], docs: band.docs[i], mb: (band.bytes[i] / 1e6).toFixed(0), done: band.done[i] })),
   };
+  try {
+    await env.DB_IDX.prepare("INSERT INTO runs (ts, mode, wall_ms, batches, docs_done, parts_indexed, dup_skipped, errors, ok, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(new Date().toISOString(), mode || "http", out.wall_ms, batches, docs_done, indexed_parts, dup_skipped, errors, out.ok ? 1 : 0, JSON.stringify(out.bands)).run();
+    await env.DB_IDX.prepare("INSERT OR REPLACE INTO meta (key, value) VALUES ('last_run', ?)").bind(JSON.stringify({ ts: new Date().toISOString(), ok: out.ok, docs_done, errors, bands: out.bands })).run();
+    await env.DB_IDX.prepare("DELETE FROM meta WHERE key = 'build_lock'").run();
+  } catch (e) {}
+  return out;
 }
 
 export default {
   async fetch(request, env) {
     const u = new URL(request.url);
     const p = u.pathname;
-    if (p === "/" ) return json({ ok: true, engine: "fxbuild-1.0.0", note: "FX-2 index builder; /step runs one bounded step; /status reads checkpoints" });
+    if (p === "/" ) return json({ ok: true, engine: "fxbuild-1.1.0", note: "FX-2 index builder; /step runs one bounded step; /status reads checkpoints" });
     if (p === "/step") return json(await buildStep(env));
     if (p === "/status") {
       const m = await metaGet(env.DB_IDX, BANDS.flatMap((_, i) => [`band${i}_last_id`, `band${i}_docs`, `band${i}_bytes`, `band${i}_status`]));
@@ -133,5 +155,5 @@ export default {
     }
     return json({ ok: false, error: "not found" }, 404);
   },
-  async scheduled(event, env, ctx) { ctx.waitUntil(buildStep(env).then(r => console.log(JSON.stringify(r))).catch(e => console.log("step error: " + e))); },
+  async scheduled(event, env, ctx) { ctx.waitUntil(buildStep(env, "cron").then(r => console.log(JSON.stringify(r))).catch(e => console.log("step error: " + e))); },
 };

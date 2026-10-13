@@ -65,3 +65,54 @@ rebuild, isolation safeguards). Owner directive: keep as audit evidence.
   criteria exist. Action: prepare exact artifact + criteria.
 - Do not declare corpus complete until: coverage, full-text availability,
   source diversity, and offline answer capability are separately measured.
+
+---
+
+## OCT 13, 03:55 WAT — owner conditional rulings + cloud builder corrections
+
+OWNER RULINGS (Oct 13, 03:49): all five reported test PASSes are rulings on
+reported results for the tested scenarios only, NOT independent verification;
+restart-test evidence must not be generalized to every interruption/concurrency
+failure without corresponding tests. Growth INGESTION FROZEN until cap/size/
+headroom reconciled and FX-2 completes. Cloud builder accepted PROVISIONALLY.
+Gate order fixed: A corpus reconciliation, B tail, C retrieval+parity,
+D offline (incl. NEW REQUIREMENT: prove what HARZ can DO with content offline,
+not just find/display it), E final acceptance on 4 separate dimensions
+(coverage, full-text availability, source diversity, offline answer capability).
+
+### DISCLOSED DEFECT: cron never registered (overnight stall)
+The Oct 12 deploy response reported "1 cron trigger" from metadata triggers
+field, but GET /schedules returned []. 5.5h of zero build progress overnight.
+FIX: PUT /schedules with bare-array body [{"cron":"* * * * *"}] (the
+{"schedules":[...]} wrapper shape returns 10026 parse error — documented).
+Verified live: cron fires every minute now.
+
+### Builder v1.1.0 (owner's 7 guarantees)
+1. Durable checkpoints: D1 meta (unchanged, interoperable with v1).
+2. Idempotent retries: per-window rowid-existence guard (re-proven by runs).
+3. Process isolation: single worker; per-run nonce in lock.
+4. Duplicate protection: guard + 0 dupes across all runs to date.
+5. Failure visibility: runs table (ts, mode, wall_ms, batches, docs_done,
+   parts_indexed, dup_skipped, errors, ok) + last_run meta + ok=false at >5 errors.
+6. Verifiable progress: checkpoints + runs log both queryable.
+7. Safe recovery: SINGLE-WRITER LOCK (owner requirement): build_lock meta key
+   with 120s TTL + per-run nonce; overlapping invocations skip with reason
+   "another step holds the lock"; stale lock self-expires.
+Cron is NOT treated as proof of success: every run records its outcome.
+
+### Storage reconciliation (owner question: accounting basis of the cap)
+TWO bases, disclosed separately:
+- TEXT basis (sum of stored document sizes): 7.650 GB / 1,328,715 docs.
+  Headroom under a 9.5 GB text cap: ~1.85 GB.
+- FILE basis (D1 file_size, what Cloudflare meters toward the 10 GB D1 limit):
+  harz-million-corpus = 9.546 GB = ~46 MB OVER the 9.5 GB figure.
+The cap has been tracked on both bases historically (batch records used text
+basis headroom while noting file size). INGESTION REMAINS FROZEN per owner
+ruling. The governing basis is the owner's call when ingestion resumes.
+- harz-fx-idx file_size: 0.127 GB at 37,725 parts / 37,725 distinct (0 dupes).
+  Interim index-to-text ratio ~55% on small docs; final projection revised to
+  ~3.5-6 GB honest range, MEASURED at completion (not estimated).
+
+### Build driving (03:55 WAT)
+Cron ~4,000 docs/min, 0 errors, 0 dupes. Bands complete sequentially.
+Estimated completion: several hours; runs log is the evidence.
