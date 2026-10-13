@@ -1,9 +1,11 @@
-// HARZ FX-2 corpus-wired search worker — fx2-js-1.0.0 (Oct 12, 2026, Rabiu: "Wire the 1000000+", "Beware of duplicate")
+// HARZ FX-2 corpus-wired search worker — fx2-js-1.1.0 (Oct 12, 2026, Rabiu: "Wire the 1000000+", "Beware of duplicate")
 // INDEX-ONLY architecture: harz-fx-idx holds a CONTENTLESS FTS5 index (no text stored);
 // every byte of content stays in the ONE master corpus (harz-million-corpus). Zero duplication.
 // rowid = corpus_id*64 + part (part 0..63, parts <=85KB); doc id = rowid >> 6.
 // Routes (FX-1 contract compatible): /fx1/search?q= | /fx1/doc/:id | /fx1/stats | /
-export const FX2_VERSION = "fx2-js-1.0.0";
+export const FX2_VERSION = "fx2-js-1.1.0";
+// v1.1.0 (Oct 13): corpus now two-tier (docs metadata + BODIES_DB text by content_hash).
+// Snippets and doc retrieval read text from BODIES_DB; docs table provides metadata only.
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,OPTIONS",
@@ -58,9 +60,16 @@ export default {
       if (!ids.length) return json({ ok: true, engine: "d1+fts5 contentless", version: FX2_VERSION, count: 0, results: [], match: match });
       const ph = ids.map(() => "?").join(",");
       const meta = await env.DB_CORPUS.prepare(
-        `SELECT id, title, url, domain, source, fetched_at, size, substr(text,1,4000) AS head FROM docs WHERE id IN (${ph})`
+        `SELECT id, title, url, domain, source, fetched_at, size, content_hash FROM docs WHERE id IN (${ph})`
       ).bind(...ids).all();
       const byId = new Map((meta.results || []).map(r => [r.id, r]));
+      if (env.BODIES_DB) {
+        const hashes = [...byId.values()].map(r => r.content_hash);
+        const bh = hashes.map(() => "?").join(",");
+        const bodies = await env.BODIES_DB.prepare(`SELECT content_hash, substr(text,1,4000) AS head FROM bodies WHERE content_hash IN (${bh})`).bind(...hashes).all();
+        const bodyByHash = new Map((bodies.results || []).map(b => [b.content_hash, b.head]));
+        for (const [id, m] of byId) m.head = bodyByHash.get(m.content_hash) || "";
+      }
       const results = ids
         .filter(id => byId.has(id))
         .map(id => {
@@ -86,9 +95,13 @@ export default {
       const id = parseInt(p.slice(9), 10);
       if (!Number.isInteger(id) || id < 1) return json({ ok: false, error: "bad id" }, 400);
       const r = await env.DB_CORPUS.prepare(
-        "SELECT id, title, url, domain, source, language, fetched_at, size, content_hash, text FROM docs WHERE id = ?1"
+        "SELECT id, title, url, domain, source, language, fetched_at, size, content_hash FROM docs WHERE id = ?1"
       ).bind(id).first();
       if (!r) return json({ ok: false, error: "not found" }, 404);
+      if (env.BODIES_DB) {
+        const b = await env.BODIES_DB.prepare("SELECT text FROM bodies WHERE content_hash = ?1").bind(r.content_hash).first();
+        if (b) r.text = b.text;
+      }
       return json({ ok: true, engine: "d1+fts5 contentless (corpus-wired)", version: FX2_VERSION, doc: r });
     }
 
