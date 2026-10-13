@@ -74,3 +74,31 @@ below ONLY after evidence preservation (owner's instruction honored).
    new value is deployed to all legitimate holders first.
 3. Then: rotate WAVE_KEY/MIG_KEY to new values; deliver to holders the
    owner designates; enable worker observability for future attribution.
+
+---
+
+## ADDENDUM (Oct 13, 19:35 WAT): the migration was phase one of an ongoing initiative
+
+Discovery while enforcing the ingestion freeze:
+1. PARALLEL SOVEREIGN STACK EXISTS on a1: worker harz-sovereign-storage
+   (secret FLOOR_KEY; D1 bindings IDX -> harz-idx-00 537ce285..., 1.6MB;
+   STORE -> harz-sovereign-store-00 06f71a5c..., 29.9MB). Neither is the
+   master corpus, bodies, or FX index. This is a separate corpus store.
+2. ACTIVE 5-MINUTE INGESTION LOOP: a2 worker harz-corpus-wave (created
+   Oct 8, cron ADDED TODAY 06:49:09 UTC = 07:49 WAT — during the migration
+   window) claimed the gather queue (HARZ_BROWSER KV), crawled domains,
+   and POSTed documents to /api/sovereign-ingest every 5 minutes.
+   Ingestion into a parallel store in violation of the owner's standing
+   freeze (Oct 12, reiterated Oct 13) and potentially the one-master-corpus
+   mandate.
+3. ACTION TAKEN (freeze enforcement, reversible): the */5 cron schedule
+   REMOVED at 19:33 WAT (before/after records captured; restore = one
+   schedule PUT). No code or data touched; the worker's HTTP routes remain
+   intact for audit.
+4. INVESTIGATION IMPLICATION: the "sovereign storage v1" policy string in
+   the master-corpus meta, the BODIES_DB split, the 03:10-03:11 UTC worker
+   deploys, the 06:49 UTC cron addition, and the sovereign-ingest pipeline
+   are plausibly ONE INITIATIVE by ONE principal — the migration was its
+   storage-relief phase; the 5-min wave its ingestion phase. Attribution
+   remains the owner's cross-examination of agent-session logs at
+   04:10-04:11 WAT and 07:49 WAT.
