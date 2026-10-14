@@ -1,0 +1,67 @@
+{
+ "hashes": {
+  "immigration-v3-final.html": "981c826038d63505739b4e9f3c7b4408474a252c10cc71bd7a72d588778b6402",
+  "cbn-live.html": "f63dc323f2cc140bb0704e529261b2607a07b2902ae4b9e2b5e518a893b1630f",
+  "nimc-v3.html": "9c71cf92ff0cc5c4f3ad85e50711a337ecaf8294c41c71476e7a34a54d275d4c",
+  "cac-v2.html": "7b31d16693eab7c405580772b665212606d8f57a1d01bcfdd110d5c392f7462b",
+  "health-v2.html": "63750cdfdbe8305f92c2272fb2a84c137a7f5816134b607f09447a99ba8ffd25"
+ },
+ "immigration_5class": {
+  "external_image_src": 0,
+  "external_script_src": 0,
+  "map_iframes": 0,
+  "protocol_relative_fonts": 0,
+  "notices": 1
+ },
+ "external_css": {
+  "total_ext": 232,
+  "site": 222,
+  "themigrate": 6,
+  "googleapis": 4,
+  "inline_style_bytes": 1618547,
+  "data_uri_css_fonts": 2
+ },
+ "cbn_scan": {
+  "youtube_embeds": 2,
+  "external_imgs": 0,
+  "external_css": 0
+ },
+ "provenance": {
+  "nimc-v3.html": {
+   "found": true,
+   "parsed": true,
+   "fields": {
+    "url": "https://nimc.gov.ng",
+    "captured": "2026-10-14T05:42:58.702971+00:00",
+    "engine": "cloudflare-browser-rendering-rest (rendered DOM)",
+    "resources": "[{'url': 'https://nimc.gov.ng/apple-touch-icon.png', 'mime':",
+    "failed": "['https://fonts.googleapis.com', 'https://fonts.gstatic.com'",
+    "excluded_scripts": "['https://n8n.nimc.gov.ng/7861/widget/widget.iife.js', '/ass",
+    "dom_bytes": "10536797"
+   }
+  },
+  "cac-v2.html": {
+   "found": true,
+   "parsed": true,
+   "fields": {
+    "url": "https://www.cac.gov.ng/",
+    "captured": "2026-10-14T05:16:05.960596+00:00",
+    "engine": "cloudflare-browser-rendering-rest (rendered DOM)",
+    "resources": "[]",
+    "failed": "[]",
+    "excluded_scripts": "['/cdn-cgi/challenge-platform/h/g/orchestrate/chl_page/v1?ra",
+    "dom_bytes": "6145"
+   }
+  },
+  "health-v2.html": {
+   "found": true,
+   "parsed": false,
+   "verdict": "FOUND BUT UNCLOSED (no balanced JSON within 100KB of marker \u2014 TRUNCATED stamp)"
+  },
+  "immigration-v3-final.html": {
+   "found": true,
+   "parsed": false,
+   "verdict": "FOUND BUT UNCLOSED (no balanced JSON within 100KB of marker \u2014 TRUNCATED stamp)"
+  }
+ }
+}
