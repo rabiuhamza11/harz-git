@@ -1,0 +1,12 @@
+{
+ "packs": {
+  "nimc-v3.html": 40,
+  "immigration-v2.html": 94,
+  "health-v2.html": 114,
+  "cac-v2.html": 1
+ },
+ "shared_count": 22,
+ "cross_pack_savings_bytes": 3058928,
+ "within_pack_savings_bytes": 49471448,
+ "executed": "2026-10-14T06:05:07.679170+00:00"
+}

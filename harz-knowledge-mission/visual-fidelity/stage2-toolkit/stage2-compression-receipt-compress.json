@@ -1,0 +1,46 @@
+{
+ "tool": "stage2-compress-1.0",
+ "executed": "2026-10-14T06:03:08.007803+00:00",
+ "packs": [
+  {
+   "pack": "nimc-v3.html",
+   "original_bytes": 10547983,
+   "gzip_bytes": 7513070,
+   "gzip_sha_in": "9c71cf92ff0cc5c4",
+   "gzip_sha_out": "b3f3ff4bad0bffb9",
+   "gzip_byte_recovery_exact": true,
+   "brotli_bytes": 6922013,
+   "brotli_byte_recovery_exact": true
+  },
+  {
+   "pack": "immigration-v2.html",
+   "original_bytes": 52705782,
+   "gzip_bytes": 33939273,
+   "gzip_sha_in": "34036b44c614709e",
+   "gzip_sha_out": "d97003adbffb71c3",
+   "gzip_byte_recovery_exact": true,
+   "brotli_bytes": 17828618,
+   "brotli_byte_recovery_exact": true
+  },
+  {
+   "pack": "health-v2.html",
+   "original_bytes": 38370174,
+   "gzip_bytes": 19699831,
+   "gzip_sha_in": "63750cdfdbe8305f",
+   "gzip_sha_out": "53824c8f17374509",
+   "gzip_byte_recovery_exact": true,
+   "brotli_bytes": 10535592,
+   "brotli_byte_recovery_exact": true
+  },
+  {
+   "pack": "cac-v2.html",
+   "original_bytes": 6468,
+   "gzip_bytes": 3955,
+   "gzip_sha_in": "7b31d16693eab7c4",
+   "gzip_sha_out": "da9bc614b952333b",
+   "gzip_byte_recovery_exact": true,
+   "brotli_bytes": 3475,
+   "brotli_byte_recovery_exact": true
+  }
+ ]
+}
