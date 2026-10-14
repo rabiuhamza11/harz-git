@@ -1,0 +1,54 @@
+{
+ "test": "LAW 4 search preservation - NIMC v0.3 pack",
+ "executed": "2026-10-14T06:00:30.429785+00:00",
+ "total_extractable_chars": 9498,
+ "sections_indexed": 3,
+ "queries_executed": 10,
+ "hits": 9,
+ "misses": 1,
+ "detail": {
+  "NIHOTOUR": {
+   "target_section": "news ticker (top bar)",
+   "results": 2
+  },
+  "NIMC Act No. 23 of 2007": {
+   "target_section": "mandate section",
+   "results": 1
+  },
+  "NINAuth": {
+   "target_section": "services section",
+   "results": 3
+  },
+  "General Multi-Purpose Cards": {
+   "target_section": "mandate/cards",
+   "results": 1
+  },
+  "enrolment centre": {
+   "target_section": "services card",
+   "results": 1
+  },
+  "08000616462": {
+   "target_section": "toll-free line",
+   "results": 2
+  },
+  "Digital Identity Ecosystem": {
+   "target_section": "footer services list",
+   "results": 1
+  },
+  "Fraud Alerts": {
+   "target_section": "footer resources",
+   "results": 1
+  },
+  "What are you looking for": {
+   "target_section": "hero search placeholder",
+   "results": 0
+  },
+  "national identity database": {
+   "target_section": "mandate body text",
+   "results": 1
+  }
+ },
+ "external_requests_during_search": 0,
+ "translate_widget": "static list, service connection-dependent (disclosed)",
+ "protected_library": "kb5k seal untouched; no writes by visual pipeline (no D1/KV-e1 bindings anywhere in vf code paths)"
+}
