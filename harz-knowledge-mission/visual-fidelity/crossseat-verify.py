@@ -98,58 +98,32 @@ ext_css_c = [u for u in re.findall(r'<link[^>]*>', c) if re.search(r'rel\s*=\s*[
 print(f"  YouTube embeds: {yt} | external imgs: {len(ext_img_c)} | external css: {len(ext_css_c)}")
 report["cbn_scan"] = {"youtube_embeds": yt, "external_imgs": len(ext_img_c), "external_css": len(ext_css_c)}
 
-# ---------- GATE 5: provenance stamps in all four packs ----------
-print("\n== GATE 5: harz-provenance stamps (expect nimc+cac OK; health+immigration truncated ~20KB) ==")
+# ---------- GATE 5: provenance stamps (all four packs) ----------
+print("\n== GATE 5: harz-provenance stamps ==", flush=True)
 stamps = {}
 for f in ["nimc-v3.html", "cac-v2.html", "health-v2.html", "immigration-v3-final.html"]:
     raw = open(P + f, encoding="utf-8", errors="replace").read()
-    m = re.search(r'harz-provenance', raw)
-    if not m:
+    m = raw.find("harz-provenance")
+    if m < 0:
         stamps[f] = {"found": False, "verdict": "NO STAMP MARKER FOUND"}
-        print(f"  {f}: NO MARKER")
-        continue
-    # try to locate a JSON object near the marker
-    window = raw[m.start():m.start() + 60000]
-    jm = re.search(r'\{.*', window, re.S)
-    parsed = False; verdict = ""
-    for end in range(min(len(window), 25000)):
-        try:
-            obj = json.loads(window[:end] if False else "")
-            break
-        except Exception:
-            continue
-    # incremental parse approach: find first balanced JSON
-    depth = 0; start = window.find("{"); endcand = None
-    if start >= 0:
-        in_str = False; esc = False
-        for i in range(start, min(len(window), start + 100000)):
-            ch = window[i]
-            if esc: esc = False; continue
-            if ch == "\\": esc = True; continue
-            if ch == '"': in_str = not in_str; continue
-            if in_str: continue
-            if ch == "{": depth += 1
-            elif ch == "}":
-                depth -= 1
-                if depth == 0:
-                    endcand = i + 1
-                    break
-    if endcand:
-        try:
-            obj = json.loads(window[start:endcand])
-            parsed = True
-            verdict = (f"PARSE OK: url={obj.get('source_url', obj.get('url','?'))[:50]} "
-                       f"time={obj.get('capture_time', obj.get('captured_at','?'))} engine={obj.get('engine','?')}")
-            stamps[f] = {"found": True, "parsed": True, "fields": {k: str(v)[:60] for k, v in list(obj.items())[:8]}}
-        except json.JSONDecodeError as e:
-            verdict = f"FOUND BUT NOT PARSEABLE (marker at offset {m.start()}, JSON balanced-span found but decode error: {str(e)[:60]})"
-            stamps[f] = {"found": True, "parsed": False, "verdict": verdict,
-                         "truncation_evidence": "balanced-span parse failed — consistent with truncation"}
-    else:
-        verdict = f"FOUND BUT UNCLOSED (no balanced JSON within 100KB of marker — TRUNCATED stamp)"
-        stamps[f] = {"found": True, "parsed": False, "verdict": verdict}
-    print(f"  {f}: {verdict[:120]}")
+        print(f"  {f}: NO MARKER"); continue
+    # C5 REVISION (ruling 9a36de0): extract the exact comment span, parse payload,
+    # and report the precise truncation boundary instead of a naive balanced-window scan.
+    cstart = raw.find("{", m)
+    cend = raw.find("-->", cstart)
+    payload = raw[cstart:cend].strip() if cend > cstart else raw[cstart:]
+    try:
+        obj = json.loads(payload)
+        stamps[f] = {"found": True, "parsed": True, "comment_span_chars": len(payload),
+            "fields": {k: str(v)[:60] for k, v in list(obj.items())[:8]}}
+        verdict = f"PARSE OK ({len(payload):,} chars)"
+    except json.JSONDecodeError as e:
+        stamps[f] = {"found": True, "parsed": False, "comment_span_chars": len(payload),
+            "truncation_boundary_char": e.pos,
+            "verdict": f"TRUNCATED at char {e.pos:,} of span {len(payload):,}"}
+        verdict = stamps[f]["verdict"]
+    print(f"  {f}: {verdict}")
 report["provenance"] = stamps
 
 json.dump(report, open("harz-knowledge-mission/visual-fidelity/TEAM-C-CROSSSEAT-RAW.json", "w"), indent=1)
-print("\nRAW RESULTS SAVED: TEAM-C-CROSSSEAT-RAW.json")
+print("\nRAW RESULTS SAVED (C5-revised scanner)")

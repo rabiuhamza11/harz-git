@@ -30,6 +30,7 @@
   "nimc-v3.html": {
    "found": true,
    "parsed": true,
+   "comment_span_chars": 11292,
    "fields": {
     "url": "https://nimc.gov.ng",
     "captured": "2026-10-14T05:42:58.702971+00:00",
@@ -43,6 +44,7 @@
   "cac-v2.html": {
    "found": true,
    "parsed": true,
+   "comment_span_chars": 296,
    "fields": {
     "url": "https://www.cac.gov.ng/",
     "captured": "2026-10-14T05:16:05.960596+00:00",
@@ -56,12 +58,16 @@
   "health-v2.html": {
    "found": true,
    "parsed": false,
-   "verdict": "FOUND BUT UNCLOSED (no balanced JSON within 100KB of marker \u2014 TRUNCATED stamp)"
+   "comment_span_chars": 19999,
+   "truncation_boundary_char": 19999,
+   "verdict": "TRUNCATED at char 19,999 of span 19,999"
   },
   "immigration-v3-final.html": {
    "found": true,
    "parsed": false,
-   "verdict": "FOUND BUT UNCLOSED (no balanced JSON within 100KB of marker \u2014 TRUNCATED stamp)"
+   "comment_span_chars": 20000,
+   "truncation_boundary_char": 19984,
+   "verdict": "TRUNCATED at char 19,984 of span 20,000"
   }
  }
 }
