@@ -22,7 +22,7 @@ def rendered_dom(url):
     r = subprocess.run(["curl", "-s", "-m", "90", "-X", "POST",
         f"https://api.cloudflare.com/client/v4/accounts/{A1}/browser-rendering/content",
         "-H", f"Authorization: Bearer {tok}", "-H", "content-type: application/json",
-        "-d", json.dumps({"url": url})], capture_output=True, text=True)
+        "-d", json.dumps({"url": url, "waitForTimeout": 8000})], capture_output=True, text=True)
     d = json.loads(r.stdout)
     if not d.get("success"):
         raise RuntimeError("browser-rendering failed: " + json.dumps(d)[:200])
@@ -37,8 +37,9 @@ def fetch(url, referer):
         code = 0
     if code != 200:
         return None, None
+    acc = "text/css,*/*;q=0.1" if ("fonts.googleapis" in url or url.split("?")[0].endswith(".css")) else "*/*"
     r = subprocess.run(["curl", "-skL", "-m", "40", "-A", UA["User-Agent"],
-        "-e", referer, url], capture_output=True)
+        "-e", referer, "-H", "Accept: " + acc, url], capture_output=True)
     if r.returncode != 0 or not r.stdout:
         return None, None
     ct = None
