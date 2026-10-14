@@ -1,0 +1,60 @@
+{
+ "nimc-v3.html": {
+  "tl_outside_scripts": 0,
+  "tl_in_attributes": 0,
+  "tl_in_stamp_resource_urls": 0,
+  "ext_woff_refs_nondata": 4,
+  "woff_examples": [
+   "https://fonts.gstatic.com/s/instrumentsans/v4/pxitypc9vsfdm051uf6kvwgkfosbsnnpoozan0linhgpcwnu2zgrqxp6prwm.woff2",
+   "https://fonts.gstatic.com/s/instrumentsans/v4/pxitypc9vsfdm051uf6kvwgkfosbsnnpoozan0linhgpcwnu15grqxp6pq.woff2",
+   "https://fonts.gstatic.com/s/instrumentsans/v4/pxitypc9vsfdm051uf6kvwgkfosxq0gsqv8toedpibnr0she1zuwi3hkpa.woff2"
+  ],
+  "tl_examples_outside": []
+ },
+ "cac-v2.html": {
+  "tl_outside_scripts": 0,
+  "tl_in_attributes": 0,
+  "tl_in_stamp_resource_urls": 0,
+  "ext_woff_refs_nondata": 0,
+  "woff_examples": [],
+  "tl_examples_outside": []
+ },
+ "health-v2.html": {
+  "tl_outside_scripts": 0,
+  "tl_in_attributes": 0,
+  "tl_in_stamp_resource_urls": 0,
+  "ext_woff_refs_nondata": 20,
+  "woff_examples": [
+   "https://fonts.gstatic.com/s/poppins/v24/pxieyp8kv8jhgfvrjjbecnfhgpezsq.woff2",
+   "https://fonts.gstatic.com/s/poppins/v24/pxieyp8kv8jhgfvrjjnecnfhgpezsq.woff2",
+   "https://fonts.gstatic.com/s/poppins/v24/pxieyp8kv8jhgfvrjjfecnfhgpc.woff2"
+  ],
+  "tl_examples_outside": []
+ },
+ "immigration-v3-final.html": {
+  "tl_outside_scripts": 1,
+  "tl_in_attributes": 0,
+  "tl_in_stamp_resource_urls": 1,
+  "ext_woff_refs_nondata": 6,
+  "woff_examples": [
+   "https://immigration.gov.ng/wp-content/themes/thegov/fonts/flaticon/flaticon.woff2",
+   "https://immigration.gov.ng/wp-content/themes/thegov/fonts/flaticon/flaticon.woff",
+   "https://immigration.gov.ng/wp-content/plugins/elementor/assets/lib/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0"
+  ],
+  "tl_examples_outside": [
+   "${e?.bg?.image.src}"
+  ]
+ },
+ "cbn-live.html": {
+  "tl_outside_scripts": 0,
+  "tl_in_attributes": 0,
+  "tl_in_stamp_resource_urls": 0,
+  "ext_woff_refs_nondata": 34,
+  "woff_examples": [
+   "https://fonts.gstatic.com/s/lato/v25/s6u8w4bmutphjxsaui-qnixg7eu0.woff2",
+   "https://fonts.gstatic.com/s/lato/v25/s6u8w4bmutphjxsaxc-qnixg7q.woff2",
+   "https://fonts.gstatic.com/s/lato/v25/s6u9w4bmutphh7usswapgq3q5d0n7w.woff2"
+  ],
+  "tl_examples_outside": []
+ }
+}
