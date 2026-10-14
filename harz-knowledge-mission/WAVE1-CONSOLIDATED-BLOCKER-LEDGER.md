@@ -50,3 +50,24 @@ CONTRADICTION RECORDED (Team F duty, Oct 14): a later desk forward states "rende
 RECEIPT 189 (convergence): the ledger entry for health-v2 now reads identically on all three records — both dependency classes, 60/61 external CSS links and 54 rendering-path font sources to moh.dotmac.ng, immigration/NIMC/CAC clean on fonts. Wave-2 scanner rule absorbed as standing policy on all seats. Wave 1 remains open pending the reports above.
 
 Nothing merged, nothing repaired, protected state frozen. This ledger updates as the pending reports land; entries are evidence-cited and no number here is unmeasured.
+
+
+## RULING RECEIPT — WAVE 1 FINAL ADJUDICATION (owner, Oct 14, 2026)
+
+Team F's final report (175ee9e) received. Ruling: WAVE-1 READ-ONLY RECON = CONDITIONALLY ACCEPTED. FINAL SYSTEM ACCEPTANCE = WITHHELD. This ledger remains the consolidated Wave-1 evidence record.
+
+Per-team rulings: A conditional acceptance maintained; B partial completion recorded, acceptance open (NIS/NCDC NOT-TESTED); C artifact identity accepted for the measured artifacts; D accepted within the tested scope; E measured state accepted, population + quarantine decisions open. The 12,722-record index absence must NOT be read as 12,722 corrupt or deleted docs — disposition depends on the canonical-corpus and quarantine rulings.
+
+Blockers 1-5 (stamp truncation; immigration CSS; health CSS; health fonts; template-literal class): REMEDIATION CANDIDATES APPROVED FOR PLANNING; EXECUTION NOT AUTHORIZED. Blocker 6 (CAC): separate capture required, challenge shell preserved. Blocker 7 (CBN): blocked pending artifact handoff. Blockers 8-9 (D-3 canonical; quarantine): RESERVED FOR EXPLICIT OWNER DECISION. Blocker 10 (counter deltas + marker vocabulary): open pending reconciliation against authoritative ledgers; marker semantics defined per object without retroactively changing existing evidence meaning.
+
+Five isolated owner decisions recorded: A canonical corpus OPEN (no population replacement/deletion/reclassification until D-3 package presented); B quarantine disposition OPEN (quarantine in force; no release/delete/rewrite/silent reclassification; package must separate body integrity, source identity, historical identity, eligibility — digest check alone resolves none of the four); C provenance repair PLANNING APPROVED (new candidate artifacts, never in-place rewrites; complete machine-readable provenance; malformed/truncated output rejected); D offline dependency repair PLANNING APPROVED (complete dependency inventories incl. nested CSS imports + fonts + dynamic resources; acceptance target = verified offline behavior with honest disclosure, not zero-URL spot checks); E capture-pipeline correction PLANNING APPROVED (regression-tested genuine-URL vs JS-expression distinction; SMEDAN D-5 gets its own evidence and regression case, not assumed identical to immigration).
+
+Required handoffs before final closure: (1) Team B raw six-law matrix + authoritative D-0..D-6 definitions; (2) CBN offline pack + identity metadata; (3) authorized health-v2 serving path; (4) Desk A remaining reports with immutable evidence refs; (5) D-3 authoritative definition + proposed ruling; (6) quarantine eligibility + identity evidence.
+
+Billion-mission boundary (owner, verbatim substance): the 12,689,085,940 attested figure is recorded as a SEPARATELY RECEIPTED MISSION CLAIM, not part of Wave-1 package or corpus acceptance. It does not establish uniqueness, provenance, body identity, or canonical membership. Any future claim about that population must name the counting unit, dedup rule, attestation criteria, and exact evidence anchor. No acceptance may be inferred from a mission-level count.
+
+Delivery constraint recorded: integration-credit exhaustion is a delivery constraint, not an evidence failure. Pending uploads (Vision-V2 PDF, Team F raw report file) remain OUTSTANDING and undelivered until the receiving side confirms access.
+
+Binding execution boundaries (unchanged): no repair of frozen artifacts; no merge or deployment change; no quarantine release; no canonical-corpus replacement; no acceptance inferred from a mission-level count. Every remediation candidate must receive a new identity, independent verification, and a separate acceptance ruling.
+
+Next milestone (owner's words): not another broad sweep — resolve the two owner decisions, obtain the missing acceptance artifacts, and authorize specific remediation candidates one at a time.
