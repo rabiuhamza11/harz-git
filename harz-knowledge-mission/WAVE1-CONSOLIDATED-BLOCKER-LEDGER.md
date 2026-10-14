@@ -8,7 +8,7 @@
 | Team | Assignment | Status | Evidence |
 |---|---|---|---|
 | A | Visual closure (immigration refs, CBN capture, provenance stamps) | LANDED + ADJUDICATED (conditional acceptance, owner ruling) + reproduced from 2 seats | 2a2c6bd (report), 9a36de0 (ruling receipt), 500f57c (Hauwa seat reproduction), 403ece9 (desk verification) |
-| B | Site acceptance, six-law matrix (styles/images/fonts/search/provenance/offline), per-site pass/fail | NOT LANDED. Honest NOT-TESTED marks expected for NIS and NCDC (other seat / not yet held). Slot open | — |
+| B | Site acceptance, six-law matrix (styles/images/fonts/search/provenance/offline), per-site pass/fail | LANDED per receipt 189 (Team B matrix + font census filed on desk seat); raw report file pending handoff to shared repo. Honest NOT-TESTED marks for NIS and NCDC per original dispatch | receipt 189 (raw pending handoff) |
 | C | Package integrity (hashes, round-trip, 25MB ceiling, deployed-vs-committed) | LANDED from 2 seats, cross-verified | 500f57c, e929b8c, 2a89700, 2f2a4c0 (Hauwa), 403ece9, 6d3af36 (desk) |
 | D | Internetless verification (5,000/5,000 binding, frozen testset, boot pins, text-library, airplane-mode limitation) | LANDED per owner-forwarded adjudication (c8f21a3): 5,000/5,000 binding, identical miss-case across three environments, airplane mode device-only on both seats, live reader matches F1 | c8f21a3 (adjudication record); raw report on desk seat, pending handoff |
 | E | Corpus integrity (shard counts, live seal, quarantine, population-swap re-measure) | LANDED | aec1425 (this repo: seal HOLDS exactly, 1,341,437 docs, quarantine measured absent from index) |
@@ -40,11 +40,13 @@ CONTRADICTION RECORDED (Team F duty, Oct 14): a later desk forward states "rende
 
 ## 3. PENDING (blocks Wave-1 closure)
 
-1. Team B six-law site acceptance report (incl. honest NOT-TESTED for NIS, NCDC).
+1. Desk A's own Teams A, B, C, E execution reports (Desk A seat).
 2. Desk A's own Teams A, B, C, E execution reports.
 3. Offline CBN pack handoff (closes TF-6).
 4. Desk D-number ledger definitions D-0…D-6 full handoff from the out-of-credit desk (this ledger cites only owner-forwarded definitions).
 5. Owner rulings on: stamp re-stamp, Stage 2 CSS embedding, CAC policy, template-literal guard, canonical corpus (D-3), quarantine disposition (TF-8).
 6. A serve path for health-v2 (38MB, over KV limit) to run the TF-3 decisive offline-render experiment.
+
+RECEIPT 189 (convergence): the ledger entry for health-v2 now reads identically on all three records — both dependency classes, 60/61 external CSS links and 54 rendering-path font sources to moh.dotmac.ng, immigration/NIMC/CAC clean on fonts. Wave-2 scanner rule absorbed as standing policy on all seats. Wave 1 remains open pending the reports above.
 
 Nothing merged, nothing repaired, protected state frozen. This ledger updates as the pending reports land; entries are evidence-cited and no number here is unmeasured.
