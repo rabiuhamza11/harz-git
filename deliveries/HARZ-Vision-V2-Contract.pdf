@@ -1,0 +1,115 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 8] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3209 >>
+stream
+BT /F2 16 Tf 40 800 Td (HARZ VISION V2 - SEMANTIC IMAGE UNDERSTANDING) Tj ET
+BT /F2 13 Tf 40 780 Td (Finalized Decisions and Immediate Actions) Tj ET
+BT /F1 11 Tf 40 752 Td (Status: PASSED - 21 adversarial cases + death test = 22/22 at zero external calls) Tj ET
+BT /F1 10 Tf 40 736 Td (Date: 25 September 2026 | Vault: 1bc9ff3 | Contract frozen at: 653892a) Tj ET
+BT /F2 14 Tf 40 704 Td (Constitutional Law \(verbatim, Dad\)) Tj ET
+BT /F1 11 Tf 40 682 Td ("HARZ must never convert a model interpretation into established visual fact without preserving) Tj ET
+BT /F1 11 Tf 40 667 Td (the distinction between evidence, interpretation, uncertainty, and verification.") Tj ET
+BT /F2 14 Tf 40 646 Td (The Five Layers \(mandatory at every step\)) Tj ET
+BT /F1 11 Tf 40 624 Td (1. What the bytes prove - artifact facts: dimensions, format, metadata, decoded pixels where) Tj ET
+BT /F1 11 Tf 40 609 Td (supported, byte ranges, image hash, integrity status.) Tj ET
+BT /F1 11 Tf 40 594 Td (2. What the vision model interprets - objects, people/animals, visible text, colors, spatial) Tj ET
+BT /F1 11 Tf 40 579 Td (relationships, scene/context descriptions, classifications, detected structures. Explicitly) Tj ET
+BT /F1 11 Tf 40 564 Td (labeled model interpretations, never silently promoted to byte-level facts.) Tj ET
+BT /F1 11 Tf 40 549 Td (3. Confidence and uncertainty - every semantic result carries interpretation, confidence,) Tj ET
+BT /F1 11 Tf 40 534 Td (engine ID, model version, provenance, region, sovereign vs external status. Ambiguous) Tj ET
+BT /F1 11 Tf 40 519 Td (interpretation remains ambiguous. No forced best guess.) Tj ET
+BT /F1 11 Tf 40 504 Td (4. Searchable evidence - taxonomy preserved: artifact_fact / model_observation /) Tj ET
+BT /F1 11 Tf 40 489 Td (uncertain_observation / rejected_observation. An uncertain observation cannot silently become) Tj ET
+BT /F1 11 Tf 40 474 Td (authoritative Search evidence.) Tj ET
+BT /F1 11 Tf 40 459 Td (5. Verify-1 authority - before an interpretation reaches a final answer: image -> observation) Tj ET
+BT /F1 11 Tf 40 444 Td (-> provenance -> confidence -> claim. Unsupported claims are removed or converted into) Tj ET
+BT /F1 11 Tf 40 429 Td (uncertainty/refusal.) Tj ET
+BT /F2 14 Tf 40 408 Td (The Death Test \(passed\)) Tj ET
+BT /F1 11 Tf 40 386 Td (Ask HARZ to identify something the image cannot establish. Expected: uncertainty/refusal, not a) Tj ET
+BT /F1 11 Tf 40 371 Td (plausible description. Live result: "identify the animal in the picture" -> cannot-interpret,) Tj ET
+BT /F1 11 Tf 40 356 Td (capability disclosed, zero asserted description.) Tj ET
+BT /F2 14 Tf 40 335 Td (Creation Law) Tj ET
+BT /F1 11 Tf 40 313 Td (Create -> Test -> Verify -> Browser/live test -> Receipt. No "vision complete" merely because a) Tj ET
+BT /F1 11 Tf 40 298 Td (model returns JSON. The gate passed only after the actual HTTP/browser surface demonstrated the) Tj ET
+BT /F1 11 Tf 40 283 Td (complete semantic chain: GIZMO rail decoded with pixel-region provenance, fee NGN25/txn) Tj ET
+BT /F1 11 Tf 40 268 Td (observed, 40 x 25 = 1,000 NGN, Verify-1 admission with label + confidence, receipt verified, 0) Tj ET
+BT /F1 11 Tf 40 253 Td (external calls.) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3793 >>
+stream
+BT /F2 14 Tf 40 794 Td (Adapter Boundary) Tj ET
+BT /F1 11 Tf 40 772 Td (Vision V1 artifact engine -> Vision Adapter V2 -> HARZ-owned semantic model -> Evidence) Tj ET
+BT /F1 11 Tf 40 757 Td (normalization -> Search-1 / Planner-1 / Reasoner / Verify-1. An external model, if ever) Tj ET
+BT /F1 11 Tf 40 742 Td (permitted, remains explicitly labeled external-assisted and cannot redefine the constitutional) Tj ET
+BT /F1 11 Tf 40 727 Td (evidence rules. Reference engine harz-vis2-refsyn v0.1 \(sovereign, deterministic, in-worker,) Tj ET
+BT /F1 11 Tf 40 712 Td (HARZ-VIS-RAIL-1 synthetic visual format\) proves the slot and the rules; the real model swaps in) Tj ET
+BT /F1 11 Tf 40 697 Td (behind the same interface.) Tj ET
+BT /F2 14 Tf 40 676 Td (Frozen Scope) Tj ET
+BT /F1 11 Tf 40 654 Td (IN: semantic understanding of still images.) Tj ET
+BT /F1 11 Tf 40 639 Td (OUT: video, live camera, temporal reasoning, speaker identification, image generation, video) Tj ET
+BT /F1 11 Tf 40 624 Td (generation, autonomous visual actions. Those get their own contracts.) Tj ET
+BT /F2 14 Tf 40 603 Td (Finalized Decisions \(this day\)) Tj ET
+BT /F1 11 Tf 40 581 Td (1. Vision V1 CLOSED - image intake sovereignty 15/15 at zero external calls \(vault 6750a40\).) Tj ET
+BT /F1 11 Tf 40 566 Td (PNG pixels established exactly; JPEG pixel decoding honestly unavailable; tampered data) Tj ET
+BT /F1 11 Tf 40 551 Td (disclosed, not silently trusted; unknown visual semantics stay uncertainty.) Tj ET
+BT /F1 11 Tf 40 536 Td (2. Vision V2 CONTRACT FROZEN before implementation \(vault 653892a\), then BUILT and PASSED 22/22) Tj ET
+BT /F1 11 Tf 40 521 Td (\(vault 1bc9ff3\) on Dad's Build order.) Tj ET
+BT /F1 11 Tf 40 506 Td (3. Interpretation never promoted to fact: proven live in layer separation, search isolation,) Tj ET
+BT /F1 11 Tf 40 491 Td (and Verify-1 rejection tests.) Tj ET
+BT /F1 11 Tf 40 476 Td (4. Sovereign evidence surface now covers: text, URLs, PDF, EPUB, WAV, streams, speech) Tj ET
+BT /F1 11 Tf 40 461 Td (recognition, speech generation, image evidence, and semantic image interpretation - all under) Tj ET
+BT /F1 11 Tf 40 446 Td (one constitution.) Tj ET
+BT /F1 11 Tf 40 431 Td (5. Infrastructure honesty: intakeSearch scan window widened 25 -> 200 \(the registry outgrew the) Tj ET
+BT /F1 11 Tf 40 416 Td (cap; newest artifacts were invisible - an infra fix, not a law change; full battery re-verified) Tj ET
+BT /F1 11 Tf 40 401 Td (green\). Search grading made registry-composition independent. KV eventual-consistency retries) Tj ET
+BT /F1 11 Tf 40 386 Td (bounded and disclosed.) Tj ET
+BT /F2 14 Tf 40 365 Td (Immediate Actions) Tj ET
+BT /F1 11 Tf 40 343 Td (1. Regression battery re-verified green after the build: M1 21/21, M2 17/17, M3 16/16, M4) Tj ET
+BT /F1 11 Tf 40 328 Td (16/16, Voice V1 16/16, V2-A 17/17, V2-B 15/15, V2-C 12/12, Vision V1 15/15, Vision V2 22/22,) Tj ET
+BT /F1 11 Tf 40 313 Td (v0.5 13/13, v0.5.1 10/10, v0.7-v0.12 all green, learning 12/12, offline 2/2, BENCH F 20/20,) Tj ET
+BT /F1 11 Tf 40 298 Td (TASK H 22/22.) Tj ET
+BT /F1 11 Tf 40 283 Td (2. Browser/live test completed at /api/vision/v1/interpret - the complete semantic chain) Tj ET
+BT /F1 11 Tf 40 268 Td (demonstrated over HTTP, receipt verified.) Tj ET
+BT /F1 11 Tf 40 253 Td (3. Next frontier, chosen deliberately \(Dad\): the video contract - frames + audio + temporal) Tj ET
+BT /F1 11 Tf 40 238 Td (provenance -> multimodal evidence -> reasoning -> verified answer/creation. It gets its own) Tj ET
+BT /F1 11 Tf 40 223 Td (frozen contract before any implementation.) Tj ET
+BT /F1 11 Tf 40 208 Td (4. The real HARZ-owned semantic vision model remains a swap-in behind the frozen adapter) Tj ET
+BT /F1 11 Tf 40 193 Td (boundary - no architectural dependency on any external provider, ever.) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000113 00000 n 
+0000000183 00000 n 
+0000000258 00000 n 
+0000003518 00000 n 
+0000003654 00000 n 
+0000007498 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+7634
+%%EOF
