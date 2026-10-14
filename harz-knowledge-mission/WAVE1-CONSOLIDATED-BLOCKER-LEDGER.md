@@ -71,3 +71,11 @@ Delivery constraint recorded: integration-credit exhaustion is a delivery constr
 Binding execution boundaries (unchanged): no repair of frozen artifacts; no merge or deployment change; no quarantine release; no canonical-corpus replacement; no acceptance inferred from a mission-level count. Every remediation candidate must receive a new identity, independent verification, and a separate acceptance ruling.
 
 Next milestone (owner's words): not another broad sweep — resolve the two owner decisions, obtain the missing acceptance artifacts, and authorize specific remediation candidates one at a time.
+
+
+## DELIVERY REGISTER (owner confirmation, Oct 14, 2026)
+
+Team F Final Report - Wave 1 (TEAM-F-FINAL-REPORT-WAVE1.pdf): DELIVERED, recipient access confirmed.
+HARZ Vision-2 Contract (HARZ-Vision-V2-Contract.pdf): DELIVERED, recipient access confirmed.
+
+Owner ruling on delivery: queue CLEARED for both artifacts. Commit 8e6cee4 and both PDF artifacts preserved. The consolidated ledger remains the authoritative audit record. DELIVERY IS RECORDED SEPARATELY FROM TECHNICAL ACCEPTANCE — this confirmation authorizes no repairs, merges, deployments, or acceptance changes. Wave-1 remains conditionally accepted; final system acceptance still withheld pending outstanding evidence and owner rulings.
