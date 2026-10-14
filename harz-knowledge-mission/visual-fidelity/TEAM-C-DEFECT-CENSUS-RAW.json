@@ -57,4 +57,92 @@
   ],
   "tl_examples_outside": []
  }
+}{
+ "health_font_object_census": {
+  "raw_fontface_blocks": 105,
+  "unique_families": 12,
+  "unique_keys": 32,
+  "blocks_with_data_uri": 51,
+  "blocks_with_external_url": 54,
+  "keys_final_declaration_embedded": 17,
+  "keys_final_declaration_external": 15,
+  "keys_external_only": 15,
+  "external_only_keys": [
+   [
+    "poppins",
+    "100",
+    "italic"
+   ],
+   [
+    "poppins",
+    "200",
+    "italic"
+   ],
+   [
+    "poppins",
+    "300",
+    "italic"
+   ],
+   [
+    "poppins",
+    "400",
+    "italic"
+   ],
+   [
+    "poppins",
+    "500",
+    "italic"
+   ],
+   [
+    "poppins",
+    "600",
+    "italic"
+   ],
+   [
+    "poppins",
+    "700",
+    "italic"
+   ],
+   [
+    "poppins",
+    "800",
+    "italic"
+   ],
+   [
+    "poppins",
+    "900",
+    "italic"
+   ],
+   [
+    "poppins",
+    "100",
+    "normal"
+   ],
+   [
+    "poppins",
+    "200",
+    "normal"
+   ],
+   [
+    "poppins",
+    "500",
+    "normal"
+   ],
+   [
+    "poppins",
+    "700",
+    "normal"
+   ],
+   [
+    "poppins",
+    "800",
+    "normal"
+   ],
+   [
+    "poppins",
+    "900",
+    "normal"
+   ]
+  ]
+ }
 }
