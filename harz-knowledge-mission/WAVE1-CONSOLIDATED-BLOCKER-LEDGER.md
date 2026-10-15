@@ -109,3 +109,20 @@ All queries read-only. No repairs, no merges, no stubs, no key rotations execute
    - master docs: 1,342,482 rows; metadata payload ~130MB with text column blanked (file size stays ~3.85GB until a VACUUM, which is NOT authorized — recorded).
    - fx_fts: 1,329,429 rows (unchanged, frozen index unaffected by sharding — plan claim consistent).
    - Billing math CHECKS OUT: D1 bills account-total; included 5GB then ~$0.75/GB-mo; 17.44GB now = ~$9.3/mo ALREADY LIVE; 25GB combined cap = ~$15/mo. NOTE FOR OWNER: zero-budget law is already exceeded by storage reality (~$9.3/mo at current state); D-B sets the ceiling on an already-billing resource.
+
+## OWNER COST RULING — "ANYTHING MONEY, WE ARE OUT" (Oct 15, 12:05 WAT)
+
+D-B (25GB cap, ~$15/mo): REJECTED by owner. D-C (enwiki 1M subset): no new budget; scope freezes at what is already loaded. No new paid anything.
+
+FACTS THIS RULING COLLIDES WITH (measured, this seat):
+1. The account is ALREADY on the Workers PAID plan (required: free plan caps D1 at 5GB total; the account holds 17.44GB, impossible on free tier).
+2. Current billing is therefore ALREADY LIVE: ~$5/mo plan + ~$9.3/mo storage over the 5GB inclusion = ~$14/mo, recurring, independent of any new cap decision.
+3. If that existing bill cannot be paid, Cloudflare suspension puts ALL 41 D1 databases, all workers, and the whole HARZ stack at risk. This is the single largest standing risk to the mission and it is NOT a future decision — it is current state.
+
+ZERO-COST ENDGAME (decision package drafted, NOTHING executed — every step owner-ruled):
+a. Stop bulk ingestion now (enwiki writer paused) — stops new paid-storage growth. Trickle continues only by explicit order.
+b. VACUUM the docs table: file is ~3.85GB with only ~130MB live payload (text blanked by FX-2 migration; pages still allocated). VACUUM reclaims ~3.7GB. Requires owner authorization (state change; Migration Protocol gates apply; read paths unaffected).
+c. Move the 9.04GB bodies store OFF D1 to a free-tier store (R2 free tier: 10GB, zero egress fees; R2 was parked Oct 12 for technical reasons — cost pressure reopens the question; own hardware is the fully-sovereign alternative). Requires Migration Protocol v1 gates + reader routing change (deployment, owner-ruled).
+d. End state: account D1 under 5GB → downgrade to Workers FREE plan → $0/mo recurring. All HARZ services that fit free-tier limits stay live.
+
+The shard plan (0198afc) is PARKED: shards are cost-neutral (billing is account-total) and only make sense if a raised cap is affordable. Its routing design remains valid evidence for the zero-cost endgame.
