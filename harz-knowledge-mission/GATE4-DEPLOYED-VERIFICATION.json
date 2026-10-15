@@ -1,0 +1,11 @@
+{
+ "deployed_index_rows": 29091,
+ "deployed_bundles": 291,
+ "byte_exact": 29091,
+ "mismatches": 0,
+ "duplicate_blocked": true,
+ "corruption_detected": true,
+ "truncation_detected": true,
+ "reader_ok": true,
+ "verdict": "PASS"
+}
