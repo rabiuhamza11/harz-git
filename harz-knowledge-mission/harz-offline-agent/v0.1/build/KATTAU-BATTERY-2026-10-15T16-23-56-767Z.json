@@ -1,0 +1,73 @@
+{
+  "tool": "kattau-battery v0.1",
+  "started": "2026-10-15T16:23:56.767Z",
+  "cases": [
+    {
+      "name": "G1 frozen battery top1 (>=19)",
+      "pass": true,
+      "top1": 19
+    },
+    {
+      "name": "G1 frozen battery top3 (>=19)",
+      "pass": true,
+      "top3": 19
+    },
+    {
+      "name": "G1 kit seal present (sealed pack family)",
+      "pass": true,
+      "kit_sha256": "176b4e94ae4a9b3d…"
+    },
+    {
+      "name": "A1 greeting EN",
+      "pass": true
+    },
+    {
+      "name": "A2 greeting HA (sannu -> Hausa reply)",
+      "pass": true
+    },
+    {
+      "name": "A3 historic defect fixed: 17x23 = 391",
+      "pass": true
+    },
+    {
+      "name": "A4 exact big math",
+      "pass": true
+    },
+    {
+      "name": "A5 precedence 12+7*3 = 33",
+      "pass": true
+    },
+    {
+      "name": "A6 knowledge PASS + receipt",
+      "pass": true
+    },
+    {
+      "name": "A7 refusal beyond kit",
+      "pass": true
+    },
+    {
+      "name": "A8 identity = KNOWN LIMITATION",
+      "pass": true
+    },
+    {
+      "name": "A9 time PASS with device-clock label",
+      "pass": true
+    },
+    {
+      "name": "A10 label truthfulness + providers_called",
+      "pass": true,
+      "expect": "truthful either way"
+    },
+    {
+      "name": "A11 no provider calls claim",
+      "pass": true
+    },
+    {
+      "name": "A12 receipt shape (verdict/label/providers)",
+      "pass": true
+    }
+  ],
+  "failures": 0,
+  "finished": "2026-10-15T16:23:57.396Z",
+  "verdict": "PASS"
+}
