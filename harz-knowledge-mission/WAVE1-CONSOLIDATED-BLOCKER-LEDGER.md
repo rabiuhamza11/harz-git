@@ -79,3 +79,21 @@ Team F Final Report - Wave 1 (TEAM-F-FINAL-REPORT-WAVE1.pdf): DELIVERED, recipie
 HARZ Vision-2 Contract (HARZ-Vision-V2-Contract.pdf): DELIVERED, recipient access confirmed.
 
 Owner ruling on delivery: queue CLEARED for both artifacts. Commit 8e6cee4 and both PDF artifacts preserved. The consolidated ledger remains the authoritative audit record. DELIVERY IS RECORDED SEPARATELY FROM TECHNICAL ACCEPTANCE — this confirmation authorizes no repairs, merges, deployments, or acceptance changes. Wave-1 remains conditionally accepted; final system acceptance still withheld pending outstanding evidence and owner rulings.
+
+## TF-9 INVESTIGATION RESULT — COUNTER DELTAS RESOLVED BY MEASUREMENT (Team F, Oct 15, read-only)
+
+**Delta 1 (band2_docs 430,515 vs range 428,715, +1,800): RESOLVED.** Authoritative ledger shows exactly 430,515 rows in ids 900,001..1,330,515 — the counter is arithmetically exact for an upper bound of 1,330,515, not 1,328,715. Measured: exactly 1,800 docs exist at ids 1,328,716..1,330,515 (the FIRST 1,800 freeze-violation docs). The FX builder saw/counted that first violating batch; band2_last_id=1,328,715 records only the parity boundary. The mystery was the boundary, not the count. Consequence: the claim "FX index frozen at parity" is NOT strictly true — band2 carries up to 714 beyond-parity FTS rows (429,429 indexed vs 428,715 parity docs; true figure between 0 and 714 because the 1,086 unindexed docs cannot be placed by id post-migration).
+
+**Delta 2 (fx_fts 1,329,429 vs band-sum 1,330,515, -1,086): RESOLVED.** band2 FTS rows = 1,329,429 - 900,000 (bands 0+1) = 429,429; 430,515 seen - 429,429 indexed = 1,086 docs that produced no FTS row (empty/unindexable at build). Exact id split INDETERMINATE by measurement: the bodies store is keyed by content_hash and the docs-table text column was blanked by the FX-2 body migration. Recorded as indeterminate, not guessed.
+
+## TF-11 — NEW FINDING: POST-SEAL WRITES (Team F, Oct 15, read-only; alert class)
+
+Docs table now reads MAX(id)=1,342,482 = COUNT(*) (contiguous). The verified seal was 1,341,437 (Team E, Oct 14, last write 04:58:03.212Z). Measured: +1,045 rows beyond the seal at ids 1,341,438..1,342,482, fetched_at 2026-10-14T05:02:18Z through 2026-10-15T08:05:36Z — writes began 4 minutes after the seal's last write and continued until this morning. Sources: dump-enwiki 715, cloud-wave 324, bulk-enwiki 6. Count stable across a 90-second re-measurement: writes have stopped.
+
+**Open door identified (measured, not assumed):** the freeze enforcement deleted the corpus-wave worker, but harz-million-corpus /api/ingest-wave (WAVE_KEY route) remains LIVE with no cron — the post-seal writes are direct POSTs through that door by external million-mission writers holding WAVE_KEY, who can label any source (cloud-wave labels included). Honest self-disclosure by this seat: the Oct 12 v0.4.0 redeploy of harz-million-corpus (1B target + attested UI) kept ingest-wave live; the deploy predates the Oct 14 enforcement, but the door this seat verified with a test wave is the same door these writers used.
+
+**Post-parity population now totals 13,767 docs** (ids 1,328,716..1,342,482): the original 12,722 quarantine class + these 1,045. DISPOSITION RESERVED TO OWNER (Decision B framework; no classification of the new 1,045 as quarantine is made here — that is the owner's ruling).
+
+**Recommendation awaiting owner order (no action taken):** close the ingest door (WAVE_KEY rotation or ingest-route stub) to end further post-seal writes. This is a deployment change under the Oct 14 boundary and requires explicit authorization.
+
+All queries read-only. No repairs, no merges, no stubs, no key rotations executed. Evidence: query transcripts above, reproducible against the same ledgers.
