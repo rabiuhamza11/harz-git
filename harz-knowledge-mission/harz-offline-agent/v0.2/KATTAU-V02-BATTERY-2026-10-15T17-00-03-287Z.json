@@ -1,0 +1,93 @@
+{
+  "tool": "kattau-battery-v02",
+  "started": "2026-10-15T17:00:03.287Z",
+  "cases": [
+    {
+      "name": "G1 frozen parity top1 (>=19)",
+      "pass": true,
+      "top1": 19
+    },
+    {
+      "name": "G1 frozen parity top3 (>=19)",
+      "pass": true,
+      "top3": 19
+    },
+    {
+      "name": "kit v0.2 = 5000 sealed + eco pack",
+      "pass": true,
+      "docs": 5084,
+      "eco": 84
+    },
+    {
+      "name": "eco docs at rowids 200000+ (never touching sealed ids)",
+      "pass": true
+    },
+    {
+      "name": "kit v0.2 seal present",
+      "pass": true
+    },
+    {
+      "name": "R1 greeting EN",
+      "pass": true
+    },
+    {
+      "name": "R2 greeting HA",
+      "pass": true
+    },
+    {
+      "name": "R3 digit arithmetic 17x23",
+      "pass": true
+    },
+    {
+      "name": "R4 big math exact",
+      "pass": true
+    },
+    {
+      "name": "R5 refusal beyond kit",
+      "pass": true
+    },
+    {
+      "name": "R6 identity = KNOWN LIMITATION",
+      "pass": true
+    },
+    {
+      "name": "R7 knowledge PASS (Taraba River)",
+      "pass": true
+    },
+    {
+      "name": "U1 \"what is HARZ\" answers from eco pack (yesterday: refused)",
+      "pass": true
+    },
+    {
+      "name": "U2 eco platform query (HarzDM)",
+      "pass": true
+    },
+    {
+      "name": "U3 word-form arithmetic 17x23",
+      "pass": true
+    },
+    {
+      "name": "U4 percent-of 20% of 240 = 48",
+      "pass": true
+    },
+    {
+      "name": "U5 comparison 17 or 23",
+      "pass": true
+    },
+    {
+      "name": "U6 local fact key",
+      "pass": true
+    },
+    {
+      "name": "U7 farewell",
+      "pass": true
+    },
+    {
+      "name": "U8 providers never called",
+      "pass": true
+    }
+  ],
+  "failures": 0,
+  "finished": "2026-10-15T17:00:04.643Z",
+  "verdict": "PASS"
+}
