@@ -1,0 +1,13 @@
+{
+ "bundles": 291,
+ "raw_bytes": 233592122,
+ "compressed_bytes": 82438170,
+ "ratio": 2.83,
+ "byte_exact": 29091,
+ "mismatches": 0,
+ "corruption_detected": true,
+ "truncation_detected": true,
+ "inventory_complete": true,
+ "store_size": 89587712,
+ "verdict": "PASS"
+}
