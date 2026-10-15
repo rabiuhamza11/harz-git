@@ -139,3 +139,24 @@ Either path 2 or path 3 alone closes the gap. Path 3 is build-work not deletion 
 
 ## VAULT CROSS-CHECK RESOLUTION (objects and seats named)
 Two sovereign vault deployments exist, both statements true: THIS account's harz-sovereign-store-00 (file 0.28GB, 3,689 bundles, 89,629 docs, measured from this seat) carries the real v0.2 load; the sibling's vault on hamzarabiu390 (7 docs, 1 bundle, account census 1.053GB/5GB, their seat) is verified at design scale. The wall is symmetric. Compression planning number: 2.5x (both seats concur; 13.92x was a non-representative test batch).
+
+## RULING RECEIPT (owner, Oct 15): PATH 3 APPROVED — STORAGE CLOSURE
+Full ruling recorded: Path 3 (v0.2-style compression) approved as primary; preservation mandatory (no mine DB deletion/consolidation/overwrite; no retained body dropped; evacuation copy + SHA-256 intact); compression must prove result (pre-compression measurement, inventories, byte-for-byte integrity vs original hashes, interrupted-write/restart/partial/duplicate/corruption tests, no replacement of originals until all integrity tests + rollback readiness pass); 5GB ceiling is a hard gate (measured usage, not projection; documented margin; zero unexplained missing/altered bodies; zero integrity failures; workers functioning); Path 2 deferred pending chain-state dependency evidence (absence of bound workers alone is not safety); evacuation and curation remain separate gates; two vault deployments kept separately identified; gate-by-gate execution with commit+evidence+pass/fail recorded; unexpected discrepancy = stop and investigate, never automatic cleanup.
+
+## GATE 1 — AUTHORITATIVE PRE-COMPRESSION MEASUREMENT (Team F, Oct 15) — PASS
+Keep-class inventory (hunted-recrawl, hunted-stage2, web, cgspace-unspecified, door-onefile-v06, team-b-recovery, cloud-wave pending Decision B, dump-enwiki): 29,091 docs, 29,091 distinct hashes, ALL 29,091 bodies found in the verified evacuation copy (0 missing). Keep-class body text: 219,370,011 bytes (219MB) — this CORRECTS the curation draft's 1.9GB estimate (that figure was file-arithmetic, not measured text; the measured keep text is 219MB). Sample battery: 1,000 docs, 2.87x gzip-9, roundtrip byte-exact.
+
+## GATE 2 — FULL BUNDLE BUILD + COMPLETE VERIFICATION BATTERY (Team F, Oct 15) — PASS
+Built the complete keep-class bundle store locally (mirrors v0.2 layout: bundles table + doc_index, 100 docs/bundle): 291 bundles, raw 233,592,122B -> compressed 82,438,170B = 2.83x, store file 89,587,712B (90MB incl. index).
+Verification per the ruling, ALL COMPLETE (not sampled):
+- FULL VERIFY: 29,091/29,091 bodies decompressed byte-exact vs their original sha256, 0 mismatches
+- Corruption detection: PASS (byte-flip caught by gzip CRC)
+- Truncation/partial-bundle: PASS (detected)
+- Duplicate handling: PASS (bundle seq PK blocked)
+- Inventory reconciliation: 29,091 indexed, unique, covers the complete keep set exactly
+- Cloud-wave/quarantine-class bodies INCLUDED in the store (preserved pending Decision B; nothing deleted)
+- Rollback readiness: the authoritative 9.04GB bodies DB is UNTOUCHED; the 8.15GB evacuation copy + sha256 receipt intact; the local store is a parallel artifact, nothing replaced.
+Evidence: GATE1-MEASUREMENT.json + GATE2-BUNDLE-VERIFICATION.json committed.
+
+## MEASURED MARGIN ANSWER (the ruling's GB/GiB question)
+Account total measured: 17,441,652,736 bytes = 17.442 decimal GB = 16.24 binary GiB (the desk's 17.44GB was decimal; API reports plain bytes). Post-curation + compressed projection: corpus stack ~0.52GB (keep-store 0.09 + master rebuild ~0.13 + fx rebuild ~0.3) + non-corpus 3.56GB = ~4.08GB account total. This passes BOTH bases with margin: 920MB under 5GB decimal, 1.29GB under 5GiB binary. The fragile 180MB margin is gone; measured margin ~5x larger. Projection remains a projection until the D1 deployment gate measures actual usage.
