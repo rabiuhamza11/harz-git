@@ -1,0 +1,38 @@
+[
+ {
+  "source": "Wikimedia projects (all languages and projects, content pages)",
+  "docs_attested": 132842383,
+  "endpoint": "per-wiki siteinfo statistics of 948 live wikis (sitematrix)",
+  "verified_at": "2026-10-14T07:58:47Z",
+  "note": "articles/content pages summed per wiki; wikidatawiki=entities, commons=files described",
+  "license": "CC BY-SA 4.0 / CC0 / PD",
+  "tier": "full-content-mirror-available"
+ },
+ {
+  "source": "OpenAlex scholarly works (subsumes Crossref/PubMed/arXiv/Semantic-Scholar indices)",
+  "docs_attested": 326886422,
+  "endpoint": "https://api.openalex.org/works?per-page=1 (meta.count)",
+  "verified_at": "2026-10-14T07:58:48Z",
+  "note": "counted once as union; Crossref 187,543,468 and PubMed 41,271,858 verified separately but NOT added (overlap)",
+  "license": "CC0",
+  "tier": "open-api-index"
+ },
+ {
+  "source": "Internet Archive text-collection items (books, journals, documents)",
+  "docs_attested": 52692957,
+  "endpoint": "archive.org advancedsearch mediatype:texts numFound",
+  "verified_at": "2026-10-14T07:58:49Z",
+  "note": "items; full text of millions PD items directly downloadable",
+  "license": "various incl. PD",
+  "tier": "petabyte-open-archive"
+ },
+ {
+  "source": "OpenStreetMap planet objects (nodes+ways+relations)",
+  "docs_attested": 12176664178,
+  "endpoint": "openstreetmap.org/stats/data_stats.html (official daily report)",
+  "verified_at": "2026-10-14T07:58:50Z",
+  "note": "nodes 10,937,054,434 + ways 1,224,700,630 + relations 14,909,114; we hold verified Nigeria subset (677MB) in vault",
+  "license": "ODbL 1.0",
+  "tier": "dump-available (subset held)"
+ }
+]

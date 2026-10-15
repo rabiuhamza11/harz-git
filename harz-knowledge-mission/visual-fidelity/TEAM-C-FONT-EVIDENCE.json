@@ -1,0 +1,5 @@
+{
+ "evidence": "verbatim external-only @font-face block, offset 20903691 of sha-63750cdf blob",
+ "block": "@font-face { font-family: 'Poppins'; font-style: italic; font-weight: 100; font-display: swap; src: url(https://moh.dotmac.ng/wp-content/uploads/elementor/google-fonts/fonts/poppins-pxiayp8kv8jhgfvrjjlme0tdmpkzsq.woff2) format('woff2'); unicode-range: U+0900-097F, ...; }",
+ "note": "external host = moh.dotmac.ng (not googleapis, not a data URI). 15 Poppins keys carry external-only declarations of this shape; desk's 'no ext @font-face' scan missed these \u2014 likely their regex bounded block content at first inner brace or searched only gstatic/googleapis hosts. The fa8e618 hypothesis (54 = googleapis font-CSS links + stamp inventory) is disproven by container classification: all 54 url() refs sit INSIDE @font-face blocks, not in link tags or the stamp."
+}
