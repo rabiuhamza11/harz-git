@@ -79,3 +79,50 @@ Team F Final Report - Wave 1 (TEAM-F-FINAL-REPORT-WAVE1.pdf): DELIVERED, recipie
 HARZ Vision-2 Contract (HARZ-Vision-V2-Contract.pdf): DELIVERED, recipient access confirmed.
 
 Owner ruling on delivery: queue CLEARED for both artifacts. Commit 8e6cee4 and both PDF artifacts preserved. The consolidated ledger remains the authoritative audit record. DELIVERY IS RECORDED SEPARATELY FROM TECHNICAL ACCEPTANCE — this confirmation authorizes no repairs, merges, deployments, or acceptance changes. Wave-1 remains conditionally accepted; final system acceptance still withheld pending outstanding evidence and owner rulings.
+
+## TF-9 INVESTIGATION RESULT — COUNTER DELTAS RESOLVED BY MEASUREMENT (Team F, Oct 15, read-only)
+
+**Delta 1 (band2_docs 430,515 vs range 428,715, +1,800): RESOLVED.** Authoritative ledger shows exactly 430,515 rows in ids 900,001..1,330,515 — the counter is arithmetically exact for an upper bound of 1,330,515, not 1,328,715. Measured: exactly 1,800 docs exist at ids 1,328,716..1,330,515 (the FIRST 1,800 freeze-violation docs). The FX builder saw/counted that first violating batch; band2_last_id=1,328,715 records only the parity boundary. The mystery was the boundary, not the count. Consequence: the claim "FX index frozen at parity" is NOT strictly true — band2 carries up to 714 beyond-parity FTS rows (429,429 indexed vs 428,715 parity docs; true figure between 0 and 714 because the 1,086 unindexed docs cannot be placed by id post-migration).
+
+**Delta 2 (fx_fts 1,329,429 vs band-sum 1,330,515, -1,086): RESOLVED.** band2 FTS rows = 1,329,429 - 900,000 (bands 0+1) = 429,429; 430,515 seen - 429,429 indexed = 1,086 docs that produced no FTS row (empty/unindexable at build). Exact id split INDETERMINATE by measurement: the bodies store is keyed by content_hash and the docs-table text column was blanked by the FX-2 body migration. Recorded as indeterminate, not guessed.
+
+## TF-11 — NEW FINDING: POST-SEAL WRITES (Team F, Oct 15, read-only; alert class)
+
+Docs table now reads MAX(id)=1,342,482 = COUNT(*) (contiguous). The verified seal was 1,341,437 (Team E, Oct 14, last write 04:58:03.212Z). Measured: +1,045 rows beyond the seal at ids 1,341,438..1,342,482, fetched_at 2026-10-14T05:02:18Z through 2026-10-15T08:05:36Z — writes began 4 minutes after the seal's last write and continued until this morning. Sources: dump-enwiki 715, cloud-wave 324, bulk-enwiki 6. Count stable across a 90-second re-measurement: writes have stopped.
+
+**Open door identified (measured, not assumed):** the freeze enforcement deleted the corpus-wave worker, but harz-million-corpus /api/ingest-wave (WAVE_KEY route) remains LIVE with no cron — the post-seal writes are direct POSTs through that door by external million-mission writers holding WAVE_KEY, who can label any source (cloud-wave labels included). Honest self-disclosure by this seat: the Oct 12 v0.4.0 redeploy of harz-million-corpus (1B target + attested UI) kept ingest-wave live; the deploy predates the Oct 14 enforcement, but the door this seat verified with a test wave is the same door these writers used.
+
+**Post-parity population now totals 13,767 docs** (ids 1,328,716..1,342,482): the original 12,722 quarantine class + these 1,045. DISPOSITION RESERVED TO OWNER (Decision B framework; no classification of the new 1,045 as quarantine is made here — that is the owner's ruling).
+
+**Recommendation awaiting owner order (no action taken):** close the ingest door (WAVE_KEY rotation or ingest-route stub) to end further post-seal writes. This is a deployment change under the Oct 14 boundary and requires explicit authorization.
+
+All queries read-only. No repairs, no merges, no stubs, no key rotations executed. Evidence: query transcripts above, reproducible against the same ledgers.
+
+## STATE UPDATE — FREEZE LIFT + SHARD PLAN (Team F, Oct 15, read-only)
+
+1. TF-11 SUPERSEDED IN PART (owner ruling 54971cb): the enwiki portion of the post-seal writes is RECLASSIFIED as owner-authorized work; enforcement stood down; the freeze is lifted for WHOLE ingestion (owner, Oct 15 ~09:53 WAT). The ingest-door closure recommendation is WITHDRAWN (the door is intentionally open again). REMAINS OPEN: attribution of the 324 cloud-wave backdated-flush rows (written via the ingest door with a cloud-wave source label — attribution investigation not yet executed).
+
+2. QUARANTINE (blocker TF-8 / Decision B) REOPENS FOR ADJUDICATION (D-D in the shard-plan ruling set): now that ingestion is unfrozen, the four-question evaluation (Decision Package B) can proceed; read-only inspection pass recommended.
+
+3. SHARD PLAN v1 (desk draft 0198afc) — TEAM F VERIFICATION OF ITS MEASURED CLAIMS (read-only, this seat):
+   - bodies rows: 1,349,186 (measured; +20,471 beyond the 1,328,715 migration count — the enwiki writer is actively filling shard-00-to-be RIGHT NOW), payload 7.91GB text. File-size basis ~9.04GB of 10GB (desk-measured, consistent with payload + page overhead). Headroom shrinking at live speed; the desk's caution (no bulk before routing) is CONFIRMED AND QUANTIFIED.
+   - master docs: 1,342,482 rows; metadata payload ~130MB with text column blanked (file size stays ~3.85GB until a VACUUM, which is NOT authorized — recorded).
+   - fx_fts: 1,329,429 rows (unchanged, frozen index unaffected by sharding — plan claim consistent).
+   - Billing math CHECKS OUT: D1 bills account-total; included 5GB then ~$0.75/GB-mo; 17.44GB now = ~$9.3/mo ALREADY LIVE; 25GB combined cap = ~$15/mo. NOTE FOR OWNER: zero-budget law is already exceeded by storage reality (~$9.3/mo at current state); D-B sets the ceiling on an already-billing resource.
+
+## OWNER COST RULING — "ANYTHING MONEY, WE ARE OUT" (Oct 15, 12:05 WAT)
+
+D-B (25GB cap, ~$15/mo): REJECTED by owner. D-C (enwiki 1M subset): no new budget; scope freezes at what is already loaded. No new paid anything.
+
+FACTS THIS RULING COLLIDES WITH (measured, this seat):
+1. The account is ALREADY on the Workers PAID plan (required: free plan caps D1 at 5GB total; the account holds 17.44GB, impossible on free tier).
+2. Current billing is therefore ALREADY LIVE: ~$5/mo plan + ~$9.3/mo storage over the 5GB inclusion = ~$14/mo, recurring, independent of any new cap decision.
+3. If that existing bill cannot be paid, Cloudflare suspension puts ALL 41 D1 databases, all workers, and the whole HARZ stack at risk. This is the single largest standing risk to the mission and it is NOT a future decision — it is current state.
+
+ZERO-COST ENDGAME (decision package drafted, NOTHING executed — every step owner-ruled):
+a. Stop bulk ingestion now (enwiki writer paused) — stops new paid-storage growth. Trickle continues only by explicit order.
+b. VACUUM the docs table: file is ~3.85GB with only ~130MB live payload (text blanked by FX-2 migration; pages still allocated). VACUUM reclaims ~3.7GB. Requires owner authorization (state change; Migration Protocol gates apply; read paths unaffected).
+c. Move the 9.04GB bodies store OFF D1 to a free-tier store (R2 free tier: 10GB, zero egress fees; R2 was parked Oct 12 for technical reasons — cost pressure reopens the question; own hardware is the fully-sovereign alternative). Requires Migration Protocol v1 gates + reader routing change (deployment, owner-ruled).
+d. End state: account D1 under 5GB → downgrade to Workers FREE plan → $0/mo recurring. All HARZ services that fit free-tier limits stay live.
+
+The shard plan (0198afc) is PARKED: shards are cost-neutral (billing is account-total) and only make sense if a raised cap is affordable. Its routing design remains valid evidence for the zero-cost endgame.
