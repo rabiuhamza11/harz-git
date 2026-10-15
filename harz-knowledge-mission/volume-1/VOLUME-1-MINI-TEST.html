@@ -28,11 +28,7 @@ document.getElementById("count").textContent=q?L.length+" results (top 200 shown
 document.getElementById("list").innerHTML=L.map((d,i)=>'<div class="doc" onclick="openDoc('+DOCS.indexOf(d)+')"><b>'+d.t.replace(/</g,"&lt;")+'</b>'+d.d+' — '+d.x.length.toLocaleString()+' chars</div>').join("")}
 async function openDoc(i){const d=DOCS[i];const s=await sha(d.x);const good=s===d.h;
 document.getElementById("viewer").style.display="block";document.getElementById("list").style.display="none";
-document.getElementById("vbody").textContent=(good?"[SHA-256 VERIFIED]
-
-":"[INTEGRITY FAILURE — REFUSED]
-
-")+d.x;
+document.getElementById("vbody").textContent=(good?"[SHA-256 VERIFIED]\n\n":"[INTEGRITY FAILURE - REFUSED]\n\n")+d.x;
 if(!good){document.getElementById("banner").className="bad";document.getElementById("banner").textContent="FAIL-CLOSED: document hash mismatch — content refused."}}
 function closeDoc(){document.getElementById("viewer").style.display="none";document.getElementById("list").style.display="block"}
 async function verifyAll(){let ok=0,bad=0;for(const d of DOCS){if(await sha(d.x)===d.h){ok++}else{bad++}}
