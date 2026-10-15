@@ -29,3 +29,12 @@ Owner-executed on his Infinix (Termux, Node v26.4.0 arm), airplane mode ON:
 GATE E (owner acceptance ruling) requested. On acceptance: v0.2 becomes
 the baseline, web doors (PWA + local file) get the eco pack and skills
 the same hour, v0.1 preserved as rollback.
+
+## GATE E — OWNER ACCEPTANCE (Oct 15, ~18:1x WAT)
+Owner: "Accept."
+=> KATTAU v0.2 IS THE BASELINE. All gates closed on evidence: sandbox
+   battery 20/20, on-device battery 20/20, frozen parity 19/20+19/20 held
+   with the 84-doc eco pack appended, OFFLINE-VERIFIED airplane proof
+   ('what is HARZ' from the eco pack, tcp=REFUSED, dns=DNS-FAIL, 201ms).
+   v0.1 preserved as kattau-v01.mjs (rollback). v0.2 = default kattau.mjs.
+   Web doors (PWA + local file) receive the v0.2 roll-in immediately.
