@@ -14,3 +14,18 @@ REMAINING for v0.2 Gate D: the airplane-mode offline label
 (labels truthfully said ONLINE). The never-waived gate applies to the
 candidate exactly as it did to v0.1. Acceptance + web-door rollout
 await owner word after that label.
+
+## KATTAU v0.2 CANDIDATE — GATE D PASSED (Oct 15, ~17:10 WAT)
+Owner-executed on his Infinix (Termux, Node v26.4.0 arm), airplane mode ON:
+- "what is HARZ" -> PASS from the HARZ ecosystem fact pack,
+  LABEL: OFFLINE-VERIFIED (tcp=REFUSED, dns=DNS-FAIL — interfaces dead),
+  201ms, providers_called: []
+- Receipt on device: kattau-v02-2026-10-15T17-10-02-603Z.json
+- Same-day on-device battery: 20/20 PASS (frozen parity 19/20+19/20,
+  kit 5,084 docs, 7 regressions + 8 upgrade cases green).
+=> The never-waived gate is passed on owner evidence for the candidate.
+   The question that refused on the airplane in v0.1 now answers
+   OFFLINE-VERIFIED in v0.2.
+GATE E (owner acceptance ruling) requested. On acceptance: v0.2 becomes
+the baseline, web doors (PWA + local file) get the eco pack and skills
+the same hour, v0.1 preserved as rollback.
