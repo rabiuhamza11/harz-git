@@ -62,3 +62,15 @@ Prior same-day on-device results stand: battery 15/15, G1 parity
 top1 19/20 top3 19/20, 17x23=391, cold-start defect fixed (dd42477).
 GATE E (owner acceptance ruling) requested. Desktop door (D-4) staged
 next in sequence per D-2.
+
+## GATE E — OWNER ACCEPTANCE (Oct 15, ~17:39 WAT)
+Owner: "Accept."
+=> KATTAU v0.1 PHONE BASELINE IS ACCEPTED. Gates closed:
+   G1 parity 19/20+19/20 (sandbox + device), sandbox battery 15/15,
+   device battery 15/15, G3 offline proof OFFLINE-VERIFIED
+   (tcp=REFUSED, dns=DNS-FAIL), G4 phone gates (6.46MB kit <=15MB,
+   RSS measured ~17MB <=250MB), G6 Infinix physical pass (owner hands,
+   never waived). Defects found+fixed along the way, documented.
+NEXT per D-2 sequential ruling + D-4: DESKTOP DOOR — two-doors pattern:
+   door 1 = CF-hosted installable PWA (Edge https origin), door 2 =
+   same bytes as pure local file. Build begins now.
