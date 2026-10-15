@@ -46,3 +46,19 @@ contain FTS5 syntax chars); battery parity uses the raw object.
   kit via kattau's own first-run path; clean-state verified 15/15.
 - REMAINING for Gate D: airplane-mode phase — offline label not yet
   captured (device network was ON; labels showed ONLINE truthfully).
+
+## GATE D — INFINIX PHYSICAL PASS — EVIDENCE COMPLETE (Oct 15, ~16:36 WAT)
+Owner-executed on his Infinix (Termux, Node v26.4.0 arm), airplane mode ON,
+receipts pasted verbatim:
+- "sannu" -> Hausa greeting, LABEL: OFFLINE-VERIFIED (tcp=REFUSED,
+  dns=DNS-FAIL — interfaces dead), 95ms, providers_called: []
+- "Taraba River" -> knowledge answer with doc id + snippet + honesty
+  label, LABEL: OFFLINE-VERIFIED, 170ms, providers_called: []
+- Receipts on device: kattau-2026-10-15T16-36-06-100Z.json,
+  kattau-2026-10-15T16-36-31-514Z.json
+=> GATE D CLOSED ON OWNER EVIDENCE. The never-waived gate is passed:
+   the small one works with the internet dead, and his receipts prove it.
+Prior same-day on-device results stand: battery 15/15, G1 parity
+top1 19/20 top3 19/20, 17x23=391, cold-start defect fixed (dd42477).
+GATE E (owner acceptance ruling) requested. Desktop door (D-4) staged
+next in sequence per D-2.
