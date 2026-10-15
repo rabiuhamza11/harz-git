@@ -43,3 +43,22 @@ Owner: Gate E accepted phone baseline; D-4 two-doors ordered; built now.
 - Kit rebuilt on open (~300ms) by design (no OPFS persistence in v0.1);
   kit data identical every open (sealed inline bytes).
 - No language model, no WebGPU claims (S-B gating intact).
+
+## V0.2 ROLL-IN TO BOTH WEB DOORS (Oct 15, ~17:2x-17:2x WAT, same-hour per promise)
+Owner acceptance ("Accept", ~18:1x WAT) executed immediately:
+- Phone repo swap (a02192a): v0.2 = default kattau.mjs, v0.1 preserved as
+  kattau-v01.mjs (rollback).
+- Both web doors rebuilt with the v0.2 agent: 84-doc HARZ ecosystem pack
+  merged into the kit (5,084 docs, same kit sha ee08612a… across doors),
+  word-form arithmetic, percent-of, comparisons, local fact keys,
+  farewells, question-wrapper normalization, version labels v0.2.
+- In-build defects found + fixed honestly: else-chain breakage in the
+  v0.2 routing (caught by node --check BEFORE deploy this time),
+  hardcoded "5,000 docs" status line (now reports the true count),
+  stale v0.1 UI labels (now v0.2).
+- BROWSER-VERIFIED (real Chromium): door 1 battery PASS — frozen parity
+  top1 19/20 top3 19/20 held at 5,084 docs, 9/9 agent cases green
+  including "what is HARZ", word-form 17x23, percent-of, comparison;
+  door 2 boots zero-network, kit 199ms, word-form arithmetic answers in
+  1ms with LOCAL FILE label.
+- Owner gate remaining (same law): desktop Edge death test on v0.2.
