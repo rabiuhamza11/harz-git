@@ -18,6 +18,14 @@ const node = process.argv[0];
 const kattau = (q) => execFileSync(node, ['kattau.mjs', q], { encoding: 'utf8' });
 const verdictOf = (out) => (out.match(/VERDICT: (.+)/) || [])[1] || '';
 
+// cold-start honesty: if the kit is not built yet, build it via Kattau's own
+// first-run path instead of failing with a cryptic sqlite error (field defect
+// found on the owner's Infinix Oct 15: battery ran before first kattau run).
+if (!existsSync(KIT)) {
+  console.log('kit not built yet — building via kattau first-run path (~6.5MB, one-time)...');
+  execFileSync(node, ['kattau.mjs', 'Taraba River'], { encoding: 'utf8', stdio: 'pipe' }); // knowledge path triggers kit build
+}
+
 // G1 — frozen battery parity through the same kit + MATCH clause
 const db = new DatabaseSync(KIT, { readOnly: true });
 const sel = db.prepare("SELECT rowid FROM fts WHERE fts MATCH ? ORDER BY rank LIMIT 3");

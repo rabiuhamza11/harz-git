@@ -36,3 +36,13 @@ contain FTS5 syntax chars); battery parity uses the raw object.
   sequence per the D-2 sequential ruling — not started yet.
 - No language model claims anywhere; no WebGPU claims (S-B gating
   intact); harz-ai p4 and sealed kits untouched.
+
+## FIELD TEST RECEIPT — owner's Infinix, Oct 15 ~16:30-16:32 WAT
+- ON-DEVICE battery: 15/15 PASS, G1 parity top1 19/20 top3 19/20.
+- Device kit sha f32c5150… (built on device from sealed shards).
+- 17x23 = 391 computed on device. Knowledge query answered with receipt.
+- DEFECT found on device (battery cold-start before kit build failed
+  with a cryptic sqlite error) — FIXED honestly: battery now builds the
+  kit via kattau's own first-run path; clean-state verified 15/15.
+- REMAINING for Gate D: airplane-mode phase — offline label not yet
+  captured (device network was ON; labels showed ONLINE truthfully).
