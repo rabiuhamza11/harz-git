@@ -126,3 +126,16 @@ c. Move the 9.04GB bodies store OFF D1 to a free-tier store (R2 free tier: 10GB,
 d. End state: account D1 under 5GB → downgrade to Workers FREE plan → $0/mo recurring. All HARZ services that fit free-tier limits stay live.
 
 The shard plan (0198afc) is PARKED: shards are cost-neutral (billing is account-total) and only make sense if a raised cap is affordable. Its routing design remains valid evidence for the zero-cost endgame.
+
+## GAP-CLOSURE MATH — EXACT, PER the sibling's honest flag (Team F, Oct 15, measured)
+
+The sibling is right: the 23MB Sept relic pair (their account) cannot close a 0.9GB gap. The exact census (API file_size per DB, this account, Oct 15) names what can. Account total 17.44GB = corpus 12.88 (bodies 9.04 + master 3.85 + fx-idx 0.99) + NON-corpus 3.56GB, of which the SIX mining DBs (harz-mine, -2, -3, -5, -6, -7) hold 2.889GB, sovereign vault 0.28GB, harz-db 0.14, harz-search-ng-1 0.13, harz_search_v02 0.11, remainder ~0.04.
+
+Post-curation account states (corpus rebuilt ~2.4GB):
+1. Mines kept: 5.96GB — OVER the 5GB ceiling by ~0.96GB (the flag, quantified).
+2. Mines consolidated/deleted (needs relic ruling + chain-state dependency verification; no workers on this account bind them — worker list verified: only harz-fx, harz-fx-build, harz-fx-search, harz-million-corpus): 3.07GB — under ceiling with 1.9GB margin.
+3. Mines kept + bodies-KEEP compressed v0.2-style at the measured 2.5x (1.9GB -> 0.76GB): 4.82GB — under ceiling with margin, NO deletion of the mine history required.
+Either path 2 or path 3 alone closes the gap. Path 3 is build-work not deletion (recommended primary); path 2 is the deeper cleanup (recommended as the eventual archive consolidation anyway). Path 2 alone exceeds the ceiling if neither executes — that is the ledger's explicit warning.
+
+## VAULT CROSS-CHECK RESOLUTION (objects and seats named)
+Two sovereign vault deployments exist, both statements true: THIS account's harz-sovereign-store-00 (file 0.28GB, 3,689 bundles, 89,629 docs, measured from this seat) carries the real v0.2 load; the sibling's vault on hamzarabiu390 (7 docs, 1 bundle, account census 1.053GB/5GB, their seat) is verified at design scale. The wall is symmetric. Compression planning number: 2.5x (both seats concur; 13.92x was a non-representative test batch).
