@@ -97,3 +97,15 @@ Docs table now reads MAX(id)=1,342,482 = COUNT(*) (contiguous). The verified sea
 **Recommendation awaiting owner order (no action taken):** close the ingest door (WAVE_KEY rotation or ingest-route stub) to end further post-seal writes. This is a deployment change under the Oct 14 boundary and requires explicit authorization.
 
 All queries read-only. No repairs, no merges, no stubs, no key rotations executed. Evidence: query transcripts above, reproducible against the same ledgers.
+
+## STATE UPDATE — FREEZE LIFT + SHARD PLAN (Team F, Oct 15, read-only)
+
+1. TF-11 SUPERSEDED IN PART (owner ruling 54971cb): the enwiki portion of the post-seal writes is RECLASSIFIED as owner-authorized work; enforcement stood down; the freeze is lifted for WHOLE ingestion (owner, Oct 15 ~09:53 WAT). The ingest-door closure recommendation is WITHDRAWN (the door is intentionally open again). REMAINS OPEN: attribution of the 324 cloud-wave backdated-flush rows (written via the ingest door with a cloud-wave source label — attribution investigation not yet executed).
+
+2. QUARANTINE (blocker TF-8 / Decision B) REOPENS FOR ADJUDICATION (D-D in the shard-plan ruling set): now that ingestion is unfrozen, the four-question evaluation (Decision Package B) can proceed; read-only inspection pass recommended.
+
+3. SHARD PLAN v1 (desk draft 0198afc) — TEAM F VERIFICATION OF ITS MEASURED CLAIMS (read-only, this seat):
+   - bodies rows: 1,349,186 (measured; +20,471 beyond the 1,328,715 migration count — the enwiki writer is actively filling shard-00-to-be RIGHT NOW), payload 7.91GB text. File-size basis ~9.04GB of 10GB (desk-measured, consistent with payload + page overhead). Headroom shrinking at live speed; the desk's caution (no bulk before routing) is CONFIRMED AND QUANTIFIED.
+   - master docs: 1,342,482 rows; metadata payload ~130MB with text column blanked (file size stays ~3.85GB until a VACUUM, which is NOT authorized — recorded).
+   - fx_fts: 1,329,429 rows (unchanged, frozen index unaffected by sharding — plan claim consistent).
+   - Billing math CHECKS OUT: D1 bills account-total; included 5GB then ~$0.75/GB-mo; 17.44GB now = ~$9.3/mo ALREADY LIVE; 25GB combined cap = ~$15/mo. NOTE FOR OWNER: zero-budget law is already exceeded by storage reality (~$9.3/mo at current state); D-B sets the ceiling on an already-billing resource.
