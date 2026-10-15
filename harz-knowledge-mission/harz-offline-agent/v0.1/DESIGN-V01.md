@@ -80,9 +80,18 @@ p4 (closed) or the sealed kits; corpus changes (frozen at 1,342,482).
 D-1: approve this design as the v0.1 build target (or amend).
 D-2: phone runner: Termux reference (proven) first, PWA feasibility
      audit second — or both in parallel?
-D-3: agent name/branding within HARZ ecosystem + super-app listing
+D-3: RESOLVED by owner (Oct 15): the agent is named KATTAU (owner's ruling, replaces the desk's Gawo proposal). Branding within HARZ ecosystem + super-app listing at ship time (5-check rule)
      (5-check rule applies when it ships).
 D-4: desktop host: pure local file/PWA, or also served from own infra
      (harz.workers.dev) with offline SW (hosting stays CF per standing
      law)?
 Nothing executed. Draft only, per "Draft now".
+
+## RULING RECEIPT — NAME (owner, Oct 15, ~17:2x WAT)
+Owner: "Call him kattau."
+=> THE OFFLINE AGENT IS NAMED KATTAU. Spelling as ruled: Kattau.
+Descriptive note (this seat): kattai = "small/little" in Hausa — fitting
+for the 6.46MB phone agent. Name chosen by the owner per family tradition
+(a name should mean something to him); the desk's Gawo proposal is
+respectfully retired. D-3 resolved. D-1 (design approval), D-2 (build
+order: phone-first), D-4 (desktop delivery) remain open for the owner.
