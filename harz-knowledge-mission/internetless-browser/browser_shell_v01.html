@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HARZ Internetless Browser</title>
+<style>
+body{font-family:sans-serif;margin:0;padding:10px;background:#fff;color:#111}
+#bar{display:flex;gap:6px;margin-bottom:8px}
+#urlbar{flex:1;padding:10px;font-size:15px;border:1px solid #888;border-radius:6px}
+button{padding:9px 13px;font-size:14px;border:1px solid #888;border-radius:6px;background:#f5f5f5}
+#nav{display:flex;gap:6px;margin:6px 0}
+#status{font-size:13px;color:#555;margin:4px 0}
+#banner{padding:8px;border-radius:6px;margin:6px 0;font-size:14px;display:none}
+.ok{background:#e8f5e9;color:#1b5e20}.bad{background:#ffebee;color:#b71c1c}.warn{background:#fff8e1;color:#795548}
+.doc{padding:9px;border-bottom:1px solid #ddd;cursor:pointer}
+.doc b{display:block}
+pre{white-space:pre-wrap;font-family:inherit;word-wrap:break-word}
+a.local{color:#0b5394;cursor:pointer;text-decoration:underline}
+.miss{background:#fff3cd;padding:9px;border-radius:6px;margin:8px 0}
+#panel-search,#panel-sites{display:none}
+input[type=text]{width:100%;padding:9px;font-size:15px;box-sizing:border-box;border:1px solid #888;border-radius:6px;margin-bottom:8px}
+small{color:#666}
+</style></head><body>
+<h3>HARZ Internetless Browser <small>__DOCS_COUNT__ pages, __DOMAINS_COUNT__ domains, offline</small></h3>
+<div id="nav">
+<button onclick="goBack()">&#8592; Back</button>
+<button onclick="showHome()">Home</button>
+<button onclick="showSearch()">Search</button>
+<button onclick="showSites()">Sites</button>
+<button onclick="verifyAll()">Verify ALL</button>
+</div>
+<div id="urlbarwrap" style="display:none"><input type="text" id="urlbar" placeholder="Enter a URL or domain (e.g. businessday.ng)"><button onclick="goUrl()">Open</button></div>
+<div id="banner"></div>
+<div id="panel-home"></div>
+<div id="panel-search"><input type="text" id="q" placeholder="Search offline text..."><div id="sresults"></div></div>
+<div id="panel-sites"><input type="text" id="sf" placeholder="Filter domains..."><div id="slist"></div></div>
+<div id="panel-view" style="display:none">
+<div id="docmeta"></div><pre id="vbody"></pre></div>
+<div id="panel-miss" style="display:none"></div>
+<script>
+const DOCS=__DOC_BLOB__;
+const RIDX=__RIDX_BLOB__;
+const ORIGIN={};
+function norm(u){u=u.trim().toLowerCase();u=u.replace(/^https?:\/\//,"");u=u.replace(/^www\./,"");u=u.split("#")[0];if(u&&u[u.length-1]==="/")u=u.slice(0,-1);return u}
+let hist=[];let cur=null;
+function banner(cls,msg){const b=document.getElementById("banner");b.className=cls;b.style.display="block";b.textContent=msg}
+function hideAll(){["panel-home","panel-search","panel-sites","panel-view","panel-miss"].forEach(i=>document.getElementById(i).style.display="none")}
+async function sha(s){const b=new TextEncoder().encode(s);const h=await crypto.subtle.digest("SHA-256",b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function render(i,push){const d=DOCS[i];cur=i;if(push!==false)hist.push(i);hideAll();
+document.getElementById("panel-view").style.display="block";
+const dm=document.getElementById("docmeta");
+dm.innerHTML="<b>"+esc(d.t)+"</b><br><small>"+esc(d.u)+" &middot; "+esc(d.d)+" &middot; "+d.x.length+" chars</small>";
+const pre=document.getElementById("vbody");
+pre.innerHTML=esc(d.x);
+interceptLinks(pre,d);
+document.getElementById("urlbarwrap").style.display="flex";
+document.getElementById("urlbar").value=d.u||d.d;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function interceptLinks(el,d){
+const host=(d.u||"").replace(/^https?:\/\//,"").split("/")[0].replace(/^www\./,"");
+const base=(d.u||"").replace(/^https?:\/\//,"").replace(/\/[^\/]*$/,"/");
+el.querySelectorAll("a").forEach(a=>{a.onclick=async ev=>{ev.preventDefault();const href=a.getAttribute("href")||"";if(!href||href==="#"||href.startsWith("javascript:"))return;
+let abs=href;
+if(href.startsWith("//"))abs="https:"+href;
+else if(href.startsWith("/"))abs="https://"+host+href;
+else if(href.startsWith("http"))abs=href;
+else abs="https://"+base+href;
+openNorm(abs);}});
+}
+function openNorm(abs){
+const n=norm(abs);
+if(RIDX[n]!==undefined){render(RIDX[n]);window.scrollTo(0,0);return}
+missPage(abs,n)}
+function missPage(abs,n){
+hideAll();cur=null;document.getElementById("panel-miss").style.display="block";
+const mp=document.getElementById("panel-miss");
+const host=n.split("/")[0];
+const alts=DOCS.map((d,i)=>[d,i]).filter(x=>x[0].d===host).slice(0,15);
+let altsHtml=alts.length?alts.map(x=>'<div class="doc" onclick="render('+x[1]+')"><b>'+esc(x[0].t)+'</b><small>'+esc(x[0].u)+'</small></div>').join(""):"<small>No pages captured from this domain.</small>";
+mp.innerHTML='<div class="miss"><b>NOT CAPTURED OFFLINE</b><br>This page is not in the offline library: <code>'+esc(abs)+'</code><br><br><b>Captured pages from '+esc(host)+':</b></div>'+altsHtml;
+window.scrollTo(0,0)}
+function goBack(){if(hist.length>1){hist.pop();render(hist[hist.length-1],false)}else showHome()}
+function goUrl(){const v=document.getElementById("urlbar").value;if(!v)return;let abs=v.startsWith("http")?v:"https://"+v;
+const n=norm(abs);
+if(RIDX[n]!==undefined){render(RIDX[n]);return}
+const host=n.split("/")[0];
+const siteIdx=DOCS.findIndex(d=>d.d.toLowerCase()===host||d.d.toLowerCase()==="www."+host);
+if(siteIdx!==-1){sitePage(host);return}
+missPage(abs,n)}
+function showHome(){hideAll();hist=[];cur=null;document.getElementById("panel-home").style.display="block";document.getElementById("urlbarwrap").style.display="none";
+const ph=document.getElementById("panel-home");
+const news=["businessday.ng","dailytrust.com","dailypost.ng"];
+let html='<div class="miss">Welcome. Everything here works with NO internet. Try the Sites tab or tap a pilot:</div>';
+news.forEach(nd=>{const i=DOCS.findIndex(d=>d.d===nd);if(i!==-1)html+='<div class="doc" onclick="sitePage(\''+nd+'\')"><b>'+nd+'</b><small>site index</small></div>'});
+ph.innerHTML=html}
+function sitePage(domain){hideAll();const dm=domain.toLowerCase();const list=DOCS.map((d,i)=>[d,i]).filter(x=>x[0].d.toLowerCase()===dm);
+if(!list.length){banner("warn","No captured pages for "+domain);return}
+document.getElementById("panel-view").style.display="block";
+document.getElementById("docmeta").innerHTML="<b>Site: "+esc(domain)+"</b><br><small>"+list.length+" captured pages. Click any page. Links to uncaptured pages will say so honestly.</small>";
+const pre=document.getElementById("vbody");
+pre.innerHTML=list.map(x=>'<div class="doc" onclick="render('+x[1]+')"><b>'+esc(x[0].t||x[0].u)+'</b><small>'+esc(x[0].u)+" &middot; "+x[0].x.length+" chars</small></div>").join("");
+cur=null;document.getElementById("urlbarwrap").style.display="flex";document.getElementById("urlbar").value=domain;window.scrollTo(0,0)}
+function showSearch(){hideAll();document.getElementById("panel-search").style.display="block";const r=document.getElementById("sresults");r.innerHTML="<small>Type a term; results are full offline text.</small>"}
+document.getElementById("q").addEventListener("input",()=>{const q=document.getElementById("q").value.toLowerCase();const r=document.getElementById("sresults");
+if(!q){r.innerHTML="";return}
+const L=DOCS.map((d,i)=>[d,i]).filter(x=>x[0].t.toLowerCase().includes(q)||x[0].x.toLowerCase().includes(q)).slice(0,100);
+r.innerHTML=L.length?"":"<small>No offline matches.</small>";
+r.innerHTML+=L.map(x=>'<div class="doc" onclick="render('+x[1]+')"><b>'+esc(x[0].t)+'</b><small>'+esc(x[0].u)+" &middot; "+x[0].d+"</small></div>').join("")});
+document.getElementById("sf").addEventListener("input",()=>{const q=document.getElementById("sf").value.toLowerCase();const l=document.getElementById("slist");
+const doms={};DOCS.forEach(d=>{doms[d.d]=(doms[d.d]||0)+1});
+const L=Object.entries(doms).filter(x=>x[0].toLowerCase().includes(q)).slice(0,150);
+l.innerHTML=L.map(x=>'<div class="doc" onclick="sitePage(\''+x[0].replace(/'/g,"")+'\')"><b>'+esc(x[0])+'</b><small>'+x[1]+' captured pages</small></div>').join("")});
+function showSites(){hideAll();document.getElementById("panel-sites").style.display="block";document.getElementById("sf").dispatchEvent(new Event("input"))}
+async function verifyAll(){banner("warn","Verifying all "+DOCS.length+" documents...");
+let bad=0;for(const d of DOCS){if(await sha(d.x)!==d["h"])bad++}
+const b=document.getElementById("banner");
+if(bad){b.className="bad";b.textContent="FAIL: "+bad+" mismatches - integrity FAILED."}
+else{b.className="ok";b.textContent="PASS: all "+DOCS.length+" documents byte-verified (SHA-256). Offline, no network used."}}
+showHome();
+</script></body></html>
