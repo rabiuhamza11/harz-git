@@ -32,3 +32,22 @@ the /api/pools listing gap reported to the owner.
 harz-swap-pre-v6.0.12.js would be the pre-patch source (retrievable from
 deployment 03173ef6's predecessor via the API); current source committed
 here as harz-swap-v6.0.12-l1-wired.js.
+
+## THREE-WAY AUDIT + VERSION HONESTY FIX (Oct 16, ~08:3x WAT)
+Owner order: "Audit harzswap, harz wallet and harz exchange."
+
+AUDIT FINDINGS:
+- HARZSwap: one defect — self-reported "6.0.11" in 3 places after the
+  v6.0.12 route fix (version honesty). FIXED: bumped, redeployed,
+  /api/status now reports 6.0.12; amm pools route re-verified live.
+- HARZ Exchange (v6.1): PASS — /api/prices serves market-dictated L1
+  pool prices (GDEG ₦19,377.90, NRL ₦24,619.29 at audit time); all
+  routes its UI calls EXIST (/api/ngn, /api/p2p/offers, /api/prices —
+  no missing-route disease); honest LIVE/CACHED/OFFLINE badges; PWA
+  (SW+manifest); real-browser load verified, ONLINE·LIVE pill.
+- HARZ Wallet (GitHub page harz-wallet.html, July-era): light theme,
+  live GDEG price from swap /api/prices (market, post-wiring), balance
+  via harzpay /balance (11.33B HARZ phone wallet, frozen height
+  11,414,151). DEFECTS: no manifest/SW (5-check PWA fail — predates the
+  Universal App Contract), no honest data labels, no offline shell.
+  Needs the contract treatment as a separate release (owner ruling).
