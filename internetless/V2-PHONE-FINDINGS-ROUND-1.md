@@ -80,3 +80,14 @@ RESULT (authoritative /v2, fresh desktop browser, 06:40-06:46 UTC = 07:40-07:46 
 the run: unchanged): Sync "SYNC COMPLETE - 932/932 fetched - verified in phone cache 932/932 - packs 3/3"; search "Madagascar" ->
 20 results, coverage "932 stored bodies". Compare owner phone /v3 07:32: 0 results, 0 stored bodies. DESKTOP evidence only.
 v3 REMAINS NOT AUTHORITATIVE (another writer holds v3.shell, sha 75e3a847777a). Phone matrix: NOT TESTED.
+
+## Finding 7 - v3 FOLDED INTO /v2 (Oct 17 ~07:50 WAT)
+Owner kept landing on /v3 (phone photo 07:47: v3 offline, Madagascar 0 results, 0 stored bodies - correct for
+a build that cannot store). Deployed worker update: /v3, /v3/sw.js, /v3/manifest.json now 302-redirect to the
+/v2 equivalents. The parallel v3 shell can no longer reach the phone regardless of who writes v3.shell KV.
+Deploy preserved bindings (HARZ_BROWSER kv, HARZ_FX service) and compat date 2024-01-01.
+Verified after deploy: /v3 -> 302 /v2; shell sha aaacad5b2f02; sw b2f79401dc5a; /v2/doc/0 200;
+packs 200; resolve LOCAL_FOUND id 71; x-harz-seal 7831974-126edf37cd18b12c.
+Worker code with v3 redirect saved: internetless/v2-build/ob-worker-v3-redirect.js.
+Lesson logged: Cloudflare GET content returns multipart with CRLF headers; naive '\n\n' split silently
+dropped the module's first lines (first deploy attempt rejected by syntax check - caught, no damage).
