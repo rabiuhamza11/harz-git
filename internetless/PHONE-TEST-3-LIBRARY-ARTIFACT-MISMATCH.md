@@ -92,3 +92,10 @@ therefore swapped a library richer in Nigerian news for one without it. Truthful
 PATH: the REQUEST businessday.ng button queues it for the nightly gathering wave. Nigerian sources are
 on the hunt list; next bake can include them. Content expansion happens AFTER the navigation gate
 (mission law: finish Internetless navigation first).
+
+## ADDENDUM 5 (Oct 17, 02:18 WAT) - REQUEST button in airplane mode (device)
+Owner tapped REQUEST businessday.ng FOR OFFLINE GATHERING with the airplane icon on. The button label
+changed to: "You are OFFLINE - requests need a little data. Try again when online."
+=> PASS: honest offline outcome. The request was NOT sent and nothing pretends it was queued. That is the
+   correct behaviour (a gathering request needs the network).
+=> Not yet shown: the same request with data ON (would queue the nightly wave). Needs one tap when online.
