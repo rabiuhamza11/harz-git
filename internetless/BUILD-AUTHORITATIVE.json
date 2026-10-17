@@ -1,14 +1,18 @@
 {
- "ruling": "ONE AUTHORITATIVE BUILD = /v2 (verified). /v3 is NOT authoritative until it equals this build.",
+ "ruling": "ONE AUTHORITATIVE BUILD = /v2 (worker serves v2auth.* keys; v2.shell/v2.sw/v3.* are dead keys)",
  "recorded_utc": "2026-10-17T06:39:55.316742Z",
  "authoritative": {
   "url": "/v2",
-  "shell_sha256": "aaacad5b2f0252c653e7d522e47f6e6090b39c10e25e000fc3314660682419ed",
+  "shell_sha256": "5795764db75b1b8f461e7411fde5e6cefd12835a6a6899cb6a2f764fb8eba48d",
   "sw_sha256": "b2f79401dc5aa820ba749e1414e31af6361b3f690301820a69a605e2cd3babdf",
   "sw_scope": "/v2",
   "cache_name": "harz-internetless-v2-r3",
   "transport_anchor": "0ce51e9db956908dacae9e74347b09bf93db3cfc4954312092d21a9ea8e339ce",
-  "evidence": "desktop real-browser: SYNC COMPLETE 932/932 verified in cache; madagascar body search 20/20; 932/932 docs byte-identical to sealed corpus"
+  "evidence": "desktop real-browser: SYNC COMPLETE 932/932 verified in cache; madagascar body search 20/20; 932/932 docs byte-identical to sealed corpus",
+  "kv_keys": {
+   "shell": "v2auth.shell",
+   "sw": "v2auth.sw"
+  }
  },
  "conflicting_writer_seen": {
   "key": "v3.shell",
@@ -20,5 +24,6 @@
    "location.replace('/v2/') bounce"
   ]
  },
- "sealed_library": "x-harz-seal 7831974-126edf37cd18b12c unchanged"
+ "sealed_library": "x-harz-seal 7831974-126edf37cd18b12c unchanged",
+ "store_state": "2026-10-17: all 932 live docs self-verify (text sha256 == content_hash); 102 docs differ from Oct 8 export (repairs/clean copies); TX table rebuilt from this verified store"
 }

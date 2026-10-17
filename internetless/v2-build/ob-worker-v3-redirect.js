@@ -119,8 +119,8 @@
     if (p === "/vol/app.js") return volAsset("app");
     if (p.startsWith("/vol/vol-")) return volServe(p);
     // ===== INTERNETLESS v2 (owner authorization Oct 17: alongside the sealed library; sealed KV values untouched) =====
-    if (p === "/v2" || p === "/v2/") return kvText("v2.shell", "text/html; charset=utf-8", false);
-    if (p === "/v2/sw.js") return kvText("v2.sw", "application/javascript", false, { "Service-Worker-Allowed": "/v2" });
+    if (p === "/v2" || p === "/v2/") return kvText("v2auth.shell", "text/html; charset=utf-8", false);
+    if (p === "/v2/sw.js") return kvText("v2auth.sw", "application/javascript", false, { "Service-Worker-Allowed": "/v2" });
     if (p === "/v2/manifest.json") return kvText("v2.manifest", "application/manifest+json", false);
   /* ONE AUTHORITATIVE BUILD (owner directive Oct 17): /v2 is the only verified build; /v3 redirects to /v2 so no parallel version can serve the phone. v3.* KV retired (parallel writer shipped a broken shell). */
   if (p === "/v3" || p === "/v3/") return Response.redirect(new URL("/v2", req.url), 302);
