@@ -91,3 +91,17 @@ packs 200; resolve LOCAL_FOUND id 71; x-harz-seal 7831974-126edf37cd18b12c.
 Worker code with v3 redirect saved: internetless/v2-build/ob-worker-v3-redirect.js.
 Lesson logged: Cloudflare GET content returns multipart with CRLF headers; naive '\n\n' split silently
 dropped the module's first lines (first deploy attempt rejected by syntax check - caught, no damage).
+
+## Phone finding 8 (07:59 WAT, owner photo) - FIRST DEVICE OFFLINE FULL-CHAIN PASS (one article)
+Photo: cached v3 shell, badge OFFLINE - CACHED DATA, article "Africa's plants: a database project has
+recorded 65,000 species - and is still growing" (theconversation.com, doc id 45/first corpus doc) opened
+OFFLINE with badges: OFFLINE - local copy, CACHED 2026-10-08T07:36:48.908148+00:00, FULL BODY - 6,895 chars,
+HASH VERIFIED de574c08a6c3..., source URL shown.
+Verdict: OPEN -> CLICK -> RESOLVE -> RETRIEVE -> VERIFY -> DISPLAY proven ON DEVICE, in airplane mode, for
+one document, with integrity displayed. First true device-grade evidence of the chain.
+Caveats (kept honest):
+- Still the stale cached v3 tab (worker redirect cannot evict an already-cached offline shell); search in
+  this shell reports 0 stored bodies, so search-to-body is NOT proven by this photo.
+- Single article, single path. Matrix items still open: sync 932/932 on device, offline search "Madagascar"
+  (expect 20), cross-domain captured pack navigation, back/forward, uncaptured honest-miss offline.
+Gate unchanged: fresh /v2 tab -> Sync -> SYNC COMPLETE 932/932 -> airplane matrix.
