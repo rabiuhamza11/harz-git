@@ -52,3 +52,7 @@ FIX: one constant CACHE_NAME ("harz-internetless-v2-r3", must equal CACHE in /v2
 Forwarded desk note: items 1 (worker scope) and 3 (mislabeled message) were ALREADY fixed here; its "needs a new
 versioned address" no longer applies because /v2 and /v2/sw.js are now no-cache. The note's item 2 was valid.
 TEST: body-only word "madagascar" (in 20 article bodies, 0 titles) - result recorded below.
+RESULT (real browser, fresh profile, 02:51-02:55 WAT): Sync "SYNC COMPLETE - 932/932 fetched - verified in phone cache
+932/932 - packs 3/3". Search "madagascar": 20 results, all "body match (stored)"; coverage line "932 stored bodies";
+independent count of docs with the word in body and not in title = 20. Doc 0 first. PASS (desktop browser, labelled).
+Phone matrix still NOT TESTED: the phone held the OLD shell (immutable cache) and old worker at 02:47.
