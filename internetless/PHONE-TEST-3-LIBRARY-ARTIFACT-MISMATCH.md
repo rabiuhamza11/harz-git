@@ -71,3 +71,13 @@ Still not device-proven on the CURRENT artifact: search run + result -> full bod
 still apply, and the v2 library sync + airplane matrix remains NOT TESTED.
 NOTE: the v0.3 reader on the phone is the SEALED text library - do not edit it; v2 exists to add the
 navigation layer. Phone keeps working offline as-is.
+
+## ADDENDUM 3 (Oct 17, ~02:14 WAT) - honest not-captured flow on device (v0.3 reader, current artifact)
+Owner photo: BROWSER tab, domain "punchng.com" entered, current 932-page artifact (SEALED badge visible).
+Result: "Nothing gathered from punchng.com yet - the offline library holds only what HARZ has gathered.
+Any site in the world can be requested into the library:" + button "REQUEST punchng.com FOR OFFLINE
+GATHERING".
+=> Device evidence: HONEST NOT-CAPTURED outcome works on the phone in the v0.3 reader flow (truthful
+   "not in library" card + request-the-wave CTA, no dead end). This is the old reader's own input path,
+   NOT the v2 resolver. The library legitimately holds 5 sites; punchng.com is not one of them.
+Still pending: v2 (/v2) sync + airplane matrix - untouched by this test.
