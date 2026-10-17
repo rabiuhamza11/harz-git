@@ -105,3 +105,15 @@ Caveats (kept honest):
 - Single article, single path. Matrix items still open: sync 932/932 on device, offline search "Madagascar"
   (expect 20), cross-domain captured pack navigation, back/forward, uncaptured honest-miss offline.
 Gate unchanged: fresh /v2 tab -> Sync -> SYNC COMPLETE 932/932 -> airplane matrix.
+
+## Phone finding 9 (07:55 WAT, owner photo) - CORRECTS finding 8: OFFLINE SEARCH PASS ON DEVICE
+Photo 07:55 AM, airplane mode ON (status bar), Infinix: "Search: Madagascar - 20 result(s)", coverage
+"all 932 titles + 932 stored bodies + 3 visual packs", results labelled "body match (stored) - OPEN OFFLINE".
+Photo 07:56 (finding 8): first result opened offline, FULL BODY 6,895 chars, HASH VERIFIED.
+CORRECTION: finding 8 said this tab reported 0 stored bodies and search-to-body was not proven. That was wrong:
+the 07:55 photo shows 932 stored bodies and 20 hits on device. The owner had completed Sync on this device
+(label still reads v3 on a cached shell; stored cache is the shared harz-internetless-v2-r3 store).
+DEVICE AIRPLANE EVIDENCE NOW: [PASS] offline shell boot, [PASS] body search 20/20 (matches desktop),
+[PASS] search result -> full body -> hash verified, [PASS] honest-miss card (earlier).
+Not yet shown on device: SYNC COMPLETE line photo, cross-domain pack navigation (NYSC link click),
+back/forward/refresh, close-and-reopen cold start, reconnect recovery, tab still labelled v3 (stale shell).
