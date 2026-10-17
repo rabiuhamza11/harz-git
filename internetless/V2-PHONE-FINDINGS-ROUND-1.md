@@ -76,3 +76,7 @@ Restored v2.shell/v2.sw to the verified build (sha aaacad5b2f02 / b2f79401dc5a).
 6 seconds after my upload (proven by read-back: 8799e2e6a2fb -> 75e3a847777a). I stopped overwriting.
 RULING RECORDED: build.authoritative (KV) + internetless/BUILD-AUTHORITATIVE.json. /v2 is the one build. Do NOT write v2.* or v3.*
 without reading this file; any change must be committed here with a test result. Phone must use /v2 until v3 == v2 byte-for-byte.
+RESULT (authoritative /v2, fresh desktop browser, 06:40-06:46 UTC = 07:40-07:46 WAT; v2.shell/v2.sw hashes re-read every 12s during
+the run: unchanged): Sync "SYNC COMPLETE - 932/932 fetched - verified in phone cache 932/932 - packs 3/3"; search "Madagascar" ->
+20 results, coverage "932 stored bodies". Compare owner phone /v3 07:32: 0 results, 0 stored bodies. DESKTOP evidence only.
+v3 REMAINS NOT AUTHORITATIVE (another writer holds v3.shell, sha 75e3a847777a). Phone matrix: NOT TESTED.
