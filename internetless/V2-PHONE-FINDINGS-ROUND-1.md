@@ -43,3 +43,12 @@ before extraction; unverifiable from this corpus alone.
 Desktop-browser evidence only (labelled): Sync 932/932 verified in cache, site list truthful, doc 64 opens.
 NOT TESTED: airplane-mode matrix on the phone with a completed Sync. The phone must (a) load the new shell,
 (b) tap Sync with data on and see SYNC COMPLETE 932/932, (c) then airplane mode.
+
+## Finding 4 - SEARCH READ THE WRONG CACHE (found via forwarded desk note, confirmed in code, Oct 17 ~03:00 WAT)
+After the SW cache was renamed to harz-internetless-v2-r3, search still opened "harz-internetless-v2" (shell line 280),
+so it could never see a stored body, whatever was synced. This is also why "NYSC"/body searches showed "0 stored bodies".
+My regression: I renamed the cache and missed one reference.
+FIX: one constant CACHE_NAME ("harz-internetless-v2-r3", must equal CACHE in /v2/sw.js); all 3 references use it.
+Forwarded desk note: items 1 (worker scope) and 3 (mislabeled message) were ALREADY fixed here; its "needs a new
+versioned address" no longer applies because /v2 and /v2/sw.js are now no-cache. The note's item 2 was valid.
+TEST: body-only word "madagascar" (in 20 article bodies, 0 titles) - result recorded below.

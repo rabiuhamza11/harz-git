@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f0f2f5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HARZ Internetless v2">
+<link rel="manifest" href="/v2/manifest.json">
+<title>HARZ Internetless v2 — Offline Navigation</title>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/v2/sw.js",{scope:"/v2"});</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f2f5;color:#1a1a2e;padding:12px;max-width:760px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+h1{font-size:18px}
+h2{font-size:15px;color:#0a7a3c;margin:14px 0 6px}
+.pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;background:#dcfce7;color:#166534}
+.pill.off{background:#fee2e2;color:#991b1b}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin:8px 0}
+.badge{display:inline-block;font-size:10px;font-weight:700;margin:2px 4px 2px 0;padding:2px 8px;border-radius:10px}
+.b-ok{background:#dcfce7;color:#166534}.b-info{background:#dbeafe;color:#1e40af}.b-warn{background:#fef3c7;color:#92400e}.b-err{background:#fee2e2;color:#991b1b}
+button,.btn{cursor:pointer;border:0;border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;background:#0a7a3c;color:#fff}
+button:disabled{background:#94a3b8;cursor:not-allowed}
+input[type=text]{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;background:#fff}
+.res{border:1px solid #e2e8f0;border-radius:10px;padding:10px;margin:6px 0;background:#fff;cursor:pointer}
+.res:hover{border-color:#0a7a3c}
+.res h3{font-size:14px;color:#0a7a3c}
+.res .dom{font-size:12px;color:#64748b}
+.clickhint{font-size:11px;color:#94a3b8}
+.doc-body{white-space:pre-wrap;font-size:15px;line-height:1.65;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-top:8px}
+.doc-body a{color:#0a7a3c;text-decoration:underline}
+.doc-body a.miss{color:#b45309}
+.muted{color:#64748b;font-size:12px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+#syncbar{height:8px;background:#e2e8f0;border-radius:4px;margin-top:6px}
+#syncfill{height:8px;background:#0a7a3c;border-radius:4px;width:0}
+.card404{border:2px dashed #f59e0b;background:#fffbeb}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌐 HARZ Internetless v2</h1>
+  <span class="pill" id="netst">CHECKING…</span>
+</header>
+<div id="provenance" class="muted"></div>
+<main id="view"></main>
+<script>
+"use strict";
+// ==================== EMBEDDED VERIFIED DATA (read-only copy of the sealed corpus) ====================
+var PROV = __PROV__;
+var URLMAP = __URLMAP__;
+var TITLES = __TITLES__;
+var PACKS = __PACKS__;
+var CACHE_NAME = "harz-internetless-v2-r3"; // must equal CACHE in /v2/sw.js
+var TX = __TX__;
+var TX_ANCHOR = "__TXANCHOR__";
+
+// ==================== THE CENTRAL RESOLVER (identical logic to internetless/resolver.js, commit e7ab634) ====================
+var TRACK = ["utm_source","utm_medium","utm_campaign","utm_term","utm_content","fbclid","gclid","mc_cid","mc_eid","ref_src"];
+function normalizeUrl(href, base){
+  if (href == null) return null;
+  var raw = String(href).trim();
+  if (!raw || raw.indexOf("javascript:") === 0 || raw.indexOf("mailto:") === 0 || raw.indexOf("tel:") === 0) return null;
+  if (raw.indexOf("#") === 0) return { normalized: (base || "") + "#frag", fragmentOnly: true };
+  if (raw.indexOf("data:") === 0) return { normalized: raw, isDataUri: true };
+  var u; try { u = new URL(raw, base || undefined); } catch (e) { return null; }
+  u.hash = "";
+  if ((u.protocol === "https:" && u.port === "443") || (u.protocol === "http:" && u.port === "80")) u.port = "";
+  u.hostname = u.hostname.toLowerCase().replace(/^www\./, "");
+  var params = []; u.searchParams.forEach(function(v,k){ if (TRACK.indexOf(k) < 0) params.push([k,v]); });
+  u.search = params.map(function(kv){ return encodeURIComponent(kv[0]) + "=" + encodeURIComponent(kv[1]); }).join("&");
+  return { normalized: u.toString(), host: u.hostname, protocol: u.protocol };
+}
+var _chain = [];
+function resolve(href, opts){
+  opts = opts || {};
+  var norm = normalizeUrl(href, opts.base);
+  if (!norm) return { status: "NOT_CAPTURED", reason: "unresolvable or non-web link", href: href };
+  if (norm.fragmentOnly) return { status: "LOCAL_FOUND", reason: "in-page fragment", normalized: opts.base, store: "current-view" };
+  if (norm.isDataUri) return { status: "RESOURCE_FOUND", reason: "inlined resource (data URI)", normalized: norm.normalized };
+  var chainKey = norm.normalized;
+  var occurrences = _chain.filter(function(x){ return x === chainKey; }).length;
+  if (occurrences >= 2) return { status: "NOT_CAPTURED", reason: "navigation loop prevented", normalized: norm.normalized };
+  _chain.push(chainKey);
+  var ref = URLMAP[norm.normalized];
+  if (ref) return { status: ref.kind === "resource" ? "RESOURCE_FOUND" : "LOCAL_FOUND", ref: ref, normalized: norm.normalized };
+  var host = (norm.host || "").replace(/^www\./, "");
+  var captured = Object.keys(URLMAP).some(function(u){ return (new URL(u)).hostname.replace(/^www\./, "") === host; });
+  if (captured) return { status: "NOT_CAPTURED", reason: "domain is captured but this exact page is not stored — honestly unavailable", normalized: norm.normalized, host: host };
+  if (navigator.onLine && opts.liveAllowed) return { status: "LIVE_AVAILABLE", reason: "not stored locally; live access while online, labeled LIVE", normalized: norm.normalized };
+  return { status: "OFFLINE_UNAVAILABLE", reason: navigator.onLine ? "not stored and live access not chosen" : "not stored locally and no internet connection", normalized: norm.normalized };
+}
+
+// ==================== RUNTIME (hash routing, no homepage fallback, honest outcomes) ====================
+var $ = function(id){ return document.getElementById(id); };
+var ONLINE = null;
+function setPill(){
+  var el = $("netst"); if (!el) return;
+  var on = navigator.onLine;
+  el.textContent = on ? "ONLINE" : "OFFLINE · CACHED DATA";
+  el.className = "pill" + (on ? "" : " off");
+}
+addEventListener("online", setPill); addEventListener("offline", setPill);
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+async function sha256Hex(str){
+  var te = new TextEncoder();
+  var buf = await crypto.subtle.digest("SHA-256", te.encode(str));
+  var v = new Uint8Array(buf), h = "";
+  for (var i = 0; i < v.length; i++) h += v[i].toString(16).padStart(2, "0");
+  return h;
+}
+function syncState(){ try { return JSON.parse(localStorage.getItem("harzv2_sync") || "{}"); } catch(e){ return {}; } }
+function saveSyncState(s){ localStorage.setItem("harzv2_sync", JSON.stringify(s)); }
+
+// ---- view: home ----
+function viewHome(){
+  var byDomain = {};
+  TITLES.forEach(function(t){ byDomain[t.d] = (byDomain[t.d] || 0) + 1; });
+  var h = "<div class=\"card\"><input type=\"text\" id=\"q\" placeholder=\"Search the offline library…\" onkeydown=\"if(event.key==='Enter')location.hash='#/search/'+encodeURIComponent(this.value)\"></div>";
+  h += "<h2>Library sites (sealed corpus)</h2>";
+  Object.keys(byDomain).sort(function(a,b){ return byDomain[b]-byDomain[a]; }).forEach(function(d){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/site/'+encodeURIComponent('" + esc(d) + "')\">" +
+         "<h3>" + esc(d) + " (" + byDomain[d] + ")</h3><div class=\"dom\">OPEN OFFLINE — whole card is the button</div></div>";
+  });
+  h += "<h2>Visual packs (websites preserved with images and layout)</h2>";
+  PACKS.forEach(function(p){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/pack/"+esc(p.domain)+"'\"><h3>" + esc(p.name) + "</h3>" +
+         "<div class=\"dom\">OPEN OFFLINE — " + esc(p.label) + "</div></div>";
+  });
+  var st = syncState();
+  h += "<h2>Prepare for airplane mode</h2><div class=\"card\"><div>Sync stores every document body and pack in the local cache once. <b>Airplane mode can only open what is stored.</b></div>" +
+       "<div id=\"syncstat\" class=\"muted\">" + (st.at ? ("last sync: " + new Date(st.at).toLocaleString() + " · in phone cache " + (st.inCache || 0) + "/" + TITLES.length + " · packs " + (st.packs || 0) + "/" + PACKS.length + (st.failed ? " · failed " + st.failed : "")) : "NEVER SYNCED: pages will not open in airplane mode until you tap Sync") + "</div>" +
+       "<div id=\"syncbar\"><div id=\"syncfill\"></div></div><button id=\"syncbtn\" style=\"margin-top:8px\" onclick=\"syncAll()\">Sync all " + TITLES.length + " pages + " + PACKS.length + " packs</button></div>";
+  $("view").innerHTML = h;
+}
+async function syncAll(){
+  var btn = $("syncbtn"); if (!btn || btn.disabled) return;
+  if (!navigator.onLine) { $("syncstat").textContent = "No internet: sync needs a connection. Nothing was changed."; return; }
+  btn.disabled = true; btn.textContent = "Syncing…";
+  try { await navigator.serviceWorker.ready; } catch (e) {}
+  if (!navigator.serviceWorker.controller) {
+    $("syncstat").textContent = "Preparing offline storage… reloading once so the offline engine can take control, then tap Sync again.";
+    btn.disabled = false; btn.textContent = "Sync all (tap again after reload)";
+    setTimeout(function(){ location.reload(); }, 1200);
+    return;
+  }
+  var ids = TITLES.map(function(t){ return t.i; });
+  var ok = 0, failed = [];
+  var BATCH = 6;  // parallel fetches: much faster on a phone, still gentle on the server
+  async function one(id){
+    try {
+      var r = await fetch("/v2/doc/" + id);
+      if (r.ok) { var d = await r.json(); if (d && d.text && d.text.length > 0) return true; }
+    } catch (e) {}
+    return false;
+  }
+  for (var k = 0; k < ids.length; k += BATCH) {
+    var chunk = ids.slice(k, k + BATCH);
+    var res = await Promise.all(chunk.map(one));
+    for (var z = 0; z < res.length; z++) { if (res[z]) ok++; else failed.push(chunk[z]); }
+    var n = Math.min(k + BATCH, ids.length);
+    $("syncfill").style.width = Math.round(100 * n / ids.length) + "%";
+    $("syncstat").textContent = "syncing: " + n + "/" + ids.length + " (stored " + ok + ", failed " + failed.length + ")";
+  }
+  // one automatic retry pass for anything that failed (flaky mobile signal)
+  if (failed.length && navigator.onLine) {
+    var again = failed.slice(); failed = [];
+    for (var a = 0; a < again.length; a += BATCH) {
+      var ch2 = again.slice(a, a + BATCH);
+      var r2 = await Promise.all(ch2.map(one));
+      for (var y = 0; y < r2.length; y++) { if (r2[y]) ok++; else failed.push(ch2[y]); }
+    }
+  }
+  var packOk = 0, packFail = [];
+  for (var p = 0; p < PACKS.length; p++) {
+    try { var pr = await fetch("/v2/packs/" + PACKS[p].domain); if (pr.ok) { await pr.text(); packOk++; } else packFail.push(PACKS[p].domain); }
+    catch (e) { packFail.push(PACKS[p].domain); }
+  }
+  // verify against the real cache, not against our own counters
+  var inCache = 0;
+  try {
+    var c = await caches.open(CACHE_NAME);
+    for (var q = 0; q < ids.length; q++) { if (await c.match("/v2/doc/" + ids[q])) inCache++; }
+  } catch (e) {}
+  var st = { done: ok, inCache: inCache, failed: failed.length, packs: packOk, at: Date.now() };
+  saveSyncState(st);
+  var full = (ok === ids.length && inCache === ids.length && packFail.length === 0);
+  $("syncstat").textContent = (full ? "SYNC COMPLETE ✓ " : "SYNC INCOMPLETE ✕ ") + "docs fetched " + ok + "/" + ids.length +
+    " · verified in phone cache " + inCache + "/" + ids.length + " · packs " + packOk + "/" + PACKS.length +
+    (failed.length ? " · failed " + failed.length : "") + (packFail.length ? " · failed packs: " + packFail.join(",") : "") + " · " + new Date().toLocaleString();
+  btn.disabled = false; btn.textContent = full ? "Synced ✓ (tap to re-check)" : "Retry sync";
+}
+
+// ---- view: site page list ----
+function viewSite(domain){
+  var docs = TITLES.filter(function(t){ return t.d === domain; });
+  var h = "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+          "<h2>" + esc(domain) + " — " + docs.length + " pages in the library</h2><div class=\"muted\" id=\"storedline\">Checking what is stored on this phone…</div>";
+  docs.forEach(function(t){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/doc/" + t.i + "'\"><h3>" + esc(t.t) + "</h3><div class=\"dom\" data-doc=\"" + t.i + "\">tap to open</div></div>";
+  });
+  $("view").innerHTML = h;
+  markStored(docs);
+}
+async function markStored(docs){
+  var n = 0, total = docs.length;
+  try {
+    var c = await caches.open(CACHE_NAME);
+    for (var i = 0; i < docs.length; i++) {
+      var has = await c.match("/v2/doc/" + docs[i].i);
+      var el = document.querySelector("[data-doc='" + docs[i].i + "']");
+      if (has) { n++; if (el) el.textContent = "STORED ON PHONE ✓ opens offline"; }
+      else if (el) el.textContent = navigator.onLine ? "not stored yet (opens online, tap Sync to keep it)" : "NOT STORED ON THIS PHONE";
+    }
+  } catch (e) {}
+  var sl = document.getElementById("storedline");
+  if (sl) sl.textContent = "Stored on this phone: " + n + "/" + total + (n < total ? " · tap Sync all on Home while online to store the rest" : " · all open in airplane mode");
+}
+
+// ---- view: document (the full journey: RESOLVE→RETRIEVE→VERIFY→DISPLAY) ----
+async function viewDoc(id){
+  $("view").innerHTML = "<div class=\"muted\">resolving…</div>";
+  var ref = null;
+  for (var u in URLMAP) if (URLMAP[u].id === String(id)) { ref = URLMAP[u]; break; }
+  if (!ref) { honest404("doc " + id + " is not in the map"); return; }
+  var r;
+  try { r = await fetch("/v2/doc/" + id); } catch (e) {
+    $("view").innerHTML = "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+      "<div class=\"card card404\"><h3>NOT STORED ON THIS PHONE YET</h3><div>This page <b>is</b> in the HARZ library, but its full text has not been downloaded to this device, and there is no internet to fetch it now.<br><br>" +
+      "<b>Fix:</b> connect to the internet, open Home, and tap <b>Sync all</b> once. After that this page opens in airplane mode.<br><br>" +
+      "<span class=\"muted\">Technical: " + esc(e.message) + " · doc " + esc(String(id)) + "</span></div></div>";
+    return;
+  }
+  if (!r.ok) { honest404("retrieval failed: HTTP " + r.status); return; }
+  var doc = await r.json();
+  var got = await sha256Hex(doc.text);
+  var want = TX[String(id)];
+  if (!want || got !== want) {
+    $("view").innerHTML = "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav><div class=\"card card404\"><h3>INTEGRITY FAILURE — refused</h3><div class=\"muted\">The text stored on this phone is NOT identical to the sealed library copy. Expected " + (want ? want.slice(0,16) : "(none)") + "…, computed " + got.slice(0,16) + "… It will not be displayed as verified. Fix: connect to the internet, open Home, tap Sync all to replace it.</div></div>";
+    return;
+  }
+  var bodyHtml = esc(doc.text).replace(/(https?:\/\/[^\s<>"')]+)/g, function(m){
+    var url = m.replace(/&amp;/g, "&");
+    var res = resolve(url, { base: doc.final_url || doc.url });
+    if (res.status === "LOCAL_FOUND") return "<a href=\"#/doc/" + res.ref.id + "\">" + m + " ⟂open locally</a>";
+    if (res.status === "NOT_CAPTURED") return "<a class=\"miss\" onclick=\"missCard('" + url.replace(/'/g,"") + "')\">" + m + " ✕not captured</a>";
+    return "<a class=\"miss\" onclick=\"missCard('" + url.replace(/'/g,"") + "')\">" + m + " ⚠needs connection</a>";
+  });
+  $("view").innerHTML =
+    "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+    "<div class=\"card\"><h2 style=\"margin:0 0 6px\">" + esc(doc.title) + "</h2>" +
+    "<span class=\"badge b-warn\">OFFLINE — local copy</span><span class=\"badge b-info\">CACHED " + esc(doc.fetched_at || "?") + "</span>" +
+    "<span class=\"badge b-ok\">FULL BODY — " + doc.text.length.toLocaleString() + " chars</span>" +
+    "<span class=\"badge b-ok\">IDENTICAL TO SEALED COPY ✓ " + got.slice(0, 12) + "…</span>" +
+    "<span class=\"badge b-info\" title=\"Identifier of the original capture. The text shown is the cleaned extraction, so this is provenance, not a check on the text.\">source id " + esc((doc.content_hash || "").slice(0, 12)) + "…</span>" +
+    "<span class=\"badge b-info\">" + esc(doc.domain) + "</span>" +
+    "<div class=\"muted\">source: " + esc(doc.final_url || doc.url) + "</div></div>" +
+    "<div class=\"doc-body\" id=\"body\">" + bodyHtml + "</div>";
+}
+function missCard(url){
+  var res = resolve(url, { liveAllowed: false });
+  var msg = res.status === "NOT_CAPTURED"
+    ? "NOT CAPTURED: this page is not in your offline library.\n\n" + url + "\n\nYou can request it for the nightly wave, or open it live while connected."
+    : "OFFLINE UNAVAILABLE: not stored locally" + (navigator.onLine ? "" : " and no connection") + ".\n\n" + url;
+  alert(msg);
+  if (navigator.onLine && confirm("Open the live page now? (needs connection)")) location.href = url;
+}
+
+// ---- view: search (titles always; bodies that are stored — honest coverage) ----
+async function viewSearch(q){
+  var toks = q.toLowerCase().match(/[a-z0-9-]{2,}/g) || [];
+  var hits = [];
+  var stored = 0;
+  for (var i = 0; i < TITLES.length; i++) {
+    var t = TITLES[i];
+    var titleHit = toks.every(function(k){ return t.t.toLowerCase().indexOf(k) >= 0; }) && toks.length > 0;
+    if (titleHit) { hits.push({ i: t.i, title: t.t, why: "title match" }); continue; }
+    if ("caches" in window) {
+      var c = await caches.open(CACHE_NAME);
+      var m = await c.match("/v2/doc/" + t.i);
+      if (m) {
+        stored++;
+        var doc = await m.json();
+        var all = toks.every(function(k){ return (doc.title + " " + doc.text).toLowerCase().indexOf(k) >= 0; });
+        if (all) hits.push({ i: t.i, title: t.t, why: "body match (stored)" });
+      }
+    }
+  }
+  // packs are content too: search must find them (owner device finding, Oct 17)
+  var packHits = [];
+  PACKS.forEach(function(p){
+    var hay = (p.domain + " " + (p.name || "") + " government nigeria gov visual pack").toLowerCase();
+    if (toks.length && toks.every(function(k){ return hay.indexOf(k) >= 0; }))
+      packHits.push(p);
+  });
+  var h = "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+          "<h2>Search: “" + esc(q) + "” — " + (hits.length + packHits.length) + " result(s)</h2>" +
+          "<div class=\"muted\">Coverage: all " + TITLES.length + " titles + " + stored + " stored bodies + " + PACKS.length + " visual packs. Un-synced bodies are searchable after Sync (honest limit).</div>";
+  packHits.forEach(function(p){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/pack/" + esc(p.domain) + "'\"><h3>Visual pack: " + esc(p.domain) + "</h3><div class=\"dom\">preserved website with images — OPEN OFFLINE</div></div>";
+  });
+  hits.slice(0, 60).forEach(function(hh){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/doc/" + hh.i + "'\"><h3>" + esc(hh.title) + "</h3><div class=\"dom\">" + hh.why + " · OPEN OFFLINE</div></div>";
+  });
+  if (!hits.length) h += "<div class=\"card card404\"><div>No page in the offline library matches. This is an honest empty result — no guessing.</div></div>";
+  $("view").innerHTML = h;
+}
+
+function viewPack(domain){
+  var p = null; PACKS.forEach(function(x){ if (x.domain === domain) p = x; });
+  if (!p) { honest404("pack " + domain); return; }
+  $("view").innerHTML = "<nav><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+    "<h2>" + esc(p.name) + "</h2><div class=\"muted\" id=\"pstat\">Opening the preserved website (images inlined, links resolved)…</div>" +
+    "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"openPack('" + domain + "')\"><h3>OPEN OFFLINE — preserved site with images</h3></div>";
+  location.href = "/v2/packs/" + domain;
+}
+function honest404(what){
+  $("view").innerHTML = "<nav><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
+    "<div class=\"card card404\"><h3>NOT CAPTURED</h3><div>This destination is not in your offline library: " + esc(what) + ".<br><br>Honest outcome — no silent redirect, no guessing, no blank page.</div></div>";
+}
+
+function route(){
+  setPill();
+  var h = location.hash.replace(/^#\/?/, "");
+  if (h === "" || h === "home") return viewHome();
+  var m;
+  if ((m = h.match(/^site\/(.+)$/))) return viewSite(decodeURIComponent(m[1]));
+  if ((m = h.match(/^doc\/([^/]+)$/))) return viewDoc(m[1]);
+  if ((m = h.match(/^search\/(.+)$/))) return viewSearch(decodeURIComponent(m[1]));
+  if ((m = h.match(/^pack\/([^/]+)$/))) return viewPack(m[1]);
+  honest404(h);
+}
+addEventListener("hashchange", route);
+$("provenance").textContent = "Corpus provenance: sealed corpus copy sha256 " + PROV.corpus_sha256.slice(0,16) + "… · " + PROV.docs + " pages · " + PROV.chars.toLocaleString() + " chars · captured " + PROV.exported_at.slice(0,10) + " · sealed library untouched, identity " + PROV.seal_header;
+route();
+</script>
+</body>
+</html>
