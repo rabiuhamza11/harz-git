@@ -28,3 +28,9 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - v2 shell LOADED OFFLINE on Infinix: "OFFLINE - CACHED DATA" badge + full provenance banner (SW cache served shell). PASS (v2 shell airplane load).
 - Search "NYSC" => 0 results + honest-empty box ("no guessing") + coverage label "all 932 titles + 0 stored bodies. Un-sync bodies are searchable after Sync (honest limit)". PASS honest-empty; ROOT CAUSE of 0 = Sync not yet run (titles-only index), NYSC exists as visual pack not corpus text.
 - BLOCKED on v2 device gate: Sync prerequisite (online, once, ~932 bodies + 3 packs), then airplane re-test. Maroko doc still hash-corrupt in store (repair pending) - owner may see INTEGRITY FAILURE on it.
+
+## Addendum 02:26 + 02:32 (owner device)
+- v2 AIRPLANE: navigated destination not-in-cache => NOT CAPTURED box ("retrieval failed: Failed to fetch. Honest outcome - no silent redirect, no guessing, no blank page"). PASS category E on v2. (Nuance: "Failed to fetch" is the Sync-not-run limit; honest wording could improve after store repair + sync.)
+- 932p Reader AIRPLANE: search "nigeria tax" => results; opened article => FULL BODY, "OFFLINE, local copy" badge + hash + source URL. PASS search+open on this file.
+- Device matrix now: Circle shell/refusal PASS; 1209p search/open PASS; 932p shell/honest-miss/zero-search/request-refusal/search/open PASS; v2 shell-offline/honest-empty/NOT-CAPTURED PASS.
+- Remaining device tests: full cold-start (swipe from recents) on 932p reader; LIBRARY SITES -> site -> article; v2 online Sync then airplane re-test (blocked also by Maroko store repair).
