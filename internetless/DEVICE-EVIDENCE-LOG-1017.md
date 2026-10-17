@@ -23,3 +23,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - Search "Businessday.ng" => 0 results (2ms). Honest zero (not in this corpus; businessday lives in the 1209p file and Volume 1). PASS.
 - Browser box businessday.ng => "Nothing gathered..." + REQUEST tap => button honestly re-labels "You are OFFLINE - requests need a little data. Try again when online." PASS (offline request refusal, category E).
 - Coverage note for convergence: owner is hunting businessday.ng content across files; the one-authoritative-build must merge corpus coverage (932p sealed + 1209p + Volume 1 3,040 docs) so one library holds all verified pages.
+
+## Addendum 02:22 (v2 shell, airplane, owner device)
+- v2 shell LOADED OFFLINE on Infinix: "OFFLINE - CACHED DATA" badge + full provenance banner (SW cache served shell). PASS (v2 shell airplane load).
+- Search "NYSC" => 0 results + honest-empty box ("no guessing") + coverage label "all 932 titles + 0 stored bodies. Un-sync bodies are searchable after Sync (honest limit)". PASS honest-empty; ROOT CAUSE of 0 = Sync not yet run (titles-only index), NYSC exists as visual pack not corpus text.
+- BLOCKED on v2 device gate: Sync prerequisite (online, once, ~932 bodies + 3 packs), then airplane re-test. Maroko doc still hash-corrupt in store (repair pending) - owner may see INTEGRITY FAILURE on it.
