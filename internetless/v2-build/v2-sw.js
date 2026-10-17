@@ -1,5 +1,5 @@
 // HARZ Internetless v2 service worker — scope /v2/
-const CACHE = 'harz-internetless-v2-r2';
+const CACHE = 'harz-internetless-v2-r3';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.add('/v2')).then(() => self.skipWaiting()));
 });

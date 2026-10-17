@@ -33,11 +33,11 @@
     return { v, seal: v.length + "-" + hex.slice(0, 16) };
   }
   __name(loadOnefile, "loadOnefile");
-  async function kvText(key, ct, immutable) {
+  async function kvText(key, ct, immutable, extra) {
     const v = await HARZ_BROWSER.get(key);
     if (v == null) return new Response("v2 store missing: " + key, { status: 500 });
-    const cc = immutable ? "public, max-age=31536000, immutable" : "no-store";
-    return new Response(v, { headers: { "content-type": ct, "cache-control": cc, "Access-Control-Allow-Origin": "*" } });
+    const cc = immutable ? "public, max-age=31536000, immutable" : "no-cache";
+    return new Response(v, { headers: Object.assign({ "content-type": ct, "cache-control": cc, "Access-Control-Allow-Origin": "*" }, extra || {}) });
   }
   __name(kvText, "kvText");
   async function v2Doc(id) {
@@ -119,9 +119,9 @@
     if (p === "/vol/app.js") return volAsset("app");
     if (p.startsWith("/vol/vol-")) return volServe(p);
     // ===== INTERNETLESS v2 (owner authorization Oct 17: alongside the sealed library; sealed KV values untouched) =====
-    if (p === "/v2" || p === "/v2/") return kvText("v2.shell", "text/html; charset=utf-8", true);
-    if (p === "/v2/sw.js") return kvText("v2.sw", "application/javascript", true);
-    if (p === "/v2/manifest.json") return kvText("v2.manifest", "application/manifest+json", true);
+    if (p === "/v2" || p === "/v2/") return kvText("v2.shell", "text/html; charset=utf-8", false);
+    if (p === "/v2/sw.js") return kvText("v2.sw", "application/javascript", false, { "Service-Worker-Allowed": "/v2" });
+    if (p === "/v2/manifest.json") return kvText("v2.manifest", "application/manifest+json", false);
     if (p === "/v2/sync") return kvText("v2.sync", "application/json", false);
     if (p.startsWith("/v2/doc/")) return v2Doc(p.slice(8));
     if (p.startsWith("/v2/packs/")) return v2Pack(p.slice(10));
