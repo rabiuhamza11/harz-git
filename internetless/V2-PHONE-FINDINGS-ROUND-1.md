@@ -56,3 +56,12 @@ RESULT (real browser, fresh profile, 02:51-02:55 WAT): Sync "SYNC COMPLETE - 932
 932/932 - packs 3/3". Search "madagascar": 20 results, all "body match (stored)"; coverage line "932 stored bodies";
 independent count of docs with the word in body and not in title = 20. Doc 0 first. PASS (desktop browser, labelled).
 Phone matrix still NOT TESTED: the phone held the OLD shell (immutable cache) and old worker at 02:47.
+
+## Phone finding 5 (03:46 WAT Oct 17, owner photo): NEW SHELL CONFIRMED ON INFINIX, sync not yet run
+Photo shows the NEW shell offline (badge OFFLINE - CACHED DATA, honest-empty search card, coverage line
+"all 932 titles + 0 stored bodies"). Verdict: CORRECT HONEST BEHAVIOUR, not a defect:
+- "Madagascar" is in 20 article BODIES, 0 titles. Body search needs stored bodies; phone has 0 (no completed Sync).
+- Empty result + honest-coverage line is the system refusing to guess. PASS as designed.
+Status: shell update on device = DONE. Sync on device = NOT DONE. Airplane matrix = NOT TESTED.
+Next: data on -> /v2 -> Sync all -> confirm "SYNC COMPLETE 932/932 - verified in phone cache 932/932" ->
+airplane -> re-search "madagascar" (expect 20 body matches) -> matrix.
