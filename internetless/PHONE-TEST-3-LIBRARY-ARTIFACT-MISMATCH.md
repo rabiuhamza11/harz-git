@@ -99,3 +99,16 @@ changed to: "You are OFFLINE - requests need a little data. Try again when onlin
 => PASS: honest offline outcome. The request was NOT sent and nothing pretends it was queued. That is the
    correct behaviour (a gathering request needs the network).
 => Not yet shown: the same request with data ON (would queue the nightly wave). Needs one tap when online.
+
+## ADDENDUM 6 (Oct 17, 02:22 WAT) - FIRST v2 DEVICE EVIDENCE (phone, offline)
+Owner photo: /v2 on the Infinix, app pill "OFFLINE - CACHED DATA", provenance line intact
+(932 pages, sealed library untouched), searched "NYSC" -> 0 results, honest empty card, BACK/HOME present.
+=> DEVICE PASSES (v2, offline): shell boots from cache, provenance displays, offline label correct,
+   search runs offline, honest empty result, no guessing, no fallback.
+=> Coverage line honestly showed "0 stored bodies" => Sync had NOT been run. Full-text corpus search and
+   pack/doc offline storage still pending the owner's Sync tap.
+GAP FOUND BY OWNER: "NYSC" returned nothing although NYSC exists in v2 as a VISUAL PACK — v2 search only
+covered corpus titles/bodies. FIXED same session: search now also matches visual packs (searching "NYSC"
+shows the pack card "Visual pack: nysc.gov.ng — preserved website, OPEN OFFLINE"); coverage line updated.
+Shell redeployed (KV v2.shell), verified live.
+REMAINING GATE: owner taps Sync all (data on), then airplane: site card -> article -> search -> NYSC pack.

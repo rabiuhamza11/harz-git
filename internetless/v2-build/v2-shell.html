@@ -218,9 +218,19 @@ async function viewSearch(q){
       }
     }
   }
+  // packs are content too: search must find them (owner device finding, Oct 17)
+  var packHits = [];
+  PACKS.forEach(function(p){
+    var hay = (p.domain + " " + (p.name || "") + " government nigeria gov visual pack").toLowerCase();
+    if (toks.length && toks.every(function(k){ return hay.indexOf(k) >= 0; }))
+      packHits.push(p);
+  });
   var h = "<nav><button onclick=\"history.back()\">← BACK</button><button onclick=\"location.hash='#/home'\">HOME</button></nav>" +
-          "<h2>Search: “" + esc(q) + "” — " + hits.length + " result(s)</h2>" +
-          "<div class=\"muted\">Coverage: all " + TITLES.length + " titles + " + stored + " stored bodies. Un-synced bodies are searchable after Sync (honest limit).</div>";
+          "<h2>Search: “" + esc(q) + "” — " + (hits.length + packHits.length) + " result(s)</h2>" +
+          "<div class=\"muted\">Coverage: all " + TITLES.length + " titles + " + stored + " stored bodies + " + PACKS.length + " visual packs. Un-synced bodies are searchable after Sync (honest limit).</div>";
+  packHits.forEach(function(p){
+    h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/pack/" + esc(p.domain) + "'\"><h3>Visual pack: " + esc(p.domain) + "</h3><div class=\"dom\">preserved website with images — OPEN OFFLINE</div></div>";
+  });
   hits.slice(0, 60).forEach(function(hh){
     h += "<div class=\"res\" role=\"button\" tabindex=\"0\" onclick=\"location.hash='#/doc/" + hh.i + "'\"><h3>" + esc(hh.title) + "</h3><div class=\"dom\">" + hh.why + " · OPEN OFFLINE</div></div>";
   });
