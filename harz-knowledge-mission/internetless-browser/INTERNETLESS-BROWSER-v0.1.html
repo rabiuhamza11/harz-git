@@ -103,7 +103,7 @@ document.getElementById("q").addEventListener("input",()=>{const q=document.getE
 if(!q){r.innerHTML="";return}
 const L=DOCS.map((d,i)=>[d,i]).filter(x=>x[0].t.toLowerCase().includes(q)||x[0].x.toLowerCase().includes(q)).slice(0,100);
 r.innerHTML=L.length?"":"<small>No offline matches.</small>";
-r.innerHTML+=L.map(x=>'<div class="doc" onclick="render('+x[1]+')"><b>'+esc(x[0].t)+'</b><small>'+esc(x[0].u)+" &middot; "+x[0].d+"</small></div>').join("")});
+r.innerHTML+=L.map(x=>'<div class="doc" onclick="render('+x[1]+')"><b>'+esc(x[0].t)+'</b><small>'+esc(x[0].u)+" &middot; "+x[0].d+"</small></div>").join("")});
 document.getElementById("sf").addEventListener("input",()=>{const q=document.getElementById("sf").value.toLowerCase();const l=document.getElementById("slist");
 const doms={};DOCS.forEach(d=>{doms[d.d]=(doms[d.d]||0)+1});
 const L=Object.entries(doms).filter(x=>x[0].toLowerCase().includes(q)).slice(0,150);
