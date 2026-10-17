@@ -55,3 +55,19 @@ UNPROVEN (needs the phone): why the phone still holds the 1,209-page page. Candi
 under an earlier worker/seal and has not refreshed; (b) refresh needs one more online visit after the seal change.
 TEST (owner, one step): with data ON open the root address, wait 10 s, close the tab, reopen; report whether
 the badges still say 1209 pages or now 932 pages. That settles it without guessing.
+
+## ADDENDUM 2 (Oct 17, 02:08 WAT) - ARTIFACT MISMATCH RESOLVED
+Owner photo, AIRPLANE mode, after one online visit to the root address:
+- Phone now shows "HARZ Offline Reader v0.3 one-file" | SEALED - ALL CHECKS PASSED |
+  *932 full pages* | *5,906,020 chars* | OFFLINE ONE-FILE.
+=> The phone's service worker refreshed to the CURRENT sealed artifact (seal-sync as designed).
+=> VERSION ON PHONE (directive item 1): the current 932-page sealed library, identical to the server
+   artifact and to the corpus the v2 build was built on. The 1,209-page page is gone from the phone's
+   root view; it lived in the stale SW cache.
+=> Device evidence (airplane): current artifact boots offline, SEALED checks pass, search box and
+   BROWSER / OPEN OFFLINE / LIBRARY SITES / HARZ APPS controls visible.
+Still not device-proven on the CURRENT artifact: search run + result -> full body (was proven on the
+1,209 artifact), the v0.3 reader's known defects (dead "open offline" click, plain-text articles)
+still apply, and the v2 library sync + airplane matrix remains NOT TESTED.
+NOTE: the v0.3 reader on the phone is the SEALED text library - do not edit it; v2 exists to add the
+navigation layer. Phone keeps working offline as-is.
