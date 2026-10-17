@@ -18,3 +18,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 ## Known defects (open)
 - v2 KV store: doc 3 (Maroko) failed hash verify online (expected 82608eba / computed 5fc6b8fa) => store rebuild needed before /v2 airplane test can pass all docs.
 - Circle: stale cached shell can resurface offline (01:48 blank button).
+
+## Addendum 02:18 (airplane, 932p Reader)
+- Search "Businessday.ng" => 0 results (2ms). Honest zero (not in this corpus; businessday lives in the 1209p file and Volume 1). PASS.
+- Browser box businessday.ng => "Nothing gathered..." + REQUEST tap => button honestly re-labels "You are OFFLINE - requests need a little data. Try again when online." PASS (offline request refusal, category E).
+- Coverage note for convergence: owner is hunting businessday.ng content across files; the one-authoritative-build must merge corpus coverage (932p sealed + 1209p + Volume 1 3,040 docs) so one library holds all verified pages.
