@@ -81,3 +81,14 @@ GATHERING".
    "not in library" card + request-the-wave CTA, no dead end). This is the old reader's own input path,
    NOT the v2 resolver. The library legitimately holds 5 sites; punchng.com is not one of them.
 Still pending: v2 (/v2) sync + airplane matrix - untouched by this test.
+
+## ADDENDUM 4 (Oct 17, ~02:17 WAT) - businessday.ng gap surfaced (device, airplane mode)
+Owner searched "Businessday.ng" in the v0.3 reader: "0 results (2 ms)" + honest not-gathered card
+("Nothing gathered from businessday.ng yet") + REQUEST button.
+FINDING (product-level, not a bug): the stale 1,209-page copy the phone previously ran DID contain
+businessday.ng articles (owner was reading them earlier tonight). The current 932-page artifact never
+gathered businessday.ng - its 5 sites are theconversation/theguardian/dw/cnn/aljazeera. The refresh
+therefore swapped a library richer in Nigerian news for one without it. Truthful behaviour, real content gap.
+PATH: the REQUEST businessday.ng button queues it for the nightly gathering wave. Nigerian sources are
+on the hunt list; next bake can include them. Content expansion happens AFTER the navigation gate
+(mission law: finish Internetless navigation first).
