@@ -34,3 +34,6 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - 932p Reader AIRPLANE: search "nigeria tax" => results; opened article => FULL BODY, "OFFLINE, local copy" badge + hash + source URL. PASS search+open on this file.
 - Device matrix now: Circle shell/refusal PASS; 1209p search/open PASS; 932p shell/honest-miss/zero-search/request-refusal/search/open PASS; v2 shell-offline/honest-empty/NOT-CAPTURED PASS.
 - Remaining device tests: full cold-start (swipe from recents) on 932p reader; LIBRARY SITES -> site -> article; v2 online Sync then airplane re-test (blocked also by Maroko store repair).
+
+## Addendum 07:56 (v3, airplane, owner device)
+- Article open AIRPLANE: "Africa's plants" full body 6,895 chars, HASH VERIFIED de574c08a6c3, OFFLINE-local-copy badge, cached timestamp, source URL. PASS (device, full retrieval + verify offline on v3). Whether via full Sync or single-doc cache TBD: confirm with coverage line / offline Madagascar body search.
