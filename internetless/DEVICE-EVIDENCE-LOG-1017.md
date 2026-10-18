@@ -52,3 +52,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - Owner screenshot: NYSC Director-General's Gallery page open on phone, 2x3 grid of six real thumbnails rendering (dggallery.html sub-page — the 65/66-embedded page from the link audit).
 - Proves: pack -> sub-page navigation works on device; pack images render; sync of the 62-pack set landed on the phone.
 - Matrix state: pack navigation CLOSED (pending confirm airplane). Remaining: Read-more link (freshwater -> 6,508 chars) + cold start.
+
+## Oct 18 09:48 (owner device, AIRPLANE) — CAC NAVIGATION PASS
+- Owner screenshot: CAC FAQ sub-page (resources_faq.html) open in airplane mode, FAQ card expanded with full answer text rendered, AI Lawyer widget present.
+- Proves: CAC pack -> sub-page navigation offline on Infinix. NYSC (09:42) + CAC (09:48) both now pass offline navigation + content.
+- Matrix remaining: Read-more link (freshwater -> 6,508 chars) + cold start.
