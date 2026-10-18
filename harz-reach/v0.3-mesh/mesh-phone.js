@@ -36,11 +36,16 @@ async function cmdFetch() {
 async function cmdGo() {
   const id = arg("--id", "AAAA"), port = parseInt(arg("--port", "8988")), pushTo = arg("--push-to", null);
   const corrupt = process.argv.includes("--corrupt");   // attacker mode: flip one sig byte in flight
+  const hold = process.argv.includes("--hold");          // SAF mode: push while B is OFFLINE, frames HELD in store-and-forward
   if (!existsSync(ZONE_FILE)) { console.log("no zone.json — run 'fetch' first (while online)"); process.exit(1); }
   const zone = JSON.parse(readFileSync(ZONE_FILE, "utf8"));
   const check = await core.loadZone(zone);
   if (!check.ok) { console.log("local zone FAILED verification — refusing to carry it:", check.reason); process.exit(1); }
-  const node = new MeshNode(id, {});
+  const node = new MeshNode(id, {
+    onMetric: (ev, d) => { if (ev === "held" || ev === "flush" || ev === "peer_lost" || ev === "peer_back") console.log("  [store-and-forward] " + ev + " " + d); },
+    onPeerLost: p => console.log("peer left: [" + p + "] — frames for it will be HELD while it is offline"),
+    onAck: (src, seq) => { /* chunk ACKs keep the queue honest */ }
+  });
   const server = net.createServer(sock => {
     const t = new TcpTransport(sock);
     sock.on("data", c => t.feed(c)); sock.on("close", () => node.detach(t));
@@ -49,10 +54,29 @@ async function cmdGo() {
   await new Promise(r => server.listen(port, "0.0.0.0", r));
   console.log("GO up as [" + id + "] on port " + port + " — holding the VERIFIED book");
   console.log("waiting for " + (pushTo || "any peer") + " to join…");
+  if (hold && pushTo) {
+    console.log("SAF MODE (--hold): pushing the book to [" + pushTo + "] NOW — it is offline, frames go to the store-and-forward queue");
+    const m = await carrier.sendZone(node, pushTo, check.zone);
+    console.log("queued: " + m.chunks + " chunks / " + m.bytes + " bytes held for [" + pushTo + "] (flush happens on join)");
+  }
+  if (pushTo) {
+    console.log("type 'push' + Enter any time to (re)send the book to [" + pushTo + "] — offline peers get a queued copy");
+    const rl = (await import("readline")).createInterface({ input: process.stdin });
+    rl.on("line", async line => {
+      const t = line.trim();
+      if (t === "push") {
+        const m = await carrier.sendZone(node, pushTo, check.zone);
+        const online = node.peersOnline().includes(pushTo);
+        console.log(online ? "sent live: " + m.chunks + " chunks" : "B is OFFLINE: " + m.chunks + " chunks HELD in queue (will flush on rejoin)");
+      } else if (t === "status") {
+        console.log("peers online: [" + node.peersOnline().join(", ") + "] | frames held for " + pushTo + ": " + node.heldFor(pushTo));
+      }
+    });
+  }
   node.listener = {
     onPeerJoined: async p => {
       console.log("peer joined: [" + p + "]");
-      if (pushTo && p === pushTo) {
+      if (!hold && pushTo && p === pushTo) {  // SAF mode: delivery comes from the queue flush only — no double push
         console.log("pushing the signed book over the mesh" + (corrupt ? " — CORRUPTION TEST: one sig byte will be flipped mid-flight" : "") + "…");
         if (corrupt) {
           // attacker transport: intercept the sig-region chunk at the wire, flip one byte, reseal CRC
@@ -164,6 +188,7 @@ else {
   console.log("  node mesh-phone.js fetch                       # Phone A, while ONLINE: verify + save the king's book");
   console.log("  node mesh-phone.js go --id AAAA --push-to BBBB # Phone A: GO + push the book over the mesh");
   console.log("  node mesh-phone.js go ... --corrupt            # Phone A attacker mode: flip ONE sig byte mid-flight");
+  console.log("  node mesh-phone.js go ... --hold                # Phone A SAF mode: queue the book for an OFFLINE B (RUN 4)");
   console.log("  node mesh-phone.js join --host <A-IP> --id BBBB # Phone B: receive, verify, resolve");
   console.log("  node mesh-phone.js resolve --name pay.harz     # Phone B: resolve from mesh cache (roots dead)");
 }
