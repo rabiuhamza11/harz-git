@@ -754,11 +754,14 @@
     var el = document.getElementById("aFetchStat");
     el.textContent = "Fetching the signed book from the frozen roots (internet still ON)…";
     C.fetchVerifiedZone().then(function (loaded) {
-      if (!loaded.ok) { el.textContent = "FAILED: " + loaded.reason + " — this step needs the internet ON once. If it still fails, send me the LOG text."; log("book fetch failed: " + loaded.reason); return; }
+      if (!loaded.ok) {
+        if (A.zone) { el.textContent = "Book ALREADY HELD and VERIFIED from the earlier fetch — this repeat attempt failed only because the internet is off. That is fine. Go straight to Step 2 (PREPARE)."; log("repeat fetch refused while offline — book already held (height " + A.zone.height + ")"); return; }
+        el.textContent = "FAILED: " + loaded.reason + " — this step needs the internet ON once. If it still fails, send me the LOG text."; log("book fetch failed: " + loaded.reason); return;
+      }
       A.zone = loaded.zone;
       var v = document.getElementById("aFetchV");
       v.textContent = "VERIFIED + SAVED on this phone:\nking signature: VALID (Ed25519)\nheight " + loaded.zone.height + " · " + loaded.zone.records.length + " names\nnode " + loaded.node;
-      el.textContent = "Book held. Internet can go OFF after this.";
+      el.textContent = "Book held. KEEP DATA ON for Step 2 (PREPARE) — only turn data OFF after both phones show PAIRED.";
       document.getElementById("aPrep").disabled = false;
       log("book verified: height " + loaded.zone.height + " records " + loaded.zone.records.length + " via " + loaded.node);
     }).catch(function (e) { el.textContent = "FAILED: " + e.message; log("book fetch error: " + e.message); });
