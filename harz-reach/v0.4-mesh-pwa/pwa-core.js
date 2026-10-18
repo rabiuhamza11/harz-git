@@ -389,40 +389,37 @@
   };
   MeshP2P.prototype.sendHello = function () { var wire = this.peer || this.transport; if (wire) wire.send(encodeFrame(hello(this.self))); };
 
-  // attacker mode for the death test: flip ONE byte in the sig region mid-flight
-  // (same dynamic targeting law as the frozen Termux corrupt path)
-  function corruptHook(node, dst, full) {
-    var sigMark = -1;
-    var fb = str(full);
-    sigMark = fb.indexOf('"sig":"');
-    var sigByteOff = sigMark >= 0 ? sigMark + 7 + 20 : full.length - 40;
-    var sigChunkIdx = Math.floor(sigByteOff / CHUNK_SIZE);
-    var sigInChunk = sigByteOff % CHUNK_SIZE;
-    var origSend = node.peer.send.bind(node.peer);
-    var firstSeq = null, tapped = false;
-    node.peer.send = function (bytes) {
-      try {
-        var f = decodeFrame(bytes);
-        if (f.type === TYPE_DATA && f.dst === dst) {
-          if (firstSeq === null) firstSeq = f.seq;
-          if (!tapped && f.seq - firstSeq === sigChunkIdx) {
-            var p2 = f.payload.slice(0);
-            p2[sigInChunk] ^= 0x01;
-            var evil = encodeFrame({ type: f.type, src: f.src, dst: f.dst, seq: f.seq, ttl: f.ttl, hops: f.hops, route: f.route, payload: p2 });
-            tapped = true;
-            if (node.listener.onCorrupted) node.listener.onCorrupted(sigChunkIdx);
-            return origSend(evil);
-          }
-        }
-      } catch (e) {}
-      return origSend(bytes);
-    };
-  }
-
   function chunkPayload(buf, size) {
     var sz = size || CHUNK_SIZE, out = [];
     for (var i = 0; i < buf.length; i += sz) out.push(buf.subarray(i, Math.min(i + sz, buf.length)));
     return out.length ? out : [new Uint8Array(0)];
+  }
+
+  // attacker mode for the death test: flip ONE byte in the sig region mid-flight.
+  // Timing-safe: hooks at sendChunk level (payload, pre-frame) — works whether or not
+  // the peer has registered yet. The re-encoded frame's CRC stays valid, exactly the
+  // frozen law ("the frame CRC stays valid" — corruption lives in the book bytes).
+  function corruptHook(node, dst, full) {
+    var fb = str(full);
+    var sigMark = fb.indexOf('"sig":"');
+    var sigByteOff = sigMark >= 0 ? sigMark + 7 + 20 : full.length - 40;
+    var sigChunkIdx = Math.floor(sigByteOff / CHUNK_SIZE);
+    var sigInChunk = sigByteOff % CHUNK_SIZE;
+    var seen = 0, tapped = false;
+    var orig = node.sendChunk.bind(node);
+    node.sendChunk = function (d, chunk, ttl) {
+      if (d === dst && !tapped) {
+        if (seen === sigChunkIdx) {
+          var p2 = chunk.slice(0);
+          p2[sigInChunk] ^= 0x01;
+          tapped = true;
+          if (node.listener && node.listener.onCorrupted) node.listener.onCorrupted(sigChunkIdx);
+          return orig(d, p2, ttl);
+        }
+        seen++;
+      }
+      return orig(d, chunk, ttl);
+    };
   }
 
   var api = {
