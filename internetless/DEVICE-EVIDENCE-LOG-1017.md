@@ -73,3 +73,11 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - Not tested by owner (parked, not failed): Read-more link full-body open (server-verified 90/90 targets), cold-start Madagascar search.
 - With Magani: EFCC recapture styling+links, subdomain packs (portal.nysc.org.ng, icrp.cac.gov.ng), 3 stray images.
 - No action pending on owner. Session closed at his word.
+
+## Oct 18 10:07 — CLOSURE RULING RECEIVED (owner forwarded)
+- Ruling: the two outstanding tests (Read-more link full-body open; cold-start + Madagascar search) NO LONGER BLOCK CLOSURE, on owner-reported completion.
+- Verbatim distinction recorded: "I am recording your confirmation of completion, not claiming that I independently witnessed these final two tests." (Hauwa seat note: same on my side — no screenshots of those two were received; recorded as owner-confirmed, not device-witnessed.)
+- Follow-ups stay documented, not confused with core tests: EFCC recapture (styling+links+subpages), subdomain packs (portal.nysc.org.ng, icrp.cac.gov.ng), 3 stray images, capture noise on v0.8 pages, 17 docs with encoding artifacts.
+- Next step: Magani consolidates final evidence and issues the Internetless v2 CLOSURE REPORT with limitations explicitly listed.
+- Standing: no unnecessary rebuilds. No new scope. Finish the stage properly.
+- Matrix final state per ruling: search PASS, article open + sealed-copy verify PASS (device), pack navigation PASS (8 pages, device), Read-more PASS (owner-confirmed), cold-start PASS (owner-confirmed).
