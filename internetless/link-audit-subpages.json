@@ -1,0 +1,474 @@
+[
+ {
+  "route": "/v2/packs/cac.gov.ng/about.html",
+  "code": "200",
+  "bytes": 1273646,
+  "visible": 5074,
+  "imgs": 43,
+  "embedded": 43
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/about_board-members.html",
+  "code": "200",
+  "bytes": 986455,
+  "visible": 1536,
+  "imgs": 14,
+  "embedded": 14
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/about_management.html",
+  "code": "200",
+  "bytes": 939567,
+  "visible": 1767,
+  "imgs": 15,
+  "embedded": 15
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/about_organizational-structure.html",
+  "code": "200",
+  "bytes": 121162,
+  "visible": 999,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/about_state-offices-head.html",
+  "code": "200",
+  "bytes": 838962,
+  "visible": 1616,
+  "imgs": 15,
+  "embedded": 15
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/blog.html",
+  "code": "200",
+  "bytes": 112009,
+  "visible": 1013,
+  "imgs": 3,
+  "embedded": 3
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/contact.html",
+  "code": "200",
+  "bytes": 115902,
+  "visible": 1139,
+  "imgs": 3,
+  "embedded": 3
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/foi-portal.html",
+  "code": "200",
+  "bytes": 215219,
+  "visible": 2157,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/resources.html",
+  "code": "200",
+  "bytes": 123209,
+  "visible": 1088,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/resources_faq.html",
+  "code": "200",
+  "bytes": 120539,
+  "visible": 5733,
+  "imgs": 3,
+  "embedded": 3
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/services_business-name.html",
+  "code": "200",
+  "bytes": 201577,
+  "visible": 1699,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/services_company-registration.html",
+  "code": "200",
+  "bytes": 208745,
+  "visible": 2708,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/services_incorporated-trustees.html",
+  "code": "200",
+  "bytes": 201384,
+  "visible": 2549,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/cac.gov.ng/services_service-timelines.html",
+  "code": "200",
+  "bytes": 221473,
+  "visible": 6698,
+  "imgs": 4,
+  "embedded": 4
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/about.html",
+  "code": "200",
+  "bytes": 298672,
+  "visible": 5409,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/aboutdg.html",
+  "code": "200",
+  "bytes": 426009,
+  "visible": 4951,
+  "imgs": 6,
+  "embedded": 6
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/areaoffice.html",
+  "code": "200",
+  "bytes": 303277,
+  "visible": 2686,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/audit.html",
+  "code": "200",
+  "bytes": 298474,
+  "visible": 3801,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/camps.html",
+  "code": "200",
+  "bytes": 311208,
+  "visible": 6089,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/cbo.html",
+  "code": "200",
+  "bytes": 299322,
+  "visible": 3918,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/cds.html",
+  "code": "200",
+  "bytes": 310995,
+  "visible": 13915,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/cert.html",
+  "code": "200",
+  "bytes": 299669,
+  "visible": 4384,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/certpricecharges.html",
+  "code": "200",
+  "bytes": 300466,
+  "visible": 2419,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/contact.html",
+  "code": "200",
+  "bytes": 362007,
+  "visible": 2242,
+  "imgs": 6,
+  "embedded": 6
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/corpmob.html",
+  "code": "200",
+  "bytes": 308219,
+  "visible": 12124,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/cwhs.html",
+  "code": "200",
+  "bytes": 301492,
+  "visible": 6176,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/dggallery.html",
+  "code": "200",
+  "bytes": 2589628,
+  "visible": 1689,
+  "imgs": 66,
+  "embedded": 65
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/directorate.html",
+  "code": "200",
+  "bytes": 360586,
+  "visible": 1804,
+  "imgs": 6,
+  "embedded": 6
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/faq.html",
+  "code": "200",
+  "bytes": 308294,
+  "visible": 9750,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/finance.html",
+  "code": "200",
+  "bytes": 298607,
+  "visible": 3547,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/foreignmobreg.html",
+  "code": "200",
+  "bytes": 307202,
+  "visible": 7970,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/genservice.html",
+  "code": "200",
+  "bytes": 300800,
+  "visible": 5519,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/hrm.html",
+  "code": "200",
+  "bytes": 296720,
+  "visible": 2356,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/ict.html",
+  "code": "200",
+  "bytes": 301441,
+  "visible": 5529,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/index.html",
+  "code": "200",
+  "bytes": 671580,
+  "visible": 6088,
+  "imgs": 15,
+  "embedded": 14
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/legal.html",
+  "code": "200",
+  "bytes": 302697,
+  "visible": 6979,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/management.html",
+  "code": "200",
+  "bytes": 1525548,
+  "visible": 3371,
+  "imgs": 36,
+  "embedded": 36
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/media.html",
+  "code": "200",
+  "bytes": 309149,
+  "visible": 7692,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/mission.html",
+  "code": "200",
+  "bytes": 296682,
+  "visible": 3396,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/mobreg.html",
+  "code": "200",
+  "bytes": 303638,
+  "visible": 4881,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/mobtable.html",
+  "code": "200",
+  "bytes": 300576,
+  "visible": 2639,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/nhia.html",
+  "code": "200",
+  "bytes": 298885,
+  "visible": 3847,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/objective.html",
+  "code": "200",
+  "bytes": 296748,
+  "visible": 3770,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/officeofdg.html",
+  "code": "200",
+  "bytes": 306400,
+  "visible": 6601,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/pastdgs.html",
+  "code": "200",
+  "bytes": 303497,
+  "visible": 4003,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/ppru.html",
+  "code": "200",
+  "bytes": 299382,
+  "visible": 4153,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/privacypolicy.html",
+  "code": "200",
+  "bytes": 297271,
+  "visible": 2407,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/procurement.html",
+  "code": "200",
+  "bytes": 301549,
+  "visible": 5781,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/projects.html",
+  "code": "200",
+  "bytes": 300368,
+  "visible": 6113,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/prs.html",
+  "code": "200",
+  "bytes": 300205,
+  "visible": 4860,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/publications.html",
+  "code": "200",
+  "bytes": 328567,
+  "visible": 4959,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/reforms.html",
+  "code": "200",
+  "bytes": 303445,
+  "visible": 7035,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/saed.html",
+  "code": "200",
+  "bytes": 297497,
+  "visible": 2971,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/secretariat.html",
+  "code": "200",
+  "bytes": 314376,
+  "visible": 6937,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/serviceyear.html",
+  "code": "200",
+  "bytes": 976774,
+  "visible": 5908,
+  "imgs": 22,
+  "embedded": 19
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/specialduties.html",
+  "code": "200",
+  "bytes": 298088,
+  "visible": 3431,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/structure.html",
+  "code": "200",
+  "bytes": 300476,
+  "visible": 6447,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/supportline.html",
+  "code": "200",
+  "bytes": 301718,
+  "visible": 2485,
+  "imgs": 5,
+  "embedded": 5
+ },
+ {
+  "route": "/v2/packs/nysc.gov.ng/ventures.html",
+  "code": "200",
+  "bytes": 297107,
+  "visible": 2529,
+  "imgs": 5,
+  "embedded": 5
+ }
+]
