@@ -388,12 +388,77 @@
     return step();
   };
   MeshP2P.prototype.sendHello = function () { var wire = this.peer || this.transport; if (wire) wire.send(encodeFrame(hello(this.self))); };
+  MeshP2P.prototype.sendVoice = function (dst, bytes, durationMs) {
+    var self = this;
+    // control: start
+    this.sendChunk(dst, voiceStartFrame(bytes.length, durationMs || 0));
+    var chunks = this.chunkPayload(bytes);
+    var sent = 0;
+    function step() {
+      self.sendChunk(dst, chunks[sent]);
+      sent++;
+      if (sent < chunks.length) {
+        return (sent % 10 === 0) ? new Promise(function (r) { setTimeout(r, CHUNK_PACING_MS); }).then(step) : Promise.resolve().then(step);
+      }
+      // control: end
+      self.sendChunk(dst, voiceEndFrame());
+      return Promise.resolve({ chunks: chunks.length, bytes: bytes.length });
+    }
+    return step();
+  };
+
 
   function chunkPayload(buf, size) {
     var sz = size || CHUNK_SIZE, out = [];
     for (var i = 0; i < buf.length; i += sz) out.push(buf.subarray(i, Math.min(i + sz, buf.length)));
     return out.length ? out : [new Uint8Array(0)];
   }
+
+  // ---------- VOICE CARRIER v0.1 (same frozen wire, audio payload) ----------
+  // Control frames are tiny JSON DATA frames (start / end); the audio bytes ride as
+  // raw chunked DATA frames between them. The same seq / TTL / hops / route / ACK / CRC
+  // law applies. Refused means refused: incomplete voice = REFUSED, no playback.
+  var VOICE_START = "harz-voice-start", VOICE_END = "harz-voice-end";
+  function voiceStartFrame(bytes, durationMs) {
+    return utf8(JSON.stringify({ harz: 1, kind: VOICE_START, bytes: bytes, duration: durationMs, ts: Date.now() }));
+  }
+  function voiceEndFrame() {
+    return utf8(JSON.stringify({ harz: 1, kind: VOICE_END, ts: Date.now() }));
+  }
+  function isVoiceControl(payload) {
+    if (!payload || payload.length > 256 || payload[0] !== 0x7b) return null;
+    try { var p = JSON.parse(str(payload)); if (p && p.harz === 1 && (p.kind === VOICE_START || p.kind === VOICE_END)) return p; } catch (e) {}
+    return null;
+  }
+  function VoiceReceiver() {
+    this.active = null;   // { meta, chunks: Map<seq,bytes> }
+    this.history = [];
+  }
+  VoiceReceiver.prototype.start = function (meta) {
+    this.active = { meta: meta, chunks: new Map(), done: false };
+  };
+  VoiceReceiver.prototype.absorb = function (seq, payload) {
+    if (!this.active || this.active.done) return false;
+    if (this.active.chunks.has(seq)) return "dup";
+    this.active.chunks.set(seq, payload.slice(0));
+    return "stored";
+  };
+  VoiceReceiver.prototype.finish = function (endMeta) {
+    var a = this.active;
+    if (!a) return { ok: false, reason: "REFUSED: no voice transfer in progress" };
+    var seqs = Array.from(a.chunks.keys()).sort(function (x, y) { return x - y; });
+    var bytes = concatBytes(seqs.map(function (s) { return a.chunks.get(s); }));
+    if (bytes.length !== a.meta.bytes) {
+      var r = { ok: false, reason: "REFUSED: incomplete voice transfer (" + bytes.length + "/" + a.meta.bytes + " bytes)" };
+      this.active = null;
+      return r;
+    }
+    var verdict = { ok: true, bytes: bytes, chunks: seqs.length, bytesLen: bytes.length, durationMs: a.meta.duration || (endMeta && endMeta.duration) || 0, ts: a.meta.ts };
+    this.history.push(verdict);
+    this.active = null;
+    return verdict;
+  };
+  VoiceReceiver.prototype.busy = function () { return !!this.active && !this.active.done; };
 
   // attacker mode for the death test: flip ONE byte in the sig region mid-flight.
   // Timing-safe: hooks at sendChunk level (payload, pre-frame) — works whether or not
@@ -430,7 +495,7 @@
     ROOTS: ROOTS, ANCHOR: ANCHOR, MIN_RECORDS: MIN_RECORDS, MIN_HEIGHT: MIN_HEIGHT,
     canonicalize: canonicalize, trustCheck: trustCheck, verifyZoneSig: verifyZoneSig, loadZone: loadZone,
     buildIndex: buildIndex, resolveName: resolveName, fetchVerifiedZone: fetchVerifiedZone,
-    CARRIER: CARRIER, packageZone: packageZone, ZoneReceiver: ZoneReceiver, chunkPayload: chunkPayload,
+    CARRIER: CARRIER, packageZone: packageZone, ZoneReceiver: ZoneReceiver, chunkPayload: chunkPayload, VoiceReceiver: VoiceReceiver, isVoiceControl: isVoiceControl, VOICE_START: VOICE_START, VOICE_END: VOICE_END,
     LengthTransport: LengthTransport, DedupCache: DedupCache, MeshP2P: MeshP2P, corruptHook: corruptHook
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;

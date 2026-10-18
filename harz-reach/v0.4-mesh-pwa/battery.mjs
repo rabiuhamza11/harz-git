@@ -164,6 +164,60 @@ let ZONE = null;
   check("T9c cache untouched after hook refusal", recv.verified === null);
 }
 
+// T10 — VOICE carrier: start/chunks/end round-trip through the full pipe
+{
+  const A = new M.MeshP2P("AAAA", {}), B = new M.MeshP2P("BBBB", {});
+  const bufs = { A2B: [], B2A: [] };
+  const tA = new M.LengthTransport(b => bufs.A2B.push(b)), tB = new M.LengthTransport(b => bufs.B2A.push(b));
+  const pump = () => { while (bufs.A2B.length) tB.feed(bufs.A2B.shift()); while (bufs.B2A.length) tA.feed(bufs.B2A.shift()); };
+  A.attach(tA); B.attach(tB);
+  let acks = 0; A.listener.onAck = () => acks++;
+  const voice = new M.VoiceReceiver();
+  let started = false;
+  B.listener.onData = (src, seq, hops, route, payload) => {
+    const ctl = M.isVoiceControl(payload);
+    if (ctl) { if (ctl.kind === M.VOICE_START) { voice.start(ctl); started = true; } else if (ctl.kind === M.VOICE_END) { /* finalize below */ } return; }
+    if (started) voice.absorb(seq, payload);
+  };
+  A.sendHello(); pump();
+  // 3s of synthetic "voice" (12KB opus-like)
+  const voiceBytes = new Uint8Array(12000); for (let i = 0; i < 12000; i++) voiceBytes[i] = (i * 37) & 0xff;
+  const meta = await A.sendVoice("BBBB", voiceBytes, 3000); pump();
+  // trigger end finalize
+  const v = voice.finish({ duration: 3000 });
+  check("T10 voice start/chunks/end delivered through the pipe", v.ok && v.chunks > 0, v.ok ? v.chunks + " chunks, " + v.bytesLen + " bytes, " + v.durationMs + "ms" : v.reason);
+  check("T10b every voice chunk ACKed back at A", acks >= meta.chunks + 2, acks + " acks / " + (meta.chunks + 2) + " frames (incl. start+end)");
+  check("T10c voice bytes recovered intact (byte-exact)", v.ok && v.bytesLen === 12000 && v.bytes[5] === (5*37&0xff));
+}
+
+// T11 — incomplete voice transfer (drop one chunk) => REFUSED, no playback
+{
+  const A = new M.MeshP2P("AAAA", {}), B = new M.MeshP2P("BBBB", {});
+  const bufs = { A2B: [], B2A: [] };
+  const tA = new M.LengthTransport(b => bufs.A2B.push(b)), tB = new M.LengthTransport(b => bufs.B2A.push(b));
+  const pump = () => { while (bufs.A2B.length) tB.feed(bufs.A2B.shift()); while (bufs.B2A.length) tA.feed(bufs.B2A.shift()); };
+  A.attach(tA); B.attach(tB);
+  const voice = new M.VoiceReceiver(); let started = false, dropNext = false, dropped = false;
+  const origSend = A.peer ? A.peer.send.bind(A.peer) : tA.send.bind(tA);
+  // wrap tA.send to drop one data chunk
+  tA.send = function (bytes) {
+    let f; try { f = M.decodeFrame(bytes); } catch (e) { return origSend(bytes); }
+    if (f.type === M.TYPE_DATA && f.dst === "BBBB" && !dropped && !M.isVoiceControl(f.payload)) { dropped = true; return; } // drop it
+    return origSend(bytes);
+  };
+  B.listener.onData = (src, seq, hops, route, payload) => {
+    const ctl = M.isVoiceControl(payload);
+    if (ctl) { if (ctl.kind === M.VOICE_START) { voice.start(ctl); started = true; } return; }
+    if (started) voice.absorb(seq, payload);
+  };
+  A.sendHello(); pump();
+  const voiceBytes = new Uint8Array(8000); for (let i = 0; i < 8000; i++) voiceBytes[i] = i & 0xff;
+  await A.sendVoice("BBBB", voiceBytes, 2000); pump();
+  const v = voice.finish({ duration: 2000 });
+  check("T11 incomplete voice transfer (one chunk dropped) => REFUSED", !v.ok && v.reason.indexOf("REFUSED") === 0 && v.reason.indexOf("incomplete") >= 0, v.reason);
+}
+
+
 console.log("");
 console.log("RESULT: " + pass + " passed, " + fail + " failed" + (fail === 0 ? " — ALL PASS" : " — FAILURES PRESENT"));
 process.exit(fail === 0 ? 0 : 1);

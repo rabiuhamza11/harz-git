@@ -86,6 +86,12 @@
       <div class="status" id="aSendStat"></div>
       <div class="verdict pass" id="aSendV"></div>
     </div>
+    <div class="card">
+      <div class="step">Step 4 — your voice over the mesh</div>
+      <button class="btn" id="aRecBtn" disabled onclick="aRecord()">HOLD A MOMENT — TAP TO RECORD</button>
+      <div class="status" id="aVoiceStat">Available once the book push completes.</div>
+      <div class="verdict pass" id="aVoiceV"></div>
+    </div>
   </div>
 
   <!-- ============ PHONE B ============ -->
@@ -116,6 +122,13 @@
       <div class="status" id="bVerdictStat"></div>
       <div class="verdict pass" id="bVerdictV"></div>
       <div class="verdict fail" id="bVerdictF"></div>
+    </div>
+    <div class="card">
+      <div class="step">The voice (mesh delivery)</div>
+      <div class="status" id="bVoiceStat">Waiting for voice on the mesh…</div>
+      <div class="verdict pass" id="bVoiceV"></div>
+      <div class="verdict fail" id="bVoiceF"></div>
+      <button class="btn small" id="bReplayBtn" style="display:none" onclick="bReplay()">REPLAY THE VOICE</button>
     </div>
     <div class="card" id="bResolveCard" style="display:none">
       <div class="step">Resolve from the mesh-delivered book (roots dead)</div>
@@ -12931,12 +12944,77 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     return step();
   };
   MeshP2P.prototype.sendHello = function () { var wire = this.peer || this.transport; if (wire) wire.send(encodeFrame(hello(this.self))); };
+  MeshP2P.prototype.sendVoice = function (dst, bytes, durationMs) {
+    var self = this;
+    // control: start
+    this.sendChunk(dst, voiceStartFrame(bytes.length, durationMs || 0));
+    var chunks = this.chunkPayload(bytes);
+    var sent = 0;
+    function step() {
+      self.sendChunk(dst, chunks[sent]);
+      sent++;
+      if (sent < chunks.length) {
+        return (sent % 10 === 0) ? new Promise(function (r) { setTimeout(r, CHUNK_PACING_MS); }).then(step) : Promise.resolve().then(step);
+      }
+      // control: end
+      self.sendChunk(dst, voiceEndFrame());
+      return Promise.resolve({ chunks: chunks.length, bytes: bytes.length });
+    }
+    return step();
+  };
+
 
   function chunkPayload(buf, size) {
     var sz = size || CHUNK_SIZE, out = [];
     for (var i = 0; i < buf.length; i += sz) out.push(buf.subarray(i, Math.min(i + sz, buf.length)));
     return out.length ? out : [new Uint8Array(0)];
   }
+
+  // ---------- VOICE CARRIER v0.1 (same frozen wire, audio payload) ----------
+  // Control frames are tiny JSON DATA frames (start / end); the audio bytes ride as
+  // raw chunked DATA frames between them. The same seq / TTL / hops / route / ACK / CRC
+  // law applies. Refused means refused: incomplete voice = REFUSED, no playback.
+  var VOICE_START = "harz-voice-start", VOICE_END = "harz-voice-end";
+  function voiceStartFrame(bytes, durationMs) {
+    return utf8(JSON.stringify({ harz: 1, kind: VOICE_START, bytes: bytes, duration: durationMs, ts: Date.now() }));
+  }
+  function voiceEndFrame() {
+    return utf8(JSON.stringify({ harz: 1, kind: VOICE_END, ts: Date.now() }));
+  }
+  function isVoiceControl(payload) {
+    if (!payload || payload.length > 256 || payload[0] !== 0x7b) return null;
+    try { var p = JSON.parse(str(payload)); if (p && p.harz === 1 && (p.kind === VOICE_START || p.kind === VOICE_END)) return p; } catch (e) {}
+    return null;
+  }
+  function VoiceReceiver() {
+    this.active = null;   // { meta, chunks: Map<seq,bytes> }
+    this.history = [];
+  }
+  VoiceReceiver.prototype.start = function (meta) {
+    this.active = { meta: meta, chunks: new Map(), done: false };
+  };
+  VoiceReceiver.prototype.absorb = function (seq, payload) {
+    if (!this.active || this.active.done) return false;
+    if (this.active.chunks.has(seq)) return "dup";
+    this.active.chunks.set(seq, payload.slice(0));
+    return "stored";
+  };
+  VoiceReceiver.prototype.finish = function (endMeta) {
+    var a = this.active;
+    if (!a) return { ok: false, reason: "REFUSED: no voice transfer in progress" };
+    var seqs = Array.from(a.chunks.keys()).sort(function (x, y) { return x - y; });
+    var bytes = concatBytes(seqs.map(function (s) { return a.chunks.get(s); }));
+    if (bytes.length !== a.meta.bytes) {
+      var r = { ok: false, reason: "REFUSED: incomplete voice transfer (" + bytes.length + "/" + a.meta.bytes + " bytes)" };
+      this.active = null;
+      return r;
+    }
+    var verdict = { ok: true, bytes: bytes, chunks: seqs.length, bytesLen: bytes.length, durationMs: a.meta.duration || (endMeta && endMeta.duration) || 0, ts: a.meta.ts };
+    this.history.push(verdict);
+    this.active = null;
+    return verdict;
+  };
+  VoiceReceiver.prototype.busy = function () { return !!this.active && !this.active.done; };
 
   // attacker mode for the death test: flip ONE byte in the sig region mid-flight.
   // Timing-safe: hooks at sendChunk level (payload, pre-frame) — works whether or not
@@ -12973,7 +13051,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     ROOTS: ROOTS, ANCHOR: ANCHOR, MIN_RECORDS: MIN_RECORDS, MIN_HEIGHT: MIN_HEIGHT,
     canonicalize: canonicalize, trustCheck: trustCheck, verifyZoneSig: verifyZoneSig, loadZone: loadZone,
     buildIndex: buildIndex, resolveName: resolveName, fetchVerifiedZone: fetchVerifiedZone,
-    CARRIER: CARRIER, packageZone: packageZone, ZoneReceiver: ZoneReceiver, chunkPayload: chunkPayload,
+    CARRIER: CARRIER, packageZone: packageZone, ZoneReceiver: ZoneReceiver, chunkPayload: chunkPayload, VoiceReceiver: VoiceReceiver, isVoiceControl: isVoiceControl, VOICE_START: VOICE_START, VOICE_END: VOICE_END,
     LengthTransport: LengthTransport, DedupCache: DedupCache, MeshP2P: MeshP2P, corruptHook: corruptHook
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
@@ -13182,12 +13260,72 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
         }
       };
       A.poll = setInterval(done, 200);
+      setTimeout(function () { var rb = document.getElementById("aRecBtn"); rb.disabled = false; document.getElementById("aVoiceStat").textContent = "Ready. Tap to record, speak, tap again to send."; }, 1500);
     });
   }
   function updA() {
     var el = document.getElementById("aSendStat");
     el.textContent = "Sending… " + (A.acks) + " ACKs received of " + (A.chunks || A.totalChunks) + " chunks";
   }
+  // ---- A: voice capture + send (walkie style) ----
+  var REC = { mr: null, stream: null, parts: [], t0: 0, timer: null, active: false };
+  window.aRecord = function () {
+    var btn = document.getElementById("aRecBtn");
+    var stat = document.getElementById("aVoiceStat");
+    if (REC.active) {
+      try { REC.mr.stop(); } catch (e) {}
+      return;
+    }
+    if (!A.node || !A.connected) { stat.textContent = "Connect to Phone B first (Steps 1-3)."; return; }
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      REC.stream = stream; REC.parts = []; REC.t0 = Date.now(); REC.active = true;
+      var mime = "";
+      try { mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : ""; } catch (e) {}
+      REC.mr = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+      REC.mr.ondataavailable = function (ev) { if (ev.data && ev.data.size) REC.parts.push(ev.data); };
+      REC.mr.onstop = function () {
+        clearInterval(REC.timer);
+        REC.stream.getTracks().forEach(function (t) { t.stop(); });
+        REC.active = false;
+        var dur = Date.now() - REC.t0;
+        var blob = new Blob(REC.parts, { type: REC.mr.mimeType || "audio/webm" });
+        btn.textContent = "SENDING…";
+        stat.textContent = "Packing your voice into mesh frames…";
+        blob.arrayBuffer().then(function (ab) {
+          var bytes = new Uint8Array(ab);
+          if (!bytes.length) { stat.textContent = "Nothing recorded — try again."; btn.textContent = "HOLD A MOMENT — TAP TO RECORD"; return; }
+          var expected = Math.ceil(bytes.length / C.CHUNK_SIZE) + 2;
+          var vAcks = 0;
+          var origAck = A.node.listener.onAck;
+          A.node.listener.onAck = function (src, seq) { vAcks++; stat.textContent = "Sending… " + vAcks + " ACKs of " + expected + " frames"; };
+          A.node.sendVoice("BBBB", bytes, dur).then(function (meta) {
+            var poll = setInterval(function () {
+              if (vAcks >= expected) {
+                clearInterval(poll);
+                A.node.listener.onAck = origAck;
+                var v = document.getElementById("aVoiceV");
+                v.textContent = "VOICE SENT OVER THE MESH\n" + meta.chunks + " chunks · " + vAcks + " ACKs · " + (meta.bytes / 1024).toFixed(1) + " KB · " + (dur / 1000).toFixed(1) + "s of your voice\nTransport: LAN WebRTC (browser pipe, zero internet)";
+                stat.textContent = "Delivered. Phone B should be playing your voice.";
+                btn.textContent = "HOLD A MOMENT — TAP TO RECORD";
+                log("voice sent: " + meta.chunks + " chunks / " + meta.bytes + " bytes / " + (dur / 1000).toFixed(1) + "s");
+              }
+            }, 200);
+          });
+        });
+      };
+      REC.mr.start(500);
+      btn.textContent = "STOP + SEND";
+      REC.timer = setInterval(function () {
+        var el = (Date.now() - REC.t0) / 1000;
+        stat.textContent = "Recording… " + el.toFixed(1) + "s (tap again to stop and send)";
+        if (el >= 60) { try { REC.mr.stop(); } catch (e) {} }
+      }, 200);
+      log("mic open — recording");
+    }).catch(function (e) {
+      stat.textContent = "MIC FAILED: " + e.message + " — allow microphone access and try again.";
+    });
+  };
+
   window.aScanReply = function () {
     openScanner(function (sdp) {
       var parsed = JSON.parse(sdp); // {type:"answer", sdp:...}
@@ -13231,8 +13369,44 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
   function bReady() {
     log("channel open — waiting for the book");
     B.recv = new C.ZoneReceiver();
+    B.voice = new C.VoiceReceiver();
+    B.voiceChunks = 0;
     B.node = new C.MeshP2P("BBBB", {
       onData: function (src, seq, hops, route, payload) {
+        var ctl = C.isVoiceControl(payload);
+        if (ctl) {
+          if (ctl.kind === C.VOICE_START) {
+            B.voice.start(ctl); B.voiceChunks = 0;
+            document.getElementById("bVoiceStat").textContent = "Voice arriving on the mesh…";
+            log("voice-start: " + ctl.bytes + " bytes announced");
+          } else if (ctl.kind === C.VOICE_END) {
+            var v = B.voice.finish(ctl);
+            if (v.ok) {
+              var blob = new Blob([v.bytes], { type: "audio/webm" });
+              var url = URL.createObjectURL(blob);
+              B.lastVoiceUrl = url;
+              var el = document.getElementById("bVoiceV");
+              el.textContent = "VOICE DELIVERED OVER THE MESH\n" + v.chunks + " chunks · " + (v.bytesLen / 1024).toFixed(1) + " KB · " + (v.durationMs / 1000).toFixed(1) + "s of audio\nTransport: LAN WebRTC (browser pipe, zero internet)";
+              document.getElementById("bVoiceStat").textContent = "";
+              document.getElementById("bReplayBtn").style.display = "block";
+              var au = new Audio(url);
+              au.play().catch(function () { log("autoplay blocked — use REPLAY"); });
+              log("voice delivered + played: " + v.chunks + " chunks / " + v.bytesLen + " bytes");
+              if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+            } else {
+              document.getElementById("bVoiceF").textContent = v.reason + "\nNo playback. Refused means refused.";
+              document.getElementById("bVoiceStat").textContent = "";
+              log("voice REFUSED — " + v.reason);
+            }
+          }
+          return;
+        }
+        if (B.voice && B.voice.busy()) {
+          B.voice.absorb(seq, payload);
+          B.voiceChunks++;
+          document.getElementById("bVoiceStat").textContent = "Voice arriving… " + B.voiceChunks + " chunks";
+          return;
+        }
         var st = B.recv.absorb(src, seq, hops, route, payload);
         B.got++;
         document.getElementById("bVerdictStat").textContent = "Receiving… " + B.got + " chunks";
@@ -13275,6 +13449,11 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
       // incomplete transfers stay silent and keep waiting
     });
   }
+  window.bReplay = function () {
+    if (!B.lastVoiceUrl) return;
+    var au = new Audio(B.lastVoiceUrl);
+    au.play().catch(function (e) { log("replay failed: " + e.message); });
+  };
   window.bResolve = function (name) {
     var raw = localStorage.getItem("harz-mesh-book");
     var el = document.getElementById("bResolveStat");
@@ -13350,7 +13529,26 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
                   !v.ok === false && flipped >= 0 && !v2.ok, v2.reason);
                 stlog("S5b signature refused, fail-closed, cache untouched",
                   String(v2.reason).indexOf("SIGNATURE FAILED") >= 0 && recv.verified === null);
-                log("RESULT: " + sp + " passed, " + sf + " failed" + (sf === 0 ? " — ALL PASS" : " — FAILURES"));
+                // S6: voice over the SAME live channel — the owner's directive
+                var vrecv = new C.VoiceReceiver();
+                var vChunks = 0, vStarted = false;
+                nodeB.listener.onData = function (src, seq, hops, route, payload) {
+                  var ctl = C.isVoiceControl(payload);
+                  if (ctl) {
+                    if (ctl.kind === C.VOICE_START) { vrecv.start(ctl); vStarted = true; }
+                    else if (ctl.kind === C.VOICE_END) {
+                      var vv = vrecv.finish(ctl);
+                      stlog("S6 voice over the live channel: " + vv.chunks + " chunks, " + vv.bytesLen + " bytes, " + (vv.durationMs / 1000).toFixed(1) + "s", vv.ok, vv.ok ? "delivered" : vv.reason);
+                      stlog("S6b voice bytes recovered intact", vv.ok && vv.bytesLen === 12000 && vv.bytes[5] === (5 * 37 & 0xff));
+                      log("RESULT: " + sp + " passed, " + sf + " failed" + (sf === 0 ? " — ALL PASS" : " — FAILURES"));
+                    }
+                    return;
+                  }
+                  if (vStarted) { vrecv.absorb(seq, payload); vChunks++; }
+                };
+                var voiceBytes = new Uint8Array(12000); for (var vi = 0; vi < 12000; vi++) voiceBytes[vi] = (vi * 37) & 0xff;
+                log("S6 sending synthetic voice over the live channel…");
+                nodeA.sendVoice("BBBB", voiceBytes, 3000);
               });
             }, 700);
           });
