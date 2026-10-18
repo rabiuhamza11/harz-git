@@ -62,3 +62,11 @@ are requested must be proven in airplane mode on the real device BEFORE shipping
 - G. EFCC pack BLANK offline (7:50 screenshot). Live pack: <div id="root"></div> is empty, main bundle /assets/index-DnmVJn3i.js was removed at capture (data-harz-removed), 0 img tags, 136 chars visible text. A React app needs a rendered-DOM recapture (same method as CAC). Acceptance: EFCC opens offline as a readable page.
 - H. Subdomains: portal.nysc.org.ng and icrp.cac.gov.ng give the honest "needs internet" alert (correct), but owner wants them to open. Capture each subdomain as its own pack (rendered DOM, images embedded). Acceptance: tapping them in the parent pack opens the stored subdomain pack.
 - LAW: any change to how packs are requested needs real-device airplane proof first (PACKVER lesson, 07:44 regression).
+
+## OWNER DEVICE 08:20-08:21 (airplane): EFCC RENDERS; NAVIGATION STILL UNPROVEN
+- EFCC pack (captured 2026-10-18, 742KB) now renders offline: logo, menu, About list. Item G first pass PROVEN. Defect: stylesheet missing (external efcc.gov.ng/assets/index-*.css not inlined) so page is unstyled.
+- NYSC/CAC: owner reports images open on all, "no navigation open at all". Alerts seen are for cross-site links (portal.nysc.org.ng, icrp.cac.gov.ng) = honest, never captured.
+- Server facts (Hauwa, 08:3x): ~60 stored sub-pages exist as v2.pack.<domain>.<page>.html (NYSC ~50, CAC ~14). NYSC pack has 8 relative links, CAC 19. EFCC pack has 0 same-site resolver (efcc links data-harz-external only 8).
+- NEEDED (item I): same-site link routing — tapping an internal link (e.g. NYSC About, CAC Services) must open the stored sub-page, not just show the "needs connection" alert. Confirm the pack bridge maps relative hrefs to /v2/packs/<domain>/<page>. Owner will report whether internal links open.
+- NEEDED (item J): inline EFCC stylesheet; wire EFCC links like NYSC/CAC.
+- LAW: pack request changes need real-device airplane proof first.
