@@ -198,7 +198,10 @@
     var tryNext = function (i) {
       if (i >= list.length) return Promise.resolve({ ok: false, reason: "ALL NODES REFUSED/UNREACHABLE (" + (lastReason || "network") + ")", node: null, zone: null });
       var node = list[i];
-      return fetch(node + "/zone", { cache: "no-store" }).then(function (res) {
+      var ctl = new AbortController();
+      var timer = setTimeout(function () { ctl.abort(); }, 15000); // hard 15s per node — a hanging network must fail fast, honestly
+      return fetch(node + "/zone", { cache: "no-store", signal: ctl.signal }).then(function (res) {
+        clearTimeout(timer);
         if (!res.ok) { lastReason = node + " HTTP " + res.status; return tryNext(i + 1); }
         return res.json().then(function (zone) {
           return loadZone(zone).then(function (loaded) {
@@ -207,6 +210,7 @@
           });
         });
       }).catch(function (e) {
+        clearTimeout(timer);
         lastReason = node + " " + ((e && e.message) ? e.message : e);
         return tryNext(i + 1);
       });
