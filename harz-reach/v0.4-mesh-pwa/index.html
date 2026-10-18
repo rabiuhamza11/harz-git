@@ -13254,7 +13254,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
         clearInterval(B.finTimer);
         var pay = B.recv.resolve("pay.harz");
         var vf = document.getElementById("bVerdictV");
-        vf.textContent = "BOOK DELIVERED OVER THE MESH — INDEPENDENTLY VERIFIED:\nking signature: VALID (Ed25519, verified on THIS phone)\ntransport: mesh-live | supplying node: mesh:" + src +
+        vf.textContent = "BOOK DELIVERED OVER THE MESH — INDEPENDENTLY VERIFIED:\nking signature: VALID (Ed25519, verified on THIS phone)\ntransport: mesh-live over LAN WebRTC (browser pipe, zero internet) | supplying node: mesh:" + src +
           "\nheight " + v.zone.height + " · " + v.zone.records.length + " names · " + v.bytes + " bytes" +
           "\npay.harz → " + (pay ? pay.endpoints.https : "null") +
           "\nunknown.harz → " + (B.recv.resolve("unknown.harz") === null ? "null (honest NXDOMAIN)" : "ERROR");
@@ -13284,7 +13284,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     C.loadZone(zone).then(function (loaded) {
       if (!loaded.ok) { el.textContent = "CACHED BOOK FAILED RE-VERIFICATION: " + loaded.reason; return; }
       var r = C.resolveName(C.buildIndex(loaded.zone), name);
-      el.textContent = name + " → " + (r ? r.endpoints.https : "null (honest NXDOMAIN)") + "\ntransport: mesh-live (verified cache; no root contact)";
+      el.textContent = name + " → " + (r ? r.endpoints.https : "null (honest NXDOMAIN)") + "\ntransport: mesh-live (verified cache; no root contact; LAN WebRTC)";
       log("resolve " + name + " → " + (r ? r.endpoints.https : "null"));
     });
   };
