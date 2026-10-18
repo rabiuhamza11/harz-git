@@ -12998,6 +12998,8 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     logEl.scrollTop = logEl.scrollHeight;
   };
   log("HARZ MESH PHONE pwa v0.1 — frozen v2.1 frames, browser pipe");
+  window.addEventListener("error", function (e) { log("JS ERROR: " + e.message + " @" + (e.lineno || "?")); });
+  window.addEventListener("unhandledrejection", function (e) { log("UNHANDLED REJECTION: " + (e.reason && e.reason.message ? e.reason.message : e.reason)); });
 
   // ---------- QR chunk protocol ----------
   var QR_PART = 620; // chars per QR code
@@ -13391,9 +13393,9 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
           wireChannel(dcB2, tB2);
           dcB2.onopen = function () { nB.attach(tB2); nB.sendHello(); };
         };
-        pcA2.createOffer().then(function (o) { return pcA2.setLocalDescription(o); }).then(function () { return waitIce(pcA2, 1500); }).then(function () { return pcB2.setRemoteDescription(pcA2.localDescription); }).then(function () { return pcB2.createAnswer(); }).then(function (a2) { return pcB2.setLocalDescription(a2); }).then(function () { return pcA2.setRemoteDescription(pcB2.localDescription); });
+        pcA2.createOffer().then(function (o) { return pcA2.setLocalDescription(o); }).then(function () { return waitIce(pcA2, 1500); }).then(function () { return pcB2.setRemoteDescription(pcA2.localDescription); }).then(function () { return pcB2.createAnswer(); }).then(function (a2) { return pcB2.setLocalDescription(a2); }).then(function () { return pcA2.setRemoteDescription(pcB2.localDescription); }).catch(function (e) { log("S5 chain error: " + e.message); });
       }
-      pcA.createOffer().then(function (o) { return pcA.setLocalDescription(o); }).then(function () { return waitIce(pcA, 1500); }).then(function () { return pcB.setRemoteDescription(pcA.localDescription); }).then(function () { return pcB.createAnswer(); }).then(function (a) { return pcB.setLocalDescription(a); }).then(function () { return pcA.setRemoteDescription(pcB.localDescription); });
+      pcA.createOffer().then(function (o) { return pcA.setLocalDescription(o); }).then(function () { return waitIce(pcA, 1500); }).then(function () { return pcB.setRemoteDescription(pcA.localDescription); }).then(function () { return pcB.createAnswer(); }).then(function (a) { return pcB.setLocalDescription(a); }).then(function () { return pcA.setRemoteDescription(pcB.localDescription); }).catch(function (e) { log("S4 chain error: " + e.message); });
     });
   }
 })();
