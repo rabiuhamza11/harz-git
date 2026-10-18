@@ -55,3 +55,10 @@ My PACKVER patch (?v=r2 on pack open) broke offline pack opening: the phone had 
 already fixes the stale-pack root cause (cache:'reload' on miss), so PACKVER is redundant AND harmful. Shell
 restored to the desk's f39c0b84 + v0.8.1 linkify, PACKVER fully removed (0 refs). LAW: any change to how packs
 are requested must be proven in airplane mode on the real device BEFORE shipping; server-side checks cannot catch it.
+
+## OWNER DEVICE RESULTS 07:49-07:50 + NEW ITEMS G, H
+- NYSC pack: 3 hero photos now render offline on Infinix (item C hero images PROVEN). Two images still unembedded: img/news4.jpg, img/NYSC NDPR AUDIT 2023.png.
+- CAC pack: renders as a real page offline (item B PROVEN).
+- G. EFCC pack BLANK offline (7:50 screenshot). Live pack: <div id="root"></div> is empty, main bundle /assets/index-DnmVJn3i.js was removed at capture (data-harz-removed), 0 img tags, 136 chars visible text. A React app needs a rendered-DOM recapture (same method as CAC). Acceptance: EFCC opens offline as a readable page.
+- H. Subdomains: portal.nysc.org.ng and icrp.cac.gov.ng give the honest "needs internet" alert (correct), but owner wants them to open. Capture each subdomain as its own pack (rendered DOM, images embedded). Acceptance: tapping them in the parent pack opens the stored subdomain pack.
+- LAW: any change to how packs are requested needs real-device airplane proof first (PACKVER lesson, 07:44 regression).
