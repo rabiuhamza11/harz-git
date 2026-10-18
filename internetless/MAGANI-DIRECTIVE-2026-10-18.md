@@ -70,3 +70,9 @@ are requested must be proven in airplane mode on the real device BEFORE shipping
 - NEEDED (item I): same-site link routing — tapping an internal link (e.g. NYSC About, CAC Services) must open the stored sub-page, not just show the "needs connection" alert. Confirm the pack bridge maps relative hrefs to /v2/packs/<domain>/<page>. Owner will report whether internal links open.
 - NEEDED (item J): inline EFCC stylesheet; wire EFCC links like NYSC/CAC.
 - LAW: pack request changes need real-device airplane proof first.
+
+## OWNER DEVICE 08:38-08:39 (airplane): NAVIGATION STILL ALERTS IN ALL PACKS
+- Owner screenshots: NYSC faq.html, NYSC supportline.html, CAC /resources/faq, CAC /about/organizational-structure all show the "needs an internet connection" alert. Owner: "All links click fail".
+- Hauwa server check 08:5x: live route packs have those links WIRED (NYSC 57 internal wired anchors, faq.html + supportline.html wired; CAC 20 wired incl resources_faq) and no alert on them. Remaining server-side alerts are only assets/externals (favicons, webmanifest, southwest.html, ADVERT pdf, cross-site hosts).
+- Diagnosis: owner's phone still holds the OLD pack (pre-wiring). SW is r9 now; a cache-name change drops stored packs on activation. Owner must get the new worker to ACTIVATE, then re-sync.
+- ACTION FOR MAGANI: prove on the real device in airplane mode that after SW r9 activates + sync, a NYSC menu link (faq.html) opens the stored sub-page. If the phone still shows the old pack, add a pack-integrity check in the worker (compare stored pack sha vs server) instead of URL tags. DO NOT add ?v= to pack URLs (broke offline open 07:44).
