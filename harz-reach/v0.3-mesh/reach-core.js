@@ -10,7 +10,7 @@ export const ROOTS = [
   "https://harz-root.harz.workers.dev",
   "https://harz-root-b.harz.workers.dev"
 ];
-export const ANCHOR = "ed25519:90062faa4947be141d5e18987aea5d14dd1c570329b57b0c50a3f6cddfc54c0f";
+export const ANCHOR = "ed25519:609d4b2f10a2fba802349a1443a203248636e055bd9b7ec941476994f20e00b9";
 export const MIN_RECORDS = 77;
 export const MIN_HEIGHT = 1;
 

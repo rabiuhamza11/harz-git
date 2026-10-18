@@ -57,7 +57,9 @@ async function cmdGo() {
         if (corrupt) {
           // attacker transport: intercept the sig-region chunk at the wire, flip one byte, reseal CRC
           const full = carrier.packageZone(check.zone);
-          const sigByteOff = full.indexOf("230e5208") + 10;
+          // dynamic sig targeting: flip a byte inside the "sig":"..." value of whatever zone is loaded (h1 hardcode removed)
+          const sigMark = full.indexOf('"sig":"');
+          const sigByteOff = sigMark >= 0 ? sigMark + 7 + 20 : full.length - 40;
           const sigChunkIdx = Math.floor(sigByteOff / F.CHUNK_SIZE);
           const sigInChunk = sigByteOff % F.CHUNK_SIZE;
           const peers = node.peers;
