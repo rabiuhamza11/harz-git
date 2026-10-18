@@ -13297,102 +13297,94 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
       if (ok) sp++; else sf++;
       log((ok ? "PASS " : "FAIL ") + name + (detail ? " (" + detail + ")" : ""));
     };
-    log("SELF-TEST: frame battery against frozen twin first…");
-    var chunk = new Uint8Array(900); for (var ci = 0; ci < 900; ci++) chunk[ci] = (ci * 31) & 0xff;
-    var fdata = C.data("AAAA", "BBBB", 12345, 8, chunk);
-    var enc = C.encodeFrame(fdata);
-    var dec = C.decodeFrame(enc);
-    stlog("S1 frame round-trip (900B payload, CRC ok)", dec.seq === 12345 && dec.payload.length === 900);
+    log("SELF-TEST: frame battery first…");
+    var chunk0 = new Uint8Array(900); for (var ci = 0; ci < 900; ci++) chunk0[ci] = (ci * 31) & 0xff;
+    var dec0 = C.decodeFrame(C.encodeFrame(C.data("AAAA", "BBBB", 12345, 8, chunk0)));
+    stlog("S1 frame round-trip (900B payload, CRC ok)", dec0.seq === 12345 && dec0.payload.length === 900);
     C.fetchVerifiedZone().then(function (loaded) {
       stlog("S2 book fetched + king sig verified", loaded.ok, loaded.ok ? "height " + loaded.zone.height + ", " + loaded.zone.records.length + " names" : loaded.reason);
       if (!loaded.ok) { log("RESULT: " + sp + " passed, " + sf + " failed — ABORT (no book)"); return; }
       var zone = loaded.zone;
-      // S3: QR round trip — SDP-equivalent payload through QR encode + jsQR decode
-      var sample = JSON.stringify({ type: "offer", sdp: "v=0\r\n" + "o=- 12345 2 IN IP4 127.0.0.1\r\n".repeat(1) + "x".repeat(2400) });
+      var sample = JSON.stringify({ type: "offer", sdp: "v=0\r\n" + "o=- 12345 2 IN IP4 127.0.0.1\r\n" + "x".repeat(2400) });
       var pl = makeQrPayload(sample, "T");
       var rebuilt = "";
-      var cv = document.createElement("canvas");
+      var cvq = document.createElement("canvas");
       pl.forEach(function (p, idx) {
-        drawQr(cv, p);
-        var ctx = cv.getContext("2d");
-        var img = ctx.getImageData(0, 0, cv.width, cv.height);
-        var res = jsQR(img.data, cv.width, cv.height, { inversionAttempts: "dontInvert" });
+        drawQr(cvq, p);
+        var ctx = cvq.getContext("2d");
+        var img = ctx.getImageData(0, 0, cvq.width, cvq.height);
+        var res = jsQR(img.data, cvq.width, cvq.height, { inversionAttempts: "dontInvert" });
         var okp = !!(res && res.data === p);
         stlog("S3." + (idx + 1) + " QR part " + (idx + 1) + "/" + pl.length + " encodes + jsQR-decodes identically", okp);
         if (res) rebuilt += JSON.parse(res.data).d;
       });
       stlog("S3 QR channel lossless (" + pl.length + " parts, " + sample.length + "B)", rebuilt === sample);
-      // S4: WebRTC loopback — two peers in page, frozen frames A->B
+
+      // S4 + S5: ONE loopback pair, both tests sequential on the same channel (field-faithful)
       var pcA = newPc(), pcB = newPc();
       var dcA = pcA.createDataChannel("harz", { ordered: true });
       var tA = new C.LengthTransport(function () {}), tB = new C.LengthTransport(function () {});
       var recv = new C.ZoneReceiver();
+      var acks = 0;
       var nodeA = new C.MeshP2P("AAAA", { onAck: function () { acks++; } });
-      var acks = 0, corruptMode = false, corruptNote = "";
-      var nodeB = new C.MeshP2P("BBBB", { onData: function (src, seq, hops, route, payload) { recv.absorb(src, seq, hops, route, payload); } });
+      var nodeB = new C.MeshP2P("BBBB", {});
+      var phase = "s4";
+      nodeB.listener.onData = function (src, seq, hops, route, payload) {
+        recv.absorb(src, seq, hops, route, payload);
+      };
+      function finishRun(v, meta, isDeath) {
+        if (!isDeath) {
+          stlog("S4 book over WebRTC loopback: " + meta.chunks + " chunks, acks " + acks, v.ok && acks === meta.chunks,
+            v.ok ? "verified, height " + v.zone.height : v.reason);
+          // S5: death test on the SAME channel — the exact field path (corruptHook + live pipe)
+          var full = C.packageZone(zone);
+          recv = new C.ZoneReceiver();
+          var flipped = -1;
+          nodeA.listener.onCorrupted = function (idx) { flipped = idx; };
+          C.corruptHook(nodeA, "BBBB", full);
+          nodeA.sendZone("BBBB", zone).then(function (meta2) {
+            setTimeout(function () {
+              var src2 = Array.from(recv.buffers.keys())[0];
+              recv.finalize(src2 || "AAAA").then(function (v2) {
+                stlog("S5 DEATH TEST over the live channel: chunk " + flipped + " flipped mid-flight → REFUSED",
+                  !v.ok === false && flipped >= 0 && !v2.ok, v2.reason);
+                stlog("S5b signature refused, fail-closed, cache untouched",
+                  String(v2.reason).indexOf("SIGNATURE FAILED") >= 0 && recv.verified === null);
+                log("RESULT: " + sp + " passed, " + sf + " failed" + (sf === 0 ? " — ALL PASS" : " — FAILURES"));
+              });
+            }, 700);
+          });
+        }
+      }
       dcA.binaryType = "arraybuffer";
       wireChannel(dcA, tA);
       dcA.onopen = function () {
+        log("S4 channel open — pushing the book");
         nodeA.attach(tA);
-        if (corruptMode) { C.corruptHook(nodeA, "BBBB", C.packageZone(zone)); corruptNote = " (DEATH TEST armed)"; }
         nodeA.sendHello();
         nodeA.sendZone("BBBB", zone).then(function (meta) {
           setTimeout(function () {
             var src = Array.from(recv.buffers.keys())[0];
-            recv.finalize(src || "AAAA").then(function (v) {
-              stlog("S4 book over WebRTC loopback: " + meta.chunks + " chunks, acks " + acks, v.ok && acks === meta.chunks,
-                v.ok ? "verified, height " + v.zone.height : v.reason);
-              if (!corruptMode) {
-                // S5: death test in loopback
-                corruptMode = true;
-                runLoopbackDeath();
-              } else {
-                stlog("S5 DEATH TEST: corrupted book REFUSED, cache untouched", !v.ok && recv.verified === null, v.reason);
-                log("RESULT: " + sp + " passed, " + sf + " failed" + (sf === 0 ? " — ALL PASS" : " — FAILURES"));
-              }
-            });
-          }, 600);
+            recv.finalize(src || "AAAA").then(function (v) { finishRun(v, meta, false); });
+          }, 700);
         });
       };
       pcB.ondatachannel = function (ev) {
         var dcB = ev.channel;
         dcB.binaryType = "arraybuffer";
         wireChannel(dcB, tB);
-        dcB.onopen = function () { nodeB.attach(tB); nodeB.sendHello(); };
+        dcB.onopen = function () { log("S4 B-side channel open"); nodeB.attach(tB); nodeB.sendHello(); };
       };
-      function runLoopbackDeath() {
-        var pcA2 = newPc(), pcB2 = newPc();
-        var dcA2 = pcA2.createDataChannel("harz", { ordered: true });
-        var tA2 = new C.LengthTransport(function () {}), tB2 = new C.LengthTransport(function () {});
-        var recv2 = new C.ZoneReceiver();
-        var nA = new C.MeshP2P("AAAA", {});
-        var nB = new C.MeshP2P("BBBB", { onData: function (s, q, h, r, p) { recv2.absorb(s, q, h, r, p); } });
-        dcA2.binaryType = "arraybuffer";
-        wireChannel(dcA2, tA2);
-        dcA2.onopen = function () {
-          nA.attach(tA2);
-          C.corruptHook(nA, "BBBB", C.packageZone(zone));
-          nA.sendHello();
-          nA.sendZone("BBBB", zone).then(function (meta) {
-            setTimeout(function () {
-              var src = Array.from(recv2.buffers.keys())[0];
-              recv2.finalize(src || "AAAA").then(function (v) {
-                stlog("S5 DEATH TEST over WebRTC: one sig byte flipped mid-flight → REFUSED", !v.ok && String(v.reason).indexOf("SIGNATURE FAILED") >= 0, v.reason);
-                stlog("S5b cache untouched after refusal (fail-closed)", recv2.verified === null);
-                log("RESULT: " + sp + " passed, " + sf + " failed" + (sf === 0 ? " — ALL PASS" : " — FAILURES"));
-              });
-            }, 600);
-          });
-        };
-        pcB2.ondatachannel = function (ev) {
-          var dcB2 = ev.channel;
-          dcB2.binaryType = "arraybuffer";
-          wireChannel(dcB2, tB2);
-          dcB2.onopen = function () { nB.attach(tB2); nB.sendHello(); };
-        };
-        pcA2.createOffer().then(function (o) { log("S5 offer built"); return pcA2.setLocalDescription(o); }).then(function () { return waitIce(pcA2, 1500); }).then(function () { log("S5 ICE gathered"); return pcB2.setRemoteDescription(pcA2.localDescription); }).then(function () { return pcB2.createAnswer(); }).then(function (a2) { log("S5 answer built"); return pcB2.setLocalDescription(a2); }).then(function () { log("S5 answer set"); return pcA2.setRemoteDescription(pcB2.localDescription); }).then(function () { log("S5 SDP exchange complete — waiting for channel"); }).catch(function (e) { log("S5 chain error: " + e.message); });
-      }
-      pcA.createOffer().then(function (o) { return pcA.setLocalDescription(o); }).then(function () { return waitIce(pcA, 1500); }).then(function () { return pcB.setRemoteDescription(pcA.localDescription); }).then(function () { return pcB.createAnswer(); }).then(function (a) { return pcB.setLocalDescription(a); }).then(function () { return pcA.setRemoteDescription(pcB.localDescription); }).then(function () { log("S4 SDP exchange complete — waiting for channel"); }).catch(function (e) { log("S4 chain error: " + e.message); });
+      pcA.oniceconnectionstatechange = function () { log("ICE(A): " + pcA.iceConnectionState); };
+      pcB.oniceconnectionstatechange = function () { log("ICE(B): " + pcB.iceConnectionState); };
+      pcA.createOffer().then(function (o) { return pcA.setLocalDescription(o); })
+        .then(function () { return waitIce(pcA, 1500); })
+        .then(function () { return pcB.setRemoteDescription(pcA.localDescription); })
+        .then(function () { return pcB.createAnswer(); })
+        .then(function (a) { return pcB.setLocalDescription(a); })
+        .then(function () { return pcA.setRemoteDescription(pcB.localDescription); })
+        .then(function () { log("S4 SDP exchange complete"); })
+        .catch(function (e) { log("SELFTEST chain error: " + e.message); });
     });
   }
 })();
