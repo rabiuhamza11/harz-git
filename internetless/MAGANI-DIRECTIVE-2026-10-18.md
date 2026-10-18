@@ -38,3 +38,13 @@ Also still open from device matrix: COLD START (swipe-kill + reopen + search) â€
 
 ## Known/flagged (do NOT re-report): 17 docs with lossy nbsp artifacts (0xC2 stray) disclosed in
 v2.final-state-20261017; 1019-hit claim unverified (desk audit f5bb7b6); onefile v0.7 hash mismatch flagged.
+
+## UPDATE 07:4x â€” PACK VERSIONING SHIPPED BY HAUWA (critical, integrate in every future shell build)
+Finding: pack changes NEVER reach phones that already synced. /v2/packs/* is SW cache-first + immutable;
+sync re-fetch reads the OLD cache entry forever. Owner's phone showed 3 hero images broken while the live
+pack embeds them, because it holds the pre-fix pack.
+Fix deployed (shell sha a5f5e1e6, base = desk's f39c0b84 + byte-surgical patch): var PACKVER = "r2";
+both pack fetch paths versioned (?v=PACKVER): sync fetch + openPack location.href. On every pack change,
+bump PACKVER (r3, r4...) in the shell. Magani: include PACKVER in future shell builds or coordinate.
+Current live pack states: EFCC recaptured (510KB, new sha c4af0a1e); NYSC still 13/15 embedded
+(img/news4.jpg + img/NYSC NDPR AUDIT 2023.png pending, item C).
