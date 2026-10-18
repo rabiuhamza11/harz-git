@@ -57,3 +57,9 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - Owner screenshot: CAC FAQ sub-page (resources_faq.html) open in airplane mode, FAQ card expanded with full answer text rendered, AI Lawyer widget present.
 - Proves: CAC pack -> sub-page navigation offline on Infinix. NYSC (09:42) + CAC (09:48) both now pass offline navigation + content.
 - Matrix remaining: Read-more link (freshwater -> 6,508 chars) + cold start.
+
+## Oct 18 09:49-09:50 (owner device, AIRPLANE) — CAC MULTI-PAGE NAVIGATION PASS
+- 09:49 Resources sub-page opens: "Access Expert Resources Designed to Support Your Success", Downloadable Resources, search box. Server copy: 1,088 visible chars, "Downloadable Forms" section present; form PDFs are external/uncaptured (1 .pdf ref) => honest limit.
+- 09:50 Company Registration sub-page opens: green hero, company-type tabs (Private/Public, Limited/unlimited, Mortgages Reg, Other Statutory), step-by-step guide. In-page tabs and layout rendering offline.
+- Tally CAC offline on device: FAQ (09:48), Resources (09:49), Company Registration (09:50) = 3 distinct sub-pages navigated. With NYSC (FAQ, Mobilization Time-Table, Important Info, DG Gallery) = 7 distinct pack sub-pages proven on Infinix.
+- Matrix remaining: Read-more link (freshwater -> 6,508 chars), cold start (swipe-kill, reopen, search Madagascar). EFCC subpages + subdomain packs with Magani.
