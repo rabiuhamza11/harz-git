@@ -47,3 +47,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - NYSC pack (new capture 2026-10-18 "internal pages stored"): clicked FAQs in nav → navigated to /v2/packs/nysc.gov.ng/faq.html → FULL FAQ content rendered (registration, concessions, corrections, exemption, camp docs — complete text). Screenshot sealed.
 - CAC pack (new capture 2026-10-18): clicked FAQ in Resources footer → navigated to /v2/packs/cac.gov.ng/resources_faq.html → full FAQ page (10 questions, contact block, AI Lawyer widget). Screenshot sealed.
 - Proof class: real-browser click navigation on live routes. Offline layer (SW r9 cache) same proven pattern as corpus docs; full offline pack nav still requires owner device airplane test after sync.
+
+## Oct 18 09:42 (owner device) — NYSC SUB-PAGE NAVIGATION + IMAGES PASS
+- Owner screenshot: NYSC Director-General's Gallery page open on phone, 2x3 grid of six real thumbnails rendering (dggallery.html sub-page — the 65/66-embedded page from the link audit).
+- Proves: pack -> sub-page navigation works on device; pack images render; sync of the 62-pack set landed on the phone.
+- Matrix state: pack navigation CLOSED (pending confirm airplane). Remaining: Read-more link (freshwater -> 6,508 chars) + cold start.
