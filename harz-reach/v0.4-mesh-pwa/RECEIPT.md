@@ -32,3 +32,11 @@ https://rabiuhamza11.github.io/harz-git/harz-reach/v0.4-mesh-pwa/index.html
 - Plain-language buttons: START THE MESH / SCAN PHONE A'S CODES / SCAN PHONE B'S REPLY, plus on-card explanation lines.
 - FIELD BUG FIXED pre-run: A was showing the raw SDP while B parsed it as JSON — the very first scan would have failed. Both sides now send JSON{type,sdp} compressed.
 - Selftest: 13/13 ALL PASS (S1-S7 incl. compression round-trip, live book, death test, voice over live channel).
+
+## v0.7 (Oct 18, 15:01) — owner: "redesign it without camera"
+- CAMERA AND ALL QR CODE REMOVED. Page 377KB → 62KB. Only permission left: microphone (for voice).
+- New pairing (one-time, online): the phones introduce each other through the FROZEN HARZ Edge Telecom registry (v5.4.0 /api/msg + /api/inbox store-and-forward, 400-char parts, gzip-compressed handshake, sid-grouped reassembly). Reuses Dad's own foundation per his Oct 18 directive ("we should not discard this work").
+- Then the internet is KILLED (A data OFF): connection establishment, book push, king signature verify, death test, and voice are all pure LAN WebRTC over the hotspot. Honest label on screen and in verdicts.
+- Selftest v0.7 live: ALL PASS — S1 frames, S2 book, S7 compression, S4 loopback book 21/21 acks, S5 death test refused, S6 voice byte-exact, S8+S8b LIVE registry round-trip A→B and B→A byte-exact against the real worker.
+- Known cosmetic: selftest RESULT line prints before async S8/S8b complete (they PASS seconds after).
+- Field sequence: both online → A fetch book → A hotspot ON + data ON, B joins hotspot → A PREPARE, B PREPARE → both PAIRED → A data OFF → A CONNECT → book lands, then voice. Death test same, with mode checked before CONNECT.
