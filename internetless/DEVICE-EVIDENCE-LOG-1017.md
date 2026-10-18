@@ -42,3 +42,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - CAC pack opens offline as a rendered page (logo, content, AI Lawyer Assistant widget) — Magani's rendered-DOM recapture WORKS on device. Item B of directive: PROVEN.
 - Tapping icrp.cac.gov.ng (uncaptured subdomain) → honest alert "this original link needs an internet connection". Correct refusal behavior on device.
 - Pending device proof: NYSC pack hero images post-r8, Read-more link full body (doc 566), cold start.
+
+## Oct 18 09:2x (real browser, Hauwa seat) — PACK NAVIGATION PROVEN LIVE
+- NYSC pack (new capture 2026-10-18 "internal pages stored"): clicked FAQs in nav → navigated to /v2/packs/nysc.gov.ng/faq.html → FULL FAQ content rendered (registration, concessions, corrections, exemption, camp docs — complete text). Screenshot sealed.
+- CAC pack (new capture 2026-10-18): clicked FAQ in Resources footer → navigated to /v2/packs/cac.gov.ng/resources_faq.html → full FAQ page (10 questions, contact block, AI Lawyer widget). Screenshot sealed.
+- Proof class: real-browser click navigation on live routes. Offline layer (SW r9 cache) same proven pattern as corpus docs; full offline pack nav still requires owner device airplane test after sync.
