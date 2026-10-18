@@ -37,3 +37,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 
 ## Addendum 07:56 (v3, airplane, owner device)
 - Article open AIRPLANE: "Africa's plants" full body 6,895 chars, HASH VERIFIED de574c08a6c3, OFFLINE-local-copy badge, cached timestamp, source URL. PASS (device, full retrieval + verify offline on v3). Whether via full Sync or single-doc cache TBD: confirm with coverage line / offline Madagascar body search.
+
+## Oct 18 07:53 (v2, airplane, owner device) — CAC PACK PASS
+- CAC pack opens offline as a rendered page (logo, content, AI Lawyer Assistant widget) — Magani's rendered-DOM recapture WORKS on device. Item B of directive: PROVEN.
+- Tapping icrp.cac.gov.ng (uncaptured subdomain) → honest alert "this original link needs an internet connection". Correct refusal behavior on device.
+- Pending device proof: NYSC pack hero images post-r8, Read-more link full body (doc 566), cold start.
