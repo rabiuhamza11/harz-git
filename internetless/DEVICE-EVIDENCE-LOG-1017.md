@@ -63,3 +63,7 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - 09:50 Company Registration sub-page opens: green hero, company-type tabs (Private/Public, Limited/unlimited, Mortgages Reg, Other Statutory), step-by-step guide. In-page tabs and layout rendering offline.
 - Tally CAC offline on device: FAQ (09:48), Resources (09:49), Company Registration (09:50) = 3 distinct sub-pages navigated. With NYSC (FAQ, Mobilization Time-Table, Important Info, DG Gallery) = 7 distinct pack sub-pages proven on Infinix.
 - Matrix remaining: Read-more link (freshwater -> 6,508 chars), cold start (swipe-kill, reopen, search Madagascar). EFCC subpages + subdomain packs with Magani.
+
+## Oct 18 09:49 (owner device, AIRPLANE) — CAC MANAGEMENT PAGE PASS
+- Owner screenshot: CAC Registrar-General page (Hussaini Ishaq Magaji, SAN) open offline: green hero card, portrait photo rendered, full credentials and appointment text. Embedded portrait image renders in airplane mode.
+- Tally CAC offline on device: FAQ, Resources, Company Registration, Registrar-General (management) = 4 distinct sub-pages. With NYSC (4) = 8 distinct pack sub-pages proven on Infinix.
