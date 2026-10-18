@@ -68,7 +68,8 @@
     <div class="card">
       <div class="step">Step 2 — the run</div>
       <label class="chk"><input type="checkbox" id="deathMode" onchange="log('DEATH TEST mode ' + (this.checked ? 'ON — one signature byte will be flipped mid-flight' : 'off'))"> DEATH TEST MODE — corrupt one byte mid-flight (B must REFUSE)</label>
-      <button class="btn" id="aGo" disabled onclick="aGo()">GO — START THE MESH</button>
+      <div class="muted">Why camera codes? There is no internet and no server to introduce the two phones. The pictures carry the introduction; after that they talk directly over your hotspot. No typing, ever.</div>
+      <button class="btn" id="aGo" disabled onclick="aGo()">START THE MESH</button>
       <div class="status" id="aGoStat"></div>
       <div class="qrbox" id="aQrBox">
         <div class="counter" id="aQrLabel"></div>
@@ -77,7 +78,7 @@
           <button onclick="qrPrev('A')">&#8592;</button>
           <button onclick="qrNext('A')">&#8594;</button>
         </div>
-        <div class="muted">Phone B: tap JOIN and scan all the codes above.</div>
+        <div class="muted">Phone B: tap SCAN PHONE A'S CODES and point the camera at these pictures.</div>
       </div>
     </div>
     <div class="card">
@@ -98,7 +99,8 @@
   <div id="panelB" style="display:none">
     <div class="card">
       <div class="step">Step 1 — scan Phone A's codes</div>
-      <button class="btn" onclick="bJoin()">JOIN THE MESH</button>
+      <button class="btn" onclick="bJoin()">SCAN PHONE A'S CODES</button>
+      <div class="muted">The camera only reads Phone A's pairing pictures. It does not record or send anything anywhere.</div>
       <div id="scanwrap">
         <video id="video" playsinline muted autoplay></video>
         <div id="scanstat">Scanning…</div>
@@ -143,7 +145,7 @@
     <div id="log">— boot —</div>
   </div>
 
-  <div class="footer">HARZ REACH v0.4 mesh-pwa · frozen v2.1 data plane, byte-exact · keep this tab open for the offline run<br>gate 3: authority over a non-root transport, verified on a device that never touched the internet for it</div>
+  <div class="footer">HARZ REACH v0.6 mesh-pwa · frozen v2.1 data plane, byte-exact · keep this tab open for the offline run<br>gate 3: authority over a non-root transport, verified on a device that never touched the internet for it</div>
 </div>
 
 <script>
@@ -13072,7 +13074,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     logEl.textContent = lines.join("\n");
     logEl.scrollTop = logEl.scrollHeight;
   };
-  log("HARZ MESH PHONE pwa v0.1 — frozen v2.1 frames, browser pipe");
+  log("HARZ MESH PHONE pwa v0.6 — frozen v2.1 frames, browser pipe, compressed pairing");
   window.addEventListener("error", function (e) { log("JS ERROR: " + e.message + " @" + (e.lineno || "?")); });
   window.addEventListener("unhandledrejection", function (e) { log("UNHANDLED REJECTION: " + (e.reason && e.reason.message ? e.reason.message : e.reason)); });
 
@@ -13088,6 +13090,24 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     var pl = [];
     for (var i = 0; i < parts.length; i++) pl.push(JSON.stringify({ h: 1, n: parts.length, i: i, r: role, d: parts[i] }));
     return pl;
+  }
+  // handshake compression: shrinks the codes to scan. H1 = gzip+base64, H0 = plain fallback.
+  function compressText(str) {
+    if (typeof CompressionStream === "undefined") return Promise.resolve("H0:" + str);
+    var u8 = new TextEncoder().encode(str);
+    var stream = new Blob([u8]).stream().pipeThrough(new CompressionStream("gzip"));
+    return new Response(stream).arrayBuffer().then(function (ab) {
+      var u = new Uint8Array(ab), bin = "";
+      for (var i = 0; i < u.length; i++) bin += String.fromCharCode(u[i]);
+      return "H1:" + btoa(bin);
+    });
+  }
+  function decompressText(str) {
+    if (str.indexOf("H0:") === 0) return Promise.resolve(str.slice(3));
+    var bin = atob(str.slice(3)), u = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    var stream = new Blob([u]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return new Response(stream).text();
   }
   var qrState = { parts: [], idx: 0, timer: null };
   function drawQr(canvas, text) {
@@ -13225,12 +13245,14 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
     wireChannel(A.dc, A.transport);
     A.pc.oniceconnectionstatechange = function () { log("ICE: " + A.pc.iceConnectionState); if (A.pc.iceConnectionState === "connected" || A.pc.iceConnectionState === "completed") aConnected(); };
     A.pc.createOffer().then(function (o) { return A.pc.setLocalDescription(o); }).then(function () { return waitIce(A.pc, 4000); }).then(function () {
-      var sdp = A.pc.localDescription.sdp;
-      var parts = makeQrPayload(sdp, "A");
-      showCodes("A", parts);
-      log("GO up as [AAAA] — showing " + parts.length + " invite code(s), " + sdp.length + "B SDP");
-      document.getElementById("aScanBtn").disabled = false;
-      document.getElementById("aGoStat").textContent = "GO up as [AAAA]. Hand Phone B the codes above, then scan B's reply below.";
+      var offer = JSON.stringify({ type: "offer", sdp: A.pc.localDescription.sdp });
+      compressText(offer).then(function (packed) {
+        var parts = makeQrPayload(packed, "A");
+        showCodes("A", parts);
+        log("showing " + parts.length + " pairing code(s) — handshake " + offer.length + "B compressed to " + packed.length + "B");
+        document.getElementById("aScanBtn").disabled = false;
+        document.getElementById("aGoStat").textContent = "These pictures ARE the introduction. Phone B scans them, then you scan B's reply below.";
+      });
     });
   };
   function aConnected() {
@@ -13327,9 +13349,11 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
   };
 
   window.aScanReply = function () {
-    openScanner(function (sdp) {
-      var parsed = JSON.parse(sdp); // {type:"answer", sdp:...}
-      A.pc.setRemoteDescription(parsed).then(function () {
+    openScanner(function (packed) {
+      decompressText(packed).then(function (txt) {
+        var parsed = JSON.parse(txt); // {type:"answer", sdp:...}
+        return A.pc.setRemoteDescription(parsed);
+      }).then(function () {
         log("reply accepted — connecting");
         document.getElementById("aScanBtn").disabled = true;
       }).catch(function (e) { log("reply failed: " + e.message); });
@@ -13355,14 +13379,18 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
       wireChannel(ev.channel, B.transport);
       ev.channel.onopen = function () { bReady(); };
     };
-    openScanner(function (sdp) {
-      var offer = JSON.parse(sdp);
-      document.getElementById("bJoinStat").textContent = "Codes received. Building the reply…";
-      B.pc.setRemoteDescription(offer).then(function () { return B.pc.createAnswer(); }).then(function (ans) { return B.pc.setLocalDescription(ans); }).then(function () { return waitIce(B.pc, 4000); }).then(function () {
+    openScanner(function (packed) {
+      decompressText(packed).then(function (txt) {
+        var offer = JSON.parse(txt);
+        document.getElementById("bJoinStat").textContent = "Codes received. Building the reply…";
+        return B.pc.setRemoteDescription(offer).then(function () { return B.pc.createAnswer(); }).then(function (ans) { return B.pc.setLocalDescription(ans); }).then(function () { return waitIce(B.pc, 4000); });
+      }).then(function () {
         var reply = JSON.stringify({ type: B.pc.localDescription.type, sdp: B.pc.localDescription.sdp });
-        showCodes("B", makeQrPayload(reply, "B"));
-        document.getElementById("bReplyCard").style.display = "block";
-        log("reply ready — show these codes to Phone A");
+        return compressText(reply).then(function (packedReply) {
+          showCodes("B", makeQrPayload(packedReply, "B"));
+          document.getElementById("bReplyCard").style.display = "block";
+          log("reply ready — show these codes to Phone A");
+        });
       }).catch(function (e) { log("answer failed: " + e.message); });
     });
   };
@@ -13499,6 +13527,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
       });
       stlog("S3 QR channel lossless (" + pl.length + " parts, " + sample.length + "B)", rebuilt === sample);
 
+      function startS4() {
       // S4 + S5: ONE loopback pair, both tests sequential on the same channel (field-faithful)
       var pcA = newPc(), pcB = newPc();
       var dcA = pcA.createDataChannel("harz", { ordered: true });
@@ -13583,6 +13612,13 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
         .then(function () { return pcA.setRemoteDescription(pcB.localDescription); })
         .then(function () { log("S4 SDP exchange complete"); })
         .catch(function (e) { log("SELFTEST chain error: " + e.message); });
+      }
+      compressText(sample).then(function (packed) {
+        return decompressText(packed).then(function (rt) { return { p: packed, rt: rt }; });
+      }).then(function (r) {
+        stlog("S7 handshake compression round-trip (" + sample.length + "B → " + r.p.length + "B)", r.rt === sample, r.p.length + "B");
+        startS4();
+      });
     });
   }
 })();
