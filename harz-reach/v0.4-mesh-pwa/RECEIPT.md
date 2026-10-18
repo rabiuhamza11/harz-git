@@ -25,3 +25,10 @@ https://rabiuhamza11.github.io/harz-git/harz-reach/v0.4-mesh-pwa/index.html
 - Track B (Wi-Fi Direct/BLE APK) untouched, per order.
 - GitHub Pages origin: page must be loaded once online, tab kept open for the offline run.
 - Autoplay policy: B may need a tap on REPLAY THE VOICE if the browser blocks auto-play.
+
+## v0.6 (Oct 18, 14:31) — owner asked: why the scan camera + simplify
+- Camera = the phone-to-phone introduction. With zero internet and zero servers there is no other channel between two browsers on separate phones; the QR pictures carry the WebRTC handshake, after which the phones talk directly over the hotspot. Now explained on the screen itself.
+- gzip+base64 handshake compression (CompressionStream, H0 fallback): pairing codes cut from ~4-6 per side to typically 1-2 (selftest S7: 2464B→135B on the synthetic sample).
+- Plain-language buttons: START THE MESH / SCAN PHONE A'S CODES / SCAN PHONE B'S REPLY, plus on-card explanation lines.
+- FIELD BUG FIXED pre-run: A was showing the raw SDP while B parsed it as JSON — the very first scan would have failed. Both sides now send JSON{type,sdp} compressed.
+- Selftest: 13/13 ALL PASS (S1-S7 incl. compression round-trip, live book, death test, voice over live channel).
