@@ -81,3 +81,8 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 - Next step: Magani consolidates final evidence and issues the Internetless v2 CLOSURE REPORT with limitations explicitly listed.
 - Standing: no unnecessary rebuilds. No new scope. Finish the stage properly.
 - Matrix final state per ruling: search PASS, article open + sealed-copy verify PASS (device), pack navigation PASS (8 pages, device), Read-more PASS (owner-confirmed), cold-start PASS (owner-confirmed).
+
+## Oct 18 10:35 (owner report) — SECOND PHONE, FLIGHT MODE, V2 OPENS
+- Owner reports: HARZ Internetless v2 opens on ANOTHER phone in flight mode.
+- Significance: first MULTI-DEVICE offline evidence. A fresh device (no Infinix cache history) synced and served the library offline — the system is not dependent on the primary phone's cache state. Stands toward the deferred second-phone field-test boundary.
+- Classification: owner-reported, not screenshot-witnessed by any seat (same distinction as the closure ruling). Details not yet captured: device model, sync size/time, which pages tested.
