@@ -67,3 +67,9 @@ Logged by Hauwa's seat. Devices > desktop. Airplane icon verified in status bar 
 ## Oct 18 09:49 (owner device, AIRPLANE) — CAC MANAGEMENT PAGE PASS
 - Owner screenshot: CAC Registrar-General page (Hussaini Ishaq Magaji, SAN) open offline: green hero card, portrait photo rendered, full credentials and appointment text. Embedded portrait image renders in airplane mode.
 - Tally CAC offline on device: FAQ, Resources, Company Registration, Registrar-General (management) = 4 distinct sub-pages. With NYSC (4) = 8 distinct pack sub-pages proven on Infinix.
+
+## Oct 18 10:00 — OWNER CLOSED THE TEST SESSION ("I am done with all this")
+- Final device tally this session: NYSC 4 sub-pages + CAC 4 sub-pages proven offline in airplane mode (09:39-09:50), images rendering, content complete. Pack navigation CLOSED.
+- Not tested by owner (parked, not failed): Read-more link full-body open (server-verified 90/90 targets), cold-start Madagascar search.
+- With Magani: EFCC recapture styling+links, subdomain packs (portal.nysc.org.ng, icrp.cac.gov.ng), 3 stray images.
+- No action pending on owner. Session closed at his word.
