@@ -65,6 +65,8 @@ async function cmdGo() {
     rl.on("line", async line => {
       const t = line.trim();
       if (t === "push") {
+        const held = node.heldFor(pushTo);
+        if (held > 0) { console.log("QUEUE NOT EMPTY: " + held + " chunks already held for [" + pushTo + "] — push ignored (one copy at a time, prevents doubled transfer)"); return; }
         const m = await carrier.sendZone(node, pushTo, check.zone);
         const online = node.peersOnline().includes(pushTo);
         console.log(online ? "sent live: " + m.chunks + " chunks" : "B is OFFLINE: " + m.chunks + " chunks HELD in queue (will flush on rejoin)");
