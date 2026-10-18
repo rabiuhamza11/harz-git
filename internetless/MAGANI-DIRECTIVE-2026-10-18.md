@@ -48,3 +48,10 @@ both pack fetch paths versioned (?v=PACKVER): sync fetch + openPack location.hre
 bump PACKVER (r3, r4...) in the shell. Magani: include PACKVER in future shell builds or coordinate.
 Current live pack states: EFCC recaptured (510KB, new sha c4af0a1e); NYSC still 13/15 embedded
 (img/news4.jpg + img/NYSC NDPR AUDIT 2023.png pending, item C).
+
+## ROLLBACK 07:5x — PACKVER REMOVED BY HAUWA (owner device regression, screenshot 7:44 ERR_FAILED)
+My PACKVER patch (?v=r2 on pack open) broke offline pack opening: the phone had cached /v2/packs/nysc.gov.ng
+(no ?v=), the OPEN OFFLINE button requested ...?v=r2, never cached -> airplane ERR_FAILED page. SW r8 (Magani)
+already fixes the stale-pack root cause (cache:'reload' on miss), so PACKVER is redundant AND harmful. Shell
+restored to the desk's f39c0b84 + v0.8.1 linkify, PACKVER fully removed (0 refs). LAW: any change to how packs
+are requested must be proven in airplane mode on the real device BEFORE shipping; server-side checks cannot catch it.
