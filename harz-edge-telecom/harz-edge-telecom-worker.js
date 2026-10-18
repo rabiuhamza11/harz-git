@@ -97,7 +97,7 @@ ${body}
 __name(reportPage, "reportPage");
 __name2(reportPage, "reportPage");
 __name22(reportPage, "reportPage");
-var VERSION = "5.3.0";
+var VERSION = "5.4.0";
 var THEME = "#f0f2f5";
 var CSS = `
 *{margin:0;padding:0;box-sizing:border-box}
@@ -661,6 +661,21 @@ var RADIO_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="v
 <div class="card"><h2>Voice listener</h2><button id="vlbtn" onclick="vlToggle()">LISTEN FOR VOICE</button><button onclick="vlPlay()">PLAY LAST TRANSMISSION</button><audio id="vlplay"></audio><div id="vlstat" class="note">While listening, this phone keeps the last 20 seconds in a rolling buffer and can replay the last transmission.</div></div><div class="card"><h2>Voice inbox — pull from the mesh</h2><input id="vinph" placeholder="Your phone"><button onclick="vlPull()">PULL MY INBOX</button><div id="vinbox"><div class="note">Voice notes sent to your number through the mesh queue wait on the edge. Pull them here and play.</div></div></div>
 <div class="card"><h2>What this is</h2><div class="note">A message becomes two tones from the speaker; another phone's mic hears it and turns it back into text. No internet, no carrier, no cost. Text rides the sound rail; voice rides push-to-talk \u2014 a half-duplex walkie-talkie, one talks then the other. Real-phone field testing is mandatory before any announcement.</div></div>
 </main>@@SCRIPT@@<script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw2.js').catch(function(){}); }</script></body></html>`;
+var WALKIE_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f0f2f5"><meta name="apple-mobile-web-app-capable" content="yes"><title>HARZ Walkie</title><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icon.svg" type="image/svg+xml"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}body{background:#f0f2f5;color:#333;min-height:100vh}header{background:#fff;border-bottom:1px solid #e3e6ea;padding:16px;text-align:center}h1{font-size:18px;color:#0a7d3c;letter-spacing:.5px}main{max-width:520px;margin:0 auto;padding:16px}.card{background:#fff;border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}.card h2{font-size:12px;color:#0a7d3c;margin-bottom:12px;text-transform:uppercase;letter-spacing:.6px;text-align:center}.big{width:100%;padding:26px;border:0;border-radius:14px;font-size:18px;font-weight:800;cursor:pointer;color:#fff;background:#0a7d3c;transition:transform .08s,background .15s}.big:active{transform:scale(.97);background:#086a32}.big.rec{background:#c0392b}.ghost{width:100%;padding:14px;border:2px solid #0a7d3c;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;color:#0a7d3c;background:#fff;margin-top:10px}.note{font-size:13px;color:#777;margin-top:12px;text-align:center;line-height:1.4}.foot{font-size:12px;color:#999;text-align:center;padding:16px 16px 32px;line-height:1.5}</style></head><body><header><h1>HARZ WALKIE</h1></header><main>
+<div class="card"><h2>Talk</h2><button class="big" id="pttbtn" onmousedown="pttStart()" onmouseup="pttStop()" ontouchstart="pttStart();event.preventDefault()" ontouchend="pttStop()">HOLD TO TALK</button><div id="pttstat" class="note">Hold the button and speak. Release to play your voice out loud.</div><audio id="pttplay"></audio></div>
+<div class="card"><h2>Listen</h2><button class="big" id="vlbtn" onclick="vlToggle()">LISTEN FOR VOICE</button><button class="ghost" onclick="vlPlay()">PLAY LAST TRANSMISSION</button><audio id="vlplay"></audio><div id="vlstat" class="note">Press LISTEN. Hold the other phone close while someone talks. Then press PLAY.</div></div>
+<div class="foot">One talks, the other listens. Turn the volume up and hold the phones close. Voice carries by speaker and mic.</div>
+</main><script>var pttRec=null,pttChunks=[],pttBlob=null,pttTimer=null,vlRec=null,vlLast=null,vlPrev=null;
+async function pttStart(){if(pttRec&&pttRec.state==="recording")return;try{var s=await navigator.mediaDevices.getUserMedia({audio:true});pttChunks=[];pttRec=new MediaRecorder(s);pttRec.ondataavailable=function(e){if(e.data.size)pttChunks.push(e.data)};pttRec.onstop=function(){s.getTracks().forEach(function(t){t.stop()});pttBlob=new Blob(pttChunks,{type:pttRec.mimeType||"audio/webm"});document.getElementById("pttstat").textContent="Playing your voice...";var el=document.getElementById("pttplay");el.src=URL.createObjectURL(pttBlob);el.play().catch(function(){});setTimeout(function(){document.getElementById("pttstat").textContent="Hold the button and speak. Release to play your voice out loud.";},1500)};pttRec.start();pttTimer=setTimeout(function(){pttStop()},20000);document.getElementById("pttstat").textContent="Talking... release to play.";var b=document.getElementById("pttbtn");b.textContent="RELEASE TO PLAY";b.classList.add("rec")}catch(e){document.getElementById("pttstat").textContent="Mic blocked: allow microphone access."}}
+function pttStop(){if(pttRec&&pttRec.state==="recording"){clearTimeout(pttTimer);pttRec.stop();var b=document.getElementById("pttbtn");b.textContent="HOLD TO TALK";b.classList.remove("rec")}}
+async function vlToggle(){if(vlRec){try{vlRec.stop()}catch(e){}vlRec.stream.getTracks().forEach(function(t){t.stop()});vlRec=null;document.getElementById("vlbtn").textContent="LISTEN FOR VOICE";document.getElementById("vlbtn").classList.remove("rec");document.getElementById("vlstat").textContent="Stopped. Press PLAY to hear the last transmission.";return}try{var s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});vlRec=new MediaRecorder(s);vlRec.stream=s;vlRec.ondataavailable=function(e){if(e.data.size){vlPrev=vlLast;vlLast=e.data;document.getElementById("vlstat").textContent="Heard something ("+(vlLast.size/1024).toFixed(1)+"KB). Press PLAY LAST TRANSMISSION."}};vlRec.start(10000);document.getElementById("vlbtn").textContent="STOP LISTENING";document.getElementById("vlbtn").classList.add("rec");document.getElementById("vlstat").textContent="Listening... hold the other phone close and talk."}catch(e){document.getElementById("vlstat").textContent="Mic blocked: allow microphone access."}}
+function vlPlay(){if(!vlLast){document.getElementById("vlstat").textContent="Nothing captured yet.";return}var el=document.getElementById("vlplay");el.src=URL.createObjectURL(vlLast);el.play().catch(function(){})}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw2.js').catch(function(){})}
+<\/script></body></html>`;
+function walkiePage() {
+  return WALKIE_HTML;
+}
+__name(walkiePage, "walkiePage");
 function radioPage() {
   var html = RADIO_HTML.replace("@@STYLE@@", RADIO_STYLE).replace("@@SCRIPT@@", "<script>" + RADIO_CODEC + RADIO_JS + "<\/script>");
   return html;
@@ -702,6 +717,9 @@ var worker_default = {
       }
       if (path === "/radio") {
         return new Response(radioPage(), { headers: { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-cache" } });
+      }
+      if (path === "/walkie") {
+        return new Response(walkiePage(), { headers: { "Content-Type": "text/html;charset=UTF-8", "Cache-Control": "no-cache" } });
       }
       if (path === "/health") {
         return new Response(JSON.stringify({
