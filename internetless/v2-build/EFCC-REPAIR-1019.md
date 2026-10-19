@@ -23,3 +23,9 @@ Build honesty: two self-caught bugs fixed before shipping (template placeholders
 braces from f-string conversion) — both verified fixed live before this receipt.
 KV: v2.pack.efcc.gov.ng (patched home), v2.pack.efcc.gov.ng.{Overview,Leadership,WantedPersons,News,FAQ,Contactus}.html,
 v2.shell (PACKS updated). All uploads success:true.
+
+## ADDENDUM — VIDEOS (owner request "I want video to open too", Oct 19 ~16:30 WAT)
+- Problem: EFCC Videos section dead offline ("Not stored offline").
+- Evidence: bundle audit — videos are YouTube (OfficialEFCC channel, youtube/v3 API + embeds). Cannot be stored offline: they stream from YouTube's servers.
+- Repair (honest maximum): new Videos.html pack — 15 latest videos captured from the channel's public RSS feed (titles, dates, video IDs), all 15 thumbnails fetched and INLINED as data URIs (zero external images), each with a PLAY link (external, bridge shows honest needs-internet card). Banner discloses: list stored offline, playback needs internet. Home pack Videos card now links there. Shell PACKS: EFCC = 7 pages.
+- Acceptance: Videos.html 200 (279,914B), 15 vids, 15 inlined thumbs, 15 yt links, 0 external imgs; home card points to it; shell label + auto-heal updated. Phone proof rides the same one-tap sync.
