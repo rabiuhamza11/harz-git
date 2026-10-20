@@ -1,0 +1,166 @@
+{
+ "slice_checked": 40,
+ "total_pages": 82,
+ "cursor_was": 40,
+ "cursor_next": 80,
+ "full_sweep_cycles": 3,
+ "changes": 22,
+ "changed": [
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.finance.html",
+   "url": "https://nysc.gov.ng/finance.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.foreignmobreg.html",
+   "url": "https://nysc.gov.ng/foreignmobreg.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.genservice.html",
+   "url": "https://nysc.gov.ng/genservice.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.hrm.html",
+   "url": "https://nysc.gov.ng/hrm.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.ict.html",
+   "url": "https://nysc.gov.ng/ict.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.legal.html",
+   "url": "https://nysc.gov.ng/legal.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.management.html",
+   "url": "https://nysc.gov.ng/management.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.media.html",
+   "url": "https://nysc.gov.ng/media.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.mission.html",
+   "url": "https://nysc.gov.ng/mission.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.mobreg.html",
+   "url": "https://nysc.gov.ng/mobreg.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.mobtable.html",
+   "url": "https://nysc.gov.ng/mobtable.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.nhia.html",
+   "url": "https://nysc.gov.ng/nhia.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.objective.html",
+   "url": "https://nysc.gov.ng/objective.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.officeofdg.html",
+   "url": "https://nysc.gov.ng/officeofdg.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.pastdgs.html",
+   "url": "https://nysc.gov.ng/pastdgs.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.ppru.html",
+   "url": "https://nysc.gov.ng/ppru.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.privacypolicy.html",
+   "url": "https://nysc.gov.ng/privacypolicy.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.procurement.html",
+   "url": "https://nysc.gov.ng/procurement.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.projects.html",
+   "url": "https://nysc.gov.ng/projects.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.prs.html",
+   "url": "https://nysc.gov.ng/prs.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "nysc.gov.ng",
+   "page": "nysc.gov.ng.serviceyear.html",
+   "url": "https://nysc.gov.ng/serviceyear.html",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" co"
+  },
+  {
+   "domain": "cac.gov.ng",
+   "page": "cac.gov.ng.index.html",
+   "url": "https://cac.gov.ng/",
+   "when": "2026-10-20T07:13:50.867Z",
+   "sample": "<!DOCTYPE html><html lang=\"en\" class=\"plus_jakarta_sans_f1fa6da1-module__6F21nW__variable overflow-x"
+  }
+ ],
+ "misses": 18,
+ "at": "2026-10-20T07:13:50.867Z"
+}

@@ -1,4 +1,4 @@
-// HARZ PACK WATCHDOG v0.4 — Oct 20, 2026 (owner ruling: "no new added information will escape us")
+// HARZ PACK WATCHDOG v0.9 — Oct 20, 2026 (owner ruling: "no new added information will escape us")
 // LAW: detection only, honest. Never fabricate. Failed check ≠ change. First sight = baseline, never an "update".
 // Free-tier constraints honored: 50 subrequests/invocation -> slices of 40, fetched in PARALLEL (wall < 100s).
 // Rotating cursor: full 82-page sweep completes every 2 cron fires (every 30 min, honest freshness).
@@ -41,15 +41,29 @@ async function checkSlice(env) {
       const canonical = text
         .replace(/<script[\s\S]*?<\/script>/gi, "")
         .replace(/<!--[\s\S]*?-->/g, "")
+        .replace(/\shx-headers=('[^']*'|"[^"]*")/gi, "")
+        .replace(/\snonce=('[^']*'|"[^"]*")/gi, "")
+        .replace(/csrf[a-z_-]*[=:]\s*['"]?[A-Za-z0-9_\-]{20,}/gi, "csrf=STRIPPED")
         .replace(/\s+/g, " ")
         .trim();
       const blocked =
         /just a moment|checking your browser|cf-browser-verification|challenge-platform|__cf_chl|captcha/i.test(canonical) ||
+        /cdn-cgi\/content\?id=/i.test(canonical) ||
+        /challenges\.cloudflare\.com/i.test(canonical) ||
+        /content-security-policy[^>]{0,120}nonce-/i.test(canonical) ||
         canonical.length < 150;
       if (blocked) return { page, miss: true, blocked: true };
-      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonical));
+      /* v0.9 semantic landmarks: watch only title + headings (what real edits touch).
+         Rotating tokens, ads, tickers and per-session nonces never touch landmarks;
+         challenge interstitials have no landmarks and fail the floor below. */
+      const heads = canonical.match(/<h[1-4][^>]*>[\s\S]*?<\/h[1-4]>/gi) || [];
+      const title = (canonical.match(/<title>[\s\S]*?<\/title>/i) || [""])[0];
+      const landmarks = title + " " + heads.join(" ");
+      const lm = landmarks.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (lm.length < 100) return { page, miss: true, blocked: true };
+      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(lm));
       const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
-      return { page, hex, sample: canonical.slice(0, 100) };
+      return { page, hex, canonLen: lm.length, sample: lm.slice(0, 100) };
     } catch (e) {
       return { page, miss: true };
     }
@@ -58,13 +72,21 @@ async function checkSlice(env) {
   for (const r of results) {
     const key = "v2.watch." + r.page.key;
     const prev = await env.HARZ_BROWSER.get(key);
+    const prevLen = parseInt((await env.HARZ_BROWSER.get("v2.watchlen." + r.page.key)) || "0", 10) || 0;
     if (r.miss) {
       miss++;
-      if (prev !== null) await env.HARZ_BROWSER.put("v2.watchmiss." + r.page.key, now);
+      await env.HARZ_BROWSER.put("v2.watchmiss." + r.page.key, JSON.stringify({ at: now, blocked: !!r.blocked, first_sight: prev === null }));
       continue;
     }
+    if (prev !== null && prevLen > 0 && (r.canonLen < prevLen * 0.6 || r.canonLen > prevLen * 1.67)) {
+      miss++;
+      await env.HARZ_BROWSER.put("v2.watchmiss." + r.page.key, JSON.stringify({ at: now, blocked: true, volatile: true, first_sight: prev === null, len: r.canonLen, prevLen }));
+      continue;
+    }
+    if (prev !== null) await env.HARZ_BROWSER.delete("v2.watchmiss." + r.page.key);
     if (prev !== r.hex) {
       await env.HARZ_BROWSER.put(key, r.hex);
+      await env.HARZ_BROWSER.put("v2.watchlen." + r.page.key, String(r.canonLen));
       await env.HARZ_BROWSER.put("v2.watchts." + r.page.key, now);
       if (prev !== null) {
         changes.push({ domain: r.page.domain, page: r.page.key, url: r.page.url, when: now, sample: r.sample });
@@ -73,7 +95,11 @@ async function checkSlice(env) {
   }
 
   if (changes.length > 0) {
-    await env.HARZ_BROWSER.put("v2.recapture.queue", JSON.stringify({ queued_at: now, changes }));
+    let prior = [];
+    try { prior = (JSON.parse((await env.HARZ_BROWSER.get("v2.recapture.queue")) || "{}").changes) || []; } catch (e) {}
+    const seen = new Set(prior.map((c) => c.page));
+    const merged = prior.concat(changes.filter((c) => !seen.has(c.page)));
+    await env.HARZ_BROWSER.put("v2.recapture.queue", JSON.stringify({ queued_at: now, changes: merged }));
     const wakeUrl = await env.HARZ_BROWSER.get("v2.wake.url");
     if (wakeUrl) {
       try {

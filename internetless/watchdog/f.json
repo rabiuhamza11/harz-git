@@ -1,0 +1,11 @@
+{
+ "slice_checked": 2,
+ "total_pages": 82,
+ "cursor_was": 80,
+ "cursor_next": 0,
+ "full_sweep_cycles": 3,
+ "changes": 0,
+ "changed": [],
+ "misses": 2,
+ "at": "2026-10-20T07:15:46.470Z"
+}
