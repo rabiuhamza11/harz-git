@@ -90,6 +90,11 @@ async function checkSlice(env) {
       await env.HARZ_BROWSER.put("v2.watchts." + r.page.key, now);
       if (prev !== null) {
         changes.push({ domain: r.page.domain, page: r.page.key, url: r.page.url, when: now, sample: r.sample });
+        // HARZ SYNC Stage 1 (mission order Oct 20): durable change journal. Detection != delivery; every eligible change gets a durable record.
+        let jhead = parseInt((await env.HARZ_BROWSER.get("v2.journal.head")) || "0", 10) + 1;
+        const jentry = { seq: jhead, at: now, url: r.page.url, page: r.page.key, prev_hash: prev, new_hash: r.hex, hash_basis: "semantic-landmark-canonical", len: r.canonLen, state: "detected", state_at: now };
+        await env.HARZ_BROWSER.put("v2.journal." + jhead, JSON.stringify(jentry));
+        await env.HARZ_BROWSER.put("v2.journal.head", String(jhead));
       }
     }
   }
