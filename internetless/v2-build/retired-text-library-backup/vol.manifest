@@ -1,0 +1,30 @@
+{
+  "format": "HARZ-VOLUMES/1.0",
+  "created": "2026-10-11T23:45:00.000Z",
+  "source": {
+    "onefile_sha256": "a44ceec55e61f3a409be05ef4eda5e95b8e97f2eb17053ac232c67210496a562",
+    "corpus_sha": "d5cadfb0474433ffaff93db68676de34cf01f2ac83d9cb7f1f73cef2a093888c",
+    "digest": "3716d33e3d3e47d721af666676b6313b4e4f02125ce1b104d458b99bf3fa1b87"
+  },
+  "note": "Volumes carved from the sealed one-file corpus. Each volume self-verifies by sha256 at install AND at every boot. Search across installed volumes only. vol-003 is the Nigeria seed: every doc is from a Nigerian source (youverify.co, prnigeria.com, son.gov.ng, budgetoffice.gov.ng, nigerianlawguru.com) \u2014 first slice of the designated Volume 1 (Hausa/Nigeria). The full Volume 1 grows as the hunt waves ingest the queued Nigerian sources.",
+  "volumes": [
+    {
+      "id": "vol-001",
+      "docs": 400,
+      "bytes": 6301126,
+      "sha256": "95f546d308c959fd27aa0c0ecb7ee7f4ef39c1d9a2bdebe7e602699f516c9d0f"
+    },
+    {
+      "id": "vol-002",
+      "docs": 385,
+      "bytes": 5119676,
+      "sha256": "0b07dc5e3d42b3eeb2ef40efaeefbc691b9fb4b5d86fded0660e395b05ae3bcf"
+    },
+    {
+      "id": "vol-003",
+      "docs": 70,
+      "bytes": 1991052,
+      "sha256": "c1c89a25c15c91b80fbef2ab471a8e0de951a2649f30b197e2808d8cc105d815"
+    }
+  ]
+}
