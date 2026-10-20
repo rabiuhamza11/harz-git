@@ -1,0 +1,10 @@
+name = "harz-pack-watchdog"
+main = "harz-pack-watchdog.js"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "HARZ_BROWSER"
+id = "409fead4fdc24e288efe5af2bb5a1de7"
+
+[triggers]
+crons = ["*/15 * * * *"]
