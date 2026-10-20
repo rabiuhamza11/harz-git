@@ -95,6 +95,23 @@ async function checkSlice(env) {
         const jentry = { seq: jhead, at: now, url: r.page.url, page: r.page.key, prev_hash: prev, new_hash: r.hex, hash_basis: "semantic-landmark-canonical", len: r.canonLen, state: "detected", state_at: now };
         await env.HARZ_BROWSER.put("v2.journal." + jhead, JSON.stringify(jentry));
         await env.HARZ_BROWSER.put("v2.journal.head", String(jhead));
+        // HARZ SYNC Stage 3: unified journal API (harz-sync-journal). Writer token arrives via private channel into KV v2.journal.writer.token.
+        // Absent token = honest skip (the durable KV journal record above still stands; nothing is lost, nothing is faked).
+        const jtok = await env.HARZ_BROWSER.get("v2.journal.writer.token");
+        if (jtok) {
+          try {
+            await fetch("https://harz-sync-journal.hamzarabiu390.workers.dev/append", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "X-Journal-Token": jtok },
+              body: JSON.stringify({
+                kind: "pack-update", resource_url: r.page.url, store: "watch", doc_id: r.page.key,
+                version: 2, origin: "harz-pack-watchdog", old_sha256: prev, new_sha256: r.hex,
+                occurred_at: now, event_source: "semantic-landmark-detection",
+                note: "detected by watchdog; KV journal entry v2.journal." + jhead
+              })
+            });
+          } catch (e) { /* API failure never erases the KV journal record */ }
+        }
       }
     }
   }
