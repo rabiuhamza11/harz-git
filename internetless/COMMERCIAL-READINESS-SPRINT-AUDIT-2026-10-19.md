@@ -43,3 +43,22 @@ P2-4 Commercial validation. Problem: zero pricing evidence. Repair: demo on ordi
 5. P0-6 + P0-2 device journey once repairs land — one owner session, not many.
 6. P2-1..P2-3 packaging docs.
 7. P2-4 commercial validation with real users.
+
+## OWNER RULING — Oct 20, 06:41 (verbatim intent): "It is not SEC, NYSC or so that will be visual. I want EVERYTHING to be visual offline. Even video must open [offline]."
+Reading: visual packs are not the product; the WHOLE library experience must be visual offline, including video playback.
+
+New P0 (promoted by owner ruling):
+* P0-V1 — VISUAL READER for the entire corpus.
+  Problem: corpus articles open as plain text, not visual pages.
+  Evidence: article bodies stored as extracted text; packs are the only visual surface today.
+  Repair: styled offline reader (typography, headings, structure, dark-mode friendly) rendered for every article from the shell; zero new per-article storage; covers 100% of stored corpus immediately.
+  Acceptance: airplane mode, open ANY article from search → styled visual page, not a text wall.
+* P1-V2 — IMAGES for articles.
+  Problem: article images are not preserved at corpus scale.
+  Repair: selective preservation (category by category) with honest "image not preserved" placeholders where absent. Never fake.
+  Acceptance: preserved images render offline; unpreserved show the honest placeholder; no broken icons.
+* P1-V3 — VIDEO that opens offline.
+  Problem: no offline video playback lane today.
+  Repair: curated video preservation (free-tier object storage ~10GB cap), offline player in the shell; honest label for unpreserved videos.
+  Acceptance: a preserved video PLAYS in airplane mode; an unpreserved one is labeled honestly.
+Honest boundary (physics + zero-budget, not refusal): preserving every image and video on the internet is not possible on free tiers; preservation is selective and grows; what is not preserved is labeled, never faked.
