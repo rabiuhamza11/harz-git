@@ -1,0 +1,350 @@
+[
+ {
+  "domain": "sec.gov.ng",
+  "pages": [
+   {
+    "key": "sec.gov.ng.for-investors.html",
+    "url": "https://sec.gov.ng/for-investors/"
+   },
+   {
+    "key": "sec.gov.ng.find-registered-operator.html",
+    "url": "https://sec.gov.ng/for-investors/find-a-registered-operator/"
+   },
+   {
+    "key": "sec.gov.ng.circulars.html",
+    "url": "https://sec.gov.ng/for-investors/keep-track-of-circulars/"
+   },
+   {
+    "key": "sec.gov.ng.investment-scams.html",
+    "url": "https://sec.gov.ng/for-investors/known-investment-scams/"
+   },
+   {
+    "key": "sec.gov.ng.whistleblowing.html",
+    "url": "https://sec.gov.ng/for-investors/whistleblowing/"
+   },
+   {
+    "key": "sec.gov.ng.for-operators.html",
+    "url": "https://sec.gov.ng/for-operators/"
+   },
+   {
+    "key": "sec.gov.ng.operator-registration.html",
+    "url": "https://sec.gov.ng/for-operators/operator-registration/"
+   },
+   {
+    "key": "sec.gov.ng.capital-market-data.html",
+    "url": "https://sec.gov.ng/for-operators/keep-track-of-capital-market-data/"
+   },
+   {
+    "key": "sec.gov.ng.statistical-bulletin.html",
+    "url": "https://sec.gov.ng/for-operators/keep-track-of-capital-market-data/statistical-bulletin/"
+   },
+   {
+    "key": "sec.gov.ng.mergers-acquisitions.html",
+    "url": "https://sec.gov.ng/for-operators/mergers-acquisitions-and-takeovers/"
+   },
+   {
+    "key": "sec.gov.ng.for-businesses.html",
+    "url": "https://sec.gov.ng/for-businesses/"
+   },
+   {
+    "key": "sec.gov.ng.register-company.html",
+    "url": "https://sec.gov.ng/for-businesses/register-a-company/"
+   },
+   {
+    "key": "sec.gov.ng.raising-capital.html",
+    "url": "https://sec.gov.ng/for-businesses/raising-capital/"
+   },
+   {
+    "key": "sec.gov.ng.about.html",
+    "url": "https://sec.gov.ng/about/"
+   },
+   {
+    "key": "sec.gov.ng.who-we-are.html",
+    "url": "https://sec.gov.ng/about/our-role/who-we-are/"
+   },
+   {
+    "key": "sec.gov.ng.contact-us.html",
+    "url": "https://sec.gov.ng/about/contact-us/"
+   },
+   {
+    "key": "sec.gov.ng.faq.html",
+    "url": "https://sec.gov.ng/about/resources/frequently-asked-questions/"
+   },
+   {
+    "key": "sec.gov.ng.news.html",
+    "url": "https://sec.gov.ng/about/news/"
+   },
+   {
+    "key": "sec.gov.ng.mandate.html",
+    "url": "https://sec.gov.ng/our-mandate/"
+   },
+   {
+    "key": "sec.gov.ng.enforcements.html",
+    "url": "https://sec.gov.ng/enforcements/"
+   },
+   {
+    "key": "sec.gov.ng.forms.html",
+    "url": "https://sec.gov.ng/about/resources/forms/"
+   },
+   {
+    "key": "sec.gov.ng.annual-reports.html",
+    "url": "https://sec.gov.ng/about/resources/annual-reports/"
+   },
+   {
+    "key": "sec.gov.ng.rules-regulations.html",
+    "url": "https://sec.gov.ng/our-mandate/regulation/rules-and-regulations/"
+   },
+   {
+    "key": "sec.gov.ng.index.html",
+    "url": "https://sec.gov.ng/"
+   }
+  ]
+ },
+ {
+  "domain": "nysc.gov.ng",
+  "pages": [
+   {
+    "key": "nysc.gov.ng.index.html",
+    "url": "https://nysc.gov.ng/"
+   },
+   {
+    "key": "nysc.gov.ng.about.html",
+    "url": "https://nysc.gov.ng/about.html"
+   },
+   {
+    "key": "nysc.gov.ng.aboutdg.html",
+    "url": "https://nysc.gov.ng/aboutdg.html"
+   },
+   {
+    "key": "nysc.gov.ng.areaoffice.html",
+    "url": "https://nysc.gov.ng/areaoffice.html"
+   },
+   {
+    "key": "nysc.gov.ng.audit.html",
+    "url": "https://nysc.gov.ng/audit.html"
+   },
+   {
+    "key": "nysc.gov.ng.camps.html",
+    "url": "https://nysc.gov.ng/camps.html"
+   },
+   {
+    "key": "nysc.gov.ng.cbo.html",
+    "url": "https://nysc.gov.ng/cbo.html"
+   },
+   {
+    "key": "nysc.gov.ng.cds.html",
+    "url": "https://nysc.gov.ng/cds.html"
+   },
+   {
+    "key": "nysc.gov.ng.cert.html",
+    "url": "https://nysc.gov.ng/cert.html"
+   },
+   {
+    "key": "nysc.gov.ng.certpricecharges.html",
+    "url": "https://nysc.gov.ng/certpricecharges.html"
+   },
+   {
+    "key": "nysc.gov.ng.contact.html",
+    "url": "https://nysc.gov.ng/contact.html"
+   },
+   {
+    "key": "nysc.gov.ng.corpmob.html",
+    "url": "https://nysc.gov.ng/corpmob.html"
+   },
+   {
+    "key": "nysc.gov.ng.cwhs.html",
+    "url": "https://nysc.gov.ng/cwhs.html"
+   },
+   {
+    "key": "nysc.gov.ng.dggallery.html",
+    "url": "https://nysc.gov.ng/dggallery.html"
+   },
+   {
+    "key": "nysc.gov.ng.directorate.html",
+    "url": "https://nysc.gov.ng/directorate.html"
+   },
+   {
+    "key": "nysc.gov.ng.faq.html",
+    "url": "https://nysc.gov.ng/faq.html"
+   },
+   {
+    "key": "nysc.gov.ng.finance.html",
+    "url": "https://nysc.gov.ng/finance.html"
+   },
+   {
+    "key": "nysc.gov.ng.foreignmobreg.html",
+    "url": "https://nysc.gov.ng/foreignmobreg.html"
+   },
+   {
+    "key": "nysc.gov.ng.genservice.html",
+    "url": "https://nysc.gov.ng/genservice.html"
+   },
+   {
+    "key": "nysc.gov.ng.hrm.html",
+    "url": "https://nysc.gov.ng/hrm.html"
+   },
+   {
+    "key": "nysc.gov.ng.ict.html",
+    "url": "https://nysc.gov.ng/ict.html"
+   },
+   {
+    "key": "nysc.gov.ng.legal.html",
+    "url": "https://nysc.gov.ng/legal.html"
+   },
+   {
+    "key": "nysc.gov.ng.management.html",
+    "url": "https://nysc.gov.ng/management.html"
+   },
+   {
+    "key": "nysc.gov.ng.media.html",
+    "url": "https://nysc.gov.ng/media.html"
+   },
+   {
+    "key": "nysc.gov.ng.mission.html",
+    "url": "https://nysc.gov.ng/mission.html"
+   },
+   {
+    "key": "nysc.gov.ng.mobreg.html",
+    "url": "https://nysc.gov.ng/mobreg.html"
+   },
+   {
+    "key": "nysc.gov.ng.mobtable.html",
+    "url": "https://nysc.gov.ng/mobtable.html"
+   },
+   {
+    "key": "nysc.gov.ng.nhia.html",
+    "url": "https://nysc.gov.ng/nhia.html"
+   },
+   {
+    "key": "nysc.gov.ng.objective.html",
+    "url": "https://nysc.gov.ng/objective.html"
+   },
+   {
+    "key": "nysc.gov.ng.officeofdg.html",
+    "url": "https://nysc.gov.ng/officeofdg.html"
+   },
+   {
+    "key": "nysc.gov.ng.pastdgs.html",
+    "url": "https://nysc.gov.ng/pastdgs.html"
+   },
+   {
+    "key": "nysc.gov.ng.ppru.html",
+    "url": "https://nysc.gov.ng/ppru.html"
+   },
+   {
+    "key": "nysc.gov.ng.privacypolicy.html",
+    "url": "https://nysc.gov.ng/privacypolicy.html"
+   },
+   {
+    "key": "nysc.gov.ng.procurement.html",
+    "url": "https://nysc.gov.ng/procurement.html"
+   },
+   {
+    "key": "nysc.gov.ng.projects.html",
+    "url": "https://nysc.gov.ng/projects.html"
+   },
+   {
+    "key": "nysc.gov.ng.prs.html",
+    "url": "https://nysc.gov.ng/prs.html"
+   },
+   {
+    "key": "nysc.gov.ng.serviceyear.html",
+    "url": "https://nysc.gov.ng/serviceyear.html"
+   }
+  ]
+ },
+ {
+  "domain": "cac.gov.ng",
+  "pages": [
+   {
+    "key": "cac.gov.ng.index.html",
+    "url": "https://cac.gov.ng/"
+   },
+   {
+    "key": "cac.gov.ng.about.html",
+    "url": "https://cac.gov.ng/about.html"
+   },
+   {
+    "key": "cac.gov.ng.about_board-members.html",
+    "url": "https://cac.gov.ng/about_board-members.html"
+   },
+   {
+    "key": "cac.gov.ng.about_management.html",
+    "url": "https://cac.gov.ng/about_management.html"
+   },
+   {
+    "key": "cac.gov.ng.about_organizational-structure.html",
+    "url": "https://cac.gov.ng/about_organizational-structure.html"
+   },
+   {
+    "key": "cac.gov.ng.about_state-offices-head.html",
+    "url": "https://cac.gov.ng/about_state-offices-head.html"
+   },
+   {
+    "key": "cac.gov.ng.blog.html",
+    "url": "https://cac.gov.ng/blog.html"
+   },
+   {
+    "key": "cac.gov.ng.contact.html",
+    "url": "https://cac.gov.ng/contact.html"
+   },
+   {
+    "key": "cac.gov.ng.foi-portal.html",
+    "url": "https://cac.gov.ng/foi-portal.html"
+   },
+   {
+    "key": "cac.gov.ng.resources.html",
+    "url": "https://cac.gov.ng/resources.html"
+   },
+   {
+    "key": "cac.gov.ng.resources_faq.html",
+    "url": "https://cac.gov.ng/resources_faq.html"
+   },
+   {
+    "key": "cac.gov.ng.services_business-name.html",
+    "url": "https://cac.gov.ng/services_business-name.html"
+   },
+   {
+    "key": "cac.gov.ng.services_company-registration.html",
+    "url": "https://cac.gov.ng/services_company-registration.html"
+   },
+   {
+    "key": "cac.gov.ng.services_incorporated-trustees.html",
+    "url": "https://cac.gov.ng/services_incorporated-trustees.html"
+   },
+   {
+    "key": "cac.gov.ng.services_service-timelines.html",
+    "url": "https://cac.gov.ng/services_service-timelines.html"
+   }
+  ]
+ },
+ {
+  "domain": "efcc.gov.ng",
+  "pages": [
+   {
+    "key": "efcc.gov.ng.about.html",
+    "url": "https://efcc.gov.ng/about/"
+   },
+   {
+    "key": "efcc.gov.ng.leadership.html",
+    "url": "https://efcc.gov.ng/leadership/"
+   },
+   {
+    "key": "efcc.gov.ng.wanted-persons.html",
+    "url": "https://efcc.gov.ng/wanted-persons/"
+   },
+   {
+    "key": "efcc.gov.ng.news.html",
+    "url": "https://efcc.gov.ng/news/"
+   },
+   {
+    "key": "efcc.gov.ng.faq.html",
+    "url": "https://efcc.gov.ng/faq/"
+   },
+   {
+    "key": "efcc.gov.ng.contact.html",
+    "url": "https://efcc.gov.ng/contact/"
+   }
+  ]
+ }
+]
