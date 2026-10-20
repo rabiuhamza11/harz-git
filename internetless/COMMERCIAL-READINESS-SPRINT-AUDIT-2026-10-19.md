@@ -62,3 +62,12 @@ New P0 (promoted by owner ruling):
   Repair: curated video preservation (free-tier object storage ~10GB cap), offline player in the shell; honest label for unpreserved videos.
   Acceptance: a preserved video PLAYS in airplane mode; an unpreserved one is labeled honestly.
 Honest boundary (physics + zero-budget, not refusal): preserving every image and video on the internet is not possible on free tiers; preservation is selective and grows; what is not preserved is labeled, never faked.
+
+## INTEGRATION AUDIT MILESTONE — Oct 20, 07:44 (owner's counsel)
+Five-point acceptance for Watcher + Preservation working TOGETHER on real websites:
+V1 visual fidelity (incl. images/CSS/nav/subpages) — proven server-side for 4 packs; full device journey still owed.
+V2 automatic change detection within configured interval — watchdog v0.4 deployed (cron */15, canonical hashing, 40-page parallel slices, honest full-sweep = 30 min; free-tier 50-subrequest law honored). Verification: baseline sweeps 07:45/08:00 WAT, storm re-check 08:15 WAT.
+V3 safe synchronization (fetch, verify, save without corrupting verified version) — NOT BUILT: staging key + verification + atomic promotion + previous-version backup is the next build.
+V4 offline operation after sync — previously proven on device (Oct 17-18); SEC device run owed.
+V5 honest freshness on screen — NOT BUILT: shell labels (current/updating/stale/unavailable) reading v2.watch.lastcheck.
+STATE ANSWER (to counsel's question): Watcher and preservation engine built SEPARATELY. Detection→queue is live; queue→recapture is NOT yet wired (wake URL unset). Integration is the remaining work, sequenced: verify detection, wire wake, safe promotion, freshness labels, then the full-cycle real-change test.
