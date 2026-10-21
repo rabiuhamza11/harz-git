@@ -1,0 +1,14 @@
+{
+  "schema": "harz-mesh-manifest-v1",
+  "law": "object identity = sha256(text) (canonical content). File envelope is transport detail, disclosed per node.",
+  "trusted_source": "sealed corpus TX map (identity 7831974-126edf37cd18b12c), Phase 1 gate report Oct 21",
+  "objects": {
+    "815": {
+      "title": "Day Zero deferred... (Cape Town water crisis, cnn.com)",
+      "text_sha256": "de216a7cd334a425e438e46843a6e07846681376d28dbe948b3606d5658efe63",
+      "file_sha256_nodeA": "5327af4f67589d682baf59ec6b4aeb475d77747e9396cfb6738fb156cdff83d1",
+      "file_sha256_nodeB": "115d59e2cb1d67235b7cd730cfc65eae4aa77c6f5b19ffa9f68cb6d53d1b3394",
+      "text_chars": 9268, "file_bytes_nodeA": 9884, "file_bytes_nodeB": 9901
+    }
+  }
+}
