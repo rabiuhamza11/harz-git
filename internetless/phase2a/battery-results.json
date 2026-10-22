@@ -1,0 +1,56 @@
+[
+ {
+  "leg": 1,
+  "name": "load+verify object on node A and node B",
+  "status": "PASS",
+  "detail": "17534B, sha bd3ea5622e2a5f35\u2026, both verified at ingest"
+ },
+ {
+  "leg": 2,
+  "name": "internet isolation",
+  "status": "PASS",
+  "detail": "all transport 127.0.0.1; zero external hosts reachable in battery"
+ },
+ {
+  "leg": 3,
+  "name": "client discovers node A and node B",
+  "status": "PASS",
+  "detail": "discovery of 2 nodes in 3.9ms; both advertise 1719 with matching sha"
+ },
+ {
+  "leg": 4,
+  "name": "retrieve from node A + verify",
+  "status": "PASS",
+  "detail": "17534B in 1.1ms, client-side hash verify MATCH"
+ },
+ {
+  "leg": 5,
+  "name": "retrieve from node B + verify",
+  "status": "PASS",
+  "detail": "17534B in 1.4ms, identical bytes to node A response"
+ },
+ {
+  "leg": 6,
+  "name": "no prior copy / no full library on client",
+  "status": "PASS",
+  "detail": "client received only the requested object (memory-only); library mirror is 15MB, client holds 17,534B of it"
+ },
+ {
+  "leg": 7,
+  "name": "node A down -> failover to node B",
+  "status": "PASS",
+  "detail": "A confirmed unreachable, B served verified object, total 10003.4ms"
+ },
+ {
+  "leg": 8,
+  "name": "corruption: node stops serving",
+  "status": "PASS",
+  "detail": "node B re-verified at serve time and refused: 'REFUSED \u2014 integrity check failed at serve time'"
+ },
+ {
+  "leg": 8,
+  "name": "corruption: client rejects bad bytes",
+  "status": "PASS",
+  "detail": "client-side hash check REJECTED the tampered copy"
+ }
+]
