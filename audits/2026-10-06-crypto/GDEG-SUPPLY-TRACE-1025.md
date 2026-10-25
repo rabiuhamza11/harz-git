@@ -40,3 +40,6 @@ Does Rabiu recognize 0x111F183B…935aaC1 as his own wallet?
 - harz-crypto-wallet.harz.workers.dev: 200, Wallet v4 rendering (browser + curl)
 - harz-swap.harz.workers.dev: 200, HARZSwap serving
 - Etherscan v2 API requires a key; Polygonscan web + drpc sufficed for this entire trace.
+
+## CLOSURE (Oct 25, ~09:0x WAT, owner word)
+Owner reiterated: the delegation-wallet matter is CLOSED (ruled Oct 2-6: old path written off, treasury 0x608110Ca confirmed owner-owned, re-issue-on-clean-contracts strategy stands). This trace stands as HISTORICAL RECORD ONLY. No further old-path wallet forensics; 0x111F183B is part of the written-off path.
