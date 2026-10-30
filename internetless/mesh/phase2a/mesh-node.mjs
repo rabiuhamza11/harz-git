@@ -3,11 +3,13 @@
 // Runs on any Node.js >= 16 device: laptop, desktop, or Android via Termux. No dependencies.
 // Usage: node mesh-node.mjs --port 8787 --dir ./node-store
 import http from 'node:http';
+import os from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 function arg(k, d) { const i = process.argv.indexOf(k); return i > 0 && process.argv[i+1] ? process.argv[i+1] : d; }
 const PORT = parseInt(arg('--port', '8787'), 10);
+const HOST = arg('--host', '0.0.0.0');
 const DIR = arg('--dir', './node-store');
 const MANIFEST = JSON.parse(fs.readFileSync(new URL('./mesh-manifest.json', import.meta.url), 'utf8'));
 const LOG = path.join(DIR, 'node-log.jsonl');
@@ -62,8 +64,15 @@ const server = http.createServer((req, res) => {
   done(404, JSON.stringify({ok: false, error: 'unknown route'}));
 });
 const START = new Date().toISOString();
-server.listen(PORT, () => {
-  console.log('HARZ MESH NODE 2A listening on :' + PORT + ' | store: ' + DIR);
+server.listen(PORT, HOST, () => {
+  console.log('HARZ MESH NODE 2A listening on ' + HOST + ':' + PORT + ' | store: ' + DIR);
+  // print every LAN address so the OTHER device knows exactly where to aim (hotspot: use these)
+  try {
+    const ifs = os.networkInterfaces();
+    for (const name of Object.keys(ifs)) for (const a of ifs[name] || []) {
+      if (a.family === 'IPv4' && !a.internal) console.log('  REACHABLE AT: http://' + a.address + ':' + PORT + '  (' + name + ')');
+    }
+  } catch (e) {}
   console.log('  GET /inventory  — advertised objects + integrity state');
   console.log('  GET /object/<id> — integrity-checked serve (refuses on hash mismatch)');
   console.log('  Held: ' + fs.readdirSync(DIR).filter(x => x.endsWith('.json') && x !== 'node-log.jsonl' && !x.startsWith('node-')).join(', '));

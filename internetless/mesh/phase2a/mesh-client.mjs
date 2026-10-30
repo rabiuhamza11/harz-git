@@ -7,6 +7,28 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 function arg(k, d) { const i = process.argv.indexOf(k); return i > 0 && process.argv[i+1] ? process.argv[i+1] : d; }
+if (typeof fetch !== 'function') {
+  console.log('FATAL: this Node build has no fetch (needs Node 18+). In Termux run: pkg install nodejs-lts -y && node --version');
+  process.exit(2);
+}
+function diagnose(e) {
+  const chain = [];
+  let cur = e;
+  for (let d = 0; cur && d < 4; d++) { chain.push(String(cur)); if (cur.code) chain.push(cur.code); if (cur.cause) cur = cur.cause; else break; }
+  const all = chain.join(' ');
+  const codes = ['ECONNREFUSED','ETIMEDOUT','ENETUNREACH','EAI_AGAIN','EHOSTUNREACH','ECONNRESET'];
+  const code = codes.find(k => all.includes(k)) || '';
+  const map = {
+    ECONNREFUSED: 'the node is NOT RUNNING or the port is wrong. On the node device: is mesh-node.mjs still running? Did the screen sleep / Termux doze? Run termux-wake-lock FIRST, then start the node.',
+    ETIMEDOUT: 'no answer within 8s. Likely different Wi-Fi networks, hotspot off, or the node device asleep.',
+    ENETUNREACH: 'no route to that IP. Are BOTH devices on the SAME hotspot or Wi-Fi? Copy the exact IP from the node printed REACHABLE AT line.',
+    EAI_AGAIN: 'name could not be resolved. Use the raw IP the node printed, not a hostname.',
+    EHOSTUNREACH: 'that IP is not on this network. Copy the exact IP the node printed.',
+    ECONNRESET: 'connection was cut mid-way. Did the node device lock its screen or lose hotspot?'
+  };
+  return '[' + (code || 'NO-ANSWER') + '] ' + (map[code] || 'the request never got an HTTP answer. Check: node running? same Wi-Fi? correct IP?');
+}
+const PING = process.argv.includes('--ping');
 const NODE = arg('--node', 'http://192.168.43.1:8787');
 const ID = arg('--id', '815');
 const REJECT_TEST = process.argv.includes('--reject-test');
@@ -23,6 +45,20 @@ async function fetchJSON(p) {
   return {status: r.status, bytes: b, headers: r.headers};
 }
 (async () => {
+  if (PING) {
+    try {
+      const t = Date.now();
+      const r = await fetchJSON(NODE + '/inventory');
+      const adv = JSON.parse(r.bytes.toString('utf8'));
+      console.log('NODE REACHABLE in ' + (Date.now() - t) + 'ms — ' + NODE);
+      console.log('  advertises: ' + (adv.objects || []).map(o => o.id + (o.serves ? ' (VERIFIED)' : ' (MISMATCH)')).join(', '));
+      process.exit(0);
+    } catch (e) {
+      console.log('NODE UNREACHABLE — ' + NODE);
+      console.log('  DIAGNOSIS: ' + diagnose(e));
+      process.exit(1);
+    }
+  }
   const evidence = {schema: 'harz-mesh-phase2a-receipt-v1', at: new Date().toISOString(),
     device: 'client ' + process.platform + ' node ' + process.version, node: NODE, id: ID,
     expected_hash: expected, reject_test: REJECT_TEST, external_requests: 0};
@@ -60,8 +96,15 @@ async function fetchJSON(p) {
     console.log('  receipt: ' + fn);
     process.exit(evidence.verdict === 'ACCEPTED' ? 0 : 1);
   } catch (e) {
-    evidence.verdict = 'FAILED'; evidence.error = String(e).slice(0, 200);
-    console.log('VERDICT: FAILED — ' + evidence.error);
+    evidence.verdict = 'FAILED';
+    evidence.error = diagnose(e);
+    evidence.raw_error = String(e).slice(0, 200);
+    if (e && e.cause) evidence.cause = String(e.cause).slice(0, 200);
+    console.log('VERDICT: FAILED');
+    console.log('  DIAGNOSIS: ' + evidence.error);
+    console.log('  raw: ' + evidence.raw_error + (evidence.cause ? ' | cause: ' + evidence.cause : ''));
+    try { fs.mkdirSync('evidence', {recursive: true});
+      fs.writeFileSync('evidence/phase2a-FAILED-' + Date.now() + '.json', JSON.stringify(evidence, null, 1)); } catch (x) {}
     process.exit(1);
   }
 })();

@@ -1,42 +1,56 @@
-# PHASE 2A RUNBOOK — Offline Mesh Retrieval, First Experiment
-# Kit: mesh-node.mjs (storage node) · mesh-client.mjs (client) · mesh-manifest.json (trusted hashes)
-# Test object: doc 815 (Cape Town water crisis, cnn.com), text sha256 de216a7c… (sealed, identical at both online nodes).
-# Sandbox-verified Oct 21 (accept / wrong-hash reject / corrupt-refuse 409 / unreachable honest-fail). Sandbox ≠ device proof.
+# PHASE 2A RUNBOOK v2 — Offline Mesh Retrieval (TWO-PHONE edition, hardened Oct 30)
 
-## SETUP — NODE A (any computer or phone with Node.js 16+)
-On the computer (install Node from nodejs.org if needed):
-  cd mesh/phase2a
-  node mesh-node.mjs --port 8787 --dir ./node-store
-Find the computer's LAN address:
-  Windows: ipconfig   (look for "IPv4 Address")
-  Linux/Mac: ip addr  (or ifconfig)
+Test object: doc 1719 (17,534 bytes, sha bd3ea5622e2a5f35…) and doc 815 (sha de216a7c…). Both sealed-valid.
+Node 18+ REQUIRED on both devices (fetch). In Termux: pkg install nodejs-lts -y ; node --version must print v18 or higher.
 
-## SETUP — CLIENT C (the Infinix, via Termux)
-  pkg install nodejs-lts -y
-  cd mesh/phase2a   (kit copied to phone: termux-setup-storage, then copy via USB or git clone)
-  node mesh-client.mjs --node http://<NODE-A-IP>:8787 --id 815
+## GET THE KIT ONTO THE PHONE (one online moment)
+In Termux: pkg install git -y ; git clone https://github.com/rabiuhamza11/harz-git
+Kit lives at: harz-git/internetless/mesh/phase2a
+(No internet right now? Copy the phase2a folder over USB instead — it is 45KB.)
 
-## GENUINELY OFFLINE PROTOCOL (do this before the recorded run)
-Option 1 (recommended): Android hotspot with MOBILE DATA OFF.
-  On the Infinix: turn ON hotspot, turn OFF mobile data. Connect the computer to the hotspot Wi-Fi.
-  The LAN (hotspot) works; the internet is dead because data is off.
-Option 2: Router with WAN cable unplugged; both devices on its Wi-Fi.
-Then PROVE the internet is dead from BOTH devices, and save the output:
+## ARRANGEMENT A — TWO PHONES (primary; this is the Sunday shape)
+PHONE 2 = STORAGE NODE
+ 1. cd harz-git/internetless/mesh/phase2a
+ 2. termux-wake-lock          ← CRITICAL. Without it Android dozes and kills the node mid-test.
+ 3. node mesh-node.mjs --port 8787 --dir ./node-store
+    Expected: "HARZ MESH NODE 2A listening on 0.0.0.0:8787" AND a line
+    "REACHABLE AT: http://<IP>:8787"  ← WRITE THIS IP DOWN. The client uses it.
+    Expected: "Held: 1719.json, 815.json"
+
+HOTSPOT: turn ON the hotspot (either phone), connect the other phone to it. Mobile data OFF on the hotspot phone.
+
+INFINIX = CLEAN CLIENT (open a SECOND Termux session, do not kill the node session)
+ 4. cd harz-git/internetless/mesh/phase2a
+ 5. node mesh-client.mjs --node http://<THE-IP-FROM-STEP-3>:8787 --ping
+    Expected: "NODE REACHABLE in NNms" + "advertises: 815 (VERIFIED), 1719 (VERIFIED)"
+    THIS STEP IS THE DIAGNOSTIC. If it fails here, the table below names the cause. Do not proceed past a failed ping.
+ 6. node mesh-client.mjs --node http://<IP>:8787 --id 1719
+    Expected: VERDICT: ACCEPTED + expected/received hashes identical + retrieval time + receipt file written.
+ 7. node mesh-client.mjs --node http://<IP>:8787 --id 1719 --reject-test
+    Expected: VERDICT: REJECTED (client takes nothing unverified).
+ 8. On PHONE 2 press Ctrl+C to stop the node. On the Infinix re-run step 6.
+    Expected: VERDICT: FAILED + DIAGNOSIS [ECONNREFUSED] … (honest failure, named cause).
+ 9. Restart the node, re-run step 6 once more → ACCEPTED again (recovery).
+
+DEAD-INTERNET PROOF (run BEFORE filming, from BOTH phones, save the output)
   curl -m 8 https://harz-offline-browser.hamzarabiu390.workers.dev/v2/doc/815
-  (expected: failure/timeout — record it; if it succeeds, you are NOT offline, do not run the test)
+  Expected: timeout/failure. If it succeeds, you are NOT offline — do not run the test.
 
-## THE RECORDED RUN (matches the 10-step experiment)
-1.  node mesh-client.mjs --node http://<NODE-A-IP>:8787 --id 815
-    → VERDICT: ACCEPTED + timings + receipt file saved in evidence/
-2.  Wrong-hash test: node mesh-client.mjs --node http://<NODE-A-IP>:8787 --id 815 --reject-test
-    → VERDICT: REJECTED (client accepts nothing unverified)
-3.  Kill Node A (Ctrl+C) → re-run step 1 → VERDICT: FAILED (honest unreachable failure)
-4.  Tamper test (optional): edit a copy's text on the node → node returns 409 integrity refusal,
-    inventory stops advertising the object.
-5.  Send Nuruddeen the evidence/*.json receipts + the dead-internet curl outputs.
+## ARRANGEMENT B — COMPUTER NODE + PHONE CLIENT
+Same steps, node on the computer (node mesh-node.mjs --port 8787 --dir ./node-store), IP from its REACHABLE AT line (Windows: it prints too). Hotspot: phone hosts, computer connects, mobile data OFF.
+
+## DIAGNOSIS TABLE — every failure names itself now
+ [ECONNREFUSED]        node not running / wrong port / node device dozed. termux-wake-lock, restart node.
+ [ETIMEDOUT]           different networks, hotspot off, or node asleep. Both devices must be on the SAME hotspot.
+ [ENETUNREACH]/[EHOSTUNREACH]  wrong IP. Copy the exact REACHABLE AT line from the node screen.
+ [EAI_AGAIN]           used a hostname. Use the raw IP.
+ [ECONNRESET]          node lost its screen/hotspot mid-transfer. termux-wake-lock.
+ 404 object not held  the node store lacks that id — check "Held:" line on the node.
+ 409 integrity refusal node refuses its own tampered copy — correct behaviour, do not serve it.
+ FATAL: no fetch       Node is older than 18. pkg install nodejs-lts -y.
 
 ## WHAT IS AND IS NOT CLAIMED
-- Claimed after a passed device run: one verified object retrieved over LAN from a nearby node,
-  offline, on demand, no library download, client-side hash verification, wrong-hash rejection.
-- NOT claimed: discovery protocol (Phase 2B), multiple nodes simultaneously, P2P phone-as-node
-  (needs the same kit on a second phone + background restrictions testing), scale/performance.
+- Claimed after a passed device run: one verified object retrieved over LAN from a nearby node, offline,
+  on demand, no library download, client-side hash verification, wrong-hash rejection, named-failure recovery.
+- NOT claimed: discovery (Phase 2B), multiple simultaneous nodes, phone-as-node for the public,
+  scale/performance, background serving after screen-off beyond termux-wake-lock.
