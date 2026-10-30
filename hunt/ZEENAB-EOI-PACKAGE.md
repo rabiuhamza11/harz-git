@@ -11,11 +11,11 @@
 - TIN (main): 24550860 — FIRS, MSTO Bauchi
 - TIN (branch): 24550860-0001
 - Phone: 0802 868 7857
+- Email (submission + replies): harzco.business@gmail.com
 - Bank reference: UBA 2034326424, Rabiu Hamza Mohammed
 
-## STILL NEEDED BEFORE SEND (2 items only)
-1. REGISTERED ADDRESS — exact address as on the CAC certificate (not in any HARZ record).
-2. APPLICATION EMAIL — the email to appear on the submission and to receive their reply.
+## STILL NEEDED BEFORE SEND (1 item only)
+1. REGISTERED ADDRESS — exact address as on the CAC certificate (not in any HARZ record). If the certificate address is unavailable, confirm the business contact address to print instead.
 
 *Everything else below is complete and uses verified values only.*
 
