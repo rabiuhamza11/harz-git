@@ -30,3 +30,8 @@ Live venue execution (locked by design) · Android actual install (owner device)
 
 ## TEST ARTIFACTS LEFT IN LEDGER (honest, named)
 CLOSE-DUPE*, CLOSE-DUPE2*, CLOSE-DUPE3, CLOSE-BRIDGE*, LIVE-TRY rows + one TEST-SEED prediction (CLOSE-BRIDGE, notes say TEST-SEED). Recommend retention as evidence; owner may order purge.
+
+## Amendment 2026-10-30 10:42 WAT — device render evidence
+Owner submitted a phone screenshot of the live dashboard (Android browser, updated 10:40, DEMO ONLY badge, PREDICTIONS 1 / OPEN 1 / LOSSES 0 / RISK INACTIVE agg 1%, gate feed showing LIVE-TRY REFUSED_VENUE_MODE, CLOSE-DUPE3 ACCEPTED_SIMULATED, CLOSE-BRIDGE DUPLICATE_PREVENTED).
+=> PWA row moves from NOT TESTED to VERIFIED for on-device render (Android viewport, real device).
+=> Remaining nicety: Add to home screen install (standalone launch) not yet evidenced.
