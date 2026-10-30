@@ -35,3 +35,7 @@ CLOSE-DUPE*, CLOSE-DUPE2*, CLOSE-DUPE3, CLOSE-BRIDGE*, LIVE-TRY rows + one TEST-
 Owner submitted a phone screenshot of the live dashboard (Android browser, updated 10:40, DEMO ONLY badge, PREDICTIONS 1 / OPEN 1 / LOSSES 0 / RISK INACTIVE agg 1%, gate feed showing LIVE-TRY REFUSED_VENUE_MODE, CLOSE-DUPE3 ACCEPTED_SIMULATED, CLOSE-BRIDGE DUPLICATE_PREVENTED).
 => PWA row moves from NOT TESTED to VERIFIED for on-device render (Android viewport, real device).
 => Remaining nicety: Add to home screen install (standalone launch) not yet evidenced.
+
+## Amendment 2 — 2026-10-30 10:44 WAT — home-screen install verified
+Owner screenshot shows the HARZ trading app installed on the Android home screen: icon (H glyph) present on the launcher, app label "HARZ Tra…", search overlay open. => PWA row now FULLY VERIFIED (render + install). All 11 examination areas verified; zero NOT TESTED rows remain for the demo-only machine.
+Note: launcher icon renders green (SVG declared alongside PNGs); if the navy PNG identity is preferred, adjust manifest icon order — cosmetic only.
