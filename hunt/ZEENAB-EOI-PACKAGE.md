@@ -5,10 +5,17 @@
 - Weekly/monthly capacity: replenishment schedule from the Yelwan Shendam partners, stated as "weekly supply available on request" (no invented tonnage).
 - Honest commercial note: 1 tonne per commodity is a starter/sample-scale offer for an industrial buyer; position it as an entry point with partner-network aggregation behind it, never as our maximum.
 
-## FILL BEFORE SEND (3 items only)
-1. FULL TIN — records hold only the prefix "24…"; CAC RC 321424 is confirmed. Type it exactly as on the TIN certificate.
-2. REGISTERED ADDRESS — not found in any HARZ record. Exact address as on the CAC certificate.
-3. APPLICATION EMAIL — the email address to appear on the submission and to receive their reply.
+## REGISTRATION (confirmed by owner, Oct 30)
+- Registered entity: HI WATER/BLOCK INDUSTRY, trading as HARZ DIGITAL SERVICES
+- CAC RC: 321424
+- TIN (main): 24550860 — FIRS, MSTO Bauchi
+- TIN (branch): 24550860-0001
+- Phone: 0802 868 7857
+- Bank reference: UBA 2034326424, Rabiu Hamza Mohammed
+
+## STILL NEEDED BEFORE SEND (2 items only)
+1. REGISTERED ADDRESS — exact address as on the CAC certificate (not in any HARZ record).
+2. APPLICATION EMAIL — the email to appear on the submission and to receive their reply.
 
 *Everything else below is complete and uses verified values only.*
 
