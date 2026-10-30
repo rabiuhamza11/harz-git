@@ -1,5 +1,10 @@
 # EOI PACKAGE — ZEENAB FOODS LIMITED (prepared Oct 30, 2026, Team F)
 
+## CONFIRMED FIGURES (owner's word, Oct 30)
+- Quantity available NOW: ~1 tonne per commodity, for sorghum, millet, soybeans, beans and sesame.
+- Weekly/monthly capacity: replenishment schedule from the Yelwan Shendam partners, stated as "weekly supply available on request" (no invented tonnage).
+- Honest commercial note: 1 tonne per commodity is a starter/sample-scale offer for an industrial buyer; position it as an entry point with partner-network aggregation behind it, never as our maximum.
+
 ## FILL BEFORE SEND (3 items only)
 1. FULL TIN — records hold only the prefix "24…"; CAC RC 321424 is confirmed. Type it exactly as on the TIN certificate.
 2. REGISTERED ADDRESS — not found in any HARZ record. Exact address as on the CAC certificate.
