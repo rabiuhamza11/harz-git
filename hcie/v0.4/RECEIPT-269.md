@@ -34,3 +34,10 @@ GATE 3 ACCEPTANCE TABLE (current):
  Corrupted accepted ............... zero (no corrupted object has been presented yet either)
  Missing falsely advertised ....... zero
  NOTE: corrupted-object rejection has NOT been tested with a real tampered file. See next step.
+
+E. 4:35 PM, AIRPLANE icon in status bar, no signal bars, battery 39, tab 50.
+   Scrolled to bottom: all rows VERIFIED, Read panel open, canary-github v1 text rendered in full (ALPHA-7F3C marker), label "verified".
+   => OFFLINE READ confirmed on device: verify + open + display with radio off.
+   Caveat unchanged: URL bar shows harz-hcie.harz.workers.dev, so cannot distinguish saved-file reopen from a still-open tab.
+
+STILL OPEN: transfer to Phone B (Gate 3 proper), tampered-file rejection test, Oct 25 two-phone failure.
