@@ -1,4 +1,4 @@
-HCIE change-detection canary, revision 2.
-Issued: 2026-10-31T15:08Z
-Marker: BETA-2E91
-This revision exists to prove the watcher detects a genuine external edit and preserves revision 1.
+HCIE change-detection canary, revision 3.
+Issued: 2026-10-31T15:35Z
+Marker: GAMMA-4C18
+Third revision: proves sequential version assignment from inside the insert path.
