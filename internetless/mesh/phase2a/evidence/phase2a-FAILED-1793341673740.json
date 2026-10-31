@@ -1,0 +1,13 @@
+{
+ "schema": "harz-mesh-phase2a-receipt-v1",
+ "at": "2026-10-30T06:27:45.736Z",
+ "device": "client linux node v20.20.2",
+ "node": "http://192.168.43.1:8787",
+ "id": "815",
+ "expected_hash": "de216a7cd334a425e438e46843a6e07846681376d28dbe948b3606d5658efe63",
+ "reject_test": false,
+ "external_requests": 0,
+ "verdict": "FAILED",
+ "error": "[23] network failure before any HTTP answer. Check: node running? same Wi-Fi? correct IP?",
+ "raw_error": "TimeoutError: The operation was aborted due to timeout"
+}
