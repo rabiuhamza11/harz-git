@@ -1,0 +1,18 @@
+name: HCIE Pulse
+# Sovereign clock for the HARZ HCIE Acquisition Worker (Phase 2).
+# Cloudflare cron-trigger API is blocked for the current token; this GitHub clock
+# pings the worker's server-side-throttled /pulse endpoint every 5 minutes.
+# The worker itself enforces a 4-minute floor, so duplicate pings are harmless.
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {}
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Pulse the acquisition worker
+        run: |
+          echo "pulse at $(date -u +%FT%TZ)"
+          curl -sS -m 180 -X POST https://harz-hcie-acquire.harz.workers.dev/pulse
