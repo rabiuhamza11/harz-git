@@ -33,3 +33,19 @@ his own key on first open. Verified that after deletion an approve attempt falls
 - One review key, shared by whoever holds it. No per-person review identities yet.
 - No conflict handling: two devices contributing different text under the same title both queue as separate contributions.
 - Rejecting keeps a review note but there is no appeal/edit path; the author must submit a new contribution.
+
+## ADDENDUM (owner observation, 17:24)
+Owner screenshot: review page shows "No connection." under the Unlock button while the queue card below correctly reads
+"Nothing is queued." Server state at the same time: review_key_sha256 exists (prefix f4484c53, 64 hex chars), the auth
+endpoint answers normally ({"ok":false,"error":"wrong review key"} for a wrong key), and the queue holds 0 items.
+So the key WAS already claimed earlier (12-character entry, "Key accepted." at 17:18) and this press failed on the network
+fetch, not because HARZ refused anything.
+
+DEFECT (open, needs owner ruling): the handler catches every exception and prints the same words "No connection."
+A DNS blip, a worker 5xx served as HTML, and a genuine airplane-mode failure are therefore indistinguishable to the person
+holding the phone. Correct behaviour: separate (a) transport failure, (b) HTTP error with status code, (c) a non-JSON body,
+(d) a server refusal with its reason. Same fault exists in the approve/reject path ("No connection. The decision was NOT
+recorded.") where a refused decision and an unreachable server read identically.
+
+Also noted: the key is kept in localStorage after a successful claim, so approving does not require retyping it. The
+"unlock" press only matters if the key was never claimed or the browser lost its storage.
