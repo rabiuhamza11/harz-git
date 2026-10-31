@@ -1,0 +1,15 @@
+{
+  "id": 55,
+  "object_id": 55,
+  "source_key": "contrib-6",
+  "url": "contrib://6",
+  "title": "Contribution 6 by Hauwa-test",
+  "version": 1,
+  "canonical_sha256": "c2769da3ed7f6b816598fe65aa2518f5ec431052d26dc96787cb1fc6bc21af03",
+  "sha256": "c2769da3ed7f6b816598fe65aa2518f5ec431052d26dc96787cb1fc6bc21af03",
+  "bytes": 92,
+  "captured_ts": "2026-10-31T18:35:46.337Z",
+  "content": "Loop 2 contribution at 2026-10-31T18:35:45Z - continuous circulation test note by Hauwa-test",
+  "published_by": "HARZ Internet Publisher v0.4",
+  "published_ts": "2026-10-31T18:35:48Z"
+}
