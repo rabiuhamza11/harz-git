@@ -41,3 +41,6 @@ E. 4:35 PM, AIRPLANE icon in status bar, no signal bars, battery 39, tab 50.
    Caveat unchanged: URL bar shows harz-hcie.harz.workers.dev, so cannot distinguish saved-file reopen from a still-open tab.
 
 STILL OPEN: transfer to Phone B (Gate 3 proper), tampered-file rejection test, Oct 25 two-phone failure.
+
+UPDATE 16:47 - Owner reports the file was SENT to the second phone. Transfer stage: owner-reported, receiver-side verification NOT yet reported.
+Gate 3 remains UNFILLED: need Phone B verdict (10/10?) + airplane read on Phone B.
