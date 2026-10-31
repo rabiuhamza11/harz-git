@@ -1,4 +1,4 @@
-HCIE change-detection canary, revision 1.
-Issued: 2026-10-31T15:05Z
-Marker: ALPHA-7F3C
-This file is the controlled proof that a real internet change is detected and versioned.
+HCIE change-detection canary, revision 2.
+Issued: 2026-10-31T15:08Z
+Marker: BETA-2E91
+This revision exists to prove the watcher detects a genuine external edit and preserves revision 1.
