@@ -1,0 +1,15 @@
+{
+  "id": 41,
+  "object_id": 41,
+  "source_key": "contrib-1",
+  "url": "contrib://1",
+  "title": "Contribution 1 by Rabiu (Dad)",
+  "version": 1,
+  "canonical_sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
+  "sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
+  "bytes": 70,
+  "captured_ts": "2026-10-31T18:09:11.560Z",
+  "content": "HCIE reverse circulation test note A - Gembu market report 31 Oct 2026",
+  "published_by": "HARZ Internet Publisher v0.4",
+  "published_ts": "2026-10-31T18:13:10Z"
+}
