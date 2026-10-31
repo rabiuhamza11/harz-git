@@ -16,3 +16,7 @@ NEXT EVIDENCE REQUIRED FROM OWNER:
 1. Top-of-page verdict (should read 10/10 VERIFIED).
 2. Confirmation the artifact was downloaded via /gate3/download and opened from local storage with mobile data and Wi-Fi OFF.
 3. Then the two-phone step: transfer that single file, open on Phone B, report verdict, airplane reopen.
+
+UPDATE 16:32 - owner confirmed the top-of-page verdict reads 10/10 VERIFIED on the phone.
+Verdict now: PASS on device (bundle self-verification in the phone browser, 10/10).
+Still NOT proven: file saved and opened with connection off; transfer to second phone; airplane read on receiver.
