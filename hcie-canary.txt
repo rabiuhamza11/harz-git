@@ -1,4 +1,7 @@
-HCIE change-detection canary, revision 3.
-Issued: 2026-10-31T15:35Z
-Marker: GAMMA-4C18
-Third revision: proves sequential version assignment from inside the insert path.
+HCIE change-detection canary, revision 1.
+Issued: 2026-10-31T18:10Z
+Marker: CANARY-INIT-001
+Initial canary file created for forward_proof.
+Revision 4 | Issued: 2026-10-31T18:25:45Z | Marker: CANARY-LOOP1-MARKER-1793471145
+Revision 5 | Issued: 2026-10-31T18:30:18Z | Marker: CANARY-LOOP2-MARKER-1793471418
+Revision 6 | Issued: 2026-10-31T18:32:24Z | Marker: CANARY-LOOP2-MARKER-1793471544
