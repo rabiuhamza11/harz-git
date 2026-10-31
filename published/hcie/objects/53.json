@@ -1,0 +1,15 @@
+{
+  "id": 53,
+  "object_id": 53,
+  "source_key": "contrib-5",
+  "url": "contrib://5",
+  "title": "Contribution 5 by Hauwa-loop2",
+  "version": 1,
+  "canonical_sha256": "bef7317347dbcceba760f06d694bb8efe120b9610d38bcddaeaa5205b5791d30",
+  "sha256": "bef7317347dbcceba760f06d694bb8efe120b9610d38bcddaeaa5205b5791d30",
+  "bytes": 86,
+  "captured_ts": "2026-10-31T18:34:38.349Z",
+  "content": "Loop 2 continuous circulation verification note by Hauwa-loop2 at 2026-10-31T18:34:37Z",
+  "published_by": "HARZ Internet Publisher v0.4",
+  "published_ts": "2026-10-31T18:34:45Z"
+}
