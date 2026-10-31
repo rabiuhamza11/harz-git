@@ -488,6 +488,14 @@ export default {
       return j((await env.HARZ_DB.prepare("SELECT * FROM hcie_sources ORDER BY id").all()).results);
     }
     if (u.pathname === "/read" || u.pathname.startsWith("/read/")) return new Response(READ_HTML, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
+    if (u.pathname === "/gate3" || u.pathname === "/gate3/") { u.pathname = "/api/hcie/bundle.html"; }
+    if (u.pathname === "/gate3/download") {
+      const rows = await env.HARZ_DB.prepare("SELECT id, source_key, version, canonical_sha256, bytes, captured_ts, content FROM hcie_objects WHERE verified=1 ORDER BY source_key, version LIMIT 10").all();
+      const docs = (rows.results || []).map(function (o) { return { id: o.id, source: o.source_key, version: o.version, sha256: o.canonical_sha256, bytes: o.bytes, captured: o.captured_ts, text: o.content }; });
+      const payload = JSON.stringify({ kind: "harz.hcie.bundle", schema: 1, created: nowIso(), count: docs.length, docs: docs });
+      const safe = payload.replace(/</g, "\\u003c");
+      return new Response(BUNDLE_HTML.replace("__PAYLOAD__", safe), { headers: { "content-type": "text/html; charset=utf-8", "content-disposition": "attachment; filename=harz-gate3-bundle.html", "cache-control": "no-store" } });
+    }
     if (u.pathname === "/api/hcie/bundle.html") {
       const want = Math.min(20, Math.max(1, parseInt(u.searchParams.get("n") || "10", 10)));
       const rows = await env.HARZ_DB.prepare(
