@@ -4,3 +4,4 @@ Marker: CANARY-INIT-001
 Initial canary file created for forward_proof.
 Revision 4 | Issued: 2026-10-31T18:25:45Z | Marker: CANARY-LOOP1-MARKER-1793471145
 Revision 5 | Issued: 2026-10-31T18:30:18Z | Marker: CANARY-LOOP2-MARKER-1793471418
+Revision 6 | Issued: 2026-10-31T18:32:24Z | Marker: CANARY-LOOP2-MARKER-1793471544
