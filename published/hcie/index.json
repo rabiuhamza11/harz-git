@@ -1,12 +1,21 @@
 {
- "node": "harz-hcie (node A)",
- "publication": "authorised Internet destination: harz-git published/",
- "objects": [
-  {
-   "id": 38,
-   "version": 18,
-   "sha256": "c4372fb371034170af04190708d926ecbc380bbfb88d48b248c79f6171fabc9b",
-   "bytes": 17930
-  }
- ]
+  "node": "harz-hcie (node A)",
+  "publication": "authorised Internet destination: harz-git published/",
+  "objects": [
+    {
+      "id": 38,
+      "version": 18,
+      "sha256": "c4372fb371034170af04190708d926ecbc380bbfb88d48b248c79f6171fabc9b",
+      "bytes": 17930
+    },
+    {
+      "id": 41,
+      "object_id": 41,
+      "source_key": "contrib-1",
+      "version": 1,
+      "sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
+      "canonical_sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
+      "bytes": 70
+    }
+  ]
 }
