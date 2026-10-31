@@ -4,7 +4,7 @@
 // Law: only VERIFIED objects (hash-matched, captured bytes) may ever be presented as offline-available.
 // A source row may say "advertised"; only an object row means we hold it.
 
-const VERSION = "hcie-0.8.0";
+const VERSION = "hcie-0.8.5";
 const UA = "harz-hcie/0.1 (HARZ Continuity Exchange)";
 
 const SEED_SOURCES = [
@@ -611,11 +611,49 @@ function hcieSha256(str) {
 
 
 
-const SW_JS = "const C='hcie-shell-v1';" +
+const SW_JS = "const V='hcie-0.8.5';const C='hcie-shell-'+V;" +
 "self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(['/write','/review','/manifest.json','/icon.svg']);}).then(function(){return self.skipWaiting();}));});" +
-"self.addEventListener('activate',function(e){e.waitUntil(self.clients.claim());});" +
-"self.addEventListener('fetch',function(e){var u=new URL(e.request.url);if(u.pathname.indexOf('/api/')===0){return;}e.respondWith(caches.match(e.request).then(function(h){return h||fetch(e.request).then(function(r){var cp=r.clone();caches.open(C).then(function(c){c.put(e.request,cp);});return r;}).catch(function(){return caches.match('/write');});}));});";
+"self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return k===C?null:caches.delete(k);}));}).then(function(){return self.clients.claim();}));});" +
+// Network first for pages: a deployed fix must reach the person holding the phone. Cache is the offline fallback, not the default.
+"self.addEventListener('fetch',function(e){var u=new URL(e.request.url);if(u.pathname.indexOf('/api/')===0){return;}" +
+"if(e.request.method!=='GET'){return;}" +
+"e.respondWith(fetch(e.request).then(function(r){if(r&&r.ok){var cp=r.clone();caches.open(C).then(function(c){c.put(e.request,cp);}).catch(function(){});}return r;}).catch(function(){return caches.match(e.request).then(function(h){return h||caches.match('/write');});}));});";
 
+const RESET_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f0f2f5">
+<title>HCIE Reset Cache</title><style>
+body{margin:0;background:#f0f2f5;color:#12181f;font:15px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;padding:14px}
+.card{background:#fff;border:1px solid #e3e8ee;border-radius:14px;padding:14px;margin:12px 0}
+button{font:inherit;font-weight:700;background:#0f766e;color:#fff;border:0;border-radius:10px;padding:11px 14px;margin-top:10px;width:100%}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6b7280;word-break:break-all;margin-top:8px}
+</style></head><body><h1 style="font-size:19px;margin:0 0 2px">HCIE Cache Reset</h1>
+<div class="card"><b>What this does</b><div class="mono" id="out">working...</div>
+<div class="mono">Removes the stored page copies and the old service worker on this browser, then reopens the review screen
+from HARZ. Nothing in HARZ is touched: the queue, the published manifest and your review key are not affected.</div>
+<button id="again">Run again</button></div>
+<script>
+var out=document.getElementById('out');
+async function run(){
+  out.textContent='clearing...';
+  var notes=[];
+  try{
+    if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations){
+      var rs=await navigator.serviceWorker.getRegistrations();
+      for(var i=0;i<rs.length;i++){await rs[i].unregister();}
+      notes.push('service workers unregistered: '+rs.length);
+    }
+    if(window.caches&&caches.keys){
+      var ks=await caches.keys();
+      for(var j=0;j<ks.length;j++){await caches.delete(ks[j]);}
+      notes.push('caches deleted: '+ks.length);
+    }
+    out.textContent=notes.join(' | ')+' - reopening review screen.';
+    setTimeout(function(){location.replace('/review?fresh='+Date.now());},900);
+  }catch(e){out.textContent='Reset failed: '+e.message;}
+}
+document.getElementById('again').onclick=run;
+run();
+</script></body></html>`;
 
 const REVIEW_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -626,25 +664,50 @@ const REVIEW_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 h1{font-size:19px;margin:0 0 2px}.sub{color:#6b7280;font-size:12px}
 .card{background:#fff;border:1px solid #e3e8ee;border-radius:14px;padding:14px;margin:12px 0}
 label{display:block;font-size:12px;font-weight:700;color:#374151;margin:10px 0 4px}
-input{width:100%;font:inherit;padding:10px;border:1px solid #dfe4ea;border-radius:10px;background:#fbfcfd}
+input{width:100%;font:inherit;padding:10px;border:1px solid #dfe4ea;border-radius:10px;background:#eef2f9}
 button{font:inherit;font-weight:700;background:#0f766e;color:#fff;border:0;border-radius:10px;padding:11px 14px;margin-top:10px;width:100%}
 button.ghost{background:#fff;color:#b91c1c;border:1px solid #f3c9c9}
 .mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6b7280;word-break:break-all;margin-top:6px}
-pre{white-space:pre-wrap;font:inherit;background:#fbfcfd;border:1px solid #dfe4ea;border-radius:10px;padding:10px;margin:8px 0}
 .tag{display:inline-block;background:#e0f2f1;color:#0f766e;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800}
 </style></head><body>
 <h1>HCIE Review</h1>
 <div class="sub">Queued contributions. Nothing publishes itself: it publishes when you decide.</div>
-<div class="card" id="authbox"><label>Review key</label>
+<div class="card" id="authbox"><label>Review key (needed only to approve or reject, not to read the queue)</label>
 <input id="key" type="password" placeholder="at least 8 characters">
-<button id="save">Unlock reviewing</button><div class="mono" id="authmsg"></div></div>
-<div id="list"><div class="card">Loading queue...</div></div>
+<button id="save">Unlock reviewing</button><div class="mono" id="authmsg">Unlock: nothing attempted yet.</div></div>
+<div class="card" id="qhead"><b>Queue</b><div class="mono" id="qmeta">not read yet</div></div>
+<div id="list"></div>
 <script>
 function el(i){return document.getElementById(i);}
-function key(){return localStorage.getItem('harz_review_key')||'';}
+function storedKey(){return localStorage.getItem('harz_review_key')||'';}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function render(d){
-  if(!d.count){el('list').innerHTML='<div class="card"><b>Nothing is queued.</b><div class="mono">Approved items are published; rejected items keep their review note.</div></div>';return;}
+function stamp(){var d=new Date();return d.toTimeString().slice(0,8);}
+
+// ONE classifier. It reports what actually happened, never what we hoped happened.
+async function call(url,opts){
+  var ctrl=null,timer=null;
+  if(typeof AbortController!=='undefined'){ctrl=new AbortController();timer=setTimeout(function(){ctrl.abort();},12000);}
+  var o=Object.assign({},opts||{});
+  if(ctrl){o.signal=ctrl.signal;}
+  var res;
+  try{res=await fetch(url,o);}catch(e){if(timer){clearTimeout(timer);}return {kind:'unreachable',message:'No connection. Try again.'};}
+  if(timer){clearTimeout(timer);}
+  var text=null;
+  try{text=await res.text();}catch(e){return {kind:'invalid',message:'Invalid server response.'};}
+  var body=null;
+  try{body=JSON.parse(text);}catch(e){body=null;}
+  if(!res.ok){
+    var extra=(body&&typeof body.error==='string'&&body.error)?(' Reason: '+body.error):'';
+    return {kind:'http',status:res.status,message:'Server error (HTTP '+res.status+').'+extra,body:body};
+  }
+  if(!body||typeof body!=='object'){return {kind:'invalid',message:'Invalid server response.'};}
+  if(body.ok===false){return {kind:'refused',status:res.status,message:'Request refused: '+(body.error||'no reason given'),body:body};}
+  return {kind:'ok',body:body,message:null};
+}
+
+function render(d,when){
+  el('qmeta').textContent='read from HARZ at '+when+' | '+d.count+' queued | this screen shows only what it loaded';
+  if(!d.count){el('list').innerHTML='<div class="card"><b>Nothing is queued.</b><div class="mono">HARZ answered at '+when+' with zero queued items. Approved items are published; rejected items keep their review note.</div></div>';return;}
   var h='';
   d.items.forEach(function(it){
     h+='<div class="card"><b>'+esc(it.title)+'</b> <span class="tag">QUEUED</span>'+
@@ -652,44 +715,59 @@ function render(d){
        '<div class="mono">sha256 '+esc(it.actual_sha256)+' | integrity '+esc(it.integrity)+'</div>'+
        '<input id="n_'+esc(it.id)+'" placeholder="review note (optional)">'+
        '<button data-id="'+esc(it.id)+'" data-dec="approve">Approve and publish</button>'+
-       '<button class="ghost" data-id="'+esc(it.id)+'" data-dec="reject">Reject</button></div>';
+       '<button class="ghost" data-id="'+esc(it.id)+'" data-dec="reject">Reject</button>'+
+       '<div class="mono" id="msg_'+esc(it.id)+'">decision: nothing attempted yet.</div></div>';
   });
   el('list').innerHTML=h;
 }
+
 async function load(){
-  try{
-    var r=await fetch('/api/hcie/queue?state=QUEUED',{cache:'no-store'});
-    render(await r.json());
-  }catch(e){el('list').innerHTML='<div class="card"><b>No connection.</b><div class="mono">Reviewing needs a connection. Nothing is lost: the queue lives on HARZ, not on this phone.</div></div>';}
+  var r=await call('/api/hcie/queue?state=QUEUED',{cache:'no-store'});
+  if(r.kind==='ok'){render(r.body,stamp());return;}
+  el('qmeta').textContent='NOT read | '+r.message+' | '+stamp();
+  el('list').innerHTML='<div class="card"><b>Queue unavailable.</b><div class="mono">'+esc(r.message)+' at '+stamp()+
+    '</div>Nothing is displayed here, and that does NOT mean nothing is queued. This screen cannot see the queue right now.</div>';
 }
+
 async function decide(id,decision){
-  var n=el('n_'+id);
+  var n=el('n_'+id),out=el('msg_'+id);
   var note=n?n.value:'';
-  try{
-    var r=await fetch('/api/hcie/review',{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({id:id,decision:decision,reviewer:'owner',note:note,review_key:key()})});
-    var d=await r.json();
-    if(!d.ok){alert('Refused: '+(d.error||'unknown reason'));return;}
-    alert(decision==='approve'?('Published. Object id '+d.object_id+'.'):'Rejected. The review note is recorded.');
-    load();
-  }catch(e){alert('No connection. The decision was NOT recorded.');}
+  out.textContent='decision: sending '+decision+'...';
+  var r=await call('/api/hcie/review',{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({id:id,decision:decision,reviewer:'owner',note:note,review_key:storedKey()})});
+  if(r.kind==='ok'){
+    out.textContent='Success - '+(decision==='approve'?('published as object '+r.body.object_id+'.'):'rejected, review note recorded.')+' ('+stamp()+')';
+    load();return;
+  }
+  var reason=(r.body&&r.body.error)?String(r.body.error):'';
+  if(r.kind==='refused'&&reason.toLowerCase().indexOf('key')>=0){
+    out.textContent=r.message+' ('+stamp()+'). This browser holds '+(storedKey()?'a key HARZ did not accept':'no key')+
+      '. Enter your review key in the box above and press Unlock: approving needs no unlock until the key is unknown to this browser.';
+    return;
+  }
+  out.textContent=r.message+' ('+stamp()+')'+(r.kind==='refused'?' The decision was refused, so nothing changed.':' The decision was NOT recorded.');
 }
+
 el('list').addEventListener('click',function(e){
   var b=e.target;
   if(!b||!b.getAttribute||!b.getAttribute('data-dec')){return;}
   decide(b.getAttribute('data-id'),b.getAttribute('data-dec'));
 });
+
 el('save').onclick=async function(){
   var k=el('key').value.trim();
-  if(k.length<8){el('authmsg').textContent='Use at least 8 characters.';return;}
-  try{
-    var r=await fetch('/api/hcie/review-auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({key:k})});
-    var d=await r.json();
-    if(d.ok){localStorage.setItem('harz_review_key',k);el('authmsg').textContent=d.claimed?'Review key set on this device and locked into HARZ. It cannot be read back.':'Key accepted.';}
-    else{el('authmsg').textContent='Refused: '+(d.error||'wrong key');}
-  }catch(e){el('authmsg').textContent='No connection.';}
+  if(k.length<8){el('authmsg').textContent='Unlock refused locally: the key must be at least 8 characters. Nothing was sent. ('+stamp()+')';return;}
+  el('authmsg').textContent='Unlock: asking HARZ...';
+  var r=await call('/api/hcie/review-auth',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({key:k})});
+  if(r.kind==='ok'){
+    localStorage.setItem('harz_review_key',k);
+    el('authmsg').textContent='Success - '+(r.body.claimed?'review key set on this device and locked into HARZ.':'key accepted.')+' ('+stamp()+')';
+    return;
+  }
+  el('authmsg').textContent=r.message+' ('+stamp()+')';
 };
-if(key()){el('authmsg').textContent='A key is stored on this device.';}
+
+if(storedKey()){el('authmsg').textContent='Unlock: a key is stored on this device. Approving does not need a fresh unlock.';}
 load();
 </script></body></html>`;
 
@@ -839,10 +917,6 @@ export default {
     }
     if (u.pathname === "/manifest.json") return Response.json(MANIFEST, { headers: { "cache-control": "max-age=3600" } });
     if (u.pathname === "/icon.svg") return new Response(ICON, { headers: { "content-type": "image/svg+xml", "cache-control": "max-age=86400" } });
-    if (u.pathname === "/sw.js") return new Response(
-      "const C='hcie-v1';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).pathname.startsWith('/api/'))return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(x=>{const c=x.clone();caches.open(C).then(k=>k.put(e.request,c));return x})))});",
-      { headers: { "content-type": "application/javascript", "cache-control": "max-age=3600" } });
-
     if (u.pathname === "/api/hcie/status") {
       try { return j(await status(env)); } catch (e) { return j({ error: String(e.message || e) }, 500); }
     }
@@ -852,8 +926,9 @@ export default {
     }
     if (u.pathname === "/read" || u.pathname.startsWith("/read/")) return new Response(READ_HTML, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
     if (u.pathname === "/gate3" || u.pathname === "/gate3/") { u.pathname = "/api/hcie/bundle.html"; }
-    if (u.pathname === "/sw.js") return new Response(SW_JS, { headers: { "content-type": "application/javascript", "cache-control": "no-cache" } });
+    if (u.pathname === "/sw.js") return new Response(SW_JS, { headers: { "content-type": "application/javascript", "cache-control": "no-store" } });
     if (u.pathname === "/write" || u.pathname === "/write/") return new Response(WRITE_HTML, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
+    if (u.pathname === "/reset" || u.pathname === "/reset/") return new Response(RESET_HTML, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
     if (u.pathname === "/review" || u.pathname === "/review/") return new Response(REVIEW_HTML, { headers: { "content-type": "text/html;charset=utf-8", "cache-control": "no-store" } });
     if (u.pathname === "/api/hcie/review-auth" && req.method === "POST") {
       try { return j(await reviewAuth(env, await req.json().catch(() => ({})))); }
