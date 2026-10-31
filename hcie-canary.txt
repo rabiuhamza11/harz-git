@@ -1,0 +1,4 @@
+HCIE change-detection canary, revision 1.
+Issued: 2026-10-31T15:05Z
+Marker: ALPHA-7F3C
+This file is the controlled proof that a real internet change is detected and versioned.
