@@ -16,6 +16,15 @@
       "sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
       "canonical_sha256": "96e1c6d18d79f0853dce1d86ca41dc9e14a6a97f6152ca754aae775a22193bcd",
       "bytes": 70
+    },
+    {
+      "id": 50,
+      "object_id": 50,
+      "source_key": "contrib-4",
+      "version": 1,
+      "sha256": "08d6e1eb5887ad3951cdc3c74e0b20303c69ef0333df63f0d7557c51b9501755",
+      "canonical_sha256": "08d6e1eb5887ad3951cdc3c74e0b20303c69ef0333df63f0d7557c51b9501755",
+      "bytes": 92
     }
   ]
 }
