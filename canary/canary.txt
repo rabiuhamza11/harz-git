@@ -1,0 +1,4 @@
+HCIE change-detection canary, revision 1.
+Issued: 2026-10-31T18:10Z
+Marker: CANARY-INIT-001
+Initial canary file created for forward_proof.
