@@ -1,0 +1,12 @@
+{
+ "node": "harz-hcie (node A)",
+ "publication": "authorised Internet destination: harz-git published/",
+ "objects": [
+  {
+   "id": 38,
+   "version": 18,
+   "sha256": "c4372fb371034170af04190708d926ecbc380bbfb88d48b248c79f6171fabc9b",
+   "bytes": 17930
+  }
+ ]
+}
