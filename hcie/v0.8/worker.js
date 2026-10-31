@@ -4,7 +4,7 @@
 // Law: only VERIFIED objects (hash-matched, captured bytes) may ever be presented as offline-available.
 // A source row may say "advertised"; only an object row means we hold it.
 
-const VERSION = "hcie-0.8.5";
+const VERSION = "hcie-0.8.7";
 const UA = "harz-hcie/0.1 (HARZ Continuity Exchange)";
 
 const SEED_SOURCES = [
@@ -64,6 +64,58 @@ function idOf(text, author) {
   return "C-" + text.length + "-" + (author || "anon").replace(/[^a-z0-9]/gi, "").slice(0, 8).toLowerCase();
 }
 
+function normTitle(t) {
+  return String(t || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+// Same title is not the same claim. This reports other held claims under a title, with their
+// publication status and enough text to compare. It never rejects, merges or prefers either one.
+async function collisionsFor(env, item) {
+  const nt = normTitle(item.title);
+  if (!nt) return [];
+  const rows = await env.HARZ_DB.prepare(
+    "SELECT o.id object_id, o.source_key, o.version, o.title, o.canonical_sha256, o.bytes, o.captured_ts, o.verified, " +
+    "substr(o.content,1,600) preview, c.id contribution_id, c.author, c.device, c.state, c.reviewed_ts " +
+    "FROM hcie_objects o LEFT JOIN hcie_contributions c ON o.source_key = 'contribution:' || c.id " +
+    "WHERE lower(trim(o.title)) = ? AND o.canonical_sha256 <> ? ORDER BY o.captured_ts LIMIT 12"
+  ).bind(nt, item.actual_sha256).all();
+  const out = [];
+  for (const r of (rows.results || [])) {
+    out.push({
+      object_id: r.object_id, source_key: r.source_key, version: r.version,
+      hash: String(r.canonical_sha256 || "").slice(0, 16), bytes: r.bytes,
+      author: r.author || "unattributed (captured object)", device: r.device || null,
+      status: r.contribution_id ? (r.state === "PUBLISHED" ? "PUBLISHED" : (r.state || "UNKNOWN")) : "PUBLISHED",
+      published_as: r.object_id, contributed_ts: r.captured_ts, reviewed_ts: r.reviewed_ts || null,
+      preview: r.preview || "", same_title: true
+    });
+  }
+  return out;
+}
+
+async function queueWithCollisions(env, st) {
+  const rows = await env.HARZ_DB.prepare(
+    "SELECT id,author,device,title,text,actual_sha256,integrity,state,created_ts,reviewed_ts,reviewer " +
+    "FROM hcie_contributions WHERE state=? ORDER BY created_ts DESC LIMIT 100"
+  ).bind(st).all();
+  const items = [];
+  for (const it of (rows.results || [])) {
+    const cols = await collisionsFor(env, it);
+    const prev = await env.HARZ_DB.prepare(
+      "SELECT ts, action, reviewer, note FROM hcie_reviews WHERE contribution_id=? AND action='ALREADY_SUBMITTED_BY' ORDER BY id"
+    ).bind(it.id).all();
+    items.push(Object.assign({}, it, {
+      bytes: String(it.text || "").length,
+      collisions: cols,
+      collision_count: cols.length,
+      also_submitted_by: (prev.results || []).map(function (r) {
+        return { author: r.reviewer, ts: r.ts, note: r.note };
+      })
+    }));
+  }
+  return items;
+}
+
 async function contribute(env, body) {
   const author = String(body.author || "unknown-device").slice(0, 80);
   const device = String(body.device || "unidentified").slice(0, 80);
@@ -93,8 +145,20 @@ async function contribute(env, body) {
   }
 
   const id = "C-" + actual.slice(0, 16);
-  const exists = await env.HARZ_DB.prepare("SELECT id, state FROM hcie_contributions WHERE id=?").bind(id).first();
-  if (exists) return { ok: true, id: exists.id, state: exists.state, duplicate: true, integrity, actual_sha256: actual };
+  const exists = await env.HARZ_DB.prepare("SELECT id, state, author, created_ts, title FROM hcie_contributions WHERE id=?").bind(id).first();
+  if (exists) {
+    // The bytes are already held, so no second copy is created. The SUBMISSION is still evidence:
+    // it is recorded with its own author, device, time and the identity it matched.
+    await env.HARZ_DB.prepare(
+      "INSERT INTO hcie_reviews (ts,contribution_id,action,reviewer,note) VALUES (?,?,?,?,?)"
+    ).bind(nowIso(), exists.id, "ALREADY_SUBMITTED_BY", author,
+      "identical bytes | device " + device + " | submitted " + nowIso() +
+      " | contributes to " + exists.id + " (\"" + exists.title + "\") | content held once, submissions held separately" +
+      " | first submission " + exists.created_ts).run();
+    return { ok: true, id: exists.id, state: exists.state, duplicate: true, integrity, actual_sha256: actual,
+             attribution_recorded: true,
+             note: "identical text already held; this submission is recorded as its own attributable provenance, the text is not duplicated" };
+  }
 
   if (false) {
     await env.HARZ_DB.prepare(
@@ -113,7 +177,8 @@ async function contribute(env, body) {
   ).bind(id, author, device, title, text, declared || actual, actual, integrity, "QUEUED", nowIso()).run();
   await env.HARZ_DB.prepare(
     "INSERT INTO hcie_reviews (ts,contribution_id,action,reviewer,note) VALUES (?,?,?,?,?)"
-  ).bind(nowIso(), id, "RECEIVED_VERIFIED", "integrity-guardian", "bytes verified; queued for human review, NOT published").run();
+  ).bind(nowIso(), id, "RECEIVED_VERIFIED", "integrity-guardian",
+    "bytes verified | submitted by " + author + " | device " + device + " | submitted " + nowIso() + " | queued for human review, NOT published").run();
   await env.HARZ_DB.prepare(
     "INSERT INTO hcie_journal (ts,source_key,object_id,state,detail) VALUES (?,?,?,?,?)"
   ).bind(nowIso(), "contribution", null, "CONTRIBUTION_QUEUED", id + " by " + author + " (unpublished until review)").run();
@@ -611,7 +676,7 @@ function hcieSha256(str) {
 
 
 
-const SW_JS = "const V='hcie-0.8.5';const C='hcie-shell-'+V;" +
+const SW_JS = "const V='hcie-0.8.7';const C='hcie-shell-'+V;" +
 "self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(['/write','/review','/manifest.json','/icon.svg']);}).then(function(){return self.skipWaiting();}));});" +
 "self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return k===C?null:caches.delete(k);}));}).then(function(){return self.clients.claim();}));});" +
 // Network first for pages: a deployed fix must reach the person holding the phone. Cache is the offline fallback, not the default.
@@ -705,6 +770,20 @@ async function call(url,opts){
   return {kind:'ok',body:body,message:null};
 }
 
+function collisionBlock(it){
+  var h='<div class="card" style="border-color:#f3c9c9;background:#fff7f7"><b>Same title, different text: '+it.collision_count+' other claim'+(it.collision_count>1?'s':'')+'</b>'+
+        '<div class="mono">These are DIFFERENT claims under one title, not duplicates of this one. Nothing is merged or rejected automatically: decide or leave both.</div>';
+  it.collisions.forEach(function(c){
+    h+='<div class="mono" style="border-top:1px solid #f3c9c9;padding-top:6px;margin-top:6px">'+
+       esc(c.status)+' as object '+esc(c.object_id)+' (v'+esc(c.version)+') | author '+esc(c.author)+
+       (c.device?' | device '+esc(c.device):'')+' | '+esc(c.bytes)+' bytes | sha256 '+esc(c.hash)+
+       ' | published '+esc(c.contributed_ts)+'</div>'+
+       '<details><summary>Compare that text</summary><div class="mono">'+esc(c.preview)+
+       (c.bytes>600?' ... (preview of '+esc(c.bytes)+' bytes)':'')+'</div></details>';
+  });
+  return h+'</div>';
+}
+
 function render(d,when){
   el('qmeta').textContent='read from HARZ at '+when+' | '+d.count+' queued | this screen shows only what it loaded';
   if(!d.count){el('list').innerHTML='<div class="card"><b>Nothing is queued.</b><div class="mono">HARZ answered at '+when+' with zero queued items. Approved items are published; rejected items keep their review note.</div></div>';return;}
@@ -712,7 +791,10 @@ function render(d,when){
   d.items.forEach(function(it){
     h+='<div class="card"><b>'+esc(it.title)+'</b> <span class="tag">QUEUED</span>'+
        '<div class="mono">'+esc(it.id)+' | author '+esc(it.author)+' | device '+esc(it.device)+' | '+esc(it.created_ts)+'</div>'+
-       '<div class="mono">sha256 '+esc(it.actual_sha256)+' | integrity '+esc(it.integrity)+'</div>'+
+       '<div class="mono">sha256 '+esc(it.actual_sha256)+' | integrity '+esc(it.integrity)+' | '+esc(it.bytes)+' bytes</div>'+
+       '<details><summary>This submission text</summary><div class="mono">'+esc(it.text)+'</div></details>'+
+       (it.collision_count?collisionBlock(it):'')+
+       (it.also_submitted_by&&it.also_submitted_by.length?'<div class="mono">ALSO SUBMITTED BY (identical text, own record): '+it.also_submitted_by.map(function(x){return esc(x.author);}).join(', ')+'</div>':'')+
        '<input id="n_'+esc(it.id)+'" placeholder="review note (optional)">'+
        '<button data-id="'+esc(it.id)+'" data-dec="approve">Approve and publish</button>'+
        '<button class="ghost" data-id="'+esc(it.id)+'" data-dec="reject">Reject</button>'+
@@ -944,10 +1026,10 @@ export default {
     }
     if (u.pathname === "/api/hcie/queue") {
       const st = (u.searchParams.get("state") || "QUEUED").toUpperCase();
-      const rows = await env.HARZ_DB.prepare(
-        "SELECT id,author,device,title,actual_sha256,integrity,state,created_ts,reviewed_ts,reviewer FROM hcie_contributions WHERE state=? ORDER BY created_ts DESC LIMIT 100"
-      ).bind(st).all();
-      return j({ state: st, count: (rows.results || []).length, items: rows.results || [] });
+      const items = await queueWithCollisions(env, st);
+      const colliding = items.filter(function (i) { return i.collision_count > 0; }).length;
+      return j({ state: st, count: items.length, collision_items: colliding, items: items,
+        note: "collisions list same-titled claims with different bytes; nothing is merged or rejected automatically" });
     }
     if (u.pathname.startsWith("/api/hcie/contribution/")) {
       const cid = u.pathname.split("/").pop();
