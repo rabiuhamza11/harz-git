@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HARZ Offline Receipt Verifier</title>
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--green:#3fb950;--red:#f85149;--blue:#58a6ff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;padding:20px;max-width:760px;margin:0 auto}
+  h1{font-size:22px;color:var(--blue);margin-bottom:4px}
+  p.sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  textarea{width:100%;min-height:190px;background:#0b0f14;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.5}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  button{background:var(--blue);color:#04121f;border:0;border-radius:8px;padding:11px 16px;font-weight:700;font-size:14px;cursor:pointer}
+  button.alt{background:#21262d;color:var(--text);border:1px solid var(--line)}
+  button:active{transform:translateY(1px)}
+  #result{margin-top:14px;padding:14px;border-radius:10px;font-size:14px;line-height:1.6;display:none}
+  #result.ok{display:block;background:#0d2818;border:1px solid #2ea04366;color:#7ee787}
+  #result.bad{display:block;background:#2d1214;border:1px solid #f8514966;color:#ff7b72}
+  #result.info{display:block;background:#0d1b2a;border:1px solid #1f6feb66;color:#a5d6ff}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:4px 10px;font-size:13px;margin-top:8px;font-family:ui-monospace,monospace}
+  .kv span:first-child{color:var(--muted)}
+  .note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px}
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+  .badge.pending{background:#3d2c00;color:#e3b341}
+  .badge.synced{background:#0d2818;color:#3fb950}
+</style>
+</head>
+<body>
+<h1>HARZ Offline Receipt Verifier</h1>
+<p class="sub">Verify a HARZ payment receipt that travelled with no Internet. Runs entirely in your browser — no server, no network.</p>
+
+<div class="card">
+  <textarea id="receipt" spellcheck="false" placeholder="Paste a receipt JSON here..."></textarea>
+  <div class="row">
+    <button onclick="verify()">Verify receipt</button>
+    <button class="alt" onclick="loadSample()">Load sample</button>
+    <button class="alt" onclick="tamper()">Tamper amount (demo)</button>
+  </div>
+  <div id="result"></div>
+  <div class="note">
+    What this proves: the payer's P-256 signature matches the exact payer, payee, amount and nonce in the receipt, and the receipt has not been altered.
+    What it does not prove: settlement. A receipt is <b>pending</b> until HARZ Chain confirms it. Accept offline payments only up to a trust limit you are willing to carry.
+  </div>
+</div>
+
+<script>
+const SAMPLE = {
+  "protocol": "harz-offline-pay/0.2",
+  "type": "harz_receipt",
+  "status": "pending",
+  "from": "08011111111",
+  "to": "08022222222",
+  "amount": 250,
+  "nonce": 1793577965082,
+  "ts": "2026-11-02T00:06:05.082Z",
+  "memo": "market payment",
+  "payer_pubkey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEByfz/Z8C666H2fuex+JqIt/ECOiXdqgjRlXokJkYNeRDektR92DW9wPqDvI4Qah2FGHmA4c7f//DgYfXZNXMyw==",
+  "sig": "LsHOKR3dZC9C54X2xZZSig25iv+TFxaA9c6afpCPZ13SGDQGewSl/SsFLGJL71jICKOr1a4JweTg2Amf92LULg==",
+  "canonical": "08011111111|08022222222|250|1793577965082",
+  "received_at": "2026-11-02T00:06:05.091Z",
+  "ack": {
+    "payee": "08022222222",
+    "payee_pubkey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETxgBT73nmbCrwmoh1H5vhYdDB8MRQdZ1wm3+nj6ewDLoljLlW3eDoXmTG4+y1doyiAuVRGPYzwvfU5JamE9DNA==",
+    "sig": "JLfwxB/t9dVO+yH0l/FszVLpBh1N27SIDhQtGC8ej9CbWE4242Pt1yQ4QAsPT/3hKF97+GjlCGQG43cqMcMeTQ==",
+    "signed_at": "2026-11-02T00:06:05.091Z"
+  },
+  "synced": null
+};
+
+function b64ToBytes(b64){const bin=atob(b64);const out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
+function canonical(r){return r.from+"|"+r.to+"|"+String(parseFloat(r.amount))+"|"+String(r.nonce)}
+function ackCanonical(r,at){return "ack|"+r.from+"|"+r.to+"|"+String(parseFloat(r.amount))+"|"+String(r.nonce)+"|"+at}
+
+async function verifyP256(pubB64, msg, sigB64){
+  try{
+    const key = await crypto.subtle.importKey("spki", b64ToBytes(pubB64), {name:"ECDSA",namedCurve:"P-256"}, false, ["verify"]);
+    return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"}, key, b64ToBytes(sigB64), new TextEncoder().encode(msg));
+  }catch(e){return false}
+}
+
+async function verify(){
+  const el = document.getElementById("result");
+  let r;
+  try { r = JSON.parse(document.getElementById("receipt").value); }
+  catch(e){ el.className="bad"; el.innerHTML="Invalid JSON — paste the receipt exactly as saved."; return; }
+  if(!r.from||!r.to||!r.amount||!r.nonce||!r.sig||!r.payer_pubkey){
+    el.className="bad"; el.innerHTML="Malformed receipt — missing from, to, amount, nonce, sig or payer_pubkey."; return;
+  }
+  const msg = canonical(r);
+  const okMain = await verifyP256(r.payer_pubkey, msg, r.sig);
+  let ackLine = "";
+  if(r.ack && r.ack.sig && r.ack.payee_pubkey){
+    const aok = await verifyP256(r.ack.payee_pubkey, ackCanonical(r, r.ack.signed_at), r.ack.sig);
+    ackLine = `<div class="kv"><span>payee ACK</span><span>${aok ? "VALID" : "INVALID"}</span></div>`;
+  }
+  if(!okMain){
+    el.className="bad";
+    el.innerHTML = "RECEIPT INVALID — signature does not match this payer, payee, amount and nonce.<div class=\"kv\"><span>checked</span><span>"+msg.replace(/</g,"&lt;")+"</span></div>";
+    return;
+  }
+  el.className="ok";
+  el.innerHTML = `RECEIPT VALID — payer signature verified locally in this browser.
+  <div class="kv">
+    <span>payer</span><span>${r.from}</span>
+    <span>payee</span><span>${r.to}</span>
+    <span>amount</span><span>${parseFloat(r.amount).toLocaleString()} HARZ</span>
+    <span>nonce</span><span>${r.nonce}</span>
+    <span>time</span><span>${r.ts || ""}</span>
+    <span>memo</span><span>${(r.memo||"—").replace(/</g,"&lt;")}</span>
+    <span>signed</span><span>${msg.replace(/</g,"&lt;")}</span>
+  </div>${ackLine}
+  <div style="margin-top:10px">Settlement: <span class="badge ${r.status==="synced"?"synced":"pending"}">${r.status==="synced"?"SETTLED ON CHAIN":"PENDING — not yet settled"}</span></div>`;
+}
+
+function loadSample(){
+  document.getElementById("receipt").value = JSON.stringify(SAMPLE, null, 2);
+  document.getElementById("result").className="info";
+  document.getElementById("result").innerHTML="Sample receipt loaded. Press <b>Verify receipt</b> to check the P-256 signature.";
+}
+function tamper(){
+  let r; try{ r=JSON.parse(document.getElementById("receipt").value) }catch(e){ return loadSample() }
+  r.amount = parseFloat(r.amount) + 1000;
+  document.getElementById("receipt").value = JSON.stringify(r, null, 2);
+  document.getElementById("result").className="info";
+  document.getElementById("result").innerHTML="Amount changed by +1,000 HARZ. Press <b>Verify receipt</b> — it must be refused.";
+}
+</script>
+</body>
+</html>
