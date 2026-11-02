@@ -40,3 +40,9 @@ A >= 70 and closeable in 30d | B 45-69 | C 25-44 | REJECTED < 25 or unverifiable
 ## OUTCOME LOOP
 Every record tracks: contacted -> responded -> quotation_requested -> demo_requested -> awarded -> payment_received -> revenue_ngn.
 Weekly review: which sources produced conversations (not just leads) — reweight source priority accordingly.
+
+## RUN NOTES (Nov 2 2026)
+- NOCOPO TLS cert expired Nov 2 — recheck before trusting.
+- nigeriatenders.com (paywalled aggregator): lead-gen pointer only, never primary evidence; carries superseded deadlines (saw pre-addendum NUC 13 Nov).
+- dgMarket buyer-page pattern works: https://afd.dgmarket.com/tenders/adminShowBuyer.do?buyerId=<id>; "West African Tender" buyerId=7822998 aggregates ECOWAS notices (mostly stale).
+- UNDP global feed: filter Nigeria manually; no NG items in current window as of Nov 2.
